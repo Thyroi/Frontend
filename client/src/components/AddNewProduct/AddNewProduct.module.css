@@ -1,24 +1,82 @@
 .AddProductContainer {
-    width: 100vh;
+	width: 100%;
+	height: 100%;
+	display: flex;
 }
 
 .formProduct {
-    display: flex;
-    justify-content: space-around;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 3fr 3fr 4fr;
 }
 
-.formProduct img{
-    width: 100px;
-    height: 100px;
-}
-.textDescription{
-    resize: none;
+.formProduct img {
+	max-width: 100%;
+	max-height: 100%;
 }
 
 .error {
-    font-size: smaller;
-    color: red !important;
-    padding-left: 10px;
-
+	font-size: smaller;
+	color: red !important;
+	padding-left: 10px;
 }
 
+.branch {
+	grid-row: 1;
+	grid-column: 1;
+}
+
+.clothes {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+.gender {
+	grid-row: 2;
+	grid-column: 1;
+}
+
+.size {
+	grid-row: 2;
+	grid-column: 2;
+}
+
+.collection {
+	grid-row: 3;
+	grid-column: 1/3;
+}
+
+.color {
+	grid-row: 4;
+	grid-column: 1;
+}
+
+.stock {
+	grid-row: 4;
+	grid-column: 2;
+}
+
+.price {
+	grid-row: 5;
+	grid-column: 1;
+}
+
+.offer {
+	grid-row: 5;
+	grid-column: 2;
+}
+
+.images {
+	grid-row: 1/3;
+	grid-column: 3;
+}
+
+.textDescription {
+	grid-row: 3/6;
+	grid-column: 3;
+}
+
+.submit {
+	grid-row: 5;
+	grid-column: 3;
+}

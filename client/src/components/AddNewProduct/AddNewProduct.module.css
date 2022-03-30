@@ -1,0 +1,24 @@
+.AddProductContainer {
+    width: 100vh;
+}
+
+.formProduct {
+    display: flex;
+    justify-content: space-around;
+}
+
+.formProduct img{
+    width: 100px;
+    height: 100px;
+}
+.textDescription{
+    resize: none;
+}
+
+.error {
+    font-size: smaller;
+    color: red !important;
+    padding-left: 10px;
+
+}
+

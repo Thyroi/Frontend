@@ -1,4 +1,5 @@
 import React from 'react';
+import style from "./Cart.module.css";
 //To add context below here
 
 // It is much better to add events listeners to keep a clean code
@@ -15,7 +16,8 @@ function Cart(){
           return(
             <div className="itemContainer">
               <div className='imgContainer'>
-                <img src="" alt="" />
+                <img src="" alt="iconOff" />
+                <img src="" alt="product" />
               </div>
 
               <div className="infoContainer">
@@ -29,10 +31,17 @@ function Cart(){
                     <button>+</button>
                   </div>
 
-                  <button className="removeButton">
-                    <img src="" alt="" />
-                    <p>Remove</p>
-                  </button>
+                  <div className="containerButtons">
+                    <div className="containerDiscount">
+                      <input type="text" placeholder="Discount Code"/>
+                      <input type="submit" value="Apply" />
+                    </div>
+                    <button className="removeButton">
+                      <img src="" alt="" />
+                      <p>Remove</p>
+                    </button>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -47,3 +56,5 @@ function Cart(){
     </div>
   )
 }
+
+export default Cart;

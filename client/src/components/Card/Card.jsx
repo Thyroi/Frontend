@@ -19,7 +19,7 @@ export default function Card({ data }) {
 
 	return (
 		<div className={style.container}>
-			<Link to={`/detail/:${id_product}`}>
+			<Link to={`/detail/${id_product}`}>
 				<div className={style.background}>
 					<span>{is_offer && 'oferta'}</span>
 					<img src={default_image} alt='' />

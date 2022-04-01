@@ -1,30 +1,37 @@
 import React from "react";
-import style from "./Product_detail.module.css";
+import { useParams } from "react-router-dom";
+
+import style from "./Product_detail.module.scss";
+
+//Data
+import data from "../../Assets/Products.json";
 
 // Waiting for routes and data to deploy it finally
 
 function Product_detail() {
+  const { id } = useParams();
+  const product = data.find((p) => p.id_product == id);
+  const { default_image, variants, name, brand, price, description } = product;
+  console.log(product);
+
   return (
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
-          <img className={style.mainImage} />
+          <img className={style.mainImage} src={default_image} />
         </div>
         <div className={style.containerSecondImages}>
-          <img className={style.secondImages} />
-          <img className={style.secondImages} />
-          <img className={style.secondImages} />
-          <img className={style.secondImages} />
+          {variants[0].ProductImages.map((image) => (
+            <img className={style.secondImages} src={image} />
+          ))}
         </div>
       </div>
 
       <div className={style.containerInf}>
         <div className={style.specificInf}>
-          <h2 className={style.productName}>Flannel Shirt Dark</h2>
-          <p className={style.collectionName}>
-            Charles Jeffrey LOVERBOY, Otoño-invierno 2017
-          </p>
-          <p className={style.productPrice}>$450</p>
+          <h2 className={style.productName}>{name}</h2>
+          <p className={style.collectionName}>{brand}</p>
+          <p className={style.productPrice}>{`$${price}`}</p>
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
               <h3 className={style.sizeHeader}>Size</h3>
@@ -74,12 +81,7 @@ function Product_detail() {
         <div className={style.generalInformation}>
           <h4 className={style.headerDescription}>Description</h4>
           <hr className={style.line} />
-          <p className={style.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-            dolores animi sint repellendus facere id, laudantium odio ullam, ea
-            excepturi mollitia quos eius? Reiciendis qui fugiat laudantium,
-            nobis beatae dicta.
-          </p>
+          <p className={style.description}>{description}</p>
         </div>
       </div>
     </div>

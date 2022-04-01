@@ -1,7 +1,7 @@
 .container {
 	display: flex;
 	height: 60vh;
-	width: 15vw;
+	width: 20vw;
 	justify-content: center;
 	align-items: center;
 	border: 2px solid transparent;
@@ -15,19 +15,66 @@
 	justify-content: center;
 	align-items: flex-start;
 	max-height: 60vh;
-	max-width: 15vw;
+	max-width: 20vw;
 	border-radius: 5px;
 	overflow: hidden;
+	position: relative;
+}
+
+.offer {
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 2rem;
+	background-color: rgb(252, 96, 179);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: azure;
+	font-weight: 400;
 }
 
 .background img {
 	max-height: 60vh;
-	max-width: 15vw;
+	max-width: 20vw;
 }
 
 .info {
 	position: absolute;
-	font-weight: 600;
+	bottom: 0;
+	padding-bottom: 0.5rem;
+	height: 16vh;
+	width: 20vw;
+	background-color: rgba(240, 255, 255, 0.5);
+	backdrop-filter: blur(8px);
 	color: black;
-	text-shadow: 0 0 0.2rem azure;
+	text-align: start;
+	display: grid;
+	grid-template-rows: 3fr 1fr 2fr 1fr;
+}
+
+.name,
+.brand,
+.price,
+.stock {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0.2rem 0.2rem 0.2rem 1rem;
+}
+
+.name {
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+.brand,
+.stock {
+	font-size: 0.7rem;
+	font-weight: 300;
+}
+.price {
+	font-size: 1.2rem;
+	font-weight: 600;
 }

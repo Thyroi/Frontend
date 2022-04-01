@@ -1,0 +1,19 @@
+.container {
+	grid-template-rows: 10vh 1fr;
+}
+
+.filters {
+	grid-row: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cards {
+	grid-row: 2;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	justify-items: flex-start;
+	align-items: center;
+}

@@ -17,7 +17,13 @@ code {
 
 a {
 	text-decoration: none;
-	color: #565656;
+	color: inherit;
+}
+
+input,
+button,
+textarea {
+	border: 1px solid transparent;
 }
 
 *:focus {

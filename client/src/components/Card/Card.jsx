@@ -1,29 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import style from './Card.module.css';
 
-export default function Card({images, brand, collection, isOffer, price, stock, type, gender, size, description}) {
-  return (
-    <div className={styles.conteiner}>
-        <div>
-            <span>{/* {isOffer} */ true && "oferta"}</span>
-            <Link to={`/home/no se que variable va aca`}>
-                <img src={images} alt="ACA VA LA FOTO" />
-            </Link>
-        </div>
-        <div>
-            <span>{type}</span>
-        </div>
-        <div>
-            <span>{brand}</span>
-            <span>{collection}</span>
-        </div>
-        <div>
-            <span>{price}</span>
-        </div>
-        <div>
-            <span>{stock}</span>
-        </div>
+export default function Card({ data }) {
+	/* const stocks = Object.entries(variants[0].stocks); */
 
-    </div>
-  )
+	const {
+		id_product,
+		name,
+		price,
+		brand,
+		is_offer,
+		default_image,
+		variants,
+	} = data;
+
+	const stocks = Object.entries(variants);
+
+	return (
+		<div className={style.container}>
+			<Link to={`/detail/:${id_product}`}>
+				<div className={style.background}>
+					<span>{is_offer && 'oferta'}</span>
+					<img src={default_image} alt='' />
+				</div>
+			</Link>
+			<div className={style.info}>
+				<span>{name}</span>
+
+				<span>{brand}</span>
+
+				<span>{price}</span>
+
+				<span>
+					{stocks?.map((s) => {
+						return <div>{`${s[0]}: ${s[1]}`}</div>;
+					})}
+				</span>
+			</div>
+		</div>
+	);
 }

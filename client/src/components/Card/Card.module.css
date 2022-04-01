@@ -1,0 +1,33 @@
+.container {
+	display: flex;
+	height: 60vh;
+	width: 15vw;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid transparent;
+	border-radius: 5px;
+	position: relative;
+	margin: 1rem 1rem;
+}
+
+.background {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	max-height: 60vh;
+	max-width: 15vw;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.background img {
+	max-height: 60vh;
+	max-width: 15vw;
+}
+
+.info {
+	position: absolute;
+	font-weight: 600;
+	color: black;
+	text-shadow: 0 0 0.2rem azure;
+}

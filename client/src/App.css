@@ -1,12 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600&display=swap');
-
-::-webkit-scrollbar {
-	display: none;
-}
-
 .app {
-	font-family: 'Work Sans', sans-serif;
-	text-align: center;
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -15,37 +7,60 @@
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	background: linear-gradient(to bottom right, #ffffff, #bfc1c4);
-	color: rgb(26, 26, 26);
+	background: #f3f3f3;
 	display: grid;
-	grid-template-columns: 10vw 1fr;
-	grid-template-rows: 10vh 10vh 1fr;
+	grid-template-columns: 20vw 80vw;
+	grid-template-rows: 10vh 1fr;
+}
+
+.appName {
+	background-color: azure;
+	grid-row: 1;
+	grid-column: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 600;
+	font-size: 2rem;
 }
 
 .top {
 	grid-row: 1;
 	grid-column: 2;
-	border: 1px solid rgb(212, 212, 212);
-	border-radius: 10px;
+	display: grid;
+	grid-template-columns: 6fr 3fr;
+	border: 1px solid rgb(228, 228, 228);
+}
+
+.searchBar {
+	grid-column: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login {
+	grid-column: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .left {
-	grid-row: 1/4;
-	grid-column: 1;
-	border: 1px solid rgb(228, 228, 228);
-	border-radius: 10px;
-}
-
-.filters {
 	grid-row: 2;
-	grid-column: 2;
+	grid-column: 1;
 	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+
+	height: 100%;
+	width: 100%;
+	background-color: azure;
 }
 
 .container {
-	grid-row: 3;
+	grid-row: 2;
 	grid-column: 2;
-	border: 1px solid rgb(224, 221, 221);
-	border-radius: 10px;
+	border: 1px solid rgb(228, 228, 228);
 	overflow: scroll;
 }

@@ -1,6 +1,5 @@
 import './App.css';
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
-import Filters from './components/Filters/Filters';
 import Nav from './components/Nav/Nav';
 import Landing from './components/Landing/Landing';
 import { Route } from 'react-router-dom';
@@ -10,21 +9,24 @@ import Search from './components/SearchBar/Search';
 export default function App() {
 	return (
 		<div className='app'>
+			<div className='appName'>Shop</div>
 			<div className='top'>
-				<Search />
+				<div className='searchBar'>
+					<Search />
+				</div>
+				<div className='login'>
+					{/*Acá va <Login/>, cuando esté. Revisar hoja de estilos  */}
+				</div>
 			</div>
 			<div className='left'>
 				<Nav />
 			</div>
-			<div className='filters'>
-				<Filters />
-			</div>
 			<div className='container'>
-				<Route exact path='/add'>
+				<Route exact path='/AddNewProduct'>
 					<AddNewProduct />
 				</Route>
 				<Route exact path='/'>
-					{/* <Landing /> */}
+					<Landing />
 				</Route>
 			</div>
 		</div>

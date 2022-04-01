@@ -3,8 +3,8 @@ import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Nav from './components/Nav/Nav';
 import Landing from './components/Landing/Landing';
 import { Route } from 'react-router-dom';
-
 import Search from './components/SearchBar/Search';
+import Home from './components/Home/Home';
 
 export default function App() {
 	return (
@@ -22,7 +22,9 @@ export default function App() {
 				<Nav />
 			</div>
 			<div className='container'>
+				<Home />
 				<Route exact path='/AddNewProduct'>
+
 					<AddNewProduct />
 				</Route>
 				<Route exact path='/'>

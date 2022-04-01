@@ -1,10 +1,13 @@
 import './App.css';
+import { Route } from 'react-router-dom';
+
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Nav from './components/Nav/Nav';
 import Landing from './components/Landing/Landing';
-import { Route } from 'react-router-dom';
-
 import Search from './components/SearchBar/Search';
+import LogInTop from './components/LogIn/LogInTop';
+import LogIn from './components/LogIn/LogInMain';
+import Products from './components/Products/Products';
 
 export default function App() {
 	return (
@@ -15,19 +18,17 @@ export default function App() {
 					<Search />
 				</div>
 				<div className='login'>
-					{/*Acá va <Login/>, cuando esté. Revisar hoja de estilos  */}
+					<LogInTop />
 				</div>
 			</div>
 			<div className='left'>
 				<Nav />
 			</div>
 			<div className='container'>
-				<Route exact path='/AddNewProduct'>
-					<AddNewProduct />
-				</Route>
-				<Route exact path='/'>
-					<Landing />
-				</Route>
+				<Route exact path='/AddNewProduct' component={AddNewProduct} />
+				<Route exact path='/Products' component={Products} />
+				<Route exact path='/LogIn' component={LogIn} />
+				<Route exact path='/' component={Landing} />
 			</div>
 		</div>
 	);

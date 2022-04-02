@@ -32,7 +32,7 @@ function AddNewProduct() {
 			error.price = 'It should be more expensive';
 		}
 		if (!input.description) {
-			error.price = 'This field is mandatory';
+			error.description = 'This field is mandatory';
 		}
 
 		return error;
@@ -51,49 +51,45 @@ function AddNewProduct() {
 
 	return (
 		<div className={styles.AddProductContainer}>
-			<form>
-				<div className={styles.formProduct}>
-					<div className={styles.branch}>
-						<label>Branch</label>
+			<form className={styles.form}>
+				<div className={styles.fields}>
+					<div className={styles.brand}>
+						<label>Brand</label>
 						<input
 							type='text'
 							value={input.brand}
 							name='brand'
-							placeholder='Set Brand Name'
+							placeholder={error.brand}
 							autoComplete='off'
 							className={styles.inputStyle}
 							onChange={(e) => handleChange(e)}
 						/>
-						{error.brand && (
-							<p className={styles.error}>{error.brand}</p>
-						)}
 					</div>
-					<div className={styles.clothe}>
-						<label>Clothe Type</label>
+					<div className={styles.type}>
+						<label>Type</label>
 						<input
 							type='text'
 							value={input.type}
 							name='type'
-							placeholder='Set Type'
+							placeholder={error.type}
 							autoComplete='off'
 							className={styles.inputStyle}
 							onChange={(e) => handleChange(e)}
 						/>
-						{error.type && (
-							<p className={styles.error}>{error.type}</p>
-						)}
 					</div>
 					<div className={styles.gender}>
+						<label>Gender</label>
 						<select>
-							<option value='all'>Sort by Gender</option>
+							<option value='all'>Add gender</option>
 							<option value='Female'>Female</option>
 							<option value='Man'>Man</option>
 							<option value='none'>Non Gender</option>
 						</select>
 					</div>
 					<div className={styles.size}>
+						<label>Size</label>
 						<select>
-							<option value='all'>Sort by Size</option>
+							<option value='all'>Add size</option>
 							<option value='XS'>XS</option>
 							<option value='S'>S</option>
 							<option value='M'>M</option>
@@ -107,17 +103,15 @@ function AddNewProduct() {
 							type='text'
 							value={input.collection}
 							name='collection'
-							placeholder='Set Collection'
+							placeholder={error.collection}
 							autoComplete='off'
 							className={styles.inputStyle}
 							onChange={(e) => handleChange(e)}></input>
-						{error.collection && (
-							<p className={styles.error}>{error.collection}</p>
-						)}
 					</div>
 					<div className={styles.color}>
+						<label>Color</label>
 						<select>
-							<option value='all'>Sort by Color</option>
+							<option value='all'>Add color</option>
 							<option value='white'>white</option>
 							<option value='black'>black</option>
 							<option value='Pink'>Pink</option>
@@ -126,18 +120,15 @@ function AddNewProduct() {
 						</select>
 					</div>
 					<div className={styles.stock}>
-						<label>Stock</label> {/*input */}
+						<label>Stock</label>
 						<input
 							type='number'
 							value={input.stock}
 							name='stock'
-							placeholder='Set Stock'
+							placeholder={error.stock}
 							autoComplete='off'
 							className={styles.inputStyle}
 							onChange={(e) => handleChange(e)}></input>
-						{error.stock && (
-							<p className={styles.error}>{error.stock}</p>
-						)}
 					</div>
 					<div className={styles.price}>
 						<label>Price</label>
@@ -145,35 +136,38 @@ function AddNewProduct() {
 							type='number'
 							value={input.price}
 							name='price'
-							placeholder='Set Price'
+							placeholder={error.price}
 							autoComplete='off'
 							onChange={(e) => handleChange(e)}
 							className={styles.inputStyle}></input>
-						{error.price && (
-							<p className={styles.error}>{error.price}</p>
-						)}
 					</div>
 					<div className={styles.offer}>
-						<label>Offer Of</label>
+						<label>On sale</label>
 						<input type='checkbox'></input>
 					</div>
-					<div className={styles.images}>
+				</div>
+				<div className={styles.images}>
+					<div className={styles.imgCont}>
 						<img src={input.img} alt='img' />
 					</div>
-					<div className={styles.textDescription}>
-						<textarea
-							onChange={(e) => handleChange(e)}
-							value={input.description}
-							rows='4'
-							cols='50'
-							name='description'></textarea>
-						{error.description && (
-							<p className={styles.error}>{error.description}</p>
-						)}
+					<div className={styles.buttonCont}>
+						<button>Add image</button>
 					</div>
-					<div className={styles.submit}>
-						<button type='submit'>Add Product</button>
-					</div>
+				</div>
+				<div className={styles.textDescription}>
+					<label>Description</label>
+					<input
+						type='text'
+						value={input.description}
+						name='description'
+						placeholder={error.description}
+						autoComplete='off'
+						onChange={(e) => handleChange(e)}
+						className={styles.inputStyle}
+					/>
+				</div>
+				<div className={styles.submit}>
+					<button type='submit'>Add Product</button>
 				</div>
 			</form>
 		</div>

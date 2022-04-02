@@ -4,12 +4,13 @@ import styles from './Filters.module.css';
 const Dropdown = ({ label, value, options, onChange }) => {
 	return (
 		<label className={styles.dropdownBox}>
-			{label}
 			<div>
 				<select value={value} onChange={onChange}>
+					<option selected={true}>{label}</option>
 					{options.map((option) => (
 						<option value={option.value}>{option.label}</option>
 					))}
+					<option selected={true}>{label}</option>
 				</select>
 			</div>
 		</label>

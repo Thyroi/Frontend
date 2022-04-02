@@ -14,7 +14,7 @@
 }
 
 .appName {
-	background-color: azure;
+	background-color: white;
 	grid-row: 1;
 	grid-column: 1;
 	display: flex;
@@ -54,7 +54,7 @@
 
 	height: 100%;
 	width: 100%;
-	background-color: azure;
+	background-color: white;
 }
 
 .container {

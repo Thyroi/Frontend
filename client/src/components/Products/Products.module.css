@@ -17,3 +17,11 @@
 	justify-items: flex-start;
 	align-items: center;
 }
+.pagination {
+	margin: 2rem;
+}
+
+.pagination button {
+	margin: 0 0.5rem;
+	cursor: pointer;
+}

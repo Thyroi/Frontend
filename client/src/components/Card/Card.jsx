@@ -13,8 +13,10 @@ export default function Card({ data }) {
 		variants,
 	} = data;
 
-	let stocks =
-		'Units: 20'; /* stocks debería sumar todos los stocks de todos los talles y eso... */
+	let stocks = 0;
+	variants.forEach((v) =>
+		Object.values(v.Stocks).forEach((s) => (stocks += s))
+	);
 
 	return (
 		<div className={style.container}>
@@ -29,9 +31,9 @@ export default function Card({ data }) {
 			<div className={style.info}>
 				<div className={style.name}>{name}</div>
 				<div className={style.brand}>{brand}</div>
-				<div className={style.price}>{price}</div>
+				<div className={style.price}>{`$${price}`}</div>
 				{/* falta colección que no está aún en el json creo */}
-				<div className={style.stock}>{stocks}</div>
+				<div className={style.stock}>{`Units: ${stocks}`}</div>
 			</div>
 		</div>
 	);

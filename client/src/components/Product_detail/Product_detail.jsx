@@ -44,7 +44,7 @@ function Product_detail() {
             </div>
 
             <div className={style.containerColorPreference}>
-              <h3 className={style.colorSize}>Color</h3>
+              <h3 className={style.colorHeader}>Color</h3>
               <div className={style.colors}>
                 <div className={style.color}>blue</div>
                 <div className={style.color}>red</div>
@@ -54,10 +54,10 @@ function Product_detail() {
             </div>
 
             <div className={style.containerAmountFavorite}>
-              <div className="counterContainer">
-                <button>-</button>
-                <p>2</p>
-                <button>+</button>
+              <div className={style.counterContainer}>
+                <button className={style.counterButton}>-</button>
+                <p className={style.counterNumber}>2</p>
+                <button className={style.counterButton}>+</button>
               </div>
               <div className={style.favorite}>
                 <img className={style.favoriteImg} src="" alt="favorite" />

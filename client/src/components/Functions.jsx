@@ -56,7 +56,7 @@ export function addProduct(){
     }
 }
 
-export function addProduct(){
+export function updateProduct(){
     return async function(){
         const update = await axios.put("products/update", payload)
         return "Producto actualizado con exito"

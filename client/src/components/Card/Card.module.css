@@ -67,6 +67,10 @@
 	font-size: 0.7rem;
 	font-weight: 300;
 }
+
+.stock span {
+	margin: 0 0.2rem 0 0;
+}
 .price {
 	font-size: 1.2rem;
 	font-weight: 600;

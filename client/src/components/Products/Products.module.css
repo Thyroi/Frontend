@@ -58,10 +58,11 @@
 
 .dropdown_content {
 	top: 1.8em;
-	display: none;
 	position: absolute;
 	background-color: transparent;
 	z-index: 1;
+	transform: scaleY(0) translateY(-100%);
+	transition: all 0.15s;
 }
 
 .dropdown_content button {
@@ -72,7 +73,7 @@
 	text-align: left;
 	font-weight: 400;
 	background-color: transparent;
-	transition: all 0.3s;
+	transition: all ease-in-out 0.2s;
 	cursor: pointer;
 }
 
@@ -101,6 +102,7 @@
 	backdrop-filter: blur(8px);
 	max-height: 16rem;
 	overflow: scroll;
+	transform: scaleY(1);
 }
 
 .dropdown_button:hover,

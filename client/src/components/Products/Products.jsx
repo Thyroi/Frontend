@@ -3,33 +3,9 @@ import style from './Products.module.css';
 import data from '../../Assets/Products.json';
 import Card from '../Card/Card';
 import { filterReducer } from '../../context';
+import Dropdown from '../Dropdown/Dropdown';
 
-//options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...]
-
-const Dropdown = ({ placeHolder, options, handler }) => {
-	return (
-		<div className={style.dropdown}>
-			<button
-				className={style.dropdown_button}
-				onClick={(e) => {
-					e.preventDefault();
-				}}>
-				{placeHolder}
-			</button>
-			<div className={style.dropdown_content}>
-				{options.map(({ id, name }) => {
-					return (
-						<button key={id} value={name} onClick={handler}>
-							{name}
-						</button>
-					);
-				})}
-			</div>
-		</div>
-	);
-};
-
-function Products() {
+export default function Products() {
 	const [state, dispatch] = React.useReducer(filterReducer, data);
 
 	//---------------------------------------------PAGINADO--------------------------------//
@@ -102,7 +78,7 @@ function Products() {
 	const handleBrandChange = (event) => {
 		setBrand(event.target.value);
 	};
-	const handleCollectiondChange = (event) => {
+	const handleCollectionChange = (event) => {
 		setCollection(event.target.value);
 	};
 
@@ -111,6 +87,8 @@ function Products() {
 	return (
 		<div className={style.container}>
 			<div className={style.filters}>
+				{/* options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...] */}
+
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
@@ -159,7 +137,7 @@ function Products() {
 						{ id: 3, name: 'Fall' },
 						{ id: 4, name: 'All' },
 					]}
-					handler={handleCollectiondChange}
+					handler={handleCollectionChange}
 				/>
 			</div>
 			<div className={style.cards}>
@@ -213,5 +191,3 @@ function Products() {
 		</div>
 	);
 }
-
-export default Products;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AddNewProduct.module.css';
+import Dropdown from '../Dropdown/Dropdown';
 
 function AddNewProduct() {
 	const [error, setError] = useState({});
@@ -78,24 +79,34 @@ function AddNewProduct() {
 						/>
 					</div>
 					<div className={styles.gender}>
-						<label>Gender</label>
-						<select>
-							<option value='all'>Add gender</option>
-							<option value='Female'>Female</option>
-							<option value='Man'>Man</option>
-							<option value='none'>Non Gender</option>
-						</select>
+						<Dropdown
+							placeHolder={'Gender'}
+							options={[
+								{ id: 0, name: 'Man' },
+								{ id: 1, name: 'Woman' },
+							]}
+							handler={(e) => {
+								e.preventDefault();
+								alert('no function assigned');
+							}}
+						/>
 					</div>
 					<div className={styles.size}>
-						<label>Size</label>
-						<select>
-							<option value='all'>Add size</option>
-							<option value='XS'>XS</option>
-							<option value='S'>S</option>
-							<option value='M'>M</option>
-							<option value='L'>L</option>
-							<option value='XL'>XL</option>
-						</select>
+						<Dropdown
+							placeHolder={'Size'}
+							options={[
+								{ id: 0, name: 'XS' },
+								{ id: 1, name: 'S' },
+								{ id: 2, name: 'M' },
+								{ id: 3, name: 'L' },
+								{ id: 4, name: 'XL' },
+								{ id: 5, name: 'XXL' },
+							]}
+							handler={(e) => {
+								e.preventDefault();
+								alert('no function assigned');
+							}}
+						/>
 					</div>
 					<div className={styles.collection}>
 						<label>Collection</label>
@@ -109,15 +120,21 @@ function AddNewProduct() {
 							onChange={(e) => handleChange(e)}></input>
 					</div>
 					<div className={styles.color}>
-						<label>Color</label>
-						<select>
-							<option value='all'>Add color</option>
-							<option value='white'>white</option>
-							<option value='black'>black</option>
-							<option value='Pink'>Pink</option>
-							<option value='Red'>Red</option>
-							<option value='Blue'>Blue</option>
-						</select>
+						<Dropdown
+							placeHolder={'Color'}
+							options={[
+								{ id: 0, name: 'Black' },
+								{ id: 1, name: 'White' },
+								{ id: 2, name: 'Pink' },
+								{ id: 3, name: 'Red' },
+								{ id: 4, name: 'Blue' },
+								{ id: 5, name: 'Yellow' },
+							]}
+							handler={(e) => {
+								e.preventDefault();
+								alert('no function assigned');
+							}}
+						/>
 					</div>
 					<div className={styles.stock}>
 						<label>Stock</label>

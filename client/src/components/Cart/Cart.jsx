@@ -2,11 +2,10 @@ import React from "react";
 import style from "./Cart.module.scss";
 //To add context below here
 
-// It is much better to add events listeners to keep a clean code
-// Take into consideration the stock when increasing or decreasing amount
+// Add the context for showing the items
 
 function Cart() {
-  // Provisional
+  // Provisional remove this when context is implemented
   const itemsCart = ["Clothe", "Clothe", "Clothe", "Clothe"];
 
   return (
@@ -15,8 +14,8 @@ function Cart() {
         return (
           <div className={style.itemContainer}>
             <div className={style.imgContainer}>
-              <img src="" alt="iconOff" />
-              <img src="" alt="product" />
+              <img className={style.productImage} src={require("../../Assets/img/login_side.jpg")} alt="iconOff" />
+              {/* <img src="" alt="product" /> */}
             </div>
 
             <div className={style.infoContainer}>

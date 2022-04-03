@@ -25,7 +25,7 @@
 	width: 4rem;
 	height: 4rem;
 	border-radius: 2rem;
-	background-color: rgb(252, 96, 179);
+	background-color: rgb(252, 71, 167);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -41,7 +41,7 @@
 .info {
 	grid-row: 2;
 	background-color: white;
-	color: black;
+	color: #565656;
 	text-align: start;
 	display: grid;
 	grid-template-rows: 3fr 1fr 2fr 1fr;

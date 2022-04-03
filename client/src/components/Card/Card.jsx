@@ -33,7 +33,10 @@ export default function Card({ data }) {
 				<div className={style.brand}>{brand}</div>
 				<div className={style.price}>{`$${price}`}</div>
 				{/* falta colección que no está aún en el json creo */}
-				<div className={style.stock}>{`Units: ${stocks}`}</div>
+				<div className={style.stock}>
+					<span>Units: </span>
+					<span style={{ fontWeight: '800' }}>{stocks}</span>
+				</div>
 			</div>
 		</div>
 	);

@@ -24,6 +24,12 @@ export default function Nav() {
 				className={styles.title}>
 				Add Products
 			</NavLink>
+      <NavLink
+				to='/Cart'
+				activeClassName={styles.active}
+				className={styles.title}>
+				Cart
+			</NavLink>
 		</div>
 	);
 }

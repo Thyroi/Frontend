@@ -9,6 +9,7 @@ import LogInTop from './components/LogIn/LogInTop';
 import LogIn from './components/LogIn/LogInMain';
 import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
+import Cart from "./components/Cart/Cart";
 
 export default function App() {
 	return (
@@ -28,6 +29,7 @@ export default function App() {
 			<div className='container'>
 				<Route exact path='/AddNewProduct' component={AddNewProduct} />
 				<Route exact path='/Products' component={Products} />
+        <Route exact path='/Cart' component={Cart} />
         <Route exact path='/Detail/:id' component={Product_detail} />
 				<Route exact path='/LogIn' component={LogIn} />
 				<Route exact path='/' component={Landing} />

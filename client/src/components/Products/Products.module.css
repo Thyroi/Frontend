@@ -1,5 +1,5 @@
 .container {
-	grid-template-rows: 10vh 1fr;
+	grid-template-rows: 10vh 1fr 10vh;
 }
 
 .filters {
@@ -20,12 +20,40 @@
 	align-items: center;
 }
 .pagination {
+	grid-row: 3;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
 	margin: 2rem;
+	color: #565656;
+}
+
+.pagination span {
+	font-weight: 600;
+	margin: 0 0.5rem;
 }
 
 .pagination button {
-	margin: 0 0.5rem;
+	font-weight: 600;
+	color: #565656;
 	cursor: pointer;
+	transition: all ease-in-out 0.2s;
+}
+
+.pagination button:disabled {
+	font-weight: 100;
+}
+
+.text {
+	grid-column: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.pages {
+	grid-column: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .dropdown_content {
@@ -86,4 +114,15 @@
 	color: white;
 	background-color: rgb(252, 71, 167);
 	font-weight: 600;
+}
+
+.activePage {
+	color: rgb(252, 71, 167);
+	font-weight: 600;
+	transition: all ease-in-out 0.2s;
+}
+
+.inactivePage {
+	font-weight: 400;
+	transition: all ease-in-out 0.2s;
 }

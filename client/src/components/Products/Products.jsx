@@ -36,21 +36,29 @@ function Products() {
 
 	const [results] = useState(9);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [i, setI] = useState(0);
+	const [j, setJ] = useState(i + 3);
 
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [state]);
 
-	function handlePaginate(n) {
-		setCurrentPage(n);
+	function previousPage(e) {
+		e.preventDefault();
+		setCurrentPage((current) => (current -= 1));
+		if (currentPage < pageNumbers.length) {
+			setI((i) => (i > 1 ? i - 1 : 0));
+			setJ((j) => (i > 0 ? j - 1 : j));
+		}
 	}
 
-	function previousPage(n) {
-		setCurrentPage(n - 1);
-	}
-
-	function nextPage(n) {
-		setCurrentPage(n + 1);
+	function nextPage(e) {
+		e.preventDefault();
+		setCurrentPage((current) => (current += 1));
+		if (currentPage > 1) {
+			setJ((j) => (j < pageNumbers.length ? j + 1 : j));
+			setI((i) => (j < pageNumbers.length ? i + 1 : i));
+		}
 	}
 
 	const indexOfLastPost = currentPage * results;
@@ -165,21 +173,42 @@ function Products() {
 			</div>
 
 			<div className={style.pagination}>
-				<span>
-					Showing {results < state.length ? results : state.length} of{' '}
-					{state.length}
-				</span>
-				{pageNumbers.map((number) => {
-					return (
-						<span key={number}>
-							<button onClick={previousPage}>{'<<'}</button>
-							<button onClick={() => handlePaginate(number)}>
+				<div className={style.text}>
+					{`Showing ${
+						results < state.length
+							? `${
+									currentPage === 1
+										? 1
+										: results * currentPage - 1
+							  } - ${results * currentPage}`
+							: state.length
+					} of ${state.length}`}
+				</div>
+				<div className={style.pages}>
+					<button
+						onClick={(e) => previousPage(e)}
+						disabled={currentPage === 1}>
+						{'<<'}
+					</button>
+					{pageNumbers?.slice(i, j).map((number) => {
+						return (
+							<span
+								key={number}
+								className={
+									number === currentPage
+										? style.activePage
+										: style.inactivePage
+								}>
 								{number}
-							</button>
-							<button onClick={nextPage}>{'>>'}</button>
-						</span>
-					);
-				})}
+							</span>
+						);
+					})}
+					<button
+						disabled={currentPage === pageNumbers.length}
+						onClick={(e) => nextPage(e)}>
+						{'>>'}
+					</button>
+				</div>
 			</div>
 		</div>
 	);

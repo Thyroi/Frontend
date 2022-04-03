@@ -45,6 +45,14 @@ function Products() {
 		setCurrentPage(n);
 	}
 
+	function previousPage(n) {
+		setCurrentPage(n - 1);
+	}
+
+	function nextPage(n) {
+		setCurrentPage(n + 1);
+	}
+
 	const indexOfLastPost = currentPage * results;
 	const indexOfFirstPost = indexOfLastPost - results;
 	const currentPosts = state?.slice(indexOfFirstPost, indexOfLastPost);
@@ -164,9 +172,11 @@ function Products() {
 				{pageNumbers.map((number) => {
 					return (
 						<span key={number}>
+							<button onClick={previousPage}>{'<<'}</button>
 							<button onClick={() => handlePaginate(number)}>
 								{number}
 							</button>
+							<button onClick={nextPage}>{'>>'}</button>
 						</span>
 					);
 				})}

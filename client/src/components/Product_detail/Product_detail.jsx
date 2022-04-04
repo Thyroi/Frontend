@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux'
 
 //Data
 import data from '../../Assets/Products.json';
-import { getById } from '../../actions/index';
+import { getById, addCart } from '../../actions/index';
 
 // Waiting for routes and data to deploy it finally
 
@@ -16,7 +16,6 @@ export default function Product_detail() {
 	const dispatch = useDispatch()
 	
 	useEffect(() => {
-		console.log("si")
 		dispatch(getById(id))
 	},[dispatch])
 	/* const producto = data.find((p) => p.id_product == id);
@@ -25,6 +24,7 @@ export default function Product_detail() {
 	const product = useSelector((state) => state.details)
 	const { default_image, name, variants, brand, price, description } = product;
 	
+  const cartProducts = useSelector(state => state.cart);
 
 	return (
 		<div className={style.container}>
@@ -91,7 +91,7 @@ export default function Product_detail() {
 
 						<div className={style.containerBuyCart}>
 							<button className={style.buyButton}>Buy</button>
-							<button className={style.cartButton}>
+							<button className={style.cartButton} id="addCartButton" onClick={()=> addCart(cartProducts,product, dispatch)}>
 								<img src='' alt='' />
 							</button>
 						</div>

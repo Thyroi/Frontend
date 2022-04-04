@@ -1,5 +1,5 @@
 import './App.css';
-import { Route } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Nav from './components/Nav/Nav';
@@ -12,6 +12,13 @@ import Product_detail from './components/Product_detail/Product_detail';
 import Cart from "./components/Cart/Cart";
 
 export default function App() {
+  const location = useLocation();
+  
+  if(location.pathname === '/LogIn'){
+    return <Route exact path='/LogIn' component={LogIn} />
+    
+  }
+
 	return (
 		<div className='app'>
 			<div className='appName'>Shop</div>
@@ -31,7 +38,6 @@ export default function App() {
 				<Route exact path='/Products' component={Products} />
         <Route exact path='/Cart' component={Cart} />
         <Route exact path='/Detail/:id' component={Product_detail} />
-				<Route exact path='/LogIn' component={LogIn} />
 				<Route exact path='/' component={Landing} />
 			</div>
 		</div>

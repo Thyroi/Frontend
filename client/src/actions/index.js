@@ -88,3 +88,25 @@ export function addProduct(payload){
         return alert("Producto creado con exito")
     }
 }
+
+// Actions for Cart guest
+
+export function addCart(cartProducts, payload, dispatch){
+  if(!(cartProducts.some(p => p.id_product == payload.id_product))){
+    return dispatch({
+      type: "ADD_CART",
+      payload: payload
+    })
+  }
+  
+  alert("This product is already in your cart");
+}
+
+export function removeCart(cartProducts, payload){
+  const newConstProducts = cartProducts.filter(p => p.id_product !== payload.id_product);
+  console.log(newConstProducts)
+  return {
+    type: "REMOVE_CART",
+    payload: newConstProducts
+  }
+}

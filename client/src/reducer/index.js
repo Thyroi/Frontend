@@ -3,7 +3,9 @@ const initialState = {
     allproducts: [],
     details: {},
     categories: [],
-    collections: []
+    collections: [],
+
+    cart: []
 }
 
 export default function rootReducer (state = initialState, action){
@@ -53,6 +55,19 @@ export default function rootReducer (state = initialState, action){
                 ...state,
                 products: action.payload
             }
+
+        case "ADD_CART":
+            return {
+              ...state,
+              cart: [...state.cart, action.payload]
+            }
+
+        case "REMOVE_CART":
+          return {
+            ...state,
+            cart: [...action.payload]
+          }
+
         default:
             return state
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Cart.module.scss";
 
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCart } from "../../actions/index";
 // Add the context for showing the items
@@ -13,15 +14,17 @@ function Cart() {
   return (
     <div className={style.containerCart}>
       {itemsCart.map((item) => {
-        const { name, price, default_image } = item;
+        const { name, price, default_image, id_product } = item;
         return (
           <div className={style.itemContainer}>
             <div className={style.imgContainer}>
-              <img
-                className={style.productImage}
-                src={default_image}
-                alt="iconOff"
-              />
+              <Link to={`/detail/${id_product}`}>
+                <img
+                  className={style.productImage}
+                  src={default_image}
+                  alt="iconOff"
+                />
+              </Link>
               {/* <img src="" alt="product" /> */}
             </div>
 
@@ -50,7 +53,10 @@ function Cart() {
                     />
                   </div>
 
-                  <button className={style.removeButton} onClick={()=>dispatch(removeCart(itemsCart, item))}>
+                  <button
+                    className={style.removeButton}
+                    onClick={() => dispatch(removeCart(itemsCart, item))}
+                  >
                     <img src="" alt="" />
                     <p>Remove</p>
                   </button>

@@ -1,27 +1,34 @@
 import React from "react";
 import style from "./Cart.module.scss";
-//To add context below here
 
+import { useSelector, useDispatch } from "react-redux";
+import { removeCart } from "../../actions/index";
 // Add the context for showing the items
 
 function Cart() {
   // Provisional remove this when context is implemented
-  const itemsCart = ["Clothe", "Clothe", "Clothe", "Clothe"];
+  const itemsCart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   return (
     <div className={style.containerCart}>
       {itemsCart.map((item) => {
+        const { name, price, default_image } = item;
         return (
           <div className={style.itemContainer}>
             <div className={style.imgContainer}>
-              <img className={style.productImage} src={require("../../Assets/img/login_side.jpg")} alt="iconOff" />
+              <img
+                className={style.productImage}
+                src={default_image}
+                alt="iconOff"
+              />
               {/* <img src="" alt="product" /> */}
             </div>
 
             <div className={style.infoContainer}>
               <div className={style.subInfoContainer}>
-                <h3 className={style.nameProduct}>Name Product</h3>
-                <p className={style.productPrice}>Product Price</p>
+                <h3 className={style.nameProduct}>{name}</h3>
+                <p className={style.productPrice}>{`$${price}`}</p>
 
                 <div className={style.counterContainer}>
                   <button className={style.counterButton}>-</button>
@@ -31,11 +38,19 @@ function Cart() {
 
                 <div className={style.containerButtons}>
                   <div className={style.containerDiscount}>
-                    <input className={style.inputDiscount} type="text" placeholder="Discount Code" />
-                    <input className={style.applyDiscount} type="submit" value="Apply" />
+                    <input
+                      className={style.inputDiscount}
+                      type="text"
+                      placeholder="Discount Code"
+                    />
+                    <input
+                      className={style.applyDiscount}
+                      type="submit"
+                      value="Apply"
+                    />
                   </div>
 
-                  <button className={style.removeButton}>
+                  <button className={style.removeButton} onClick={()=>dispatch(removeCart(itemsCart, item))}>
                     <img src="" alt="" />
                     <p>Remove</p>
                   </button>
@@ -50,9 +65,7 @@ function Cart() {
         <p className={style.totalInfo}>
           Total due: <span className={style.totalPrice}>$900</span>
         </p>
-        <button className={style.buyButton}>
-          Buy
-        </button>
+        <button className={style.buyButton}>Buy</button>
       </div>
     </div>
   );

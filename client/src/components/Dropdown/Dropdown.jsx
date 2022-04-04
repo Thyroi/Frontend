@@ -16,7 +16,11 @@ export default function Dropdown({ placeHolder, options, handler }) {
 			<div className={style.dropdown_content}>
 				{options.map(({ id, name }) => {
 					return (
-						<button key={id} value={name} onClick={handler}>
+						<button
+							key={id}
+							name={placeHolder.toLowerCase()}
+							value={name}
+							onClick={handler}>
 							{name}
 						</button>
 					);

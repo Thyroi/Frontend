@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AddNewProduct.module.css';
 import Dropdown from '../Dropdown/Dropdown';
+import ImgGallery from '../ImgGallery/ImgGallery';
 
 function AddNewProduct() {
 	const [error, setError] = useState({});
 	const [input, setInput] = useState({
 		brand: '',
 		type: '',
+		gender: '',
+		size: '',
+		color: '',
 		collection: '',
 		stock: '',
 		price: '',
-		img: 'https://media1.sistemacontinuo.com.ar/5289/remera-hombre-sublimable.jpg',
+		img: '',
+		isoffer: false,
 		description: '',
 	});
 
@@ -44,10 +49,12 @@ function AddNewProduct() {
 	}, [input]);
 
 	const handleChange = (e) => {
-		setInput({
+		e.preventDefault();
+		setInput((input) => ({
 			...input,
-			[e.target.name]: e.target.value,
-		});
+			[e.target.name]:
+				e.target.name === 'isoffer' ? !input.isoffer : e.target.value,
+		}));
 	};
 
 	return (
@@ -85,11 +92,9 @@ function AddNewProduct() {
 								{ id: 0, name: 'Man' },
 								{ id: 1, name: 'Woman' },
 							]}
-							handler={(e) => {
-								e.preventDefault();
-								alert('no function assigned');
-							}}
+							handler={(e) => handleChange(e)}
 						/>
+						<span>{input.gender}</span>
 					</div>
 					<div className={styles.size}>
 						<Dropdown
@@ -102,11 +107,9 @@ function AddNewProduct() {
 								{ id: 4, name: 'XL' },
 								{ id: 5, name: 'XXL' },
 							]}
-							handler={(e) => {
-								e.preventDefault();
-								alert('no function assigned');
-							}}
+							handler={(e) => handleChange(e)}
 						/>
+						<span>{input.size}</span>
 					</div>
 					<div className={styles.collection}>
 						<label>Collection</label>
@@ -130,11 +133,9 @@ function AddNewProduct() {
 								{ id: 4, name: 'Blue' },
 								{ id: 5, name: 'Yellow' },
 							]}
-							handler={(e) => {
-								e.preventDefault();
-								alert('no function assigned');
-							}}
+							handler={(e) => handleChange(e)}
 						/>
+						<span>{input.color}</span>
 					</div>
 					<div className={styles.stock}>
 						<label>Stock</label>
@@ -160,12 +161,17 @@ function AddNewProduct() {
 					</div>
 					<div className={styles.offer}>
 						<label>On sale</label>
-						<input type='checkbox'></input>
+
+						<input
+							type='button'
+							name='isoffer'
+							value={input.isoffer}
+							onClick={(e) => handleChange(e)}></input>
 					</div>
 				</div>
 				<div className={styles.images}>
 					<div className={styles.imgCont}>
-						<img src={input.img} alt='img' />
+						<ImgGallery />
 					</div>
 					<div className={styles.buttonCont}>
 						<button>Add image</button>

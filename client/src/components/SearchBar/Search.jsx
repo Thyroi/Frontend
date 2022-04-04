@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import styles from './Search.module.css';
+import {useDispatch} from 'react-redux'
+import { getByName } from '../../actions'
 
 function Search() {
-	const [search, setSearch] = useState('');
+	
+	const [search, setSearch] = useState("")
+
+	const dispatch = useDispatch()
+
+	function handleClick(e) {
+		e.preventDefault()
+		dispatch(getByName(search))
+		setSearch("")
+	}
 
 	function handleChange(e) {
-		setSearch(e.target.value);
-		console.log(typeof e.target.value);
+		e.preventDefault()
+		setSearch(e.target.value)
 	}
+
 
 	return (
 		<div className={styles.container}>
@@ -17,7 +29,7 @@ function Search() {
 				onChange={(e) => handleChange(e)}
 				placeholder='Search by Id or by Type'
 			/>
-			<button>Search</button>
+			<button onClick={(e) => {handleClick(e)}}>Search</button>
 		</div>
 	);
 }

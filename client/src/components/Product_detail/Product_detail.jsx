@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import style from './Product_detail.module.scss';
+import {useSelector, useDispatch} from 'react-redux'
 
 //Data
 import data from '../../Assets/Products.json';
+import { getById } from '../../actions/index';
 
 // Waiting for routes and data to deploy it finally
 
-function Product_detail() {
+export default function Product_detail() {
 	const { id } = useParams();
-	const product = data.find((p) => p.id_product == id);
-	const { default_image, variants, name, brand, price, description } =
-		product;
+	
+	const dispatch = useDispatch()
+	
+	useEffect(() => {
+		console.log("si")
+		dispatch(getById(id))
+	},[dispatch])
+	/* const producto = data.find((p) => p.id_product == id);
+	const { variants } = producto; */
+
+	const product = useSelector((state) => state.details)
+	const { default_image, name, variants, brand, price, description } = product;
+	
 
 	return (
 		<div className={style.container}>
@@ -21,7 +33,7 @@ function Product_detail() {
 					<img className={style.mainImage} src={default_image} />
 				</div>
 				<div className={style.containerSecondImages}>
-					{variants[0].ProductImages.map((image) => (
+					{variants && variants[0].ProductImages.map((image) => (
 						<img
 							key={image}
 							className={style.secondImages}
@@ -102,4 +114,4 @@ function Product_detail() {
 	);
 }
 
-export default Product_detail;
+

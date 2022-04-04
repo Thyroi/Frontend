@@ -1,4 +1,4 @@
-import * as React from 'react';
+/* import * as React from 'react';
 import data from './Assets/Products.json';
 
 const FilterContext = React.createContext(data);
@@ -23,3 +23,4 @@ function FilterProvider({ children }) {
 }
 
 export { filterReducer, FilterProvider };
+ */

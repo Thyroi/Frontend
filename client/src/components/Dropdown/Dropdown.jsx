@@ -19,7 +19,7 @@ export default function Dropdown({ placeHolder, options, handler }) {
 						<button
 							key={id}
 							name={placeHolder.toLowerCase()}
-							value={name}
+							value={id}
 							onClick={handler}>
 							{name}
 						</button>

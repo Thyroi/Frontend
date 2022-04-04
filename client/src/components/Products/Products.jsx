@@ -2,12 +2,31 @@ import React, { useState, useEffect } from 'react';
 import style from './Products.module.css';
 import data from '../../Assets/Products.json';
 import Card from '../Card/Card';
-import { filterReducer } from '../../context';
 import Dropdown from '../Dropdown/Dropdown';
 
-export default function Products() {
-	const [state, dispatch] = React.useReducer(filterReducer, data);
+import {useDispatch, useSelector} from "react-redux"
+import { getByCatId, getByColId, getInfo, getOffers, getSelectorsCat, getSelectorsCol } from '../../actions';
 
+export default function Products() {
+
+	const dispatch = useDispatch()
+	const products = useSelector((state) => state.products)
+	const categories = useSelector((state) => state.categories)
+	const collections = useSelector((state) => state.collections)
+	console.log(collections)
+	const cat = categories.filter(p => p.id !== 1 && p.id !== 2)
+	
+
+	useEffect(() => {
+		dispatch(getInfo())
+		dispatch(getSelectorsCat())
+		dispatch(getSelectorsCol())
+	},[dispatch])
+
+
+	/* const products = data */
+
+	
 	//---------------------------------------------PAGINADO--------------------------------//
 
 	const [results] = useState(9);
@@ -17,7 +36,7 @@ export default function Products() {
 
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [state]);
+	}, [products]);
 
 	function previousPage(e) {
 		e.preventDefault();
@@ -39,11 +58,11 @@ export default function Products() {
 
 	const indexOfLastPost = currentPage * results;
 	const indexOfFirstPost = indexOfLastPost - results;
-	const currentPosts = state?.slice(indexOfFirstPost, indexOfLastPost);
+	const currentPosts = products?.slice(indexOfFirstPost, indexOfLastPost);
 
 	const pageNumbers = [];
 
-	for (let i = 1; i <= Math.ceil(state?.length / results); i++) {
+	for (let i = 1; i <= Math.ceil(products?.length / results); i++) {
 		pageNumbers?.push(i);
 	}
 
@@ -51,7 +70,6 @@ export default function Products() {
 
 	//-----------------------------------ESTADOS DE FILTERS--------------------------------//
 
-	const [isOffer, setIsOffer] = useState();
 	const [stock, setStock] = useState('stock');
 	const [typesC, setTypesC] = useState('types');
 	const [brand, setBrand] = useState('brand');
@@ -61,10 +79,14 @@ export default function Products() {
 
 	const handleOfferChange = (e) => {
 		e.preventDefault();
-		setIsOffer(() => {
-			return e.target.value;
-		});
-		dispatch({ type: 'filterOffer', payload: isOffer });
+		if(e.target.value === "0"){
+			var res = "true"
+		} else if (e.target.value === "1"){
+			var res = "false"
+		} else {
+			return dispatch(getInfo())
+		}
+		dispatch(getOffers(res))
 	};
 
 	const handleStockChange = (event) => {
@@ -72,14 +94,22 @@ export default function Products() {
 	};
 
 	const handleTypeChange = (event) => {
-		setTypesC(event.target.value);
+		event.preventDefault()
+		if(event.target.value === "0"){
+			return dispatch(getInfo())
+		} else {
+		dispatch(getByCatId(event.target.value))}
 	};
 
 	const handleBrandChange = (event) => {
 		setBrand(event.target.value);
 	};
 	const handleCollectionChange = (event) => {
-		setCollection(event.target.value);
+		event.preventDefault()
+		if(event.target.value === "0"){
+			return dispatch(getInfo())
+		} else {
+		dispatch(getByColId(event.target.value))}
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//
@@ -92,13 +122,13 @@ export default function Products() {
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
+						{ id: 2, name: "All"},						
 						{ id: 0, name: 'Sale' },
 						{ id: 1, name: 'Not sale' },
-						{ id: 2, name: 'All' },
 					]}
 					handler={handleOfferChange}
 				/>
-				<Dropdown
+				{/* <Dropdown
 					placeHolder={'Stock'}
 					options={[
 						{ id: 0, name: 'More than 100' },
@@ -107,18 +137,13 @@ export default function Products() {
 						{ id: 3, name: 'All' },
 					]}
 					handler={handleStockChange}
-				/>
+				/> */}
 				<Dropdown
 					placeHolder={'Type'}
-					options={[
-						{ id: 0, name: 'T-shirts' },
-						{ id: 1, name: 'Pants' },
-						{ id: 2, name: 'Sweaters' },
-						{ id: 3, name: 'All' },
-					]}
+					options={[{id: 0, name: "All"}, ...cat]}
 					handler={handleTypeChange}
 				/>
-				<Dropdown
+				{/* <Dropdown
 					placeHolder={'Brand'}
 					options={[
 						{ id: 0, name: 'Forever21' },
@@ -127,16 +152,10 @@ export default function Products() {
 						{ id: 3, name: 'All' },
 					]}
 					handler={handleBrandChange}
-				/>
+				/> */}
 				<Dropdown
 					placeHolder={'Collection'}
-					options={[
-						{ id: 0, name: 'Winter' },
-						{ id: 1, name: 'Spring' },
-						{ id: 2, name: 'Summer' },
-						{ id: 3, name: 'Fall' },
-						{ id: 4, name: 'All' },
-					]}
+					options={[{id: 0, name: "All"}, ...collections]}
 					handler={handleCollectionChange}
 				/>
 			</div>
@@ -153,14 +172,14 @@ export default function Products() {
 			<div className={style.pagination}>
 				<div className={style.text}>
 					{`Showing ${
-						results < state.length
+						results < products.length
 							? `${
 									currentPage === 1
 										? 1
 										: results * currentPage - 1
 							  } - ${results * currentPage}`
-							: state.length
-					} of ${state.length}`}
+							: products.length
+					} of ${products.length}`}
 				</div>
 				<div className={style.pages}>
 					<button

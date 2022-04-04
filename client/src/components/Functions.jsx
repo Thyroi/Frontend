@@ -7,9 +7,10 @@ export function getInfo(){
 	}
 }
 
-export function getByName(payload){
+// validacion de no caracteres especiales y .split()
+export function getProductBySuperSearch(payload){
     return async function(){
-        var name = await axios.get(`/products?name=${payload}`)
+        var name = await axios.get("/products", payload)
         return name.data
     }    
 }

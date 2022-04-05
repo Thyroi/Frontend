@@ -1,6 +1,8 @@
 import React from "react";
 import style from "./Cart.module.scss";
 
+import Quantity from "../Quantity/Quantity";
+
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCart } from "../../actions/index";
@@ -35,11 +37,7 @@ function Cart() {
                 <h3 className={style.nameProduct}>{name}</h3>
                 <p className={style.productPrice}>{`$${price}`}</p>
 
-                <div className={style.counterContainer}>
-                  <button className={style.counterButton}>-</button>
-                  <p className={style.counterNumber}>2</p>
-                  <button className={style.counterButton}>+</button>
-                </div>
+                <Quantity />
 
                 <div className={style.containerButtons}>
                   <div className={style.containerDiscount}>

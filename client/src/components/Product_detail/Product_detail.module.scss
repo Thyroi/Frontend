@@ -132,27 +132,6 @@
           display: flex;
           margin-bottom: 1rem;
           align-items: center;
-
-          .counterContainer {
-            display: flex;
-            align-items: center;
-            margin-right: 2rem;
-
-            .counterButton {
-              appearance: none;
-              width: 25px;
-              height: 25px;
-              border-radius: 5px;
-              background-color: #e4687c;
-              color: #ffffff;
-              font-weight: 600;
-              cursor: pointer;
-            }
-
-            .counterNumber {
-              margin: 0 1rem;
-            }
-          }
         }
 
         .containerBuyCart {

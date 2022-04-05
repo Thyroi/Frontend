@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Quantity from '../Quantity/Quantity';
+
 import style from './Product_detail.module.scss';
 import {useSelector, useDispatch} from 'react-redux'
 
@@ -71,15 +73,7 @@ export default function Product_detail() {
 						</div>
 
 						<div className={style.containerAmountFavorite}>
-							<div className={style.counterContainer}>
-								<button className={style.counterButton}>
-									-
-								</button>
-								<p className={style.counterNumber}>2</p>
-								<button className={style.counterButton}>
-									+
-								</button>
-							</div>
+							<Quantity />
 							<div className={style.favorite}>
 								<img
 									className={style.favoriteImg}

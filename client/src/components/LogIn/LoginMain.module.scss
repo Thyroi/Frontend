@@ -1,18 +1,20 @@
 .background {
   width: 100%;
-  
+  height: 100vh;
+  background: #f3f3f3;
   display: flex;
   justify-content: center;
   align-items: center;
 
   .container {
-    width: 70%;
+    width: 55%;
     height: 500px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     display: flex;
 
     .containerImage {
       width: 50%;
-      
+
       .img {
         width: 100%;
         height: 100%;
@@ -64,23 +66,22 @@
           .labelInput {
             margin-bottom: 1rem;
             font-weight: 600;
-
           }
 
           .input {
             width: 100%;
             height: 2.5rem;
-            border: 2px solid #F3F3F3;
+            border: 2px solid #f3f3f3;
             border-radius: 5px;
             padding-left: 1rem;
-            background: #F3F3F3;
+            background: #f3f3f3;
             font-size: 0.8rem;
 
             transition: 0.3s all ease;
           }
 
           .input:focus {
-            border: 2px solid #E4687C;
+            border: 2px solid #e4687c;
           }
         }
 
@@ -90,20 +91,21 @@
           justify-content: space-between;
 
           .containerRememberMe {
-             display: flex;
-             align-items: center;
+            display: flex;
+            align-items: center;
 
             .buttonRemember {
               appearance: none;
               width: 20px;
               height: 20px;
-              border: 2px solid #E4687C;
+              border: 2px solid #e4687c;
               border-radius: 5px;
+              flex-shrink: 0;
               cursor: pointer;
             }
 
             .buttonRemember:checked {
-              background: #E4687C;
+              background: #e4687c;
             }
 
             .textRemember {
@@ -115,6 +117,11 @@
           .forgotText {
             font-weight: 600;
             font-size: 0.9rem;
+            transition: 0.3s all ease;
+          }
+
+          .forgotText:hover {
+            color: #e4687c;
           }
         }
 
@@ -123,7 +130,8 @@
           display: flex;
           justify-content: space-between;
 
-          .loginButton, .signUpButton {
+          .loginButton,
+          .signUpButton {
             width: 45%;
             height: 2.5rem;
             border-radius: 5px;
@@ -131,7 +139,7 @@
           }
 
           .loginButton {
-            background: #E4687C;
+            background: #e4687c;
             color: #ffffff;
             font-weight: 500;
 
@@ -148,18 +156,65 @@
             align-items: center;
 
             background: #ffffff;
-            border: 3px solid #E4687C;
-            color: #E4687C;
+            border: 3px solid #e4687c;
+            color: #e4687c;
             font-weight: 500;
 
             transition: 0.3s all ease;
           }
 
-          .signUpButton:hover{
-            background: #E4687C;
+          .signUpButton:hover {
+            background: #e4687c;
             color: #ffffff;
           }
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 970px) {
+  .containerOptions {
+    flex-direction: column;
+
+    .containerRememberMe {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .container {
+    .containerImage {
+      display: none;
+    }
+
+    .containerForm {
+      background-color: #d3566a;
+      flex-basis: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .background {
+    .container {
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+
+      .containerImage {
+        display: block;
+        width: 100%;
+        height: 25vh;
+
+        .img {
+          border-radius: 0;
+        }
+      }
+
+      .containerForm {
+        width: 100%;
       }
     }
   }

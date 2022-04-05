@@ -1,0 +1,20 @@
+.loginContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+
+  .text {
+    font-weight: 600;
+    transition: 0.3s all ease;
+  }
+
+  .text:hover {
+    color: #E4687C;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+}

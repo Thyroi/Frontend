@@ -27,10 +27,12 @@
 }
 
 .top {
-  grid-row: 1;
-	grid-column: 2;
-	display: grid;
-	grid-template-columns: 6fr 3fr;
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 3rem;
 }
 
 .searchBar {

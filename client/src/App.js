@@ -25,13 +25,8 @@ export default function App() {
           </div>
           
           <div className="top">
-            <div className="searchBar">
               <Search />
-            </div>
-
-            <div className="login">
               <LogInTop />
-            </div>
           </div>
           
           <div className="container">

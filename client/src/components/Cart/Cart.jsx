@@ -11,6 +11,8 @@ function Cart() {
   const itemsCart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  console.log(itemsCart);
+
   return (
     <div className={style.containerCart}>
       {itemsCart.map((item) => {

@@ -5,7 +5,7 @@ const initialState = {
     categories: [],
     collections: [],
 
-    cart: []
+    cart: JSON.parse(window.localStorage.getItem("cart")) || [],
 }
 
 export default function rootReducer (state = initialState, action){
@@ -59,7 +59,7 @@ export default function rootReducer (state = initialState, action){
         case "ADD_CART":
             return {
               ...state,
-              cart: [...state.cart, action.payload]
+              cart: [...action.payload]
             }
 
         case "REMOVE_CART":

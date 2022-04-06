@@ -1,5 +1,6 @@
-import styleNotification from "../components/Notification/Notification.module.scss";
+// Notification
 
+import styleNotification from "../components/Notification/Notification.module.scss";
 export function Notifications(text) {
   let notification = document.querySelector("#notification");
   if (notification) {
@@ -32,4 +33,11 @@ export function removeNotification() {
     notification.classList.remove(styleNotification.notification);
     notification.classList.add(styleNotification.notification_hide);
   }
+}
+
+// Change default Image
+
+export function selectImage(image) {
+  let defaultImage = document.querySelector("#default_image");
+  defaultImage.setAttribute("src", image);
 }

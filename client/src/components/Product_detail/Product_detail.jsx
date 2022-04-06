@@ -9,25 +9,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
 
+import { selectImage } from "../../utils/utils";
+
 //Data
-import data from "../../Assets/Products.json";
 import { getById, addCart } from "../../actions/index";
 
 // Waiting for routes and data to deploy it finally
 
 export default function Product_detail() {
   const { id } = useParams();
-
   const dispatch = useDispatch();
+
+  const product = useSelector((state) => state.details);
+  const { default_image, name, variants, brand, price, description } = product;
 
   useEffect(() => {
     dispatch(getById(id));
   }, [dispatch]);
-  /* const producto = data.find((p) => p.id_product == id);
-	const { variants } = producto; */
-
-  const product = useSelector((state) => state.details);
-  const { default_image, name, variants, brand, price, description } = product;
 
   const cartProducts = useSelector((state) => state.cart);
 
@@ -35,7 +33,7 @@ export default function Product_detail() {
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
-          <img className={style.mainImage} src={default_image} />
+          <img className={style.mainImage} src={default_image} id="default_image"/>
         </div>
         <div className={style.containerSecondImages}>
           {variants &&
@@ -45,6 +43,7 @@ export default function Product_detail() {
                 className={style.secondImages}
                 src={image}
                 alt=""
+                onClick={() => selectImage(image)}
               />
             ))}
         </div>
@@ -79,7 +78,10 @@ export default function Product_detail() {
             <div className={style.containerAmountFavorite}>
               <Quantity />
               <div className={style.favorite}>
-                <FontAwesomeIcon className={style.favoriteIcon} icon={faHeart} />
+                <FontAwesomeIcon
+                  className={style.favoriteIcon}
+                  icon={faHeart}
+                />
               </div>
             </div>
 
@@ -92,7 +94,10 @@ export default function Product_detail() {
                   addCart(cartProducts, product, dispatch);
                 }}
               >
-                <FontAwesomeIcon className={style.cartIcon} icon={faCartShopping} />
+                <FontAwesomeIcon
+                  className={style.cartIcon}
+                  icon={faCartShopping}
+                />
               </button>
             </div>
             <div className={style.containerUnits}>

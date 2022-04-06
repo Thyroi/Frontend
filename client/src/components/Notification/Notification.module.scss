@@ -1,5 +1,5 @@
 .notification, .notification_hide {
-  width: 16rem;
+  width: auto;
   height: 3rem;
   position: fixed;
   right: 3rem;
@@ -26,7 +26,7 @@
   }
 
   .text {
-    padding-left: 1rem;
+    padding: 0 1rem;
     font-size: 0.9rem;
   }
 
@@ -54,6 +54,7 @@
     100% {
       opacity: 0;
       transform: translateY(10px);
+      z-index: -1;
     }
   }
 }

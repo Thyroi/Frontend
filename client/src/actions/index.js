@@ -1,4 +1,5 @@
 import axios from "axios";
+import { notifications } from "../utils/utils.js";
 
 export function getInfo() {
   return async function (dispatch) {
@@ -110,12 +111,12 @@ export function addProduct(payload) {
 export function addCart(cartProducts, payload, dispatch) {
   if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
     if(localStorage.getItem("cart") != null) localStorage.removeItem("cart");
-    console.log(cartProducts);
     cartProducts.push(payload);
-    console.log(cartProducts);
 
     localStorage.setItem("cart", JSON.stringify(cartProducts));
     const cart = JSON.parse(localStorage.getItem("cart"));
+
+    notifications("Product added to cart");
 
     return dispatch({
       type: "ADD_CART",
@@ -123,7 +124,7 @@ export function addCart(cartProducts, payload, dispatch) {
     });
   }
 
-  alert("This product is already in your cart");
+  notifications("This product is already in your cart");
 }
 
 export function removeCart(cartProducts, payload) {

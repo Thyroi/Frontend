@@ -10,6 +10,7 @@ import LogIn from "./components/LogIn/LogInMain";
 import Products from "./components/Products/Products";
 import Product_detail from "./components/Product_detail/Product_detail";
 import Cart from "./components/Cart/Cart";
+import Notification from "./components/Notification/Notification";
 
 export default function App() {
 
@@ -27,6 +28,7 @@ export default function App() {
           <div className="top">
               <Search />
               <LogInTop />
+              <Notification />
           </div>
           
           <div className="container">

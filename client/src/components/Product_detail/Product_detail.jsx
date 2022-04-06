@@ -6,6 +6,9 @@ import Quantity from "../Quantity/Quantity";
 import style from "./Product_detail.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+
 //Data
 import data from "../../Assets/Products.json";
 import { getById, addCart } from "../../actions/index";
@@ -76,7 +79,7 @@ export default function Product_detail() {
             <div className={style.containerAmountFavorite}>
               <Quantity />
               <div className={style.favorite}>
-                <img className={style.favoriteImg} src="" alt="favorite" />
+                <FontAwesomeIcon className={style.favoriteIcon} icon={faHeart} />
               </div>
             </div>
 
@@ -89,7 +92,7 @@ export default function Product_detail() {
                   addCart(cartProducts, product, dispatch);
                 }}
               >
-                <img src="" alt="" />
+                <FontAwesomeIcon className={style.cartIcon} icon={faCartShopping} />
               </button>
             </div>
             <div className={style.containerUnits}>

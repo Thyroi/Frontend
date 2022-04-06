@@ -132,6 +132,18 @@
           display: flex;
           margin-bottom: 1rem;
           align-items: center;
+
+          .favoriteIcon {
+            width: 20px;
+            height: 20px;
+            color: #949494;
+            transition: 0.3s all ease;
+            cursor: pointer;
+          }
+
+          .favoriteIcon:hover {
+            color: #E4687C;
+          }
         }
 
         .containerBuyCart {
@@ -157,6 +169,13 @@
             background-color: #e4687c;
             border-radius: 5px;
             cursor: pointer;
+
+            .cartIcon {
+              width: 20px;
+              height: 20px;
+              color: #ffffff;
+            }
+
 
           }
         }

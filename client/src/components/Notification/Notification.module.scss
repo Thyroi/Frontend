@@ -1,0 +1,62 @@
+.notification, .notification_hide {
+  width: 16rem;
+  height: 3rem;
+  position: fixed;
+  right: 3rem;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  //Animation
+  animation: showing 0.3s ease-in-out forwards;
+
+  @keyframes showing {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .text {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .closeButton {
+    appearance: none;
+    width: 50px;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+    background-color: #E4687C;
+    cursor: pointer;
+  }
+
+}
+
+.notification_hide {
+  //Animation
+  animation: hiding 0.3s ease-in-out forwards;
+
+  @keyframes hiding {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+.noNotification {
+  display: none;
+}

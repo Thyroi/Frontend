@@ -93,6 +93,15 @@
           .containerRememberMe {
             display: flex;
             align-items: center;
+            position: relative;
+
+            // .checkIcon {
+            //   position: absolute;
+            //   width: 15px;
+            //   height: 15px;
+            //   left: 2px;
+            //   color: #ffffff;
+            // }
 
             .buttonRemember {
               appearance: none;
@@ -102,10 +111,16 @@
               border-radius: 5px;
               flex-shrink: 0;
               cursor: pointer;
+              transition: 0.3s all ease-out;
             }
 
             .buttonRemember:checked {
               background: #e4687c;
+            }
+
+            .buttonRemember:checked::after {
+              content: "\2714";
+              color: #ffffff;
             }
 
             .textRemember {

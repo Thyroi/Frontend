@@ -46,7 +46,6 @@ export function getSelectorsCol(){
 	return async function(dispatch){
 		var selectorsCol = await axios.get("http://localhost:3001/selectors/collections")
         var response = selectorsCol.data.data.map(p => {return {id: p.id_collection, name: p.name}})
-        
 		return dispatch({
             type: "GET_SELECTOR_COL",
             payload: response

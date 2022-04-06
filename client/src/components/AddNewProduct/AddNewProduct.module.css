@@ -197,3 +197,7 @@ select {
 	border-radius: 0.5rem;
 	margin: 1rem 1rem;
 }
+
+.errorsMessage {
+	color: red;
+}

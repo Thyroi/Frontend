@@ -134,6 +134,8 @@ export function removeCart(cartProducts, payload) {
 
   window.localStorage.setItem("cart", JSON.stringify(newConstProducts));
   const cart = JSON.parse(window.localStorage.getItem("cart"));
+
+  notifications("Product removed from cart");
   return {
     type: "REMOVE_CART",
     payload: cart,

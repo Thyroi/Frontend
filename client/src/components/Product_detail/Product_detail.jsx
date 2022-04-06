@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import { selectImage } from "../../utils/utils";
+import { selectImage, productColor, productSizes } from "../../utils/utils";
 
 //Data
 import { getById, addCart } from "../../actions/index";
@@ -33,7 +33,11 @@ export default function Product_detail() {
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
-          <img className={style.mainImage} src={default_image} id="default_image"/>
+          <img
+            className={style.mainImage}
+            src={default_image}
+            id="default_image"
+          />
         </div>
         <div className={style.containerSecondImages}>
           {variants &&
@@ -58,20 +62,22 @@ export default function Product_detail() {
             <div className={style.containerSizePreference}>
               <h3 className={style.sizeHeader}>Size</h3>
               <div className={style.sizes}>
-                <div className={style.size}>S</div>
-                <div className={style.size}>M</div>
-                <div className={style.size}>L</div>
-                <div className={style.size}>xL</div>
+                {product.variants && productSizes(product).map((size) => (
+                  <div key={size} className={style.size}>
+                    {size}
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className={style.containerColorPreference}>
               <h3 className={style.colorHeader}>Color</h3>
               <div className={style.colors}>
-                <div className={style.color}>blue</div>
-                <div className={style.color}>red</div>
-                <div className={style.color}>black</div>
-                <div className={style.color}>green</div>
+                {product.variants && productColor(product).map((color) => (
+                  <div key={color} className={style.color}>
+                    {color}
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -102,7 +108,7 @@ export default function Product_detail() {
             </div>
             <div className={style.containerUnits}>
               <p className={style.infoUnits}>
-                Available Units: <span className={style.units}>58</span>
+                Available Units: <span className={style.units}></span>
               </p>
             </div>
           </div>

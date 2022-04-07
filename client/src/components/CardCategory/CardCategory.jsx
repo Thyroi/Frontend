@@ -8,9 +8,14 @@ function CardCategory({ img, name }) {
 			<div className={styles.background}>
 				<img src={img} alt='' />
 			</div>
-			<div className={styles.title}>
-				<Link to={`/category?name=${name}`}>{name}</Link>
-			</div>
+
+			<Link
+				className={styles.title}
+				to={name === 'All' ? '/products' : `/category?name=${name}`}>
+				{name}
+			</Link>
+
+			<div className={styles.products}>show relevant products here</div>
 		</div>
 	);
 }

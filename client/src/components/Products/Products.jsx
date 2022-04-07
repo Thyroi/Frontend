@@ -43,6 +43,8 @@ export default function Products() {
 		document.querySelector('.container').scrollTop = 0;
 	}, [currentPage]);
 
+	//probar Element.scrollIntoView();
+
 	function previousPage(e) {
 		e.preventDefault();
 		setCurrentPage((current) => (current -= 1));

@@ -25,7 +25,11 @@ export default function Card({ data }) {
 					{is_offer && (
 						<span className={style.offer}>{'Oferta'}</span>
 					)}
-					<img src={default_image} alt='' />
+					<img
+						src={default_image}
+						alt=''
+						className={!stocks ? style.noStock : undefined}
+					/>
 				</Link>
 			</div>
 			<div className={style.info}>
@@ -33,10 +37,21 @@ export default function Card({ data }) {
 				<div className={style.brand}>{brand}</div>
 				<div className={style.price}>{`$${price}`}</div>
 				{/* falta colección que no está aún en el json creo */}
-				<div className={style.stock}>
-					<span>{`Units: `}</span>
-					<span style={{ fontWeight: '800' }}>{stocks}</span>
-				</div>
+				{!stocks ? (
+					<span
+						style={{
+							fontWeight: '800',
+							color: 'red',
+							margin: '0 0 0 1rem',
+						}}>
+						SOLD OUT
+					</span>
+				) : (
+					<div className={style.stock}>
+						<span>{`Units: `}</span>
+						<span style={{ fontWeight: '800' }}>{stocks}</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

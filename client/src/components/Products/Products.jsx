@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import style from './Products.module.css';
-import data from '../../Assets/Products.json';
 import Card from '../Card/Card';
 import Dropdown from '../Dropdown/Dropdown';
 
-import {useDispatch, useSelector} from "react-redux"
-import { getByCatId, getByColId, getInfo, getOffers, getSelectorsCat, getSelectorsCol } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getByCatId,
+	getByColId,
+	getInfo,
+	getOffers,
+	getSelectorsCat,
+	getSelectorsCol,
+} from '../../actions';
 
 export default function Products() {
-
-	const dispatch = useDispatch()
-	const products = useSelector((state) => state.products)
-	const categories = useSelector((state) => state.categories)
-	const collections = useSelector((state) => state.collections)
-	console.log(collections)
-	const cat = categories.filter(p => p.id !== 1 && p.id !== 2)
-	
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.products);
+	const categories = useSelector((state) => state.categories);
+	const collections = useSelector((state) => state.collections);
+	const cat = categories.filter((p) => p.id !== 1 && p.id !== 2);
 
 	useEffect(() => {
-		dispatch(getInfo())
-		dispatch(getSelectorsCat())
-		dispatch(getSelectorsCol())
-	},[dispatch])
-
+		dispatch(getInfo());
+		dispatch(getSelectorsCat());
+		dispatch(getSelectorsCol());
+	}, [dispatch]);
 
 	/* const products = data */
 
-	
 	//---------------------------------------------PAGINADO--------------------------------//
 
 	const [results] = useState(9);
@@ -37,6 +38,10 @@ export default function Products() {
 	useEffect(() => {
 		setCurrentPage(1);
 	}, [products]);
+
+	useEffect(() => {
+		document.querySelector('.container').scrollTop = 0;
+	}, [currentPage]);
 
 	function previousPage(e) {
 		e.preventDefault();
@@ -70,51 +75,56 @@ export default function Products() {
 
 	//-----------------------------------ESTADOS DE FILTERS--------------------------------//
 
-	const [stock, setStock] = useState('stock');
-	const [typesC, setTypesC] = useState('types');
-	const [brand, setBrand] = useState('brand');
-	const [collection, setCollection] = useState('collection');
+	//const [stock, setStock] = useState('stock');
+	//const [typesC, setTypesC] = useState('types');
+	//const [brand, setBrand] = useState('brand');
+	//const [collection, setCollection] = useState('collection');
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
 	const handleOfferChange = (e) => {
 		e.preventDefault();
-		if(e.target.value === "0"){
-			var res = "true"
-		} else if (e.target.value === "1"){
-			var res = "false"
+		var res = '';
+		if (e.target.value === '0') {
+			res = 'true';
+		} else if (e.target.value === '1') {
+			res = 'false';
 		} else {
-			return dispatch(getInfo())
+			return dispatch(getInfo());
 		}
-		dispatch(getOffers(res))
+		dispatch(getOffers(res));
 	};
 
-	const handleStockChange = (event) => {
+	/* const handleStockChange = (event) => {
 		setStock(event.target.value);
 	};
-
+ */
 	const handleTypeChange = (event) => {
-		event.preventDefault()
-		if(event.target.value === "0"){
-			return dispatch(getInfo())
+		event.preventDefault();
+		if (event.target.value === '0') {
+			return dispatch(getInfo());
 		} else {
-		dispatch(getByCatId(event.target.value))}
+			dispatch(getByCatId(event.target.value));
+		}
 	};
 
-	const handleBrandChange = (event) => {
+	/* const handleBrandChange = (event) => {
 		setBrand(event.target.value);
-	};
+	}; */
 	const handleCollectionChange = (event) => {
-		event.preventDefault()
-		if(event.target.value === "0"){
-			return dispatch(getInfo())
+		event.preventDefault();
+		if (event.target.value === '0') {
+			return dispatch(getInfo());
 		} else {
-		dispatch(getByColId(event.target.value))}
+			dispatch(getByColId(event.target.value));
+		}
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	return (
+	return !products.length ? (
+		<h2>Loading...</h2>
+	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
 				{/* options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...] */}
@@ -122,7 +132,7 @@ export default function Products() {
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
-						{ id: 2, name: "All"},						
+						{ id: 2, name: 'All' },
 						{ id: 0, name: 'Sale' },
 						{ id: 1, name: 'Not sale' },
 					]}
@@ -140,7 +150,7 @@ export default function Products() {
 				/> */}
 				<Dropdown
 					placeHolder={'Type'}
-					options={[{id: 0, name: "All"}, ...cat]}
+					options={[{ id: 0, name: 'All' }, ...cat]}
 					handler={handleTypeChange}
 				/>
 				{/* <Dropdown
@@ -155,7 +165,7 @@ export default function Products() {
 				/> */}
 				<Dropdown
 					placeHolder={'Collection'}
-					options={[{id: 0, name: "All"}, ...collections]}
+					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
 			</div>

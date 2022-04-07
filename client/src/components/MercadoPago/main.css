@@ -53,19 +53,20 @@ form{
 }
 
 .pay{
-    background-color: rgb(255, 144, 162);
+    background-color: #e4687c;
     color:white;
     font-weight: 600;
     padding: 0.5rem;
-    width: 80%;
+    width: 150;
     border: 1px solid transparent;
     border-radius: 0.3rem;
     transition: all ease-in-out 0.15s;
+    cursor: pointer;
 }
 
 .pay:hover{
     background-color: white;
-    color:rgb(255, 144, 162);
+    color:#e4687c;
 }
 
 .card{

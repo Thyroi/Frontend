@@ -12,6 +12,7 @@ import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
 import Notification from './components/Notification/Notification';
+import Confirmation from './components/Confirmation/Confirmation';
 
 export default function App() {
 	return (

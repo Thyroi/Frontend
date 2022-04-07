@@ -25,7 +25,7 @@
 	width: 4rem;
 	height: 4rem;
 	border-radius: 2rem;
-	background-color: rgb(252, 71, 167);
+	background-color: #e4687c;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -36,6 +36,11 @@
 .background img {
 	max-width: 23vw;
 	max-height: 50rem;
+}
+
+.noStock{
+	-webkit-filter: grayscale(1);
+	filter: grayscale(1);
 }
 
 .info {

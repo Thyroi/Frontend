@@ -17,7 +17,7 @@
 }
 
 .title:hover {
-  color: #E4687C;
+  color: #e4687c;
 }
 
 .icons {
@@ -27,5 +27,5 @@
 
 .active {
   background-color: #F3F3F3;
-  color: #E4687C;
+  color: #e4687c;
 }

@@ -9,9 +9,8 @@
 	overflow: hidden;
 	background: #f3f3f3;
 	display: grid;
-
-  grid-auto-columns: 250px 1fr;
-  grid-auto-rows: 80px 1fr
+  grid-template-columns: 20vw 1fr;
+  grid-template-rows: 15vh 1fr
 }
 
 .appName {

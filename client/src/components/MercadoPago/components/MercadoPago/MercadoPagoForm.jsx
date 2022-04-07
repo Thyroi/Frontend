@@ -29,7 +29,7 @@ export default function MercadoPagoForm() {
 	};
 
 	return (
-		<div className='container'>
+		<div className='cont'>
 			<div className='card'>
 				{/* <Card
 					cvc={state.cvc}

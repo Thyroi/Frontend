@@ -60,6 +60,12 @@ form{
     width: 80%;
     border: 1px solid transparent;
     border-radius: 0.3rem;
+    transition: all ease-in-out 0.15s;
+}
+
+.pay:hover{
+    background-color: white;
+    color:rgb(255, 144, 162);
 }
 
 .card{

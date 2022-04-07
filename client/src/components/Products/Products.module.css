@@ -23,8 +23,9 @@
 	grid-row: 3;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	margin: 2rem;
+	padding: 2rem;
 	color: #565656;
+	background-color: white;
 }
 
 .pagination span {
@@ -37,6 +38,7 @@
 	color: #565656;
 	cursor: pointer;
 	transition: all ease-in-out 0.2s;
+	background-color: transparent;
 }
 
 .pagination button:disabled {

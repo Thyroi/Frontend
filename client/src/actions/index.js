@@ -161,3 +161,26 @@ export function selectingProduct(payload){
     payload: payload
   }
 }
+
+// Data for sending products
+export function saveSendingData(){
+  let labels = document.querySelectorAll("label");
+  labels = Array.from(labels);
+
+  let data = {}
+
+  labels.forEach(label => {
+    const property = label.id;
+    const value = label.nextSibling.value;
+    data[property] = value;
+  })
+
+
+  localStorage.setItem("datosDeEnvío", JSON.stringify(data));
+  const payload = JSON.parse(localStorage.getItem("datosDeEnvío"));
+  
+  return {
+    type: "SAVE_DATA",
+    payload: payload
+  }
+}

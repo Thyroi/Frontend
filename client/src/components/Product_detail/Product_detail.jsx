@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import Quantity from "../Quantity/Quantity";
 
@@ -142,7 +142,9 @@ export default function Product_detail() {
             </div>
 
             <div className={style.containerBuyCart}>
-              <button className={style.buyButton}>Buy</button>
+              <Link to="/Form">
+                <button className={style.buyButton}>Buy</button>
+              </Link>
               <button
                 className={style.cartButton}
                 id="addCartButton"

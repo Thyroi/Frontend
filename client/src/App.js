@@ -11,9 +11,9 @@ import Products from "./components/Products/Products";
 import Product_detail from "./components/Product_detail/Product_detail";
 import Cart from "./components/Cart/Cart";
 import Notification from "./components/Notification/Notification";
+import Form from "./components/Form/Form";
 
 export default function App() {
-
   return (
     <Switch>
       <Route exact path="/LogIn" component={LogIn} />
@@ -24,18 +24,19 @@ export default function App() {
           <div className="left">
             <Nav />
           </div>
-          
+
           <div className="top">
-              <Search />
-              <LogInTop />
-              <Notification />
+            <Search />
+            <LogInTop />
+            <Notification />
           </div>
-          
+
           <div className="container">
             <Route exact path="/AddNewProduct" component={AddNewProduct} />
             <Route exact path="/Products" component={Products} />
             <Route exact path="/Cart" component={Cart} />
             <Route exact path="/Detail/:id" component={Product_detail} />
+            <Route exact path="/Form" component={Form} />
             <Route exact path="/" component={Landing} />
           </div>
         </div>

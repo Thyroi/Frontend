@@ -35,11 +35,11 @@ export default function App() {
 
           <div className="container">
             <Route exact path="/AddNewProduct" component={AddNewProduct} />
-            <Route exact path="/Products" component={Products} />
+            <Route exact path="/products" component={Products} />
             <Route exact path='/AdminDashBoard' component={AdminDashBoard} />
             <Route exact path="/Cart" component={Cart} />
             <Route exact path='/cart/pay' component={Main} />
-            <Route exact path="/Detail/:id" component={Product_detail} />
+            <Route exact path="/products/:id" component={Product_detail} />
             <Route exact path="/Form" component={Form} />
             <Route exact path="/" component={Landing} />
           </div>

@@ -38,7 +38,7 @@ function Form() {
         <label className={style.label} id="phone">
           Teléfono
         </label>
-        <input type="text" placeholder="Escribe tu phone" />
+        <input type="number" placeholder="Escribe tu phone" />
       </div>
 
       <div className={style.containerInputs}>

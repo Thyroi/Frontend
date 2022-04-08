@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 /* import 'react-credit-cards/es/styles-compiled.css'; */
 import useMercadoPago from '../../hooks/useMercadoPago';
 
-import { purchaseOrder } from '../../../../utils/utils';
+import { createGuestClient, purchaseOrder } from '../../../../utils/utils';
 
 const init = {
 	cvc: '',
@@ -124,7 +124,10 @@ export default function MercadoPagoForm() {
 						type='submit'
 						id='form-checkout__submit'
 						className='pay'
-            onClick={() => purchaseOrder()}
+            onClick={() => {
+              createGuestClient();
+              purchaseOrder();
+            }}
             >
 						Pay
 					</button>

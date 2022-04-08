@@ -329,6 +329,11 @@ export async function prepareProduct(product, cartItems) {
   localStorage.setItem("productPrepared", JSON.stringify(productToBuy));
 }
 
+export async function createGuestClient() {
+  const data = JSON.parse(localStorage.getItem("datosDeEnvio"));
+  await axios.post("http://localhost:3001/client", data);
+}
+
 export async function purchaseOrder() {
   const productPrepared = JSON.parse(localStorage.getItem("productPrepared"));
   const datosDeEnvio = JSON.parse(localStorage.getItem("datosDeEnvio"));
@@ -339,8 +344,11 @@ export async function purchaseOrder() {
     clientPhone: parseInt(datosDeEnvio.phone),
   };
 
-  await axios.post("http://localhost:3001/orders", data)  
-  console.log(data);
+  await axios.post("http://localhost:3001/orders", data);
+
+  // Remove purchase info from localStorage
+  // localStorage.removeItem("productPrepared");
+  // localStorage.removeItem("datosDeEnvio");
 }
 
 // const a = await axios.post("http://localhost:3001/orders");

@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
 import AddNewProduct from "./components/AddNewProduct/AddNewProduct";
+import Main from './components/MercadoPago/Main';
 import Nav from "./components/Nav/Nav";
 import Landing from "./components/Landing/Landing";
 import Search from "./components/SearchBar/Search";
@@ -11,6 +12,7 @@ import Products from "./components/Products/Products";
 import Product_detail from "./components/Product_detail/Product_detail";
 import Cart from "./components/Cart/Cart";
 import Notification from "./components/Notification/Notification";
+import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from "./components/Form/Form";
 
 export default function App() {
@@ -34,7 +36,9 @@ export default function App() {
           <div className="container">
             <Route exact path="/AddNewProduct" component={AddNewProduct} />
             <Route exact path="/Products" component={Products} />
+            <Route exact path='/AdminDashBoard' component={AdminDashBoard} />
             <Route exact path="/Cart" component={Cart} />
+            <Route exact path='/cart/pay' component={Main} />
             <Route exact path="/Detail/:id" component={Product_detail} />
             <Route exact path="/Form" component={Form} />
             <Route exact path="/" component={Landing} />

@@ -1,20 +1,24 @@
-import React from "react";
-import style from "./Cart.module.scss";
+import React from 'react';
+import style from './Cart.module.scss';
 
-import Quantity from "../Quantity/Quantity";
+import Quantity from '../Quantity/Quantity';
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCart } from "../../actions/index";
 import { totalDue } from "../../utils/utils";
+
 // Add the context for showing the items
 
-function Cart() {
-  // Provisional remove this when context is implemented
-  const itemsCart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+function Cart(params) {
+	// Provisional remove this when context is implemented
+	const itemsCart = useSelector((state) => state.cart);
+	const dispatch = useDispatch();
 
-  console.log(itemsCart);
+	function handleNavigate(e) {
+		e.preventDefault();
+		params.history.push('/cart/pay');
+	}
 
   if (!itemsCart) return <div>Loading</div>;
 

@@ -3,11 +3,18 @@
 	height: 70vh;
 	width: 23vw;
 	grid-template-rows: 7fr 3fr;
-	border: 2px solid transparent;
+	border: none;
 	border-radius: 0.3rem;
 	position: relative;
 	margin: 1rem 1rem;
 	overflow: hidden;
+	transition: all 0.15s;
+}
+
+.container:hover{
+	border: none;
+	transform: translateY(-5px);
+	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
 }
 
 .background {
@@ -25,7 +32,7 @@
 	width: 4rem;
 	height: 4rem;
 	border-radius: 2rem;
-	background-color: rgb(252, 71, 167);
+	background-color: #e4687c;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -36,6 +43,11 @@
 .background img {
 	max-width: 23vw;
 	max-height: 50rem;
+}
+
+.noStock{
+	-webkit-filter: grayscale(1);
+	filter: grayscale(1);
 }
 
 .info {

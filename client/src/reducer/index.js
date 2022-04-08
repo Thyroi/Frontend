@@ -4,7 +4,8 @@ const initialState = {
     details: {},
     categories: [],
     collections: [],
-
+    wishlist: [],
+    clients: [],
     cart: JSON.parse(window.localStorage.getItem("cart")) || [],
 }
 
@@ -68,6 +69,33 @@ export default function rootReducer (state = initialState, action){
             cart: [...action.payload]
           }
 
+        case "ADD_WISH_LIST":
+            if(state.wishlist?.find(e => e.id === action.payload.id)){
+                alert("This item is in your wish list")
+                return{
+                    ...state
+                }
+            } else {
+                alert("Item add to your wishlist succesfully")
+                return{
+                    ...state,
+                    wishlist: [...state.wishlist, action.payload]
+                }
+            }
+
+        case "REMOVE_WISH_LIST":
+            let eliminated = state.wishlist.filter(e => e.id !== action.payload)
+            return{
+                ...state,
+                wishlist: eliminated
+            }
+
+        case "GET_CLIENTS":
+            return{
+                ...state,
+                clients: action.payload
+            }
+            
         default:
             return state
     }

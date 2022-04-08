@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "./LoginMain.module.scss";
+import { GoogleLogin } from 'react-google-login';
+
 
 function LogInMain() {
+
+  function responseGoogle(response){
+    console.log(response)
+  }
+
   return (
     <div className={style.background}>
       <div className={style.container}>
@@ -42,6 +49,13 @@ function LogInMain() {
             <div className={style.containerLoginSignUp}>
               <input className={style.loginButton} type="submit" value="Login" />
               <Link className={style.signUpButton} to="/signup">Sign Up</Link>
+              <GoogleLogin
+                clientId="537829890364-0gr73bp197j7omes6f97ple6jn4mhb3u.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+              />
             </div>
           </div>
         </div>

@@ -141,3 +141,26 @@ export function removeCart(cartProducts, payload) {
     payload: cart,
   };
 }
+
+export function addWishList(payload){
+  return{
+      type: "ADD_WISH_LIST",
+      payload
+  }
+}
+
+export function removeWishList(payload){
+  return{
+      type: "REMOVE_WISH_LIST",
+      payload
+  }
+}
+
+export function createClient(payload){
+  return async function(dispatch){
+    return await axios.post("http://localhost:3001/client", payload)   
+  }
+}
+
+
+

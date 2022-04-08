@@ -11,6 +11,7 @@ import Products from "./components/Products/Products";
 import Product_detail from "./components/Product_detail/Product_detail";
 import Cart from "./components/Cart/Cart";
 import Notification from "./components/Notification/Notification";
+import SignUp from "./components/SignUp/SignUp";
 
 export default function App() {
 
@@ -37,6 +38,7 @@ export default function App() {
             <Route exact path="/Cart" component={Cart} />
             <Route exact path="/Detail/:id" component={Product_detail} />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/signup" component={SignUp} />
           </div>
         </div>
       </Route>

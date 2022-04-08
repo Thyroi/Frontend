@@ -4,7 +4,8 @@ const initialState = {
     details: {},
     categories: [],
     collections: [],
-
+    users: [],
+    copyUsers: [],
     cart: JSON.parse(window.localStorage.getItem("cart")) || [],
 }
 
@@ -56,6 +57,20 @@ export default function rootReducer (state = initialState, action){
                 products: action.payload
             }
 
+        case "GET_ALL_USERS": 
+            return{
+                ...state,
+                users: action.payload,
+                copyUsers: action.payload
+            }
+        case "UPDATE_PERMISSION":
+            state.users = state.copyUsers
+            return {
+                ...state,
+                copyUsers: action.payload
+            }
+
+
         case "ADD_CART":
             return {
               ...state,
@@ -67,6 +82,7 @@ export default function rootReducer (state = initialState, action){
             ...state,
             cart: [...action.payload]
           }
+
 
         default:
             return state

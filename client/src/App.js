@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
 import Nav from './components/Nav/Nav';
@@ -11,6 +11,7 @@ import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
 import Notification from './components/Notification/Notification';
+
 
 export default function App() {
 	return (

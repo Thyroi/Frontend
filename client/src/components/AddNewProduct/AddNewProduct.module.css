@@ -1,5 +1,5 @@
 .AddProductContainer {
-	display: flex;
+	/* display: flex; */
 	min-width: 97%;
 	max-height: 100%;
 	overflow: hidden;
@@ -48,7 +48,7 @@ select {
 	flex-wrap: wrap;
 }
 
-.type {
+.category {
 	grid-row: 1;
 	grid-column: 2;
 	display: flex;
@@ -196,4 +196,13 @@ select {
 	border: 1px solid transparent;
 	border-radius: 0.5rem;
 	margin: 1rem 1rem;
+}
+
+.error {
+	color: red;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
 }

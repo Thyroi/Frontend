@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import styles from './Search.module.scss';
-import { useDispatch } from 'react-redux';
-import { getByName } from '../../actions';
+
+import styles from './Search.module.css';
+import {useDispatch, useSelector} from 'react-redux'
+import { getByName } from '../../actions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 
 function Search() {
 	const [search, setSearch] = useState('');

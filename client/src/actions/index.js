@@ -141,3 +141,23 @@ export function removeCart(cartProducts, payload) {
     payload: cart,
   };
 }
+
+export function updatingCart(cartProducts){
+
+  localStorage.setItem("cart", JSON.stringify(cartProducts));
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  return {
+    type: "UPDATING_CART",
+    payload: cart
+  }
+}
+
+// Actions for customize products
+
+export function selectingProduct(payload){
+  return {
+    type: "SELECTING_PRODUCT",
+    payload: payload
+  }
+}

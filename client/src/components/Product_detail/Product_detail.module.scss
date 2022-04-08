@@ -133,25 +133,16 @@
           margin-bottom: 1rem;
           align-items: center;
 
-          .counterContainer {
-            display: flex;
-            align-items: center;
-            margin-right: 2rem;
+          .favoriteIcon {
+            width: 20px;
+            height: 20px;
+            color: #949494;
+            transition: 0.3s all ease;
+            cursor: pointer;
+          }
 
-            .counterButton {
-              appearance: none;
-              width: 25px;
-              height: 25px;
-              border-radius: 5px;
-              background-color: #e4687c;
-              color: #ffffff;
-              font-weight: 600;
-              cursor: pointer;
-            }
-
-            .counterNumber {
-              margin: 0 1rem;
-            }
+          .favoriteIcon:hover {
+            color: #E4687C;
           }
         }
 
@@ -177,6 +168,14 @@
             width: 30%;
             background-color: #e4687c;
             border-radius: 5px;
+            cursor: pointer;
+
+            .cartIcon {
+              width: 20px;
+              height: 20px;
+              color: #ffffff;
+            }
+
 
           }
         }

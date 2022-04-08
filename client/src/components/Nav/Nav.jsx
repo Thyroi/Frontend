@@ -1,8 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faShirt,
+	faCartShopping,
+	faCirclePlus,
+	faHouse,
+} from '@fortawesome/free-solid-svg-icons';
+
 import styles from './Nav.module.css';
 
 export default function Nav() {
+	const products = useSelector((state) => state.products);
 	return (
 		<div className={styles.container}>
 			<NavLink
@@ -10,33 +21,44 @@ export default function Nav() {
 				exact
 				activeClassName={styles.active}
 				className={styles.title}>
-				Home
+				<FontAwesomeIcon className={styles.icons} icon={faHouse} /> Home
 			</NavLink>
-			<NavLink
-				to='/AdminDashBoard'
-				activeClassName={styles.active}
-				className={styles.title}>
-				DashBoard
-			</NavLink>
-			<NavLink
-				to='/Products'
-				activeClassName={styles.active}
-				className={styles.title}>
-				Products
-			</NavLink>
-			<NavLink
-				to='/AddNewProduct'
-				activeClassName={styles.active}
-				className={styles.title}>
-				Add Products
-			</NavLink>
-      <NavLink
-				to='/Cart'
-				activeClassName={styles.active}
-				className={styles.title}>
-				Cart
-			</NavLink>
+			{!!products.length && (
+				<>
+					<NavLink
+						to='/products'
+						activeClassName={styles.active}
+						className={styles.title}>
+						<FontAwesomeIcon
+							className={styles.icons}
+							icon={faShirt}
+						/>
+						Products
+					</NavLink>
 
+					<NavLink
+						to='/add'
+						activeClassName={styles.active}
+						className={styles.title}>
+						<FontAwesomeIcon
+							className={styles.icons}
+							icon={faCirclePlus}
+						/>
+						Add Products
+					</NavLink>
+
+					<NavLink
+						to='/cart'
+						activeClassName={styles.active}
+						className={styles.title}>
+						<FontAwesomeIcon
+							className={styles.icons}
+							icon={faCartShopping}
+						/>
+						Cart
+					</NavLink>
+				</>
+			)}
 		</div>
 	);
 }

@@ -14,18 +14,22 @@ export default function Card({ data }) {
 	} = data;
 
 	let stocks = 0;
-	variants.forEach((v) =>
+	variants?.forEach((v) =>
 		Object.values(v.Stocks).forEach((s) => (stocks += s))
 	);
 
 	return (
 		<div className={style.container}>
 			<div className={style.background}>
-				<Link to={`/detail/${id_product}`}>
+				<Link to={`/products/${stocks ? id_product : ''}`}>
 					{is_offer && (
 						<span className={style.offer}>{'Oferta'}</span>
 					)}
-					<img src={default_image} alt='' />
+					<img
+						src={default_image}
+						alt=''
+						className={stocks === 0 ? style.noStock : undefined}
+					/>
 				</Link>
 			</div>
 			<div className={style.info}>
@@ -33,10 +37,22 @@ export default function Card({ data }) {
 				<div className={style.brand}>{brand}</div>
 				<div className={style.price}>{`$${price}`}</div>
 				{/* falta colección que no está aún en el json creo */}
-				<div className={style.stock}>
-					<span>{`Units: `}</span>
-					<span style={{ fontWeight: '800' }}>{stocks}</span>
-				</div>
+				{stocks === 0 ? (
+					<span
+						style={{
+							fontSize: '0.8rem',
+							fontWeight: '800',
+							color: 'red',
+							margin: '0 0 0 1rem',
+						}}>
+						SOLD OUT
+					</span>
+				) : (
+					<div className={style.stock}>
+						<span>{`Units: `}</span>
+						<span style={{ fontWeight: '800' }}>{stocks}</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

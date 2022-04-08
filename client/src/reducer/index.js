@@ -6,6 +6,7 @@ const initialState = {
     collections: [],
     users: [],
     copyUsers: [],
+    cart: JSON.parse(window.localStorage.getItem("cart")) || [],
 }
 
 export default function rootReducer (state = initialState, action){
@@ -55,6 +56,7 @@ export default function rootReducer (state = initialState, action){
                 ...state,
                 products: action.payload
             }
+
         case "GET_ALL_USERS": 
             return{
                 ...state,
@@ -67,6 +69,21 @@ export default function rootReducer (state = initialState, action){
                 ...state,
                 copyUsers: action.payload
             }
+
+
+        case "ADD_CART":
+            return {
+              ...state,
+              cart: [...action.payload]
+            }
+
+        case "REMOVE_CART":
+          return {
+            ...state,
+            cart: [...action.payload]
+          }
+
+
         default:
             return state
     }

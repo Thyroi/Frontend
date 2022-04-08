@@ -1,35 +1,50 @@
 import React, { useState } from 'react';
+
 import styles from './Search.module.css';
 import {useDispatch, useSelector} from 'react-redux'
 import { getByName } from '../../actions'
 
-function Search() {
-	
-	const [search, setSearch] = useState("")
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-	const dispatch = useDispatch()
+
+function Search() {
+	const [search, setSearch] = useState('');
+
+	const dispatch = useDispatch();
 
 	function handleClick(e) {
-		e.preventDefault()
-		dispatch(getByName(search))
-		setSearch("")
+		e.preventDefault();
+		return window.location.href === 'http://localhost:3000/products'
+			? () => (dispatch(getByName(search)), setSearch(''))
+			: alert("Go to 'products' and then search...");
 	}
 
 	function handleChange(e) {
-		e.preventDefault()
-		setSearch(e.target.value)
+		e.preventDefault();
+		setSearch(e.target.value);
 	}
-
 
 	return (
 		<div className={styles.container}>
+			<FontAwesomeIcon
+				className={styles.iconSearch}
+				icon={faMagnifyingGlass}
+			/>
 			<input
+				className={styles.searchInput}
 				type='text'
 				value={search}
 				onChange={(e) => handleChange(e)}
 				placeholder='Search by Id or by Type'
 			/>
-			<button onClick={(e) => {handleClick(e)}}>Search</button>
+			<button
+				className={styles.searchButton}
+				onClick={(e) => {
+					handleClick(e);
+				}}>
+				Search
+			</button>
 		</div>
 	);
 }

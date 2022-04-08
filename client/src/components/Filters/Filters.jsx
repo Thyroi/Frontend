@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import styles from './Filters.module.css';
+import { useFilter } from '../../context';
+
+import { filterReducer } from '../../context';
+import data from '../../Assets/Products.json';
 
 const Dropdown = ({ label, value, options, onChange }) => {
 	return (
 		<label className={styles.dropdownBox}>
-			{label}
 			<div>
 				<select value={value} onChange={onChange}>
+					<option selected={true}>{label}</option>
 					{options.map((option) => (
 						<option value={option.value}>{option.label}</option>
 					))}
+					<option selected={true}>{label}</option>
 				</select>
 			</div>
 		</label>
@@ -17,11 +22,12 @@ const Dropdown = ({ label, value, options, onChange }) => {
 };
 
 function Filters() {
+	/*
 	const [stock, setStock] = useState('stock');
 	const [typesC, setTypesC] = useState('types');
 	const [brand, setBrand] = useState('brand');
 	const [collection, setCollection] = useState('collection');
-	const [isOffer, setIsOffer] = useState(false);
+	*/ const [isOffer, setIsOffer] = useState(false); /*
 
 	const handleStockChange = (event) => {
 		setStock(event.target.value);
@@ -36,15 +42,21 @@ function Filters() {
 	};
 	const handleCollectiondChange = (event) => {
 		setCollection(event.target.value);
-	};
+	}; */
 
-	const handleOfferChange = (event) => {
-		setIsOffer(event.target.value);
+	const [state, dispatch] = React.useReducer(filterReducer, data);
+	
+
+	const handleOfferChange = (e) => {
+		e.preventDefault();
+		setIsOffer(!isOffer);
+		console.log(isOffer);
+		dispatch({ type: 'filterOffer', payload: isOffer });
 	};
 
 	return (
 		<div className={styles.dropDownContainer}>
-			<Dropdown
+			{/* <Dropdown
 				label='Stock'
 				options={[
 					{ label: 'Menos de 100', value: 'LowerH' },
@@ -86,17 +98,17 @@ function Filters() {
 				]}
 				value={collection}
 				onChange={handleCollectiondChange}
-			/>
-
-			<Dropdown
+			/> <Dropdown
 				label='Offer'
 				options={[
 					{ label: 'None', value: false },
 					{ label: 'Is Offer', value: true },
 				]}
-				value={isOffer}
+				value={'pito'}
 				onChange={handleOfferChange}
-			/>
+			/>*/}
+
+			<button onClick={(e) => handleOfferChange(e)}>Holis</button>
 
 			{/* 
       //chequeaba que me trajera los valores

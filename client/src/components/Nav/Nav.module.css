@@ -1,12 +1,31 @@
 .container {
+  width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
+	align-items: flex-end;
 	margin: 5rem 0;
 }
 
-.link {
-	margin: 1rem 0;
+.title {
+	text-align: left;
+  width: 80%;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 5px 0 0 5px;
 	font-weight: 600;
+	transition: all ease-in-out 0.2s;
+}
+
+.title:hover {
+  color: #e4687c;
+}
+
+.icons {
+  width: 20px;
+  margin-right: 0.5rem;
+}
+
+.active {
+  background-color: #F3F3F3;
+  color: #e4687c;
 }

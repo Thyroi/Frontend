@@ -1,6 +1,8 @@
 .dropdownBox {
 	display: flex;
-	margin: 10px;
+	margin: 1rem 0.5rem;
+	justify-content: center;
+	align-items: center;
 }
 
 .dropDownContainer {

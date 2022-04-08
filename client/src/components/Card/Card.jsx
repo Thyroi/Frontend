@@ -1,31 +1,59 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import style from './Card.module.css';
 
+export default function Card({ data }) {
+	const {
+		id_product,
+		name,
+		price,
+		brand,
+		is_offer,
+		default_image,
+		variants,
+	} = data;
 
-export default function Card({images, brand, collection, isOffer, price, stock, type, gender, size, description}) {
-  return (
-    <div className={styles.conteiner}>
-        
-        <div>
-            <span>{/* {isOffer} */ true && "oferta"}</span>
-            <Link to={`/home/no se que variable va aca`}>
-                <img src={images} alt="ACA VA LA FOTO" />
-            </Link>
-        </div>
-        <div>
-            <span>{type}</span>
-        </div>
-        <div>
-            <span>{brand}</span>
-            <span>{collection}</span>
-        </div>
-        <div>
-            <span>{price}</span>
-        </div>
-        <div>
-            <span>{stock}</span>
-        </div>
+	let stocks = 0;
+	variants?.forEach((v) =>
+		Object.values(v.Stocks).forEach((s) => (stocks += s))
+	);
 
-    </div>
-  )
+	return (
+		<div className={style.container}>
+			<div className={style.background}>
+				<Link to={`/products/${stocks ? id_product : ''}`}>
+					{is_offer && (
+						<span className={style.offer}>{'Oferta'}</span>
+					)}
+					<img
+						src={default_image}
+						alt=''
+						className={stocks === 0 ? style.noStock : undefined}
+					/>
+				</Link>
+			</div>
+			<div className={style.info}>
+				<div className={style.name}>{name}</div>
+				<div className={style.brand}>{brand}</div>
+				<div className={style.price}>{`$${price}`}</div>
+				{/* falta colección que no está aún en el json creo */}
+				{stocks === 0 ? (
+					<span
+						style={{
+							fontSize: '0.8rem',
+							fontWeight: '800',
+							color: 'red',
+							margin: '0 0 0 1rem',
+						}}>
+						SOLD OUT
+					</span>
+				) : (
+					<div className={style.stock}>
+						<span>{`Units: `}</span>
+						<span style={{ fontWeight: '800' }}>{stocks}</span>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }

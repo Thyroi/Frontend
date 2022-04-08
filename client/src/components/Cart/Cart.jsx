@@ -1,60 +1,95 @@
 import React from 'react';
-import style from "./Cart.module.css";
-//To add context below here
+import style from './Cart.module.scss';
 
-// It is much better to add events listeners to keep a clean code
-// Take into consideration the stock when increasing or decreasing amount
+import Quantity from '../Quantity/Quantity';
 
-function Cart(){
-  // Provisional
-  const itemsCart = ["Clothe", "Clothe", "Clothe", "Clothe"];
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { removeCart } from "../../actions/index";
+import { totalDue } from "../../utils/utils";
 
-  return(
-    <div className="containerCart">
-      {
-        itemsCart.map(item => {
-          return(
-            <div className="itemContainer">
-              <div className='imgContainer'>
-                <img src="" alt="iconOff" />
-                <img src="" alt="product" />
+// Add the context for showing the items
+
+function Cart(params) {
+	// Provisional remove this when context is implemented
+	const itemsCart = useSelector((state) => state.cart);
+	const dispatch = useDispatch();
+
+	function handleNavigate(e) {
+		e.preventDefault();
+		params.history.push('/cart/pay');
+	}
+
+  if (!itemsCart) return <div>Loading</div>;
+
+  return (
+    <div className={style.containerCart}>
+      {itemsCart &&
+        itemsCart.map((item) => {
+          const { name, totalPrice, variants, id_product } = item;
+          return (
+            <div className={style.itemContainer}>
+              <div className={style.imgContainer}>
+                <Link to={`/detail/${id_product}`}>
+                  <img
+                    className={style.productImage}
+                    src={variants[0].ProductImages[0]}
+                    alt="iconOff"
+                  />
+                </Link>
+                {/* <img src="" alt="product" /> */}
               </div>
 
-              <div className="infoContainer">
-                <h3>Name Product</h3>
-                <p>Product Price</p>
+              <div className={style.infoContainer}>
+                <div className={style.subInfoContainer}>
+                  <h3 className={style.nameProduct}>{name}</h3>
+                  <p
+                    className={style.productPrice}
+                    id="individualProductPrice"
+                  >{`$${totalPrice}`}</p>
 
-                <div className="itemButtons">
-                  <div className="counterContainer">
-                    <button>-</button>
-                    <p>2</p>
-                    <button>+</button>
-                  </div>
+                  <Quantity product={item} />
 
-                  <div className="containerButtons">
-                    <div className="containerDiscount">
-                      <input type="text" placeholder="Discount Code"/>
-                      <input type="submit" value="Apply" />
+                  <div className={style.containerButtons}>
+                    <div className={style.containerDiscount}>
+                      <input
+                        className={style.inputDiscount}
+                        type="text"
+                        placeholder="Discount Code"
+                      />
+                      <input
+                        className={style.applyDiscount}
+                        type="submit"
+                        value="Apply"
+                      />
                     </div>
-                    <button className="removeButton">
+
+                    <button
+                      className={style.removeButton}
+                      onClick={() => dispatch(removeCart(itemsCart, item))}
+                    >
                       <img src="" alt="" />
                       <p>Remove</p>
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>
-          )
-        })
-      }
+          );
+        })}
 
-      <div className="purchaseContainer">
-        <p>Total due <span className="totalPrice">900</span></p>
-        <button className="buyButton" onClick={console.log("working")}>Buy</button>
+      <div className={style.purchaseContainer}>
+        <p className={style.totalInfo}>
+          Total due:{" "}
+          <span className={style.totalPrice} id="total">{`$${totalDue(
+            null,
+            itemsCart
+          )}`}</span>
+        </p>
+        <button className={style.buyButton}>Buy</button>
       </div>
     </div>
-  )
+  );
 }
 
 export default Cart;

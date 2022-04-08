@@ -1,36 +1,50 @@
-import './App.css';
-import AddNewProduct from './components/AddNewProduct/AddNewProduct';
-import Nav from './components/Nav/Nav';
-import Landing from './components/Landing/Landing';
-import { Route } from 'react-router-dom';
-import Search from './components/SearchBar/Search';
-import Home from './components/Home/Home';
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+
+import AddNewProduct from "./components/AddNewProduct/AddNewProduct";
+import Main from './components/MercadoPago/Main';
+import Nav from "./components/Nav/Nav";
+import Landing from "./components/Landing/Landing";
+import Search from "./components/SearchBar/Search";
+import LogInTop from "./components/LogIn/LogInTop";
+import LogIn from "./components/LogIn/LogInMain";
+import Products from "./components/Products/Products";
+import Product_detail from "./components/Product_detail/Product_detail";
+import Cart from "./components/Cart/Cart";
+import Notification from "./components/Notification/Notification";
+import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
+import Form from "./components/Form/Form";
 
 export default function App() {
-	return (
-		<div className='app'>
-			<div className='appName'>Shop</div>
-			<div className='top'>
-				<div className='searchBar'>
-					<Search />
-				</div>
-				<div className='login'>
-					{/*Acá va <Login/>, cuando esté. Revisar hoja de estilos  */}
-				</div>
-			</div>
-			<div className='left'>
-				<Nav />
-			</div>
-			<div className='container'>
-				<Home />
-				<Route exact path='/AddNewProduct'>
+  return (
+    <Switch>
+      <Route exact path="/LogIn" component={LogIn} />
 
-					<AddNewProduct />
-				</Route>
-				<Route exact path='/'>
-					<Landing />
-				</Route>
-			</div>
-		</div>
-	);
+      <Route path="/">
+        <div className="app">
+          {/* <div className="appName">Shop</div> */}
+          <div className="left">
+            <Nav />
+          </div>
+
+          <div className="top">
+            <Search />
+            <LogInTop />
+            <Notification />
+          </div>
+
+          <div className="container">
+            <Route exact path="/AddNewProduct" component={AddNewProduct} />
+            <Route exact path="/products" component={Products} />
+            <Route exact path='/AdminDashBoard' component={AdminDashBoard} />
+            <Route exact path="/Cart" component={Cart} />
+            <Route exact path='/cart/pay' component={Main} />
+            <Route exact path="/products/:id" component={Product_detail} />
+            <Route exact path="/Form" component={Form} />
+            <Route exact path="/" component={Landing} />
+          </div>
+        </div>
+      </Route>
+    </Switch>
+  );
 }

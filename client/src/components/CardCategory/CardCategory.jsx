@@ -5,10 +5,17 @@ import styles from './CardCategory.module.css';
 function CardCategory({ img, name }) {
 	return (
 		<div className={styles.container}>
-			{/* en la class padre voy a poner la img de background */}
-			<div>
-				<Link to={`/category?name=${name}`}>{name}</Link>
+			<div className={styles.background}>
+				<img src={img} alt='' />
 			</div>
+
+			<Link
+				className={styles.title}
+				to={name === 'All' ? '/products' : `/category?name=${name}`}>
+				{name}
+			</Link>
+
+			<div className={styles.products}>show relevant products here</div>
 		</div>
 	);
 }

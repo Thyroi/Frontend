@@ -27,7 +27,7 @@ export default function Landing() {
 		{
 			id: 4,
 			img: 'https://i.pinimg.com/originals/65/5a/ef/655aefa16482ad8604e5c34b93de9cf4.jpg',
-			name: 'All products',
+			name: 'All',
 		},
 	];
 

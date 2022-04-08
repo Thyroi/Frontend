@@ -1,6 +1,5 @@
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
-
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
 import Nav from './components/Nav/Nav';
@@ -12,44 +11,36 @@ import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
 import Notification from './components/Notification/Notification';
-import Confirmation from './components/Confirmation/Confirmation';
 
 export default function App() {
 	return (
-		<Switch>
+		<div className='app'>
 			<Route exact path='/LogIn' component={LogIn} />
-
 			<Route path='/'>
-				<div className='app'>
-					{/* <div className="appName">Shop</div> */}
-					<div className='left'>
-						<Nav />
-					</div>
+				<div className='appName'></div>
 
-					<div className='top'>
-						<Search />
-						<LogInTop />
-						<Notification />
-					</div>
+				<div className='top'>
+					<Search />
+					<LogInTop />
+					<Notification />
+				</div>
+				<div className='left'>
+					<Nav />
+				</div>
+				<div className='container'>
+					<Route exact path='/' component={Landing} />
+					<Route exact path='/add' component={AddNewProduct} />
+					<Route exact path='/products' component={Products} />
 
-					<div className='container'>
-						<Route
-							exact
-							path='/AddNewProduct'
-							component={AddNewProduct}
-						/>
-						<Route exact path='/Products' component={Products} />
-						<Route exact path='/Cart' component={Cart} />
-						<Route
-							exact
-							path='/Detail/:id'
-							component={Product_detail}
-						/>
-						<Route exact path='/pay' component={Main} />
-						<Route exact path='/' component={Landing} />
-					</div>
+					<Route
+						exact
+						path='/products/:id'
+						component={Product_detail}
+					/>
+					<Route exact path='/cart' component={Cart} />
+					<Route exact path='/cart/pay' component={Main} />
 				</div>
 			</Route>
-		</Switch>
+		</div>
 	);
 }

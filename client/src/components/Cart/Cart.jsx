@@ -15,7 +15,7 @@ function Cart(params) {
 
 	function handleNavigate(e) {
 		e.preventDefault();
-		params.history.push('/pay');
+		params.history.push('/cart/pay');
 	}
 
 	return (

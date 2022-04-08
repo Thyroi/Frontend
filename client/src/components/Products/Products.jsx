@@ -18,7 +18,6 @@ export default function Products() {
 	const products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
 	const collections = useSelector((state) => state.collections);
-	const cat = categories.filter((p) => p.id !== 1 && p.id !== 2);
 
 	useEffect(() => {
 		dispatch(getInfo());
@@ -61,6 +60,10 @@ export default function Products() {
 			setJ((j) => (j < pageNumbers.length ? j + 1 : j));
 			setI((i) => (j < pageNumbers.length ? i + 1 : i));
 		}
+	}
+
+	function ArrayfyObj(obj) {
+		return [...obj?.women, ...obj?.men];
 	}
 
 	const indexOfLastPost = currentPage * results;
@@ -113,6 +116,7 @@ export default function Products() {
 	/* const handleBrandChange = (event) => {
 		setBrand(event.target.value);
 	}; */
+
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
 		if (event.target.value === '0') {
@@ -152,7 +156,15 @@ export default function Products() {
 				/> */}
 				<Dropdown
 					placeHolder={'Type'}
-					options={[{ id: 0, name: 'All' }, ...cat]}
+					options={[
+						{ id: 0, name: 'All' },
+						...categories?.women.filter((c) => {
+							return c.id > 2;
+						}),
+						...categories?.men.filter((c) => {
+							return c.id > 2;
+						}),
+					]}
 					handler={handleTypeChange}
 				/>
 				{/* <Dropdown

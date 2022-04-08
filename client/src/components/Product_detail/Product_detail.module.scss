@@ -105,7 +105,7 @@
             flex-wrap: wrap;
 
             .size,
-            .color {
+            .color, .selectedColor, .selectedSize {
               display: flex;
               justify-content: center;
               align-items: center;
@@ -122,9 +122,13 @@
               cursor: pointer;
             }
 
-            .color {
+            .color, .selectedColor {
               flex-basis: auto;
               padding: 0 5px;
+            }
+
+            .selectedColor, .selectedSize{
+              border: #E4687C solid 1px;
             }
           }
         }

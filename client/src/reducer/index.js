@@ -6,6 +6,7 @@ const initialState = {
     collections: [],
 
     cart: JSON.parse(window.localStorage.getItem("cart")) || [],
+    detailEdited: {},
 }
 
 export default function rootReducer (state = initialState, action){
@@ -25,7 +26,8 @@ export default function rootReducer (state = initialState, action){
         case "GET_BY_ID":
             return{
                 ...state,
-                details: action.payload
+                details: action.payload,
+                detailEdited: Object.assign({}, action.payload)
             }
         case "GET_SELECTOR_CAT":
             return{
@@ -67,6 +69,18 @@ export default function rootReducer (state = initialState, action){
             ...state,
             cart: [...action.payload]
           }
+
+        case "SELECTING_PRODUCT":
+          return {
+            ...state,
+            detailEdited: action.payload
+          }
+
+          case "UPDATING_CART":
+            return {
+              ...state,
+              cart: [...action.payload]
+            }
 
         default:
             return state

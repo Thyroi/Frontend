@@ -14,10 +14,20 @@ export default function Trying() {
  
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
+  // const [newObjet, setNewObjet] = useState({
+  //   brand: '',
+  //   category: '',
+  //   textDescription: '',
+  //   gender:'',
+  //   collection:'',
+  //   price:'',
+  //   is_offer:false,
+  //   validation: [{color:'', Stocks:'', ProductImages: [], SwatchImage:''}]
+  // });
 
 	const { register, control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-    	validations: [{ color: "Blanco", Stock: {L: 'a ver', M: 'a ver'}}] 
+    	validations: [{ color: "Blanco", Stocks: {L: 'a ver', M: 'a ver'}}] 
     }
 });
   	const { fields, append, remove } = useFieldArray(
@@ -27,8 +37,9 @@ export default function Trying() {
     }
   );
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
   };
+
 
 
   const uploadFile = () => {
@@ -41,13 +52,10 @@ export default function Trying() {
     });
   };
 
-
-
-
   console.log(imageUrls)
   return (
     <div className={styles.AddProductContainer}>
-    <form className={styles.form}onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.fields}>
     	<div className={styles.brand}>
         	<input type="text" name="brand" autoComplete='off' placeholder='Brand' ref={register({required: true, typeOf: 'number'})} />
@@ -60,7 +68,7 @@ export default function Trying() {
 				<option value="Camisetas">Camisetas</option>
 				<option value="Zapatos">Zapatos</option>
 			</select>
-      {errors.category?.type === "required" && "Your input is required"}
+      {errors.category && <span className={styles.error}>This field is required</span>}
       
         </div>
 		<div className={styles.gender}>
@@ -107,31 +115,31 @@ export default function Trying() {
               </select>
             <Controller
                 as={<input />}
-                name={`validations[${index}].Stock.S`}
+                name={`validations[${index}].Stocks.S`}
                 control={control}
                 defaultValue=''
                 placeholder="Select Stock for Size S"
               />
                 <Controller
                 as={<input />}
-                name={`validations[${index}].Stock.M`}
+                name={`validations[${index}].Stocks.M`}
                 control={control}
                 defaultValue=''
-                placeholder="Select Stock for Size M"
+                placeholder="Select Stocks for Size M"
                 />
               <Controller
                 as={<input />}
-                name={`validations[${index}].Stock.L`}
+                name={`validations[${index}].Stocks.L`}
                 control={control}
                 defaultValue=""
-                placeholder="Select Stock for Size L"
+                placeholder="Select Stocks for Size L"
               />
               <Controller
                 as={<input />}
-                name={`validations[${index}].Stock.XL`}
+                name={`validations[${index}].Stocks.XL`}
                 control={control}
                 defaultValue=""
-                placeholder="Select Stock for Size XL"
+                placeholder="Select Stocks for Size XL"
               />
               {/* <Controller
               as={<input />}
@@ -145,7 +153,7 @@ export default function Trying() {
                <button onClick={uploadFile}> Upload Image</button> */}
                   <input
                       type="file"
-                      name={`validations[${index}].ProductImages`}
+                      name={`validations[${index}].SwatchImage`}
                       onChange={(event) => {
                         setImageUpload(event.target.files[0]);
                       }}
@@ -163,7 +171,7 @@ export default function Trying() {
         <button
           type="button"
           onClick={() => {
-            append({ color: "Select Color", Stock: "SelectStock" });
+            append({ color: "Select Color", Stocks: "SelectStocks" });
           }}
         >
           Agregar color

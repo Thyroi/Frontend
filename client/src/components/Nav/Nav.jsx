@@ -13,6 +13,12 @@ export default function Nav() {
 				Home
 			</NavLink>
 			<NavLink
+				to='/AdminDashBoard'
+				activeClassName={styles.active}
+				className={styles.title}>
+				DashBoard
+			</NavLink>
+			<NavLink
 				to='/Products'
 				activeClassName={styles.active}
 				className={styles.title}>
@@ -30,6 +36,7 @@ export default function Nav() {
 				className={styles.title}>
 				Cart
 			</NavLink>
+
 		</div>
 	);
 }

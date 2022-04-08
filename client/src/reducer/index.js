@@ -3,7 +3,9 @@ const initialState = {
     allproducts: [],
     details: {},
     categories: [],
-    collections: []
+    collections: [],
+    users: [],
+    copyUsers: [],
 }
 
 export default function rootReducer (state = initialState, action){
@@ -52,6 +54,18 @@ export default function rootReducer (state = initialState, action){
             return{
                 ...state,
                 products: action.payload
+            }
+        case "GET_ALL_USERS": 
+            return{
+                ...state,
+                users: action.payload,
+                copyUsers: action.payload
+            }
+        case "UPDATE_PERMISSION":
+            state.users = state.copyUsers
+            return {
+                ...state,
+                users: action.payload
             }
         default:
             return state

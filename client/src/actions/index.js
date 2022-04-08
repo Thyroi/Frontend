@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import axios from "axios"
 
 export function getInfo(){
@@ -12,12 +13,18 @@ export function getInfo(){
 
 export function getByName(obj){
     return async function(dispatch){
+        try{
         console.log(obj)
         var name = await axios.get(`http://localhost:3001/products?filters=${obj}`)
         return dispatch({
             type: "GET_BY_NAME",
             payload: name.data
-        })
+        })}catch(error) {
+            return dispatch({
+                type: "GET_BY_NAME",
+                payload: alert("No products found")
+            })
+        }
     }    
 }
 
@@ -87,3 +94,38 @@ export function addProduct(payload){
         return alert("Producto creado con exito")
     }
 }
+
+export function getAllUsers() {
+    return async function (dispatch) {
+       const allusers = await axios.get("http://localhost:3001/users")
+       return dispatch({
+           type: 'GET_ALL_USERS',
+            payload: allusers.data
+       }) 
+    }
+}
+
+export function updatePermission (payload) { 
+    return async function (dispatch){
+        const update =  await axios.put(`http://localhost:3001/users`, payload)
+        return dispatch({
+            type: 'UPDATE_PERMISSION',
+            payload: update.data
+        })
+    }
+}
+
+export const deleteUser = payload => async dispatch => {
+    return await axios.delete(`http://localhost:3001/users`, {data: payload});
+};
+
+export const addCategory = payload => async dispatch => {
+    return await axios.post(`http://localhost:3001/selectors/addCat`, payload);
+}
+
+export function addNewUser(payload) {
+    return async function(){
+        const add = await axios.post("http://localhost:3001/users", payload)
+        
+    }
+} 

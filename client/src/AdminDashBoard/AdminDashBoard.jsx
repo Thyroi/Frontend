@@ -6,8 +6,9 @@ import { getAllUsers, deleteUser, updatePermission, getSelectorsCat,addNewUser, 
 import style from './AdminDashBoard.module.css'
 
 function AdminDashBoard() {
-    const [users, setUsers] = useState('')
+    const dispatch = useDispatch()
 
+    const [users, setUsers] = useState('')
     const [newCategory, setNewCategory] = useState({
         id_category: '',
         name: '',
@@ -19,7 +20,6 @@ function AdminDashBoard() {
         rol: ''
     })
     const allUser = useSelector(state => state.users)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getAllUsers()) 
@@ -53,7 +53,7 @@ function AdminDashBoard() {
            return <div>nada por aqui</div>
        }
     
-       dispatch(getAllUsers())
+       setTimeout(() => {dispatch(getAllUsers())}, 1000)
     }
     const selectCatType = (e) => {
         e.preventDefault();
@@ -117,11 +117,12 @@ function AdminDashBoard() {
         setTimeout(() => {dispatch(getAllUsers())}, 1000)
     }
 
+    console.log(allUser)
     return (
     <div className={style.divContainerAdmin}>
         <div>
-            {allUser.lenght <= 0  ? <div>Nada por aqui</div> 
-            : allUser.map(user => {
+            {!allUser  ? <div>Nada por aqui</div> 
+            : allUser?.map(user => {
                 return (
                 <div className={style.cardUser} key={user.id_user}>
                     <p>{user.id_user}</p>

@@ -22,7 +22,7 @@ export function getByName(obj){
         })}catch(error) {
             return dispatch({
                 type: "GET_BY_NAME",
-                payload: alert("No products found")
+                payload: console.log("No products found")
             })
         }
     }    
@@ -108,10 +108,12 @@ export function getAllUsers() {
 export function updatePermission (payload) { 
     return async function (dispatch){
         const update =  await axios.put(`http://localhost:3001/users`, payload)
+        console.log(update.data)
         return dispatch({
             type: 'UPDATE_PERMISSION',
-            payload: update.data
-        })
+            payload: update.data,
+            
+        }) 
     }
 }
 

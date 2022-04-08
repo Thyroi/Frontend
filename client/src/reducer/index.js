@@ -65,7 +65,7 @@ export default function rootReducer (state = initialState, action){
             state.users = state.copyUsers
             return {
                 ...state,
-                users: action.payload
+                copyUsers: action.payload
             }
         default:
             return state

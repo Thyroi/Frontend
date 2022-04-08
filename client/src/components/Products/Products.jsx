@@ -62,10 +62,6 @@ export default function Products() {
 		}
 	}
 
-	function ArrayfyObj(obj) {
-		return [...obj?.women, ...obj?.men];
-	}
-
 	const indexOfLastPost = currentPage * results;
 	const indexOfFirstPost = indexOfLastPost - results;
 	const currentPosts = products?.slice(indexOfFirstPost, indexOfLastPost);
@@ -119,11 +115,9 @@ export default function Products() {
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
-		if (event.target.value === '0') {
-			return dispatch(getInfo());
-		} else {
-			dispatch(getByColId(event.target.value));
-		}
+		event.target.value === '0'
+			? dispatch(getInfo())
+			: dispatch(getByColId(event.target.value));
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//
@@ -158,10 +152,10 @@ export default function Products() {
 					placeHolder={'Type'}
 					options={[
 						{ id: 0, name: 'All' },
-						...categories?.women.filter((c) => {
+						...categories?.women?.filter((c) => {
 							return c.id > 2;
 						}),
-						...categories?.men.filter((c) => {
+						...categories?.men?.filter((c) => {
 							return c.id > 2;
 						}),
 					]}

@@ -73,24 +73,42 @@ export function getSelectorsCol() {
 
 export function getByCatId(payload) {
 	return async function (dispatch) {
-		var catId = await axios.get(
+		var { data } = await axios.get(
 			`http://localhost:3001/products/bycat?id=${payload}`
 		);
+
+		const res = [];
+		data?.women?.forEach((e) => {
+			e?.Products?.forEach((e) => res.push(e));
+		});
+		data?.men.forEach((e) => {
+			e?.Products?.forEach((e) => res.push(e));
+		});
+
 		return dispatch({
 			type: 'GET_BY_CAT_ID',
-			payload: catId.data.Products,
+			payload: res,
 		});
 	};
 }
 
 export function getByColId(payload) {
 	return async function (dispatch) {
-		var catId = await axios.get(
+		var { data } = await axios.get(
 			`http://localhost:3001/products/bycol?id=${payload}`
 		);
+
+		const res = [];
+		data?.women?.forEach((e) => {
+			e?.Products?.forEach((e) => res?.push(e));
+		});
+		data.men.forEach((e) => {
+			e?.Products?.forEach((e) => res?.push(e));
+		});
+
 		return dispatch({
 			type: 'GET_BY_COL_ID',
-			payload: catId.data,
+			payload: res,
 		});
 	};
 }
@@ -100,10 +118,10 @@ export function getOffers(pay) {
 		var { data } = await axios.get(
 			`http://localhost:3001/products/byoffer?offer=${pay}`
 		);
-		var response = [...data.women, ...data.men];
+
 		return dispatch({
 			type: 'GET_OFFERS',
-			payload: response,
+			payload: [...data.women, ...data.men],
 		});
 	};
 }

@@ -21,6 +21,7 @@ export default function rootReducer(state = initialState, action) {
 				products: action.payload,
 				allproducts: action.payload,
 			};
+			
 		case 'GET_BY_NAME':
 			return {
 				...state,

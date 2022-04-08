@@ -21,14 +21,14 @@ export default function Card({ data }) {
 	return (
 		<div className={style.container}>
 			<div className={style.background}>
-				<Link to={`/products/${id_product}`}>
+				<Link to={`/products/${stocks ? id_product : ''}`}>
 					{is_offer && (
 						<span className={style.offer}>{'Oferta'}</span>
 					)}
 					<img
 						src={default_image}
 						alt=''
-						className={stocks % 4 === 0 ? style.noStock : undefined}
+						className={stocks === 0 ? style.noStock : undefined}
 					/>
 				</Link>
 			</div>
@@ -37,7 +37,7 @@ export default function Card({ data }) {
 				<div className={style.brand}>{brand}</div>
 				<div className={style.price}>{`$${price}`}</div>
 				{/* falta colección que no está aún en el json creo */}
-				{stocks % 4 === 0 ? (
+				{stocks === 0 ? (
 					<span
 						style={{
 							fontSize: '0.8rem',

@@ -11,7 +11,7 @@ import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
 import Notification from './components/Notification/Notification';
-
+import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 
 export default function App() {
 	return (
@@ -32,7 +32,7 @@ export default function App() {
 					<Route exact path='/' component={Landing} />
 					<Route exact path='/add' component={AddNewProduct} />
 					<Route exact path='/products' component={Products} />
-
+					<Route exact path='/AdminDashBoard' component={AdminDashBoard} />
 					<Route
 						exact
 						path='/products/:id'

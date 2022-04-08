@@ -13,6 +13,21 @@ export function getInfo() {
 	};
 }
 
+export function getSelectorsCol() {
+	return async function (dispatch) {
+		var selectorsCol = await axios.get(
+			'http://localhost:3001/selectors/collections'
+		);
+		var response = selectorsCol.data.data.map((p) => {
+			return { id: p.id_collection, name: p.name };
+		});
+
+		return dispatch({
+			type: 'GET_SELECTOR_COL',
+			payload: response,
+		});
+	};
+}
 
 export function getByName(obj){
     return async function(dispatch){
@@ -29,7 +44,7 @@ export function getByName(obj){
             })
         }
     }    
-
+}
 
 export function getById(params) {
 	return async function (dispatch) {
@@ -63,16 +78,7 @@ export function getSelectorsCat() {
 }
 
 
-export function getSelectorsCat(){
-	return async function(dispatch){
-		var selectorsCat = await axios.get("http://localhost:3001/selectors/categories")
-        var response = selectorsCat.data.data.map(p => {return {id: p.id_category, name: p.name}})
-		return dispatch({
-            type: "GET_SELECTOR_CAT",
-            payload: response
-        })
-	}
-}
+// 
 
 export function getByCatId(payload) {
 	return async function (dispatch) {
@@ -162,12 +168,12 @@ export function addCart(cartProducts, payload, dispatch) {
 }
 
 
-export function addProduct(payload){
-    return async function(){
-        const add = await axios.post("http://localhost:3001/products/add", payload)
-        return alert("Producto creado con exito")
-    }
-}
+// export function addProduct(payload){
+//     return async function(){
+//         const add = await axios.post("http://localhost:3001/products/add", payload)
+//         return alert("Producto creado con exito")
+//     }
+// }
 
 export function getAllUsers() {
     return async function (dispatch) {

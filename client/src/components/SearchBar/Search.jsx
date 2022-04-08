@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import styles from './Search.module.css';
+import styles from './Search.module.scss';
 import {useDispatch, useSelector} from 'react-redux'
 import { getByName } from '../../actions'
 

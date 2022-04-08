@@ -15,6 +15,7 @@ import {
   productSizes,
   selectVariant,
   selectSize,
+  prepareProduct
 } from "../../utils/utils";
 
 //Data
@@ -142,7 +143,7 @@ export default function Product_detail() {
             </div>
 
             <div className={style.containerBuyCart}>
-              <Link to="/Form">
+              <Link to="/Form" onClick={() => prepareProduct(product)}>
                 <button className={style.buyButton}>Buy</button>
               </Link>
               <button

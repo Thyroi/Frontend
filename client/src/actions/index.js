@@ -110,7 +110,7 @@ export function addProduct(payload) {
 
 export function addCart(cartProducts, payload, dispatch) {
   if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
-    if(localStorage.getItem("cart") != null) localStorage.removeItem("cart");
+    if (localStorage.getItem("cart") != null) localStorage.removeItem("cart");
     cartProducts.push(payload);
 
     localStorage.setItem("cart", JSON.stringify(cartProducts));
@@ -142,45 +142,59 @@ export function removeCart(cartProducts, payload) {
   };
 }
 
-export function updatingCart(cartProducts){
-
+export function updatingCart(cartProducts) {
   localStorage.setItem("cart", JSON.stringify(cartProducts));
   const cart = JSON.parse(localStorage.getItem("cart"));
 
   return {
     type: "UPDATING_CART",
-    payload: cart
-  }
+    payload: cart,
+  };
 }
 
 // Actions for customize products
 
-export function selectingProduct(payload){
+export function selectingProduct(payload) {
   return {
     type: "SELECTING_PRODUCT",
-    payload: payload
-  }
+    payload: payload,
+  };
 }
 
 // Data for sending products
-export function saveSendingData(){
+export function saveSendingData() {
   let labels = document.querySelectorAll("label");
   labels = Array.from(labels);
 
-  let data = {}
+  let data = {
+    address: {}
+  };
 
-  labels.forEach(label => {
+  labels.forEach((label) => {
     const property = label.id;
     const value = label.nextSibling.value;
-    data[property] = value;
-  })
 
+    if (
+      property === "calle" ||
+      property === "numero" ||
+      property === "state" ||
+      property === "city" ||
+      property === "zip_code" ||
+      property === "others"
+    ) {
+      console.log(data.address);
+      data.address[property] = value;
+      return;
+    }
+
+    data[property] = value;
+  });
 
   localStorage.setItem("datosDeEnvío", JSON.stringify(data));
   const payload = JSON.parse(localStorage.getItem("datosDeEnvío"));
-  
+
   return {
     type: "SAVE_DATA",
-    payload: payload
-  }
+    payload: payload,
+  };
 }

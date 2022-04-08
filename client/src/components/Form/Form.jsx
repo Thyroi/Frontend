@@ -13,7 +13,12 @@ function Form() {
   return (
     <div className={style.background}>
       <div className={style.containerInputs}>
-        <label className={style.label} id="name">Nombre completo</label>
+        <label className={style.label} id="name">Nombre </label>
+        <input type="text" placeholder="Escribe tu nombre" />
+      </div>
+
+      <div className={style.containerInputs}>
+        <label className={style.label} id="lastname">Apellido</label>
         <input type="text" placeholder="Escribe tu nombre" />
       </div>
 
@@ -23,18 +28,23 @@ function Form() {
       </div>
 
       <div className={style.containerInputs}>
-        <label className={style.label} id="street">Calle</label>
-        <input type="text" placeholder="Escribe tu calle" />
+        <label className={style.label} id="phone">Teléfono</label>
+        <input type="text" placeholder="Escribe tu phone" />
       </div>
 
       <div className={style.containerInputs}>
-        <label className={style.label} id="zipCode">Zip code</label>
-        <input type="text" placeholder="Escribe tu zip code" />
+        <label className={style.label} id="calle">Calle</label>
+        <input type="text" placeholder="Escribe tu calle" />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="city">Ciudad</label>
         <input type="text" placeholder="Escribe tu ciudad" />
+      </div>
+
+      <div className={style.containerInputs}>
+        <label className={style.label} id="zip_code">Zip code</label>
+        <input type="text" placeholder="Escribe tu zip code" />
       </div>
 
       <div className={style.containerInputs}>

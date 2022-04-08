@@ -16,12 +16,12 @@
 	border: solid 1px transparent;
 	border-radius: 0.1rem;
 	margin: 0 0.2rem;
-	width: 10rem;
+	width: 15rem;
 	height: 1.6em;
 	text-align: left;
 	font-weight: 400;
 	background-color: transparent;
-	transition: all ease-in-out 0.2s;
+	transition: all 0.2s;
 	cursor: pointer;
 }
 
@@ -50,6 +50,7 @@
 	max-height: 16rem;
 	overflow: scroll;
 	transform: scaleY(1);
+	transition: all 0.2s;
 }
 
 .dropdown_button:hover,

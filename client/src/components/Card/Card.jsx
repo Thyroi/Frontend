@@ -14,7 +14,7 @@ export default function Card({ data }) {
 	} = data;
 
 	let stocks = 0;
-	variants.forEach((v) =>
+	variants?.forEach((v) =>
 		Object.values(v.Stocks).forEach((s) => (stocks += s))
 	);
 

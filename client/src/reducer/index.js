@@ -5,7 +5,7 @@ const initialState = {
     categories: [],
     collections: [],
     wishlist: [],
-    clients: [],
+    google: {},
     cart: JSON.parse(window.localStorage.getItem("cart")) || [],
 }
 
@@ -90,10 +90,10 @@ export default function rootReducer (state = initialState, action){
                 wishlist: eliminated
             }
 
-        case "GET_CLIENTS":
+        case "GET_GOOGLE_INFO":
             return{
                 ...state,
-                clients: action.payload
+                google: action.payload
             }
             
         default:

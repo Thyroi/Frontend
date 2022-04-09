@@ -1,29 +1,31 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo  } from 'react'
+import { useSelector } from 'react-redux'
 import {useDispatch} from 'react-redux'
 import { createClient } from '../../actions';
 import style from './SignUp.module.css'
 
-export default function SignUp(params) {
+export default function SignUpGoogle(params) {
 
-    const dispatch = useDispatch()
-      
-    const [error, setError] = useState({})
+  const info = useSelector((state) => state.google)
+  const dispatch = useDispatch()
 
-    const [direc, setDirec] = useState({
-        calle: "",
-        numero: "",
-        city: "",
-        zip_code: ""
-    })
+  const [error, setError] = useState({})
+
+  const [direc, setDirec] = useState({
+      calle: "",
+      numero: "",
+      city: "",
+      zip_code: ""
+  })
     
-    const [inputs, setInputs] = useState({
-        name: "",
-        lastname: "",
-        email: "",
-        phone: "",
-        login_name: "",
-        login_password: "",
-        address: {}
+  const [inputs, setInputs] = useState({
+      name: info.name,
+      lastname: info.lastname,
+      email: info.email,
+      phone: "",
+      login_name: "",
+      login_password: "",
+      address: {}
     })
 
     useEffect(() => {
@@ -61,19 +63,7 @@ export default function SignUp(params) {
 
     function validator(inputs, direc){
         let error = {}
-        if(!inputs.name){
-            error.name = "Name is required"
-        } else if (typeof inputs.name !== "string"){
-            error.name = "Insert a valid name (without special caracters or numbers)"
-        } else if (!inputs.lastname){
-            error.lastname = "Lastname is required"
-        } else if (typeof inputs.lastname !== "string"){
-            error.lastname = "Insert a valid lastname (without special caracters or numbers)"
-        }  else if (!inputs.email){
-            error.email = "Email is required"
-        } else if (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(inputs.email) === false){
-            error.email = "Email should be a valid email"
-        } else if (!inputs.phone){
+        if (!inputs.phone){
             error.phone = "Phone is required"
         } else if (!inputs.login_name){
             error.login_name = "Login name is required"
@@ -94,7 +84,7 @@ export default function SignUp(params) {
     }
 
     const disable = useMemo(() => {
-        if(error.name || error.lastname || error.phone || error.email || error.login_name || error.login_password || error.calle || error.numero || error.city || error.zip_code){
+        if(error.phone  || error.login_name || error.login_password || error.calle || error.numero || error.city || error.zip_code){
             return true
         } return false},
         [error])
@@ -108,13 +98,13 @@ export default function SignUp(params) {
         })
         dispatch(createClient(inputs))
         setInputs({
-            name: "",
-            lastname: "",
-            email: "",
-            phone: "",
-            login_name: "",
-            login_password: "",
-            address: {},
+          name: info.name,
+          lastname: info.lastname,
+          email: info.email,
+          phone: "",
+          login_name: "",
+          login_password: "",
+          address: {}
         })
         setDirec({
             calle: "",
@@ -143,15 +133,6 @@ export default function SignUp(params) {
         {error.zip_code && (<p>{error.zip_code}</p>)} 
         <br/>
         <label>Personal Information</label>   
-        <label>Name</label>
-        <input type="text" placeholder='Name' name='name' value={inputs.name} onChange={(e) => {handleChange(e)}}/>
-        {error.name && (<p>{error.name}</p>)}
-        <label>Last Name</label>
-        <input type="text" placeholder='Last Name' name='lastname' value={inputs.lastname} onChange={(e) => {handleChange(e)}}/>
-        {error.lastname && (<p>{error.lastname}</p>)}
-        <label>Email</label>
-        <input type="text" placeholder='Email' name='email' value={inputs.email} onChange={(e) => {handleChange(e)}}/>
-        {error.email && (<p>{error.email}</p>)}
         <label>Phone</label>
         <input type="number" placeholder='Phone' name='phone' value={inputs.phone} onChange={(e) => {handleChange(e)}}/>
         {error.phone && (<p>{error.phone}</p>)}

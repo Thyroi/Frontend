@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./LoginMain.module.scss";
 import { GoogleLogin } from 'react-google-login';
+import { createClientGoogle } from "../../actions";
+import { useDispatch } from "react-redux";
 
 
-function LogInMain() {
+function LogInMain(params) {
+
+  const dispatch = useDispatch()
 
   function responseGoogle(response){
-    console.log(response)
+    const info = {name: response.profileObj.givenName, lastname: response.profileObj.familyName, email: response.profileObj.email}
+    dispatch(createClientGoogle(info))
+    params.history.push("/signupgoogle")
   }
-
+  
   return (
     <div className={style.background}>
       <div className={style.container}>

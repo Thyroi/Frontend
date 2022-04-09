@@ -162,5 +162,14 @@ export function createClient(payload){
   }
 }
 
+export function createClientGoogle(payload){
+  return{
+    type: "GET_GOOGLE_INFO",
+    payload
+  }
+}
+
+
+
 
 

@@ -3,29 +3,29 @@ import CardCategory from '../CardCategory/CardCategory';
 import styles from './Landing.module.css';
 
 export default function Landing() {
-	let categories = [
+	let collections = [
 		{
-			id: 0,
-			img: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/721/837/products/20201111_1705151-cee01b48556482841516052164004281-640-0.jpg',
+			id: 2,
+			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--Women_SpringEscape_FW22_Drop1_LOOK01_VISUAL4.png?wid=824&hei=824',
 			name: 'Summer',
 		},
 		{
-			id: 1,
-			img: 'https://www.ubuy.com.bh/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNzEzS0VpTE50Q0wuX0FDX1VMMTUwMF8uanBn.jpg',
+			id: 3,
+			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--Women_SpringEscape_FW22_Drop1_LOOK01_VISUAL4.png?wid=824&hei=824',
 			name: 'Autumn',
 		},
 		{
-			id: 2,
-			img: 'https://m.media-amazon.com/images/I/7181mldnipL._AC_UX342_.jpg',
+			id: 4,
+			img: 'https://www.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--BC_DAY-BREAK_1680x3360_LVCOM_2.jpg?wid=656',
 			name: 'Winter',
 		},
 		{
-			id: 3,
-			img: 'https://www.review-australia.com/dw/image/v2/BBBB_PRD/on/demandware.static/-/Sites-review-master-catalog/default/dw495fda72/images/RE20DR323_REGRN087_5.jpg',
+			id: 1,
+			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-polochon-other-leathers-bags--M59927_PM1_Worn%20view.png?wid=2048&hei=2048',
 			name: 'Spring',
 		},
 		{
-			id: 4,
+			id: 0,
 			img: 'https://s3.envato.com/files/335455718/160_1R3A9771.jpg',
 			name: 'All',
 		},
@@ -33,8 +33,8 @@ export default function Landing() {
 
 	return (
 		<div className={styles.container}>
-			{categories.map(({ id, img, name }) => {
-				return <CardCategory key={id} name={name} img={img} />;
+			{collections.map(({ id, img, name }) => {
+				return <CardCategory key={id} id={id} name={name} img={img} />;
 			})}
 		</div>
 	);

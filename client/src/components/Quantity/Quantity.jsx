@@ -34,7 +34,6 @@ function Quantity(props) {
         onClick={() => {
           const newProduct = decreaseLocalStock(product);
           dispatch(selectingProduct(newProduct));
-          setState(state - 1);
           document.querySelector(
             "#individualProductPrice"
           ).textContent = `$${totalDue(product)}`;
@@ -56,7 +55,6 @@ function Quantity(props) {
           }
           const newProduct = increaseLocalStock(product);
           dispatch(selectingProduct(newProduct));
-          setState(state + 1);
           document.querySelector(
             "#individualProductPrice"
           ).textContent = `$${totalDue(product)}`;

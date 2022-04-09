@@ -233,22 +233,34 @@ function focusSelectedSize(size) {
 }
 
 export function increaseLocalStock(product) {
-  console.log(product);
-  const amount = document.querySelector("#quantity");
-  const quantity = parseInt(amount.textContent);
+  let amount = document.querySelector("#quantity");
+  let availableUnits = parseInt(document.querySelector("#units").textContent);
+  let quantity = parseInt(amount.textContent);
 
-  product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-    quantity + 1;
+  if (availableUnits > 0) {
+    console.log("___+");
+    document.querySelector("#quantity").textContent = quantity + 1;
+
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity + 1;
+    document.querySelector("#units").textContent = availableUnits - 1;
+  }
   // document.querySelector("#total").innerHTML = totalDue();
   return product;
 }
 
 export function decreaseLocalStock(product) {
-  const amount = document.querySelector("#quantity");
-  const quantity = parseInt(amount.textContent);
+  let amount = document.querySelector("#quantity");
+  let quantity = parseInt(amount.textContent);
+  let availableUnits = parseInt(document.querySelector("#units").textContent);
+  let unitsForBuy = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+ 
+  if (quantity > 1) {
+    console.log("___-");
+    document.querySelector("#quantity").textContent = quantity - 1;
 
-  product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-    quantity - 1;
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity - 1;
+    document.querySelector("#units").textContent = availableUnits + 1;
+  }
   // document.querySelector("#total").innerHTML = totalDue();
   return product;
 }

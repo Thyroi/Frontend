@@ -1,5 +1,6 @@
 import styleDetail from "../components/Product_detail/Product_detail.module.scss";
 import styleNotification from "../components/Notification/Notification.module.scss";
+import axios from "axios";
 
 // Notification
 export function Notifications(text) {
@@ -94,10 +95,10 @@ function formattingProduct(variantsTemplate, product, size, units, color) {
 export function selectVariant(templateProduct, product, color) {
   if (!color) {
     color = product.variants[0].ColorName;
-    
+
     const auxiliarObject = Object.assign({}, templateProduct);
     const variantsTemplate = auxiliarObject.variants;
-    console.log(variantsTemplate)
+    console.log(variantsTemplate);
     const size = Object.keys(product.variants[0].Stocks)[0];
     const units = product.variants[0].Stocks[size];
 
@@ -259,8 +260,8 @@ export function totalDue(product, cartItems) {
       item.totalPrice = parseFloat(item.totalPrice);
       total += item.totalPrice;
     });
-    
-    console.log(total)
+
+    console.log(total);
     return total;
   }
 
@@ -272,12 +273,12 @@ export function totalDue(product, cartItems) {
   return total;
 }
 
-
-export function changingAttributesCart(cartItems, product, quantity){
+export function changingAttributesCart(cartItems, product, quantity) {
   console.log(cartItems, product);
   const cart = cartItems.map((item) => {
     if (item.id_product === product.id_product) {
-      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity;
+      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
+        quantity;
       item.totalPrice = totalDue(item);
 
       return item;
@@ -286,7 +287,78 @@ export function changingAttributesCart(cartItems, product, quantity){
     return item;
   });
 
-
-  console.log(cart)
+  console.log(cart);
   return cart;
 }
+
+// Patch del client
+
+export async function prepareProduct(product, cartItems) {
+  let productToBuy = [];
+
+  if (product) {
+    productToBuy = [
+      {
+        productid: product.id_product,
+        quantity:
+          product.variants[0].Stocks[
+            Object.keys(product.variants[0].Stocks)[0]
+          ],
+        price: product.totalPrice,
+        color: product.variants[0].ColorName,
+        size: Object.keys(product.variants[0].Stocks)[0],
+      },
+    ];
+  }
+
+  console.log(productToBuy);
+
+  if (cartItems) {
+    productToBuy = cartItems.map((item) => {
+      return {
+        productid: item.id_product,
+        quantity:
+          item.variants[0].Stocks[Object.keys(item.variants[0].Stocks)[0]],
+        price: item.totalPrice,
+        color: item.variants[0].ColorName,
+        size: Object.keys(item.variants[0].Stocks)[0],
+      };
+    });
+  }
+
+  localStorage.setItem("productPrepared", JSON.stringify(productToBuy));
+}
+
+export async function createGuestClient() {
+  const data = JSON.parse(localStorage.getItem("datosDeEnvio"));
+  await axios.post("http://localhost:3001/client", data);
+}
+
+export async function purchaseOrder() {
+  const productPrepared = JSON.parse(localStorage.getItem("productPrepared"));
+  const datosDeEnvio = JSON.parse(localStorage.getItem("datosDeEnvio"));
+
+  const data = {
+    orderDetails: [...productPrepared],
+    address: datosDeEnvio.address,
+    clientPhone: parseInt(datosDeEnvio.phone),
+  };
+
+  await axios.post("http://localhost:3001/orders", data);
+
+  // Remove purchase info from localStorage
+  // localStorage.removeItem("productPrepared");
+  // localStorage.removeItem("datosDeEnvio");
+}
+
+// const a = await axios.post("http://localhost:3001/orders");
+
+// { "orderDetails": [{"productid":32131, "quantity":1, "price":15, "color": "black", "size":"s"},
+// 	{"productid":2451, "quantity":1, "price":10, "color": "white", "size":"s"}] ,
+//   "address": {
+//       		  "calle":"200",
+//        		 "numero":"9",
+//       		  "city":"Bogotá",
+//        			 "zip_code":"1111"
+//  		   },
+//  "clientPhone":314445982911}

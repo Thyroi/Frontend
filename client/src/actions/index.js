@@ -62,26 +62,26 @@ export function getById(params) {
   };
 }
 
-export function getByColId(payload) {
-	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycol?id=${payload}`
-		);
+// export function getByColId(payload) {
+// 	return async function (dispatch) {
+// 		var { data } = await axios.get(
+// 			`http://localhost:3001/products/bycol?id=${payload}`
+// 		);
 
-		const res = [];
-		data?.women?.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
-		data.men.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
+// 		const res = [];
+// 		data?.women?.forEach((e) => {
+// 			e?.Products?.forEach((e) => res?.push(e));
+// 		});
+// 		data.men.forEach((e) => {
+// 			e?.Products?.forEach((e) => res?.push(e));
+// 		});
 
-		return dispatch({
-			type: 'GET_BY_COL_ID',
-			payload: res,
-		});
-	};
-}
+// 		return dispatch({
+// 			type: 'GET_BY_COL_ID',
+// 			payload: res,
+// 		});
+// 	};
+// }
 
 export function getSelectorsCat() {
   return async function (dispatch) {
@@ -134,6 +134,8 @@ export function cleanProducts() {
 			payload: [],
 		});
 	};
+}
+
 export function getByColId(payload) {
   return async function (dispatch) {
     var { data } = await axios.get(

@@ -11,7 +11,7 @@ import {
 	getInfo,
 	getOffers,
 	getSelectorsCat,
-  superduppertrupperBack
+  superduppertrupperBack,
 	getSelectorsCol,
 	cleanProducts
 

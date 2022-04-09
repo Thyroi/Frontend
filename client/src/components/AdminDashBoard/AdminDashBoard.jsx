@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import {useDispatch} from 'react-redux'
 import {useSelector} from 'react-redux'
-import { getAllUsers, deleteUser, updatePermission, getSelectorsCat,addNewUser, addCategory } from '../actions'
+import { getAllUsers, deleteUser, updatePermission, getSelectorsCat,addNewUser, addCategory } from '../../actions'
 import style from './AdminDashBoard.module.css'
 
 function AdminDashBoard() {

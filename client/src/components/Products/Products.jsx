@@ -10,7 +10,7 @@ import {
 	getInfo,
 	getOffers,
 	getSelectorsCat,
-	getSelectorsCol,
+	// getSelectorsCol,
 } from '../../actions';
 
 export default function Products() {
@@ -22,7 +22,7 @@ export default function Products() {
 	useEffect(() => {
 		dispatch(getInfo());
 		dispatch(getSelectorsCat());
-		dispatch(getSelectorsCol());
+		// dispatch(getSelectorsCol());
 	}, [dispatch]);
 
 	/* const products = data */

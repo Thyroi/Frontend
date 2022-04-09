@@ -10,39 +10,36 @@ import { storage } from "../../Assets/firebase";
 import { v4 } from "uuid";
 
 
-export default function Trying() {
+export default function AddNewProduct() {
  
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-  // const [newObjet, setNewObjet] = useState({
-  //   brand: '',
-  //   category: '',
-  //   textDescription: '',
-  //   gender:'',
-  //   collection:'',
-  //   price:'',
-  //   is_offer:false,
-  //   validation: [{color:'', Stocks:'', ProductImages: [], SwatchImage:''}]
-  // });
+
 
 	const { register, control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-    	validations: [{ color: "Blanco", Stocks: {L: 'a ver', M: 'a ver'}}] 
+    	variants: [{ ColorName: "Blanco", Stocks: {L: 'a ver', M: 'a ver'}}] 
     }
 });
   	const { fields, append, remove } = useFieldArray(
     {
       control,
-      name: "validations"
+      name: "variants"
     }
   );
   const onSubmit = (data) => {
-    console.log(data)
+    data.collection = parseInt(data.collection);
+    data.price = parseInt(data.price);
+    for(let i = 0; i < imageUrls.length; i++){  
+      data.variants[i].SwatchImage = imageUrls[i];
+    }
+    console.log({product : data, collection: data.coleccion, categories: data.categories});
   };
 
 
 
-  const uploadFile = () => {
+  const uploadFile = (e) => {
+    e.preventDefault(e)
     if (imageUpload == null) return;
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -57,18 +54,32 @@ export default function Trying() {
     <div className={styles.AddProductContainer}>
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.fields}>
+      <div className={styles.name}>
+        	<input type="text" name="name" autoComplete='off' placeholder='Name' ref={register({required: true})} />
+            	{errors.name && <span className={styles.error}>This field is required</span>}
+    	</div>
     	<div className={styles.brand}>
         	<input type="text" name="brand" autoComplete='off' placeholder='Brand' ref={register({required: true, typeOf: 'number'})} />
             	{errors.brand && <span className={styles.error}>This field is required</span>}
     	</div>
     	<div className={styles.category}>
-			<select name="category" ref={register({required: true, })}>
-				<option value="">Select Category</option>
+			<select name="categories" ref={register({required: true, })}>
+				<option value="">Select categories</option>
 				<option value="Pantalones">Pantalones</option>
 				<option value="Camisetas">Camisetas</option>
 				<option value="Zapatos">Zapatos</option>
 			</select>
-      {errors.category && <span className={styles.error}>This field is required</span>}
+      {errors.categories && <span className={styles.error}>This field is required</span>}
+      
+        </div>
+            	<div className={styles.category}>
+			<select name="categories" ref={register({required: true, })}>
+				<option value="">Select categories</option>
+				<option value="Pantalones">Pantalones</option>
+				<option value="Camisetas">Camisetas</option>
+				<option value="Zapatos">Zapatos</option>
+			</select>
+      {errors.categories && <span className={styles.error}>This field is required</span>}
       
         </div>
 		<div className={styles.gender}>
@@ -83,10 +94,10 @@ export default function Trying() {
 		<div className={styles.collection}>
 			<select name='collection' ref={register({required: true})}>
 				<option value=''>Select Collection</option>
-				<option value='Verano'>Verano</option>
-				<option value='Invierno'>Invierno</option>
-				<option value='Otoño'>Otoño</option>
-				<option value='Primavera'>Primavera</option>
+				<option value='1'>Verano</option>
+				<option value='2'>Invierno</option>
+				<option value='3'>Otoño</option>
+				<option value='4'>Primavera</option>
 			</select>
 		{errors.collection && <span className={styles.error}>This field is required</span>}
 		</div>
@@ -100,14 +111,14 @@ export default function Trying() {
 		</div>
     </div>
 		<div>
-			<textarea name="textDescription" placeholder='Description' ref={register({required: true})} />
+			<textarea name="description" placeholder='description' ref={register({required: true})} />
 		</div>
             
     <ul>
         {fields.map((item, index) => {
         return (
             <li key={item.id}>
-              <select ref={register()} name={`validations[${index}].color`}>
+              <select ref={register()} name={`variants[${index}].ColorName`}>
                 <option value=''> Select Color</option>
                 <option value={'Blanco'}>Blanco</option>
                 <option value={'Rojo'}>Rojo</option>	
@@ -115,49 +126,39 @@ export default function Trying() {
               </select>
             <Controller
                 as={<input />}
-                name={`validations[${index}].Stocks.S`}
+                name={`variants[${index}].Stocks.S`}
                 control={control}
                 defaultValue=''
                 placeholder="Select Stock for Size S"
               />
                 <Controller
                 as={<input />}
-                name={`validations[${index}].Stocks.M`}
+                name={`variants[${index}].Stocks.M`}
                 control={control}
                 defaultValue=''
                 placeholder="Select Stocks for Size M"
                 />
               <Controller
                 as={<input />}
-                name={`validations[${index}].Stocks.L`}
+                name={`variants[${index}].Stocks.L`}
                 control={control}
                 defaultValue=""
                 placeholder="Select Stocks for Size L"
               />
               <Controller
                 as={<input />}
-                name={`validations[${index}].Stocks.XL`}
+                name={`variants[${index}].Stocks.XL`}
                 control={control}
                 defaultValue=""
                 placeholder="Select Stocks for Size XL"
               />
-              {/* <Controller
-              as={<input />}
-              name={`validations[${index}].SwatchImage`}
-              control={control}
-              defaultValue=""
-              onChange={(event) => {
-                setImageUpload(event.target.files[0]);
-              }}
-              type="file"/>
-               <button onClick={uploadFile}> Upload Image</button> */}
-                  <input
-                      type="file"
-                      name={`validations[${index}].SwatchImage`}
-                      onChange={(event) => {
-                        setImageUpload(event.target.files[0]);
-                      }}
-                    />
+              <input
+                  type="file"
+                  name={`variants[${index}].SwatchImage`}
+                  onChange={(event) => {
+                    setImageUpload(event.target.files[0]);
+                  }}
+                />
               <button onClick={uploadFile}> Upload Image</button>
               <button type="button" onClick={() => remove(index)}>
                 Eliminar

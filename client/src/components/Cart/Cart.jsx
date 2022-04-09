@@ -6,7 +6,7 @@ import Quantity from '../Quantity/Quantity';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCart } from "../../actions/index";
-import { totalDue } from "../../utils/utils";
+import { totalDue, prepareProduct } from "../../utils/utils";
 
 // Add the context for showing the items
 
@@ -86,7 +86,9 @@ function Cart(params) {
             itemsCart
           )}`}</span>
         </p>
-        <button className={style.buyButton}>Buy</button>
+        <Link to="/form">
+          <button className={style.buyButton} onClick={() => prepareProduct(null, itemsCart)}>Buy</button>
+        </Link>
       </div>
     </div>
   );

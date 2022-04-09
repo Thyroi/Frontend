@@ -29,6 +29,8 @@ export function getSelectorsCol() {
   };
 }
 
+
+
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
@@ -102,7 +104,7 @@ export function getSelectorsCat() {
   };
 }
 
-//
+
 
 export function getByCatId(payload) {
   return async function (dispatch) {
@@ -301,39 +303,29 @@ export function selectingProduct(payload) {
 
 // Data for sending products
 export function saveSendingData() {
+  const labels = document.querySelectorAll('label');
+  const data = {}
 
-	let labels = document.querySelectorAll("label");
-	labels = Array.from(labels);
+  labels.forEach((label) => {
+    const property = label.id;
+    const value = label.nextSibling.value;
 
-	let data = {
-		address: {}
-	};
+    if (
+      property === "calle" ||
+      property === "numero" ||
+      property === "state" ||
+      property === "city" ||
+      property === "zip_code" ||
+      property === "others"
+    ) {
+      console.log(data.address);
+      data.address[property] = value;
+      return;
+    }
 
-	labels.forEach((label) => {
-		const property = label.id;
-		const value = label.nextSibling.value;
+    data[property] = value;
+  });
 
-		if (
-			property === "calle" ||
-			property === "numero" ||
-			property === "state" ||
-			property === "city" ||
-			property === "zip_code" ||
-			property === "others"
-		) {
-			console.log(data.address);
-			data.address[property] = value;
-			return;
-		}
-
-		data[property] = value;
-	});
-
-	localStorage.setItem("datosDeEnvío", JSON.stringify(data));
-	const payload = JSON.parse(localStorage.getItem("datosDeEnvío"));
-	return {
-		type: "SAVE_DATA",
-		payload: payload,
-	};
-
+  localStorage.setItem("datosDeEnvio", JSON.stringify(data));
+  const payload = JSON.parse(localStorage.getItem("datosDeEnvio"));
 }

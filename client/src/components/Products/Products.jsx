@@ -11,8 +11,10 @@ import {
 	getInfo,
 	getOffers,
 	getSelectorsCat,
+  superduppertrupperBack
 	getSelectorsCol,
 	cleanProducts
+
 } from '../../actions';
 
 export default function Products() {
@@ -30,7 +32,7 @@ export default function Products() {
 		dispatch(cleanProducts());
 		collection?dispatch(getByColId((collection))):dispatch(getInfo());
 		dispatch(getSelectorsCat());
-		dispatch(getSelectorsCol());
+		// dispatch(getSelectorsCol());
 	}, [dispatch]);
 
 	/* const products = data */

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import style from "./LoginMain.module.scss";
 
 function LogInMain() {
+
   return (
     <div className={style.background}>
       <div className={style.container}>
@@ -22,12 +23,20 @@ function LogInMain() {
 
             <div className={style.containerInput}>
               <label className={style.labelInput}>Username</label>
-              <input className={style.input} type="text" placeholder="Type username"/>
+              <input
+                className={style.input}
+                type="text"
+                placeholder="Type username"
+              />
             </div>
 
             <div className={style.containerInput}>
               <label className={style.labelInput}>Password</label>
-              <input className={style.input} type="password" placeholder="Type password"/>
+              <input
+                className={style.input}
+                type="password"
+                placeholder="Type password"
+              />
             </div>
 
             <div className={style.containerOptions}>
@@ -36,12 +45,20 @@ function LogInMain() {
                 <label className={style.textRemember}>Remember me?</label>
               </div>
 
-              <Link className={style.forgotText} to="/retrievepassword">Forgot password?</Link>
+              <Link className={style.forgotText} to="/retrievepassword">
+                Forgot password?
+              </Link>
             </div>
 
             <div className={style.containerLoginSignUp}>
-              <input className={style.loginButton} type="submit" value="Login" />
-              <Link className={style.signUpButton} to="/signup">Sign Up</Link>
+              <input
+                className={style.loginButton}
+                type="submit"
+                value="Login"
+              />
+              <Link className={style.signUpButton} to="/signup">
+                Sign Up
+              </Link>
             </div>
           </div>
         </div>

@@ -29,6 +29,8 @@ export function getSelectorsCol() {
   };
 }
 
+
+
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
@@ -81,7 +83,7 @@ export function getSelectorsCat() {
   };
 }
 
-//
+
 
 export function getByCatId(payload) {
   return async function (dispatch) {

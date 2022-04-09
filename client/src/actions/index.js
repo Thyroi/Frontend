@@ -203,51 +203,6 @@ export function addNewUser(payload) {
 	};
 }
 
-
-// export function addProduct(payload){
-//     return async function(){
-//         const add = await axios.post("http://localhost:3001/products/add", payload)
-//         return alert("Producto creado con exito")
-//     }
-// }
-
-export function getAllUsers() {
-    return async function (dispatch) {
-       const allusers = await axios.get("http://localhost:3001/users")
-       return dispatch({
-           type: 'GET_ALL_USERS',
-            payload: allusers.data
-       }) 
-    }
-}
-
-export function updatePermission (payload) { 
-    return async function (dispatch){
-        const update =  await axios.put(`http://localhost:3001/users`, payload)
-        console.log(update.data)
-        return dispatch({
-            type: 'UPDATE_PERMISSION',
-            payload: update.data,
-            
-        }) 
-    }
-}
-
-export const deleteUser = payload => async dispatch => {
-    return await axios.delete(`http://localhost:3001/users`, {data: payload});
-};
-
-export const addCategory = payload => async dispatch => {
-    return await axios.post(`http://localhost:3001/selectors/addCat`, payload);
-}
-
-export function addNewUser(payload) {
-    return async function(){
-        const add = await axios.post("http://localhost:3001/users", payload)
-        
-    }
-} 
-
 export function removeCart(cartProducts, payload) {
 	const newConstProducts = cartProducts.filter(
 		(p) => p.id_product !== payload.id_product
@@ -270,50 +225,6 @@ export function updatingCart(cartProducts) {
 	return {
 		type: 'UPDATING_CART',
 		payload: cart,
-	};
-}
-
-export function selectingProduct(payload) {
-	return {
-		type: 'SELECTING_PRODUCT',
-		payload: payload,
-	};
-}
-
-export function saveSendingData() {
-	let labels = document.querySelectorAll('label');
-	labels = Array.from(labels);
-
-	let data = {
-		address: {},
-	};
-
-	labels.forEach((label) => {
-		const property = label.id;
-		const value = label.nextSibling.value;
-
-		if (
-			property === 'calle' ||
-			property === 'numero' ||
-			property === 'state' ||
-			property === 'city' ||
-			property === 'zip_code' ||
-			property === 'others'
-		) {
-			console.log(data.address);
-			data.address[property] = value;
-			return;
-		}
-
-		data[property] = value;
-	});
-
-	localStorage.setItem('datosDeEnvío', JSON.stringify(data));
-	const payload = JSON.parse(localStorage.getItem('datosDeEnvio'));
-
-	return {
-		type: 'SAVE_DATA',
-		payload: payload,
 	};
 }
 
@@ -347,46 +258,46 @@ export function createClientGoogle(payload) {
 // Actions for customize products
 
 export function selectingProduct(payload) {
-  return {
-    type: "SELECTING_PRODUCT",
-    payload: payload,
-  };
+	return {
+		type: "SELECTING_PRODUCT",
+		payload: payload,
+	};
 }
 
 // Data for sending products
 export function saveSendingData() {
-  let labels = document.querySelectorAll("label");
-  labels = Array.from(labels);
+	let labels = document.querySelectorAll("label");
+	labels = Array.from(labels);
 
-  let data = {
-    address: {}
-  };
+	let data = {
+		address: {}
+	};
 
-  labels.forEach((label) => {
-    const property = label.id;
-    const value = label.nextSibling.value;
+	labels.forEach((label) => {
+		const property = label.id;
+		const value = label.nextSibling.value;
 
-    if (
-      property === "calle" ||
-      property === "numero" ||
-      property === "state" ||
-      property === "city" ||
-      property === "zip_code" ||
-      property === "others"
-    ) {
-      console.log(data.address);
-      data.address[property] = value;
-      return;
-    }
+		if (
+			property === "calle" ||
+			property === "numero" ||
+			property === "state" ||
+			property === "city" ||
+			property === "zip_code" ||
+			property === "others"
+		) {
+			console.log(data.address);
+			data.address[property] = value;
+			return;
+		}
 
-    data[property] = value;
-  });
+		data[property] = value;
+	});
 
-  localStorage.setItem("datosDeEnvío", JSON.stringify(data));
-  const payload = JSON.parse(localStorage.getItem("datosDeEnvío"));
+	localStorage.setItem("datosDeEnvío", JSON.stringify(data));
+	const payload = JSON.parse(localStorage.getItem("datosDeEnvío"));
 
-  return {
-    type: "SAVE_DATA",
-    payload: payload,
-  };
+	return {
+		type: "SAVE_DATA",
+		payload: payload,
+	};
 }

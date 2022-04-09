@@ -125,96 +125,107 @@ export default function SignUpGoogle(params) {
 	}
 
 	return (
-		<div>
+		<div className={style.container}>
 			<form
+				className={style.form}
 				onSubmit={(e) => {
 					handleSubmit(e);
-				}}
-				className={style.conteiner}>
-				<label>Address</label>
-				<label>Street</label>
-				<input
-					type='text'
-					placeholder='Street'
-					name='calle'
-					value={direc.calle}
-					onChange={(e) => {
-						handleChangeAddress(e);
-					}}
-				/>
-				{error.calle && <p>{error.calle}</p>}
-				<label>Number</label>
-				<input
-					type='text'
-					placeholder='Number'
-					name='numero'
-					value={direc.numero}
-					onChange={(e) => {
-						handleChangeAddress(e);
-					}}
-				/>
-				{error.numero && <p>{error.numero}</p>}
-				<label>City</label>
-				<input
-					type='text'
-					placeholder='City'
-					name='city'
-					value={direc.city}
-					onChange={(e) => {
-						handleChangeAddress(e);
-					}}
-				/>
-				{error.city && <p>{error.city}</p>}
-				<label>Zip Code</label>
-				<input
-					type='text'
-					placeholder='Zip Code'
-					name='zip_code'
-					value={direc.zip_code}
-					onChange={(e) => {
-						handleChangeAddress(e);
-					}}
-				/>
-				{error.zip_code && <p>{error.zip_code}</p>}
-				<br />
-				<label>Personal Information</label>
-				<label>Phone</label>
-				<input
-					type='number'
-					placeholder='Phone'
-					name='phone'
-					value={inputs.phone}
-					onChange={(e) => {
-						handleChange(e);
-					}}
-				/>
-				{error.phone && <p>{error.phone}</p>}
-				<label>Login Name</label>
-				<input
-					type='text'
-					placeholder='Login Name'
-					name='login_name'
-					value={inputs.login_name}
-					onChange={(e) => {
-						handleChange(e);
-					}}
-				/>
-				{error.login_name && <p>{error.login_name}</p>}
-				<label>Password</label>
-				<input
-					type='password'
-					placeholder='Login password'
-					name='login_password'
-					value={inputs.login_password}
-					onChange={(e) => {
-						handleChange(e);
-					}}
-				/>
-				{error.login_password && <p>{error.login_password}</p>}
+				}}>
+				<div className={style.addressGlobal}>
+					<label>Address</label>
+					<div className={style.address}>
+						<input
+							type='text'
+							placeholder='Street'
+							name='calle'
+							value={direc.calle}
+							onChange={(e) => {
+								handleChangeAddress(e);
+							}}
+						/>
+						{error.calle && <p>{error.calle}</p>}
 
-				<button disabled={disable} type='submit'>
-					CREATE PROFILE
-				</button>
+						<input
+							type='text'
+							placeholder='Number'
+							name='numero'
+							value={direc.numero}
+							onChange={(e) => {
+								handleChangeAddress(e);
+							}}
+						/>
+						{error.numero && <p>{error.numero}</p>}
+
+						<input
+							type='text'
+							placeholder='City'
+							name='city'
+							value={direc.city}
+							onChange={(e) => {
+								handleChangeAddress(e);
+							}}
+						/>
+						{error.city && <p>{error.city}</p>}
+
+						<input
+							type='text'
+							placeholder='Zip Code'
+							name='zip_code'
+							value={direc.zip_code}
+							onChange={(e) => {
+								handleChangeAddress(e);
+							}}
+						/>
+						{error.zip_code && <p>{error.zip_code}</p>}
+					</div>
+				</div>
+
+				<div className={style.infoGlobal}>
+					<label>Personal Information</label>
+					<div className={style.infoContainer}>
+						<input
+							type='number'
+							placeholder='Phone'
+							name='phone'
+							value={inputs.phone}
+							onChange={(e) => {
+								handleChange(e);
+							}}
+						/>
+						{error.phone && <p>{error.phone}</p>}
+					</div>
+				</div>
+
+				<div className={style.logInGlobal}>
+					<label>Username</label>
+					<input
+						type='text'
+						placeholder='Type username'
+						name='login_name'
+						value={inputs.login_name}
+						onChange={(e) => {
+							handleChange(e);
+						}}
+					/>
+					{error.login_name && <p>{error.login_name}</p>}
+					<label>Password</label>
+					<input
+						type='password'
+						placeholder='Type password'
+						name='login_password'
+						value={inputs.login_password}
+						onChange={(e) => {
+							handleChange(e);
+						}}
+					/>
+					{error.login_password && <p>{error.login_password}</p>}
+				</div>
+
+				<div className={style.submit}>
+					<button disabled={disable} type='submit'>
+						Create profile
+					</button>
+				</div>
 			</form>
 		</div>
 	);

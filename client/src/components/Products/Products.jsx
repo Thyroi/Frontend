@@ -11,17 +11,15 @@ import {
 	getInfo,
 	getOffers,
 	getSelectorsCat,
-  superduppertrupperBack
-	getSelectorsCol,
-	cleanProducts
-
+	//getSelectorsCol,
+	cleanProducts,
 } from '../../actions';
 
 export default function Products() {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
-	  }
+	}
 	const collection = useQuery().get('collection');
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products);
@@ -30,7 +28,7 @@ export default function Products() {
 
 	useEffect(() => {
 		dispatch(cleanProducts());
-		collection?dispatch(getByColId((collection))):dispatch(getInfo());
+		collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
 		dispatch(getSelectorsCat());
 		// dispatch(getSelectorsCol());
 	}, [dispatch]);

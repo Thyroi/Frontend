@@ -1,0 +1,23 @@
+.counterContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+
+  .counterButton {
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: #e4687c;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .counterNumber {
+    display: flex;
+    justify-content: center;
+    width: 1rem;
+    margin: 0 1rem;
+  }
+}

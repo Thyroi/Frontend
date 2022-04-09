@@ -1,0 +1,12 @@
+.dropdownBox {
+	display: flex;
+	margin: 1rem 0.5rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.dropDownContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

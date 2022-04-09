@@ -14,6 +14,8 @@ import Cart from "./components/Cart/Cart";
 import Notification from "./components/Notification/Notification";
 import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from "./components/Form/Form";
+import SignUp from "./components/SignUp/SignUp";
+import SignUpGoogle from "./components/SignUp/SignUpGoogle";
 
 export default function App() {
   return (
@@ -42,6 +44,8 @@ export default function App() {
             <Route exact path="/products/:id" component={Product_detail} />
             <Route exact path="/Form" component={Form} />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signupgoogle" component={SignUpGoogle} />
           </div>
         </div>
       </Route>

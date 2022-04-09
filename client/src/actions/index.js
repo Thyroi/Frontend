@@ -1,5 +1,7 @@
-import axios from "axios";
-import { Notifications } from "../utils/utils.js";
+
+import axios from 'axios';
+import { Notifications } from '../utils/utils.js';
+
 
 export function getInfo() {
   return async function (dispatch) {
@@ -28,23 +30,24 @@ export function getSelectorsCol() {
 }
 
 export function getByName(obj) {
-  return async function (dispatch) {
-    try {
-      console.log(obj);
-      var name = await axios.get(
-        `http://localhost:3001/products?filters=${obj}`
-      );
-      return dispatch({
-        type: "GET_BY_NAME",
-        payload: name.data,
-      });
-    } catch (error) {
-      return dispatch({
-        type: "GET_BY_NAME",
-        payload: [],
-      });
-    }
-  };
+	return async function (dispatch) {
+		try {
+			console.log(obj);
+			var name = await axios.get(
+				`http://localhost:3001/products?filters=${obj}`
+			);
+			return dispatch({
+				type: 'GET_BY_NAME',
+				payload: name.data,
+			});
+		} catch (error) {
+			return dispatch({
+				type: 'GET_BY_NAME',
+				payload: [],
+			});
+		}
+	};
+
 }
 
 export function getById(params) {
@@ -145,23 +148,25 @@ export function addProduct(payload) {
 // Actions for Cart guest
 
 export function addCart(cartProducts, payload, dispatch) {
-  if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
-    if (localStorage.getItem("cart") != null) localStorage.removeItem("cart");
-    cartProducts.push(payload);
+	if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
+		if (localStorage.getItem('cart') != null)
+			localStorage.removeItem('cart');
+		cartProducts.push(payload);
 
-    localStorage.setItem("cart", JSON.stringify(cartProducts));
-    const cart = JSON.parse(localStorage.getItem("cart"));
+		localStorage.setItem('cart', JSON.stringify(cartProducts));
+		const cart = JSON.parse(localStorage.getItem('cart'));
 
-    Notifications("Product added to cart");
+		Notifications('Product added to cart');
 
-    return dispatch({
-      type: "ADD_CART",
-      payload: cart,
-    });
-  }
+		return dispatch({
+			type: 'ADD_CART',
+			payload: cart,
+		});
+	}
 
-  Notifications("This product is already in your cart");
+	Notifications('This product is already in your cart');
 }
+
 
 // export function addProduct(payload){
 //     return async function(){
@@ -221,33 +226,53 @@ export function removeCart(cartProducts, payload) {
 }
 
 export function updatingCart(cartProducts) {
-  localStorage.setItem("cart", JSON.stringify(cartProducts));
-  const cart = JSON.parse(localStorage.getItem("cart"));
+	localStorage.setItem('cart', JSON.stringify(cartProducts));
+	const cart = JSON.parse(localStorage.getItem('cart'));
 
-  return {
-    type: "UPDATING_CART",
-    payload: cart,
-  };
+	return {
+		type: 'UPDATING_CART',
+		payload: cart,
+	};
+}
+
+export function addWishList(payload) {
+	return {
+		type: 'ADD_WISH_LIST',
+		payload,
+	};
+}
+
+export function removeWishList(payload) {
+	return {
+		type: 'REMOVE_WISH_LIST',
+		payload,
+	};
+}
+
+export function createClient(payload) {
+	return async function () {
+		return await axios.post('http://localhost:3001/client', payload);
+	};
+}
+
+export function createClientGoogle(payload) {
+	return {
+		type: 'GET_GOOGLE_INFO',
+		payload,
+	};
 }
 
 // Actions for customize products
 
 export function selectingProduct(payload) {
-  return {
-    type: "SELECTING_PRODUCT",
-    payload: payload,
-  };
+	return {
+		type: "SELECTING_PRODUCT",
+		payload: payload,
+	};
 }
 
 // Data for sending products
 export function saveSendingData() {
-  let labels = document.querySelectorAll("label");
-  labels = Array.from(labels);
-
-  let data = {
-    address: {},
-  };
-
   labels.forEach((label) => {
     const property = label.id;
     const value = label.nextSibling.value;
@@ -270,9 +295,4 @@ export function saveSendingData() {
 
   localStorage.setItem("datosDeEnvio", JSON.stringify(data));
   const payload = JSON.parse(localStorage.getItem("datosDeEnvio"));
-
-  return {
-    type: "SAVE_DATA",
-    payload: payload,
-  };
 }

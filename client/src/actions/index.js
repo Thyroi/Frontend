@@ -268,7 +268,7 @@ export function saveSendingData() {
     data[property] = value;
   });
 
-  localStorage.setItem("datosDeEnvío", JSON.stringify(data));
+  localStorage.setItem("datosDeEnvio", JSON.stringify(data));
   const payload = JSON.parse(localStorage.getItem("datosDeEnvio"));
 
   return {

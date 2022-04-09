@@ -30,7 +30,7 @@ export default function AddNewProduct() {
   const onSubmit = (data) => {
     data.collection = parseInt(data.collection);
     data.price = parseInt(data.price);
-    for(let i = 0; i < imageUrls.length; i++){
+    for(let i = 0; i < imageUrls.length; i++){  
       data.variants[i].SwatchImage = imageUrls[i];
     }
     console.log({product : data, collection: data.coleccion, categories: data.categories});

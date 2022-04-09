@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import style from './Products.module.css';
-import data from '../../Assets/Products.json';
 import Card from '../Card/Card';
 import Dropdown from '../Dropdown/Dropdown';
 

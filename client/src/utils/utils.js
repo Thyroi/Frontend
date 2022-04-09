@@ -311,8 +311,6 @@ export async function prepareProduct(product, cartItems) {
     ];
   }
 
-  console.log(productToBuy);
-
   if (cartItems) {
     productToBuy = cartItems.map((item) => {
       return {
@@ -351,14 +349,12 @@ export async function purchaseOrder() {
   // localStorage.removeItem("datosDeEnvio");
 }
 
-// const a = await axios.post("http://localhost:3001/orders");
+export function sendingCart(cartItems) {
+  if(cartItems.length === 0 || cartItems === undefined) return;
 
-// { "orderDetails": [{"productid":32131, "quantity":1, "price":15, "color": "black", "size":"s"},
-// 	{"productid":2451, "quantity":1, "price":10, "color": "white", "size":"s"}] ,
-//   "address": {
-//       		  "calle":"200",
-//        		 "numero":"9",
-//       		  "city":"Bogotá",
-//        			 "zip_code":"1111"
-//  		   },
-//  "clientPhone":314445982911}
+  const dataToSend = {
+    cart_items: { cartItems }
+  };
+
+  axios.put("http://localhost:3001/cart/6631651", dataToSend);
+}

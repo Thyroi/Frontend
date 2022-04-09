@@ -13,11 +13,10 @@
 	transition: all 0.15s;
 }
 
-.container:hover{
+.container:hover {
 	transform: translateY(-5px);
 	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
 }
-
 
 .background {
 	display: flex;
@@ -25,40 +24,39 @@
 	align-items: center;
 	max-height: 40vh;
 	max-width: 15vw;
-	border-radius: 5px 5px 0px 0px;
+	border-radius: 5px;
 	overflow: hidden;
 }
 
-.background img{
+.background img {
 	max-height: 45vh;
 	max-width: 20vw;
 }
-
 
 .title {
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
-	padding:0.5rem;
+	padding: 0.5rem;
 	min-height: 40vh;
 	min-width: 15vw;
-	border-radius: 5px 5px 0px 0px;
+	border-radius: 5px;
 	position: absolute;
 	font-weight: 600;
 	color: #e4687d;
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.8),transparent);
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 	font-size: 1.5rem;
 	transition: all ease 0.15s;
 }
 
-.title:hover{
-	color:white;
-	background: #e4687d85;
+.title:hover {
+	color: white;
+	background: linear-gradient(to top, #e4687d85, transparent);
 	text-shadow: none;
 }
 
-.products{
-	display:flex;
+.products {
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;

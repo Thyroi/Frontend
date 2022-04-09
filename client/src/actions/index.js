@@ -273,6 +273,9 @@ export function selectingProduct(payload) {
 
 // Data for sending products
 export function saveSendingData() {
+  const labels = document.querySelectorAll('label');
+  const data = {}
+
   labels.forEach((label) => {
     const property = label.id;
     const value = label.nextSibling.value;

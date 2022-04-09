@@ -57,6 +57,27 @@ export function getById(params) {
 	};
 }
 
+export function getByColId(payload) {
+	return async function (dispatch) {
+		var { data } = await axios.get(
+			`http://localhost:3001/products/bycol?id=${payload}`
+		);
+
+		const res = [];
+		data?.women?.forEach((e) => {
+			e?.Products?.forEach((e) => res?.push(e));
+		});
+		data.men.forEach((e) => {
+			e?.Products?.forEach((e) => res?.push(e));
+		});
+
+		return dispatch({
+			type: 'GET_BY_COL_ID',
+			payload: res,
+		});
+	};
+}
+
 export function getSelectorsCat() {
 	return async function (dispatch) {
 		const { data } = await axios.get(
@@ -102,23 +123,11 @@ export function getByCatId(payload) {
 	};
 }
 
-export function getByColId(payload) {
+export function cleanProducts() {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycol?id=${payload}`
-		);
-
-		const res = [];
-		data?.women?.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
-		data.men.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
-
 		return dispatch({
-			type: 'GET_BY_COL_ID',
-			payload: res,
+			type: 'CLEAR_PRODUCTS',
+			payload: [],
 		});
 	};
 }

@@ -14,11 +14,11 @@ import {
   productColor,
   productSizes,
   selectVariant,
-  selectSize,
+  selectSize
 } from "../../utils/utils";
 
 //Data
-import { getById, addCart, selectingProduct } from "../../actions/index";
+import { getById, addCart, selectingProduct, cleanProducts } from "../../actions/index";
 
 export default function Product_detail() {
   const { id } = useParams();
@@ -32,6 +32,7 @@ export default function Product_detail() {
   const [state, setState] = useState();
 
   useEffect(() => {
+    dispatch(cleanProducts());
     dispatch(getById(id));
   }, []);
 

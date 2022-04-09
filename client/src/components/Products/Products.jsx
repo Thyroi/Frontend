@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import style from './Products.module.css';
 import Card from '../Card/Card';
 import Dropdown from '../Dropdown/Dropdown';
@@ -11,16 +12,23 @@ import {
 	getOffers,
 	getSelectorsCat,
 	getSelectorsCol,
+	cleanProducts
 } from '../../actions';
 
 export default function Products() {
+	function useQuery() {
+		const { search } = useLocation();
+		return React.useMemo(() => new URLSearchParams(search), [search]);
+	  }
+	const collection = useQuery().get('collection');
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
 	const collections = useSelector((state) => state.collections);
 
 	useEffect(() => {
-		dispatch(getInfo());
+		dispatch(cleanProducts());
+		collection?dispatch(getByColId((collection))):dispatch(getInfo());
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
 	}, [dispatch]);

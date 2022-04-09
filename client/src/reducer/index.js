@@ -55,6 +55,12 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				products: action.payload,
 			};
+		case 'CLEAR_PRODUCTS':
+			return {
+				...state,
+				detailEdited: {},
+				products: []
+			};
 		case 'GET_OFFERS':
 			state.products = state.allproducts;
 			return {

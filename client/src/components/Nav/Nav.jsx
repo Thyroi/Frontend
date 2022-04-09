@@ -18,7 +18,7 @@ export default function Nav() {
 	return (
 		<div className={styles.container}>
 			<NavLink
-				to='/'
+				to='/home'
 				exact
 				activeClassName={styles.active}
 				className={styles.title}>
@@ -36,7 +36,7 @@ export default function Nav() {
 						/>
 						Dashboard
 					</NavLink>
-					<NavLink
+					{/* <NavLink
 						to='/products'
 						activeClassName={styles.active}
 						className={styles.title}>
@@ -45,7 +45,7 @@ export default function Nav() {
 							icon={faShirt}
 						/>
 						Products
-					</NavLink>
+					</NavLink> */}
 
 					<NavLink
 						to='/add'

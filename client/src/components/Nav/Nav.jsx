@@ -8,6 +8,7 @@ import {
 	faCartShopping,
 	faCirclePlus,
 	faHouse,
+	faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Nav.module.css';
@@ -25,6 +26,16 @@ export default function Nav() {
 			</NavLink>
 			{!!products.length && (
 				<>
+					<NavLink
+						to='/AdminDashBoard'
+						activeClassName={styles.active}
+						className={styles.title}>
+						<FontAwesomeIcon
+							className={styles.icons}
+							icon={faChartLine}
+						/>
+						Dashboard
+					</NavLink>
 					<NavLink
 						to='/products'
 						activeClassName={styles.active}

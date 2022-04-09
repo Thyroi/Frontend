@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
 import Quantity from "../Quantity/Quantity";
 
@@ -9,42 +9,65 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-//Data
-import data from "../../Assets/Products.json";
-import { getById, addCart } from "../../actions/index";
+import {
+  selectImage,
+  productColor,
+  productSizes,
+  selectVariant,
+  selectSize,
+  prepareProduct
+} from "../../utils/utils";
 
-// Waiting for routes and data to deploy it finally
+//Data
+import { getById, addCart, selectingProduct } from "../../actions/index";
 
 export default function Product_detail() {
   const { id } = useParams();
-
   const dispatch = useDispatch();
+
+  const templateProduct = useSelector((state) => state.details);
+  const product = useSelector((state) => state.detailEdited);
+
+  const { name, brand, price, description } = product;
+  product.totalPrice = price;
+  const [state, setState] = useState();
 
   useEffect(() => {
     dispatch(getById(id));
-  }, [dispatch]);
-  /* const producto = data.find((p) => p.id_product == id);
-	const { variants } = producto; */
+  }, []);
 
-  const product = useSelector((state) => state.details);
-  const { default_image, name, variants, brand, price, description } = product;
+  useEffect(() => {
+    // Auto selecting details
+    if (product.variants) selectVariant(templateProduct, product);
+  }, [product]);
 
   const cartProducts = useSelector((state) => state.cart);
+
+  if (!product.variants) return <div>Loading</div>;
+  console.log(templateProduct);
 
   return (
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
-          <img className={style.mainImage} src={default_image} />
+          <img
+            className={style.mainImage}
+            src={product.variants && product.variants[0].ProductImages[0]}
+            id="default_image"
+          />
         </div>
         <div className={style.containerSecondImages}>
-          {variants &&
-            variants[0].ProductImages.map((image) => (
+          {product.variants &&
+            product.variants[0].ProductImages.map((image) => (
               <img
                 key={image}
                 className={style.secondImages}
                 src={image}
                 alt=""
+                onClick={() => {
+                  selectImage(image);
+                  console.log(product);
+                }}
               />
             ))}
         </div>
@@ -54,37 +77,75 @@ export default function Product_detail() {
         <div className={style.specificInf}>
           <h2 className={style.productName}>{name}</h2>
           <p className={style.collectionName}>{brand}</p>
-          <p className={style.productPrice}>{`$${price}`}</p>
+          <p
+            className={style.productPrice}
+            id="individualProductPrice"
+          >{`$${product.totalPrice}`}</p>
+
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
               <h3 className={style.sizeHeader}>Size</h3>
-              <div className={style.sizes}>
-                <div className={style.size}>S</div>
-                <div className={style.size}>M</div>
-                <div className={style.size}>L</div>
-                <div className={style.size}>xL</div>
+              <div className={style.sizes} id="sizes">
+                {product.variants &&
+                  productSizes(templateProduct).map((size) => (
+                    <div
+                      id={size}
+                      key={size}
+                      className={style.size}
+                      onClick={() => {
+                        const result = selectSize(
+                          templateProduct,
+                          product,
+                          size
+                        );
+                        dispatch(selectingProduct(result));
+                        setState(size);
+                      }}
+                    >
+                      {size}
+                    </div>
+                  ))}
               </div>
             </div>
 
             <div className={style.containerColorPreference}>
               <h3 className={style.colorHeader}>Color</h3>
-              <div className={style.colors}>
-                <div className={style.color}>blue</div>
-                <div className={style.color}>red</div>
-                <div className={style.color}>black</div>
-                <div className={style.color}>green</div>
+              <div className={style.colors} id="colors">
+                {productColor(templateProduct).map((color) => (
+                  <div
+                    id={color}
+                    key={color}
+                    className={style.color}
+                    onClick={() => {
+                      const result = selectVariant(
+                        templateProduct,
+                        product,
+                        color
+                      );
+                      dispatch(selectingProduct(result));
+                      setState(color);
+                    }}
+                  >
+                    {color}
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className={style.containerAmountFavorite}>
-              <Quantity />
+              <Quantity product={product} />
               <div className={style.favorite}>
-                <FontAwesomeIcon className={style.favoriteIcon} icon={faHeart} />
+                <FontAwesomeIcon
+                  className={style.favoriteIcon}
+                  icon={faHeart}
+                />
               </div>
             </div>
 
             <div className={style.containerBuyCart}>
-              <button className={style.buyButton}>Buy</button>
+              <Link to="/Form" onClick={() => prepareProduct(product)}>
+                <button className={style.buyButton}>Buy</button>
+              </Link>
               <button
                 className={style.cartButton}
                 id="addCartButton"
@@ -92,12 +153,16 @@ export default function Product_detail() {
                   addCart(cartProducts, product, dispatch);
                 }}
               >
-                <FontAwesomeIcon className={style.cartIcon} icon={faCartShopping} />
+                <FontAwesomeIcon
+                  className={style.cartIcon}
+                  icon={faCartShopping}
+                />
               </button>
             </div>
             <div className={style.containerUnits}>
               <p className={style.infoUnits}>
-                Available Units: <span className={style.units}>58</span>
+                Available Units:{" "}
+                <span className={style.units} id="units"></span>
               </p>
             </div>
           </div>

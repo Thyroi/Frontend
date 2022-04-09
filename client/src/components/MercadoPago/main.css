@@ -1,114 +1,123 @@
 .cont {
-    background-color: #f3f3f3;
-    display:grid;
-    grid-template-columns: 3fr 5fr;
-    grid-template-rows: 1fr 1fr;
-    width: 100%;
-    height: 90%;
-    margin-top: 3rem;
+	background-color: #f3f3f3;
+	display: grid;
+	grid-template-columns: 3fr 5fr;
+	grid-template-rows: 1fr 1fr;
+	width: 100%;
+	height: 90%;
+	margin-top: 3rem;
 }
 
-form{    
-    grid-column: 2;
-    grid-row: 1/3;
+form {
+	grid-column: 2;
+	grid-row: 1/3;
 }
 
 .form-control {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 }
 
-.cardNum,.sCode,.cName,.expiration,.email,.bank,.idType,.idNum,.inst,.pay{
-    margin: 0.2rem;
-    width: 80%;
-    background: #f9f9f9;
-    border: 1px solid transparent;
-    border-radius: 0.3rem;
-    padding:0.5rem;
-    color: #565656;
-    outline: none;
-    font-weight: 300;
+.cardNum,
+.sCode,
+.cName,
+.expiration,
+.email,
+.bank,
+.idType,
+.idNum,
+.inst,
+.pay {
+	margin: 0.2rem;
+	width: 80%;
+	background: #f9f9f9;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	padding: 0.5rem;
+	color: #565656;
+	outline: none;
+	font-weight: 300;
 }
 
-.expiration{
-    background: #f9f9f9;
-    display:flex;
-    justify-content:space-around;
-    align-items: center;
-    color: #565656;
-    outline: none;
-    font-weight: 300;
+.expiration {
+	background: #f9f9f9;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	color: #565656;
+	outline: none;
+	font-weight: 300;
 }
 
-.expM,.expY{
-    max-width: 47%;
-    margin: 0 2.5%;
-    background: #f9f9f9;
-    color: #565656;
-    outline: none;
-    font-weight: 300;
+.expM,
+.expY {
+	max-width: 47%;
+	margin: 0 2.5%;
+	background: #f9f9f9;
+	color: #565656;
+	outline: none;
+	font-weight: 300;
 }
 
-.pay{
-    background-color: #e4687c;
-    color:white;
-    font-weight: 600;
-    padding: 0.5rem;
-    width: 150;
-    border: 1px solid transparent;
-    border-radius: 0.3rem;
-    transition: all ease-in-out 0.15s;
-    cursor: pointer;
+.pay {
+	background-color: #e4687c;
+	color: white;
+	font-weight: 600;
+	padding: 0.5rem;
+	width: 15rem;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	cursor: pointer;
 }
 
-.pay:hover{
-    background-color: white;
-    color:#e4687c;
+.pay:hover {
+	background-color: white;
+	color: #e4687c;
 }
 
-.card{
-    grid-column: 1;
-    grid-row:1;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 0.5rem 0.5rem;
+.card {
+	grid-column: 1;
+	grid-row: 1;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 0.5rem 0.5rem;
 }
 
-.response{
-    grid-column: 1;
-    grid-row:2;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+.response {
+	grid-column: 1;
+	grid-row: 2;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 }
 
-.resCont{
-    display:flex;
-    margin: 0.5rem 0.5rem;
-    background-color: white;
-    border:1px solid transparent;
-    border-radius: 1rem;
-    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
-    width: 70%;
-    height: 70%;
-    justify-content: center;
-    align-items: center;
+.resCont {
+	display: flex;
+	margin: 0.5rem 0.5rem;
+	background-color: white;
+	border: 1px solid transparent;
+	border-radius: 1rem;
+	box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+	width: 70%;
+	height: 70%;
+	justify-content: center;
+	align-items: center;
 }
 
 .rccs__card--unknown > div {
-    background: #565656;
-    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
- 
+	background: #565656;
+	box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
 }
 .rccs__card--unknown > div:before {
-    backdrop-filter: blur(10px);
-    content: "";
-    height: 100%;
-    width: 100%;
+	backdrop-filter: blur(10px);
+	content: '';
+	height: 100%;
+	width: 100%;
 }

@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import style from './Products.module.css';
 import Card from '../Card/Card';
 import Dropdown from '../Dropdown/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -32,7 +34,6 @@ export default function Products() {
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
 	}, [dispatch]);
-
 
 	/* const products = data */
 
@@ -211,7 +212,7 @@ export default function Products() {
 					<button
 						onClick={(e) => previousPage(e)}
 						disabled={currentPage === 1}>
-						{'<<'}
+						<FontAwesomeIcon icon={faCaretLeft} />
 					</button>
 					{pageNumbers?.slice(i, j).map((number) => {
 						return (
@@ -229,7 +230,7 @@ export default function Products() {
 					<button
 						disabled={currentPage === pageNumbers.length}
 						onClick={(e) => nextPage(e)}>
-						{'>>'}
+						<FontAwesomeIcon icon={faCaretRight} />
 					</button>
 				</div>
 			</div>

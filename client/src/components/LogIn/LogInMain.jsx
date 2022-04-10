@@ -56,7 +56,7 @@ function LogInMain(params) {
               <input className={style.loginButton} type="submit" value="Login" />
               <Link className={style.signUpButton} to="/signup">Sign Up</Link>
               <GoogleLogin
-                clientId="537829890364-0gr73bp197j7omes6f97ple6jn4mhb3u.apps.googleusercontent.com"
+                clientId="969216311730-erq289787jpgirnsaro1cnd34vcikq20.apps.googleusercontent.com"
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}

@@ -11,7 +11,7 @@ import {
 	getInfo,
 	getOffers,
 	getSelectorsCat,
-	//getSelectorsCol,
+	getSelectorsCol,
 	cleanProducts,
 } from '../../actions';
 
@@ -30,8 +30,9 @@ export default function Products() {
 		dispatch(cleanProducts());
 		collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
 		dispatch(getSelectorsCat());
-		// dispatch(getSelectorsCol());
+		dispatch(getSelectorsCol());
 	}, [dispatch]);
+
 
 	/* const products = data */
 
@@ -136,7 +137,6 @@ export default function Products() {
 		<div className={style.container}>
 			<div className={style.filters}>
 				{/* options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...] */}
-
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[

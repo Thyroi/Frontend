@@ -6,27 +6,27 @@ export default function Landing() {
 	let collections = [
 		{
 			id: 2,
-			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--Women_SpringEscape_FW22_Drop1_LOOK01_VISUAL4.png?wid=824&hei=824',
+			img: 'https://la.louisvuitton.com/content/dam/lv/online/stories/fashion/W_Fa_RW_Cruise_2022_v2.html/jcr:content/assets/looks/LV_CRUISE_22_LOOK_15.jpg?imwidth=656',
 			name: 'Summer',
 		},
 		{
 			id: 3,
-			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--Women_SpringEscape_FW22_Drop1_LOOK01_VISUAL4.png?wid=824&hei=824',
+			img: 'https://la.louisvuitton.com/content/dam/lv/online/stories/fashion/M_Fa_RW_Show_SS22_V2.html/jcr:content/assets/looks/Men_Show_SS22_Look_22.jpg?imwidth=656',
 			name: 'Autumn',
 		},
 		{
 			id: 4,
-			img: 'https://www.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton--BC_DAY-BREAK_1680x3360_LVCOM_2.jpg?wid=656',
+			img: 'https://la.louisvuitton.com/content/dam/lv/online/stories/fashion/M_Fa_RW_Show_SS22_V2.html/jcr:content/assets/looks/Men_Show_SS22_Look_42.jpg?imwidth=656',
 			name: 'Winter',
 		},
 		{
 			id: 1,
-			img: 'https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-polochon-other-leathers-bags--M59927_PM1_Worn%20view.png?wid=2048&hei=2048',
+			img: 'https://la.louisvuitton.com/content/dam/lv/online/stories/fashion/W_Fa_RW_Cruise_2022_v2.html/jcr:content/assets/looks/LV_CRUISE_22_LOOK_20.jpg?imwidth=656',
 			name: 'Spring',
 		},
 		{
 			id: 0,
-			img: 'https://s3.envato.com/files/335455718/160_1R3A9771.jpg',
+			img: 'https://i.ibb.co/LgH3Jk9/jhyj.png',
 			name: 'All',
 		},
 	];

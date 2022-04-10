@@ -30,7 +30,6 @@ export function getSelectorsCol() {
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			console.log(obj);
 			var name = await axios.get(
 				`http://localhost:3001/products?filters=${obj}`
 			);
@@ -81,20 +80,16 @@ export function getSelectorsCat() {
 export function getByCatId(payload) {
 	return async function (dispatch) {
 		var { data } = await axios.get(
-			`http://localhost:3001/products/bycat?id=${payload}`
+			`http://localhost:3001/products/bycat`
 		);
 
-		const res = [];
-		data?.women?.forEach((e) => {
-			e?.Products?.forEach((e) => res.push(e));
-		});
-		data?.men.forEach((e) => {
-			e?.Products?.forEach((e) => res.push(e));
-		});
-
+		const res = [];		
+		data?.women?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
+		data?.men?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
+		
 		return dispatch({
 			type: 'GET_BY_CAT_ID',
-			payload: res,
+			payload: res
 		});
 	};
 }
@@ -193,7 +188,6 @@ export function getAllUsers() {
 export function updatePermission(payload) {
 	return async function (dispatch) {
 		const update = await axios.put(`http://localhost:3001/users`, payload);
-		console.log(update.data);
 		return dispatch({
 			type: 'UPDATE_PERMISSION',
 			payload: update.data,
@@ -293,7 +287,6 @@ export function saveSendingData() {
 			property === 'zip_code' ||
 			property === 'others'
 		) {
-			console.log(data.address);
 			data.address[property] = value;
 			return;
 		}

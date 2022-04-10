@@ -26,11 +26,13 @@
 	max-width: 15vw;
 	border-radius: 5px;
 	overflow: hidden;
+	transition: all 0.3s;
 }
 
 .background img {
-	max-height: 45vh;
-	max-width: 20vw;
+	max-height: 40vh;
+	filter: saturate(0);
+	transition: all 0.3s;
 }
 
 .title {
@@ -43,16 +45,18 @@
 	border-radius: 5px;
 	position: absolute;
 	font-weight: 600;
-	color: #e4687d;
+	color: #ffffff98;
 	background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 	font-size: 1.5rem;
 	transition: all ease 0.15s;
 }
 
-.title:hover {
-	color: white;
-	background: linear-gradient(to top, #e4687d85, transparent);
+.container:hover img, .container:hover .title {
+	color: #ffffff;
+	filter: saturate(1);
+	/* background: linear-gradient(to top, #e4687d60, transparent); */
 	text-shadow: none;
+	background: linear-gradient(to top, rgba(122, 0, 0, 0.664), transparent);
 }
 
 .products {

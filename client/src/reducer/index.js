@@ -44,7 +44,7 @@ export default function rootReducer(state = initialState, action) {
 				collections: action.payload,
 			};
 		case 'GET_BY_CAT_ID':
-			state.products = state.allproducts;
+			// state.products = state.allproducts;
 			return {
 				...state,
 				products: action.payload,

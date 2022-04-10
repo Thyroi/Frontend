@@ -21,7 +21,7 @@ export default function Dropdown({ placeHolder, options, handler }) {
 							name={placeHolder.toLowerCase()}
 							value={id}
 							onClick={handler}>
-							{name}
+							{name.split('_').join(' ')[0].toUpperCase()+name.split('_').join(' ').slice(1)}
 						</button>
 					);
 				})}

@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import style from "./Quantity.module.scss";
 
 import { increaseLocalStock, decreaseLocalStock } from "../../utils/utils";
-
 import { selectingProduct, updatingCart } from "../../actions/index";
 
+import style from "./Quantity.module.scss";
+
 function Quantity(props) {
-  const [state, setState] = useState();
+  // const [state, setState] = useState();
   const product = props.product;
 
-  useEffect(() => {
-    setState(product);
-  }, [product]);
+  // useEffect(() => {
+  //   setState(product);
+  // }, [product]);
 
-  const path = useLocation().pathname;
+  const location = useLocation().pathname;
+  const path = location.pathname;
+
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  if (!product.variants) return <div> </div>;
+  if (!product.variants) return <div></div>;
 
   return (
     <div className={style.counterContainer}>
@@ -27,7 +29,9 @@ function Quantity(props) {
         className={style.counterButton}
         onClick={() => {
           const newProduct = Object.assign({}, decreaseLocalStock(product));
-          path = "/cart" ? dispatch(updatingCart(newProduct)) : dispatch(selectingProduct(newProduct));
+          path === "/cart"
+            ? dispatch(updatingCart(newProduct))
+            : dispatch(selectingProduct(newProduct));
         }}
       >
         -
@@ -38,8 +42,13 @@ function Quantity(props) {
       <button
         className={style.counterButton}
         onClick={() => {
-          const newProduct = Object.assign({}, increaseLocalStock(product, cartItems));
-          path = "/cart" ? dispatch(updatingCart(newProduct)) : dispatch(selectingProduct(newProduct));
+          const newProduct = Object.assign(
+            {},
+            increaseLocalStock(product, cartItems)
+          );
+          path === "/cart"
+            ? dispatch(updatingCart(newProduct))
+            : dispatch(selectingProduct(newProduct));
         }}
       >
         +

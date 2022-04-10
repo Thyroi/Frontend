@@ -46,20 +46,13 @@ export default function Product_detail() {
   }, []);
 
   useEffect(() => {
-    // Auto selecting details
-    // if (product.variants) {
-    //   
-    // }
     if (product.variants) {
-      console.log("sss")
       const newProduct = Object.assign({},formattingProduct(product, templateProduct));
       dispatch(selectingProduct(newProduct));
     }
   }, [product.price]);
 
   if (!product.variants) return <div>Loading</div>;
-
-  console.log(product);
 
   return (
     <div className={style.container}>

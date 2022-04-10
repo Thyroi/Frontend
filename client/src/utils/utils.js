@@ -47,7 +47,7 @@ export function selectImage(image) {
 // Showing colors
 
 export function productColor(product) {
-  if (product == undefined) return [];
+  if (product === undefined) return [];
 
   let colors = [];
   product.variants?.forEach((variant) => {
@@ -60,7 +60,7 @@ export function productColor(product) {
 // Showing sizes
 
 export function productSizes(product) {
-  if (product == undefined) return [];
+  if (product === undefined) return [];
 
   let sizes = [];
   product.variants?.forEach((variant) => {

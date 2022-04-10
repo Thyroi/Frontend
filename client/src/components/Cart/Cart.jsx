@@ -28,7 +28,7 @@ function Cart(params) {
         itemsCart.map((item) => {
           const { name, totalPrice, variants, id_product } = item;
           return (
-            <div className={style.itemContainer}>
+            <div key={item.id_product} className={style.itemContainer}>
               <div className={style.imgContainer}>
                 <Link to={`/detail/${id_product}`}>
                   <img

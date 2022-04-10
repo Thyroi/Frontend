@@ -17,72 +17,114 @@ function Form() {
         <label className={style.label} id="name">
           Nombre{" "}
         </label>
-        <input type="text" placeholder="Escribe tu nombre" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu nombre"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="lastname">
           Apellido
         </label>
-        <input type="text" placeholder="Escribe tu nombre" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu nombre"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="email">
           Correo electrónico
         </label>
-        <input type="text" placeholder="Escribe tu cor" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu cor"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="phone">
           Teléfono
         </label>
-        <input type="number" placeholder="Escribe tu phone" />
+        <input
+          className={style.input}
+          type="number"
+          placeholder="Escribe tu phone"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="calle">
           Calle
         </label>
-        <input type="text" placeholder="Escribe tu calle" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu calle"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="city">
           Ciudad
         </label>
-        <input type="text" placeholder="Escribe tu ciudad" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu ciudad"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="zip_code">
           Zip code
         </label>
-        <input type="text" placeholder="Escribe tu zip code" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu zip code"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="state">
           Departamento/Provincia
         </label>
-        <input type="text" placeholder="Escribe tu departamento o provincia" />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Escribe tu departamento o provincia"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <label className={style.label} id="others">
           Otros
         </label>
-        <input type="text" placeholder="Casa, apartamento..." />
+        <input
+          className={style.input}
+          type="text"
+          placeholder="Casa, apartamento..."
+        />
       </div>
 
       <div className={style.containerInputs}>
-        <input type="submit" value="Save data" id="saveNewData" />
+        <input
+          className={style.input}
+          type="submit"
+          value="Save data"
+          id="saveNewData"
+        />
       </div>
 
       <div className={style.containerInputs}>
         <Link to="/cart/pay">
           <input
+            className={style.input}
             type="submit"
             value="Confirmar datos de envío"
             id="sendDataButton"

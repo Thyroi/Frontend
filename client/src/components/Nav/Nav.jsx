@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	
+
 	faCartShopping,
 	faCirclePlus,
 	faHouse,
@@ -14,6 +14,7 @@ import {
 import styles from './Nav.module.css';
 
 export default function Nav() {
+	const history = useHistory();
 	const products = useSelector((state) => state.products);
 	return (
 		<div className={styles.container}>
@@ -24,6 +25,7 @@ export default function Nav() {
 				className={styles.title}>
 				<FontAwesomeIcon className={styles.icons} icon={faHouse} /> Home
 			</NavLink>
+
 			{!!products.length && (
 				<>
 					<NavLink
@@ -70,6 +72,9 @@ export default function Nav() {
 					</NavLink>
 				</>
 			)}
+
+			<button onClick={history.goBack}
+			>go Back!</button>
 		</div>
 	);
 }

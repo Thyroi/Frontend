@@ -15,7 +15,8 @@ import {
   productSizes,
   selectVariant,
   selectSize,
-  prepareProduct
+  prepareProduct,
+  formattingProduct
 } from "../../utils/utils";
 
 //Data
@@ -28,6 +29,8 @@ export default function Product_detail() {
   const templateProduct = useSelector((state) => state.details);
   const product = useSelector((state) => state.detailEdited);
 
+  const cartProducts = useSelector((state) => state.cart);
+
   const { name, brand, price, description } = product;
   product.totalPrice = price;
   const [state, setState] = useState();
@@ -39,13 +42,14 @@ export default function Product_detail() {
 
   useEffect(() => {
     // Auto selecting details
-    if (product.variants) selectVariant(templateProduct, product);
+    if (product.variants) {
+      const result = formattingProduct(product, templateProduct)
+      dispatch(selectingProduct(result));
+    };
   }, [product]);
 
-  const cartProducts = useSelector((state) => state.cart);
 
   if (!product.variants) return <div>Loading</div>;
-  console.log(templateProduct);
 
   return (
     <div className={style.container}>
@@ -99,7 +103,7 @@ export default function Product_detail() {
                           product,
                           size
                         );
-                        dispatch(selectingProduct(result));
+                        // dispatch(selectingProduct(result));
                         setState(size);
                       }}
                     >
@@ -123,7 +127,7 @@ export default function Product_detail() {
                         product,
                         color
                       );
-                      dispatch(selectingProduct(result));
+                      // dispatch(selectingProduct(result));
                       setState(color);
                     }}
                   >

@@ -159,7 +159,7 @@ export default function AddNewProduct() {
 
 					<textarea
 						name='description'
-						placeholder='description'
+						placeholder='Description'
 						ref={register({ required: true })}
 					/>
 				</div>
@@ -171,12 +171,13 @@ export default function AddNewProduct() {
 								<li key={item.id}>
 									<input
 										ref={register()}
-										placeholder='Select Color'
+										placeholder='Color'
 										name={`variants[${index}].ColorName`}
 									/>
 
 									<Controller
 										as={<input />}
+										type='number'
 										name={`variants[${index}].Stocks.S`}
 										control={control}
 										defaultValue=''
@@ -192,6 +193,7 @@ export default function AddNewProduct() {
 									/>
 									<Controller
 										as={<input />}
+										type='number'
 										name={`variants[${index}].Stocks.L`}
 										control={control}
 										defaultValue=''
@@ -199,6 +201,7 @@ export default function AddNewProduct() {
 									/>
 									<Controller
 										as={<input />}
+										type='number'
 										name={`variants[${index}].Stocks.XL`}
 										control={control}
 										defaultValue=''

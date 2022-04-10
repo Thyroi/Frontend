@@ -49,7 +49,11 @@ export function getByName(obj) {
 export function getById(params) {
 	return async function (dispatch) {
 		var id = await axios.get(`http://localhost:3001/products/${params}`);
-    id.data.variants[0].ProductImages.shift();
+
+    id.data.variants.forEach((variant) => {
+      variant.ProductImages.shift();
+    });
+
 		return dispatch({
 			type: 'GET_BY_ID',
 			payload: id.data,
@@ -151,8 +155,7 @@ export function addProduct(payload) {
 
 export function addCart(cartProducts, payload, dispatch) {
 	if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
-		if (localStorage.getItem('cart') != null)
-			localStorage.removeItem('cart');
+		if (localStorage.getItem('cart') != null) localStorage.removeItem('cart');
 		cartProducts.unshift(payload);
 
 		localStorage.setItem('cart', JSON.stringify(cartProducts));

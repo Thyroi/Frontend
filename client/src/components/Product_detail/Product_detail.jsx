@@ -74,7 +74,6 @@ export default function Product_detail() {
                 alt=""
                 onClick={() => {
                   selectImage(image);
-                  console.log(product);
                 }}
               />
             ))}

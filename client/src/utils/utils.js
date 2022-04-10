@@ -84,8 +84,9 @@ export function formattingProduct(product, templateProduct) {
 
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
-  product.variants[0].leftUnits =
-    copyTemplateProduct.variants[0].Stocks[key] - 1;
+  product.variants[0].leftUnits = copyTemplateProduct.variants[0].Stocks[key] - 1;
+  
+  product.totalPrice = product.price;
 
   focusSelectedColor(product.variants[0].ColorName);
   focusSelectedSize(Object.keys(product.variants[0].Stocks)[0]);

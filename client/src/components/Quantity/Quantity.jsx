@@ -15,7 +15,7 @@ function Quantity(props) {
   //   setState(product);
   // }, [product]);
 
-  const location = useLocation().pathname;
+  const location = useLocation();
   const path = location.pathname;
 
   const cartItems = useSelector((state) => state.cart);

@@ -43,14 +43,14 @@ function LogInMain(params) {
               <input className={style.input} type="password" placeholder="Type password"/>
             </div>
 
-            <div className={style.containerOptions}>
-              <div className={style.containerRememberMe}>
+            {/* <div className={style.containerOptions}>
+              {/* <div className={style.containerRememberMe}>
                 <input className={style.buttonRemember} type="checkbox" />
                 <label className={style.textRemember}>Remember me?</label>
-              </div>
+              </div> 
 
               <Link className={style.forgotText} to="/retrievepassword">Forgot password?</Link>
-            </div>
+            </div> */}
 
             <div className={style.containerLoginSignUp}>
               <input className={style.loginButton} type="submit" value="Login" />

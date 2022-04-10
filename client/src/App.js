@@ -71,8 +71,8 @@ export default function App() {
 						/>
 					</div>
 				</div>
+				<Redirect to='/home' />
 			</Route>
-			<Redirect to='/home' />
 		</Switch>
 	);
 }

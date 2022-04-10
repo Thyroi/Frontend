@@ -34,7 +34,6 @@ export default function Product_detail() {
   const templateProduct = useSelector((state) => state.details);
   let product = useSelector((state) => state.detailEdited);
 
-  console.log("product", product);
   const cartProducts = useSelector((state) => state.cart);
 
   const { name, brand, price, description } = product;
@@ -109,12 +108,8 @@ export default function Product_detail() {
                       key={size}
                       className={style.size}
                       onClick={() => {
-                        const result = selectSize(
-                          templateProduct,
-                          product,
-                          size
-                        );
-                        // dispatch(selectingProduct(result));
+                        const result = Object.assign({}, selectSize(templateProduct, product, size));
+                        dispatch(selectingProduct(result));
                         setState(size);
                       }}
                     >
@@ -133,12 +128,8 @@ export default function Product_detail() {
                     key={color}
                     className={style.color}
                     onClick={() => {
-                      const result = selectVariant(
-                        templateProduct,
-                        product,
-                        color
-                      );
-                      // dispatch(selectingProduct(result));
+                      const result = Object.assign({}, selectVariant(templateProduct, product, color));
+                      dispatch(selectingProduct(result));
                       setState(color);
                     }}
                   >

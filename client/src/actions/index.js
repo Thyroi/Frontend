@@ -157,7 +157,7 @@ export function addCart(cartProducts, payload, dispatch) {
 	if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
 		if (localStorage.getItem('cart') != null)
 			localStorage.removeItem('cart');
-		cartProducts.push(payload);
+		cartProducts.unshift(payload);
 
 		localStorage.setItem('cart', JSON.stringify(cartProducts));
 		const cart = JSON.parse(localStorage.getItem('cart'));
@@ -230,10 +230,17 @@ export function removeCart(cartProducts, payload) {
 	};
 }
 
-export function updatingCart(cartProducts) {
-	localStorage.setItem('cart', JSON.stringify(cartProducts));
-	const cart = JSON.parse(localStorage.getItem('cart'));
-
+export function updatingCart(product) {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  cart = cart.map((p) => {
+    if(p.id_product === product.id_product){
+      return product
+    }
+    
+    return p;
+  });
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
 	return {
 		type: 'UPDATING_CART',
 		payload: cart,

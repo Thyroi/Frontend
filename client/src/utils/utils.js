@@ -79,69 +79,28 @@ export function formattingProduct(product, templateProduct) {
   const copyTemplateProduct = Object.assign({}, templateProduct);
   product.variants = [];
   product.variants.push(Object.assign({}, copyTemplateProduct.variants[0]));
-  
+
   const key = Object.keys(copyTemplateProduct.variants[0].Stocks)[0];
-  
+
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
-  product.variants[0].leftUnits  = copyTemplateProduct.variants[0].Stocks[key] - 1; 
+  product.variants[0].leftUnits =
+    copyTemplateProduct.variants[0].Stocks[key] - 1;
 
+  focusSelectedColor(product.variants[0].ColorName);
+  focusSelectedSize(Object.keys(product.variants[0].Stocks)[0]);
   return product;
 }
 
 export function selectVariant(templateProduct, product, color) {
-  if (!color) {
-    color = product.variants[0].ColorName;
-
-    const auxiliarObject = Object.assign({}, templateProduct);
-    const variantsTemplate = auxiliarObject.variants;
-    const size = Object.keys(product.variants[0].Stocks)[0];
-    const units = product.variants[0].Stocks[size];
-
-    product = formattingProduct(variantsTemplate, product, size, units, color);
-    focusSelectedSize(size);
-    focusSelectedColor(color);
-
-    return product;
-  }
-
-  if (product.variants[0].ColorName === color) {
-    focusSelectedColor(color);
-    return product;
-  }
-
-  templateProduct.variants.forEach((variant) => {
+  const copyTemplateProduct = Object.assign({}, templateProduct);
+  copyTemplateProduct.variants.forEach((variant) => {
     if (variant.ColorName === color) {
-      let sizes = document.querySelector("#sizes");
-      let childSizes = sizes.childNodes;
+      copyTemplateProduct.variants = [];
+      copyTemplateProduct.variants.push(variant);
 
-      childSizes.forEach((childSize) => {
-        if (childSize.classList.contains(styleDetail.selectedSize)) {
-          const auxiliarObject = Object.assign({}, templateProduct);
-          const variantsTemplate = auxiliarObject.variants;
-          const size = childSize.innerHTML;
-
-          let units = 0;
-          variantsTemplate.find((variant) => {
-            if (
-              variant.ColorName === color &&
-              Object.keys(variant.Stocks).includes(size)
-            ) {
-              units = variant.Stocks[size];
-              return;
-            }
-          });
-
-          product = formattingProduct(
-            variantsTemplate,
-            product,
-            size,
-            units,
-            color
-          );
-          focusSelectedColor(color);
-        }
-      });
+      product = formattingProduct(product, copyTemplateProduct);
+      focusSelectedColor(color);
     }
   });
 
@@ -149,41 +108,18 @@ export function selectVariant(templateProduct, product, color) {
 }
 
 export function selectSize(templateProduct, product, size) {
-  let sizes = document.querySelector("#sizes");
-  let childSizes = sizes.childNodes;
+  const variants = templateProduct.variants;
+  variants.forEach((variant) => {
+    if (variant.ColorName === product.variants[0].ColorName) {
 
-  childSizes.forEach((childSize) => {
-    if (childSize.textContent === size) {
-      let colors = document.querySelector("#colors");
-      let childColors = colors.childNodes;
-
-      childColors.forEach((childColor) => {
-        if (childColor.classList.contains(styleDetail.selectedColor)) {
-          const auxiliarObject = Object.assign({}, templateProduct);
-          const variantsTemplate = auxiliarObject.variants;
-          const color = childColor.innerHTML;
-
-          let units = 0;
-          variantsTemplate.find((variant) => {
-            if (
-              variant.ColorName === color &&
-              Object.keys(variant.Stocks).includes(size)
-            ) {
-              units = variant.Stocks[size];
-              return;
-            }
-          });
-
-          product = formattingProduct(
-            variantsTemplate,
-            product,
-            size,
-            units,
-            color
-          );
+      const Stocks = variant.Stocks;
+      for (let s in Stocks) {
+        if (s === size) {
+          product.variants[0].Stocks = {};
+          product.variants[0].Stocks[s] = 1;
           focusSelectedSize(size);
         }
-      });
+      }
     }
   });
 
@@ -230,8 +166,9 @@ function focusSelectedSize(size) {
 
 export function increaseLocalStock(product) {
   const top = product.variants[0].leftUnits;
-  let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
-  if(nextAmount <= top){
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount <= top) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
     product.variants[0].leftUnits -= 1;
 
@@ -244,9 +181,9 @@ export function increaseLocalStock(product) {
 }
 
 export function decreaseLocalStock(product, templateProduct) {
-
-  let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
-  if(nextAmount > 2){
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount > 2) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
     product.variants[0].leftUnits += 1;
 
@@ -269,31 +206,12 @@ export function totalDue(product, cartItems) {
   }
 
   let price = product.price;
-  let units = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  let units =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
   let total = (price * units).toFixed(2);
-  
+
   return total;
 }
-
-// export function changingAttributesCart(cartItems, product, quantity) {
-//   console.log(cartItems, product);
-//   const cart = cartItems.map((item) => {
-//     if (item.id_product === product.id_product) {
-//       item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-//         quantity;
-//       item.totalPrice = totalDue(item);
-
-//       return item;
-//     }
-
-//     return item;
-//   });
-
-//   console.log(cart);
-//   return cart;
-// }
-
-// Patch del client
 
 export async function prepareProduct(product, cartItems) {
   let productToBuy = [];
@@ -352,10 +270,10 @@ export async function purchaseOrder() {
 }
 
 export function sendingCart(cartItems) {
-  if(cartItems.length === 0 || cartItems === undefined) return;
+  if (cartItems.length === 0 || cartItems === undefined) return;
 
   const dataToSend = {
-    cart_items: { cartItems }
+    cart_items: { cartItems },
   };
 
   axios.put("http://localhost:3001/cart/6631651", dataToSend);

@@ -11,8 +11,7 @@ import {
 	addCategory,
 } from '../../actions';
 import style from './AdminDashBoard.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+
 
 function AdminDashBoard() {
 	const dispatch = useDispatch();
@@ -38,9 +37,10 @@ function AdminDashBoard() {
 	const removeFunction = (e) => {
 		dispatch(
 			deleteUser({
-				id_user: e.target.value,
+				id_user: parseInt(e.target.value),
 			})
 		);
+		console.log(e.target.value);
 		setTimeout(() => {
 			dispatch(getAllUsers());
 		}, 1000);
@@ -136,7 +136,7 @@ function AdminDashBoard() {
 			dispatch(getAllUsers());
 		}, 1000);
 	};
-
+	console.log(allUser.map((user) => user.id_user));
 	return (
 		<div className={style.divContainerAdmin}>
 			<div className={style.showUsers}>
@@ -176,11 +176,8 @@ function AdminDashBoard() {
 										onClick={(e) => removeFunction(e)}
 										style={{
 											maxWidth: '3rem',
-										}}>
-										<FontAwesomeIcon
-											className={style.icons}
-											icon={faClose}
-										/>
+										}}> ✖
+										
 									</button>
 								</div>
 								<div className={style.bottom}>

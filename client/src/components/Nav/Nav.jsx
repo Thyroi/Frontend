@@ -48,7 +48,7 @@ export default function Nav() {
 					</NavLink> */}
 
 					<NavLink
-						to='/add'
+						to='/AddNewProduct'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon

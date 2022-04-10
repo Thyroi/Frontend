@@ -47,6 +47,7 @@ export default function App() {
 							component={AddNewProduct}
 						/>
 						<Route exact path='/products' component={Products} />
+						 <Route exact path='/home' component={Products} />{/* //para que funcione el home */}
 						<Route
 							exact
 							path='/AdminDashBoard'

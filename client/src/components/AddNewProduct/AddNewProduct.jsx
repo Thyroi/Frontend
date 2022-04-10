@@ -6,17 +6,31 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { getSelectorsCat, addProduct } from "../../actions";
 import { storage } from "../../Assets/firebase";
 import { v4 } from "uuid";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 export default function AddNewProduct() {
  
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
+  const dispatch = useDispatch();
+  const categorias = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    dispatch(getSelectorsCat());
+  },[dispatch]);
 
 
-	const { register, control, handleSubmit, formState: { errors } } = useForm({
+  let mujeres = categorias?.women
+  let hombres = categorias?.men
+
+
+
+	const { register, control, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
     	variants: [{ ColorName: "Blanco", Stocks: {L: 'a ver', M: 'a ver'}}] 
     }
@@ -30,10 +44,21 @@ export default function AddNewProduct() {
   const onSubmit = (data) => {
     data.collection = parseInt(data.collection);
     data.price = parseInt(data.price);
+    data.categories= [data.categories]
+    data.default_image = imageUrls[0];
+    data.id_product =   2;
+    data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
+    data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
+    data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
+    data.variants[0].Stocks.XL = parseInt(data.variants[0].Stocks.XL);
+
+   
     for(let i = 0; i < imageUrls.length; i++){  
       data.variants[i].SwatchImage = imageUrls[i];
     }
-    console.log({product : data, collection: data.coleccion, categories: data.categories});
+    dispatch(addProduct({product: data}));
+    console.log({product: data})
+    //reset()
   };
 
 
@@ -64,33 +89,16 @@ export default function AddNewProduct() {
     	</div>
     	<div className={styles.category}>
 			<select name="categories" ref={register({required: true, })}>
+      
 				<option value="">Select categories</option>
-				<option value="Pantalones">Pantalones</option>
-				<option value="Camisetas">Camisetas</option>
-				<option value="Zapatos">Zapatos</option>
+        {
+          mujeres?.map(c=> <option key={c.id}value={c.name}>{c.name}</option>)}
+          {hombres?.map(c=> <option key={c.id}value={c.name}>{c.name}</option>)
+        }
 			</select>
       {errors.categories && <span className={styles.error}>This field is required</span>}
       
         </div>
-            	<div className={styles.category}>
-			<select name="categories" ref={register({required: true, })}>
-				<option value="">Select categories</option>
-				<option value="Pantalones">Pantalones</option>
-				<option value="Camisetas">Camisetas</option>
-				<option value="Zapatos">Zapatos</option>
-			</select>
-      {errors.categories && <span className={styles.error}>This field is required</span>}
-      
-        </div>
-		<div className={styles.gender}>
-			<select name="gender" ref={register({required: true})}>
-				<option value="">Select Gender</option>
-				<option value="Mujer">Mujer</option>
-				<option value="Hombre">Hombre</option>
-				<option value="Niños">Niños</option>
-			</select>
-			{errors.gender && <span className={styles.error}> This field is required</span>}
-		</div>
 		<div className={styles.collection}>
 			<select name='collection' ref={register({required: true})}>
 				<option value=''>Select Collection</option>
@@ -118,12 +126,8 @@ export default function AddNewProduct() {
         {fields.map((item, index) => {
         return (
             <li key={item.id}>
-              <select ref={register()} name={`variants[${index}].ColorName`}>
-                <option value=''> Select Color</option>
-                <option value={'Blanco'}>Blanco</option>
-                <option value={'Rojo'}>Rojo</option>	
-                <option value={'Azul'}>Azul</option>
-              </select>
+              <input ref={register()} placeholder='Select Color' name={`variants[${index}].ColorName`}/>
+
             <Controller
                 as={<input />}
                 name={`variants[${index}].Stocks.S`}
@@ -133,6 +137,7 @@ export default function AddNewProduct() {
               />
                 <Controller
                 as={<input />}
+                type="number"
                 name={`variants[${index}].Stocks.M`}
                 control={control}
                 defaultValue=''
@@ -183,6 +188,7 @@ export default function AddNewProduct() {
 
       <input type="submit" />
     </form>
+    <p></p>
     {imageUrls.map((url) => {
         return <img src={url} alt={url}/>;
       })}

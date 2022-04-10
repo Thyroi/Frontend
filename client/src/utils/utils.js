@@ -246,19 +246,18 @@ export function increaseLocalStock(product, templateProduct) {
 }
 
 export function decreaseLocalStock(product) {
-  let amount = document.querySelector("#quantity");
-  let quantity = parseInt(amount.textContent);
-  let availableUnits = parseInt(document.querySelector("#units").textContent);
-  let unitsForBuy = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
- 
-  if (quantity > 1) {
-    console.log("___-");
-    document.querySelector("#quantity").textContent = quantity - 1;
 
-    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity - 1;
-    document.querySelector("#units").textContent = availableUnits + 1;
+  let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] - 1;
+  if(nextAmount > 0){
+    console.log("wor")
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
+    templateProduct.variants[0].Stocks[Object.keys(templateProduct.variants[0].Stocks)[0]] += 1;
+
+    const totalToPay = totalDue(product);
+    product.totalToPrice = totalToPay;
   }
-  // document.querySelector("#total").innerHTML = totalDue();
+
+  console.log(product)
   return product;
 }
 

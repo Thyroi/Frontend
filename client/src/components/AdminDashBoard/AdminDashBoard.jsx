@@ -9,7 +9,7 @@ import {
 	getSelectorsCat,
 	addNewUser,
 	addCategory,
-} from '../../actions';
+} from '../../actions/index';
 import style from './AdminDashBoard.module.css';
 
 
@@ -173,7 +173,7 @@ function AdminDashBoard() {
 									</select>
 									<button
 										value={user.id_user}
-										onClick={(e) => removeFunction(e)}
+										onClick={removeFunction}
 										style={{
 											maxWidth: '3rem',
 										}}> ✖

@@ -9,20 +9,20 @@ import {
 import { getSelectorsCat, addProduct } from "../../actions";
 import { storage } from "../../Assets/firebase";
 import { v4 } from "uuid";
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+
 
 
 export default function AddNewProduct() {
  
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
-  const dispatch = useDispatch();
-  const categorias = useSelector((state) => state.categories);
+  const dispatch = useDispatch()
+  const categorias = useSelector(state => state.categories)
 
   useEffect(() => {
-    dispatch(getSelectorsCat());
-  },[dispatch]);
+    dispatch(getSelectorsCat())
+  },[dispatch])
 
 
   let mujeres = categorias?.women
@@ -57,8 +57,8 @@ export default function AddNewProduct() {
       data.variants[i].SwatchImage = imageUrls[i];
     }
     dispatch(addProduct({product: data}));
-    console.log({product: data})
-    //reset()
+  
+    reset()
   };
 
 

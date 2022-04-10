@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import styles from './AddNewProduct.module.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getSelectorsCat, addProduct } from '../../actions';
+import { getSelectorsCat, addProduct, getInfo } from '../../actions';
 import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +12,14 @@ export default function AddNewProduct() {
 	const [imageUrls, setImageUrls] = useState([]);
 	const dispatch = useDispatch();
 	const categorias = useSelector((state) => state.categories);
+	const productos = useSelector((state) => state.products);
 
 	useEffect(() => {
 		dispatch(getSelectorsCat());
+		dispatch(getInfo())
 	}, [dispatch]);
-
+	
+	
 	let mujeres = categorias?.women;
 	let hombres = categorias?.men;
 
@@ -42,7 +45,8 @@ export default function AddNewProduct() {
 		data.price = parseInt(data.price);
 		data.categories = [data.categories];
 		data.default_image = imageUrls[0];
-		data.id_product = 2;
+		data.id_product = productos.length+1;
+		data.variants[0].ProductImages=[imageUrls[0]]
 		data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
 		data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
 		data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
@@ -52,7 +56,7 @@ export default function AddNewProduct() {
 			data.variants[i].SwatchImage = imageUrls[i];
 		}
 		dispatch(addProduct({ product: data }));
-
+		//console.log({product: data})
 		reset();
 	};
 
@@ -242,7 +246,7 @@ export default function AddNewProduct() {
 
 				<div className={styles.right}>
 					{imageUrls.map((url) => {
-						return <img src={url} alt={url} />;
+						return <img key={url} src={url} alt={url} />;
 					})}
 				</div>
 				<div className={styles.bottom}>

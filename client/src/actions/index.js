@@ -143,7 +143,7 @@ export function getOffers(pay) {
 
 export function addProduct(payload) {
 	return async function () {
-		const add = await axios.post(
+		await axios.post(
 			'http://localhost:3001/products/add',
 			payload
 		);
@@ -154,7 +154,7 @@ export function addProduct(payload) {
 // Actions for Cart guest
 
 export function addCart(cartProducts, payload, dispatch) {
-	if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
+	if (!cartProducts.some((p) => p.id_product === payload.id_product)) {
 		if (localStorage.getItem('cart') != null) localStorage.removeItem('cart');
 		cartProducts.unshift(payload);
 
@@ -209,7 +209,7 @@ export const addCategory = (payload) => async (dispatch) => {
 
 export function addNewUser(payload) {
 	return async function () {
-		const add = await axios.post('http://localhost:3001/users', payload);
+		await axios.post('http://localhost:3001/users', payload);
 	};
 }
 
@@ -306,5 +306,5 @@ export function saveSendingData() {
 	});
 
 	localStorage.setItem('datosDeEnvio', JSON.stringify(data));
-	const payload = JSON.parse(localStorage.getItem('datosDeEnvio'));
+	JSON.parse(localStorage.getItem('datosDeEnvio'));
 }

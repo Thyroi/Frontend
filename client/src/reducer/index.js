@@ -138,6 +138,12 @@ export default function rootReducer(state = initialState, action) {
 				datosDeEnvío: action.payload,
 			};
 
+    case 'CLEAR_CART':
+      return {
+        ...state,
+        cart: []
+      }
+      
 		default:
 			return state;
 	}

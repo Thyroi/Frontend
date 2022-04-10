@@ -84,8 +84,9 @@ export function formattingProduct(product, templateProduct) {
 
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
-  product.variants[0].leftUnits = copyTemplateProduct.variants[0].Stocks[key] - 1;
-  
+  product.variants[0].leftUnits =
+    copyTemplateProduct.variants[0].Stocks[key] - 1;
+
   product.totalPrice = product.price;
 
   focusSelectedColor(product.variants[0].ColorName);
@@ -112,7 +113,6 @@ export function selectSize(templateProduct, product, size) {
   const variants = templateProduct.variants;
   variants.forEach((variant) => {
     if (variant.ColorName === product.variants[0].ColorName) {
-
       const Stocks = variant.Stocks;
       for (let s in Stocks) {
         if (s === size) {
@@ -217,6 +217,8 @@ export async function prepareProduct(product, cartItems) {
   let productToBuy = [];
 
   if (product) {
+    let totalPrice = parseFloat(product.totalPrice).toFixed(2);
+
     productToBuy = [
       {
         productid: product.id_product,
@@ -224,7 +226,7 @@ export async function prepareProduct(product, cartItems) {
           product.variants[0].Stocks[
             Object.keys(product.variants[0].Stocks)[0]
           ],
-        price: product.totalPrice,
+        price: totalPrice,
         color: product.variants[0].ColorName,
         size: Object.keys(product.variants[0].Stocks)[0],
       },
@@ -233,11 +235,13 @@ export async function prepareProduct(product, cartItems) {
 
   if (cartItems) {
     productToBuy = cartItems.map((item) => {
+      let totalPrice = parseFloat(item.totalPrice);
+
       return {
         productid: item.id_product,
         quantity:
           item.variants[0].Stocks[Object.keys(item.variants[0].Stocks)[0]],
-        price: item.totalPrice,
+        price: totalPrice,
         color: item.variants[0].ColorName,
         size: Object.keys(item.variants[0].Stocks)[0],
       };
@@ -256,11 +260,28 @@ export async function purchaseOrder() {
   const productPrepared = JSON.parse(localStorage.getItem("productPrepared"));
   const datosDeEnvio = JSON.parse(localStorage.getItem("datosDeEnvio"));
 
+  let totalDue = 0
+  productPrepared.forEach((item) => {
+    let price = item.price;
+    price = parseFloat(price);
+    price = price.toFixed(2);
+    price = parseFloat(price);
+
+    totalDue += price;
+  });
+
+  // const totalDue = productPrepared.reduce((total, item) => {
+  //   return total + item.price;
+  // });
+
   const data = {
     orderDetails: [...productPrepared],
+    totalDue: totalDue,
     address: datosDeEnvio.address,
     clientPhone: parseInt(datosDeEnvio.phone),
   };
+
+  console.log(data);
 
   await axios.post("http://localhost:3001/orders", data);
 
@@ -277,4 +298,17 @@ export function sendingCart(cartItems) {
   };
 
   axios.put("http://localhost:3001/cart/6631651", dataToSend);
+}
+
+export function showingNumberCart(){
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if(!cart) return 0;
+  
+  let numberCart = 0;
+
+  cart.forEach(product => {
+    numberCart += product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  })
+
+  return numberCart;
 }

@@ -243,6 +243,13 @@ export function updatingCart(product) {
 	};
 }
 
+export function clearCart(){
+  return {
+    type: 'CLEAR_CART',
+    payload: [],
+  }
+}
+
 export function addWishList(payload) {
 	return {
 		type: 'ADD_WISH_LIST',
@@ -279,10 +286,14 @@ export function selectingProduct(payload) {
 	};
 }
 
-// Data for sending products
+// Data for buying products
 export function saveSendingData() {
-	const labels = document.querySelectorAll('label');
-	const data = {};
+	let labels = document.querySelectorAll('label');
+  labels = Array.from(labels);
+  
+	const data = {
+    address: {}
+  };
 
 	labels.forEach((label) => {
 		const property = label.id;

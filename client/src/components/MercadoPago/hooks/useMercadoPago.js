@@ -4,6 +4,15 @@ import { formConfig } from '../components/MercadoPago/formConfig.js';
 
 export default function useMercadoPago() {
 	const [resultPayment, setResultPayment] = useState(undefined);
+  
+  const products = JSON.parse(localStorage.getItem("productPrepared"));
+  let totalDue = 0;
+  products.forEach(product=> {
+    totalDue += parseFloat(product.price);
+  });
+
+  totalDue = totalDue.toFixed(2);
+  console.log(totalDue);
 
 	const { MercadoPago } = useScript(
 		'https://sdk.mercadopago.com/js/v2',
@@ -13,11 +22,11 @@ export default function useMercadoPago() {
 	useEffect(() => {
 		if (MercadoPago) {
 			const mp = new MercadoPago(
-				'TEST-2bfb3bb9-44aa-453b-a815-a6681b2a84f7'
+				'TEST-7e7424ec-5329-4767-9498-45782f341130'
 			);
 
 			const cardForm = mp.cardForm({
-				amount: '100.5',
+				amount: totalDue,
 				autoMount: true,
 				form: formConfig,
 				callbacks: {

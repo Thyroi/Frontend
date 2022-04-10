@@ -9,13 +9,14 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function Search() {
 	const [search, setSearch] = useState('');
+	const keypress = { Enter: handleClick };
 
 	const dispatch = useDispatch();
 
 	function handleClick(e) {
 		e.preventDefault();
 		return window.location.href.includes('http://localhost:3000/home')
-			? () => (dispatch(getByName(search)), setSearch(''))
+			? (dispatch(getByName(search)), setSearch(''))
 			: alert("Go to 'home' and then search...");
 	}
 
@@ -35,7 +36,10 @@ function Search() {
 				type='text'
 				value={search}
 				onChange={(e) => handleChange(e)}
-				placeholder='Search by Id or by Type'
+				placeholder='Search by name, brand or type'
+				onKeyPress={(e) => {
+					keypress[e.key] && keypress[e.key](e)
+				}}
 			/>
 			<button
 				className={styles.searchButton}

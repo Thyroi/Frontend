@@ -1,7 +1,6 @@
 .container {
 	grid-template-rows: 10vh 1fr 10vh;
 	width: 100vw;
-
 }
 
 .filters {
@@ -43,10 +42,9 @@
 	background-color: transparent;
 }
 
-.pagination button:hover{
-	color:rgb(252, 71, 167);
+.pagination button:hover {
+	color: rgb(252, 71, 167);
 	font-weight: 800;
-
 }
 
 .pagination button:disabled {
@@ -66,7 +64,26 @@
 	align-items: center;
 }
 
-
+.pages button {
+	margin: 1rem;
+	background-color: #e4687c;
+	color: white;
+	font-weight: 600;
+	padding: 0.2rem 0.5rem;
+	width: auto;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	align-self: flex-end;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.pages button:hover {
+	background-color: white;
+	color: #e4687c;
+}
 
 .dropdown_content {
 	top: 1.8em;

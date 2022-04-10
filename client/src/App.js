@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
@@ -71,6 +71,7 @@ export default function App() {
 						/>
 					</div>
 				</div>
+				<Redirect to='/home' />
 			</Route>
 		</Switch>
 	);

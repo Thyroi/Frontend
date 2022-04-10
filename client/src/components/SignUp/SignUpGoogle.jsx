@@ -10,13 +10,6 @@ export default function SignUpGoogle(params) {
 
 	const [error, setError] = useState({});
 
-	const [direc, setDirec] = useState({
-		calle: '',
-		numero: '',
-		city: '',
-		zip_code: '',
-	});
-
 	const [inputs, setInputs] = useState({
 		name: info.name,
 		lastname: info.lastname,
@@ -24,43 +17,44 @@ export default function SignUpGoogle(params) {
 		phone: '',
 		login_name: '',
 		login_password: '',
-		address: {},
+		address: {
+		calle: '',
+		numero: '',
+		city: '',
+		zip_code: ''},
 	});
 
 	useEffect(() => {
-		setError(validator(inputs, direc));
-	}, [inputs, direc]);
+		setError(validator(inputs));
+	}, [inputs]);
 
 	function handleChange(e) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
-			[e.target.name]: e.target.value,
-			address: { ...direc },
+			[e.target.name]: e.target.value
 		});
 
 		setError({
 			...inputs,
-			...direc,
 			[e.target.name]: e.target.value,
 		});
 	}
 
-	function handleChangeAddress(e) {
+	function handleAddress(e) {
 		e.preventDefault();
-		setDirec({
-			...direc,
-			[e.target.name]: e.target.value,
+		setInputs({
+			...inputs,
+			address: {...inputs.address, [e.target.name]: e.target.value}
 		});
 
 		setError({
 			...inputs,
-			...direc,
 			[e.target.name]: e.target.value,
 		});
 	}
 
-	function validator(inputs, direc) {
+	function validator(inputs) {
 		let error = {};
 		if (!inputs.phone) {
 			error.phone = 'Phone is required';
@@ -68,16 +62,16 @@ export default function SignUpGoogle(params) {
 			error.login_name = 'Login name is required';
 		} else if (!inputs.login_password) {
 			error.login_password = 'Password is required';
-		} else if (!direc.calle) {
+		} else if (!inputs.address.calle) {
 			error.calle = 'Street is required';
-		} else if (!direc.numero) {
+		} else if (!inputs.address.numero) {
 			error.numero = 'Street number is required';
-		} else if (!direc.city) {
+		} else if (!inputs.address.city) {
 			error.city = 'City is required';
-		} else if (typeof direc.city !== 'string') {
+		} else if (typeof inputs.address.city !== 'string') {
 			error.city =
 				'Insert a valid city (without special caracters or numbers)';
-		} else if (!direc.zip_code) {
+		} else if (!inputs.address.zip_code) {
 			error.zip_code = 'Zip code is required';
 		}
 		return error;
@@ -102,7 +96,6 @@ export default function SignUpGoogle(params) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
-			address: { direc },
 			phone: parseInt(inputs.phone),
 		});
 		dispatch(createClient(inputs));
@@ -113,15 +106,13 @@ export default function SignUpGoogle(params) {
 			phone: '',
 			login_name: '',
 			login_password: '',
-			address: {},
-		});
-		setDirec({
+			address: {
 			calle: '',
 			numero: '',
 			city: '',
-			zip_code: '',
+			zip_code: ''},
 		});
-		params.history.push('/Products');
+		params.history.push('/LogIn');
 	}
 
 	return (
@@ -138,9 +129,9 @@ export default function SignUpGoogle(params) {
 							type='text'
 							placeholder='Street'
 							name='calle'
-							value={direc.calle}
+							value={inputs.address.calle}
 							onChange={(e) => {
-								handleChangeAddress(e);
+								handleAddress(e);
 							}}
 						/>
 						{error.calle && <p>{error.calle}</p>}
@@ -149,9 +140,9 @@ export default function SignUpGoogle(params) {
 							type='text'
 							placeholder='Number'
 							name='numero'
-							value={direc.numero}
+							value={inputs.address.numero}
 							onChange={(e) => {
-								handleChangeAddress(e);
+								handleAddress(e);
 							}}
 						/>
 						{error.numero && <p>{error.numero}</p>}
@@ -160,9 +151,9 @@ export default function SignUpGoogle(params) {
 							type='text'
 							placeholder='City'
 							name='city'
-							value={direc.city}
+							value={inputs.address.city}
 							onChange={(e) => {
-								handleChangeAddress(e);
+								handleAddress(e);
 							}}
 						/>
 						{error.city && <p>{error.city}</p>}
@@ -171,9 +162,9 @@ export default function SignUpGoogle(params) {
 							type='text'
 							placeholder='Zip Code'
 							name='zip_code'
-							value={direc.zip_code}
+							value={inputs.address.zip_code}
 							onChange={(e) => {
-								handleChangeAddress(e);
+								handleAddress(e);
 							}}
 						/>
 						{error.zip_code && <p>{error.zip_code}</p>}

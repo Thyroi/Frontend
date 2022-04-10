@@ -1,0 +1,24 @@
+.background {
+  max-width: 100vw;
+  min-height: 100vh;
+  padding: 3rem;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .containerInputs {
+    flex-basis: 200px;
+    height: auto;
+    margin-right: 3rem;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+  }
+}

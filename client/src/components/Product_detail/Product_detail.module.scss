@@ -16,6 +16,22 @@
     .containerMainImage {
       height: 100%;
       width: 100%;
+      position: relative;
+      
+      .offer {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 2rem;
+        background-color: #e4687c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: azure;
+        font-weight: 400;
+      }
 
       .mainImage {
         height: 100%;
@@ -38,6 +54,7 @@
 
       .secondImages {
         margin-bottom: 2rem;
+        height: 150px;
         width: 100px;
         border-radius: 5px;
         cursor: pointer;
@@ -59,7 +76,7 @@
       border-radius: 5px;
       background: #ffffff;
 
-      height: 100%;
+      height: auto;
       margin-bottom: 3rem;
 
       .productName {
@@ -166,6 +183,17 @@
             color: #ffffff;
             font-weight: 600;
             border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+          }
+
+          .buyLetter {
+            width: 80%;
+            background-color: #e4687c;
+            color: #ffffff;
+            font-weight: 600;
             cursor: pointer;
           }
 
@@ -240,6 +268,7 @@
 
     .containerInf {
       width: 100%;
+      height: auto;
       margin-left: 0;
       margin-top: 3rem;
 

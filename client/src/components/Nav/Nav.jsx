@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faShirt,
+	
 	faCartShopping,
 	faCirclePlus,
 	faHouse,
@@ -48,7 +48,7 @@ export default function Nav() {
 					</NavLink> */}
 
 					<NavLink
-						to='/add'
+						to='/AddNewProduct'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon

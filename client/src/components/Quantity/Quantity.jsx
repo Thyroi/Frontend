@@ -1,63 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import style from "./Quantity.module.scss";
 
-import {
-  increaseLocalStock,
-  decreaseLocalStock,
-  totalDue,
-  changingAttributesCart,
-} from "../../utils/utils";
-
+import { increaseLocalStock, decreaseLocalStock } from "../../utils/utils";
 import { selectingProduct, updatingCart } from "../../actions/index";
 
+import style from "./Quantity.module.scss";
+
 function Quantity(props) {
+  // const [state, setState] = useState();
   const product = props.product;
+
+  // useEffect(() => {
+  //   setState(product);
+  // }, [product]);
+
   const location = useLocation();
-  const details = useSelector((state) => state.detailEdited);
-  const cartItems = useSelector(state => state.cart);
-  let number;
+  const path = location.pathname;
 
+  const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [state, setState] = useState(1);
 
-  if (location.pathname === "/Cart") {
-    number =
-      product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
-  }
+  if (!product.variants) return <div></div>;
 
   return (
     <div className={style.counterContainer}>
       <button
         className={style.counterButton}
         onClick={() => {
-          const newProduct = decreaseLocalStock(product);
-          dispatch(selectingProduct(newProduct));
-          document.querySelector(
-            "#individualProductPrice"
-          ).textContent = `$${totalDue(product)}`;
+          const newProduct = Object.assign({}, decreaseLocalStock(product));
+          path === "/cart"
+            ? dispatch(updatingCart(newProduct))
+            : dispatch(selectingProduct(newProduct));
         }}
       >
         -
       </button>
       <p className={style.counterNumber} id="quantity">
-        {number || state}
+        {product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]]}
       </p>
       <button
         className={style.counterButton}
         onClick={() => {
-          if (location.pathname === "/Cart") {
-            const newItemsCart = changingAttributesCart(cartItems, product, number + 1);
-            
-            dispatch(updatingCart(newItemsCart));
-            return;
-          }
-          const newProduct = increaseLocalStock(product);
-          dispatch(selectingProduct(newProduct));
-          document.querySelector(
-            "#individualProductPrice"
-          ).textContent = `$${totalDue(product)}`;
+          const newProduct = Object.assign(
+            {},
+            increaseLocalStock(product, cartItems)
+          );
+          path === "/cart"
+            ? dispatch(updatingCart(newProduct))
+            : dispatch(selectingProduct(newProduct));
         }}
       >
         +

@@ -30,7 +30,6 @@ export function getSelectorsCol() {
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			console.log(obj);
 			var name = await axios.get(
 				`http://localhost:3001/products?filters=${obj}`
 			);
@@ -50,6 +49,11 @@ export function getByName(obj) {
 export function getById(params) {
 	return async function (dispatch) {
 		var id = await axios.get(`http://localhost:3001/products/${params}`);
+
+    id.data.variants.forEach((variant) => {
+      variant.ProductImages.shift();
+    });
+
 		return dispatch({
 			type: 'GET_BY_ID',
 			payload: id.data,
@@ -81,20 +85,16 @@ export function getSelectorsCat() {
 export function getByCatId(payload) {
 	return async function (dispatch) {
 		var { data } = await axios.get(
-			`http://localhost:3001/products/bycat?id=${payload}`
+			`http://localhost:3001/products/bycat`
 		);
 
-		const res = [];
-		data?.women?.forEach((e) => {
-			e?.Products?.forEach((e) => res.push(e));
-		});
-		data?.men.forEach((e) => {
-			e?.Products?.forEach((e) => res.push(e));
-		});
-
+		const res = [];		
+		data?.women?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
+		data?.men?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
+		
 		return dispatch({
 			type: 'GET_BY_CAT_ID',
-			payload: res,
+			payload: res
 		});
 	};
 }
@@ -155,9 +155,8 @@ export function addProduct(payload) {
 
 export function addCart(cartProducts, payload, dispatch) {
 	if (!cartProducts.some((p) => p.id_product == payload.id_product)) {
-		if (localStorage.getItem('cart') != null)
-			localStorage.removeItem('cart');
-		cartProducts.push(payload);
+		if (localStorage.getItem('cart') != null) localStorage.removeItem('cart');
+		cartProducts.unshift(payload);
 
 		localStorage.setItem('cart', JSON.stringify(cartProducts));
 		const cart = JSON.parse(localStorage.getItem('cart'));
@@ -193,7 +192,6 @@ export function getAllUsers() {
 export function updatePermission(payload) {
 	return async function (dispatch) {
 		const update = await axios.put(`http://localhost:3001/users`, payload);
-		console.log(update.data);
 		return dispatch({
 			type: 'UPDATE_PERMISSION',
 			payload: update.data,
@@ -230,10 +228,17 @@ export function removeCart(cartProducts, payload) {
 	};
 }
 
-export function updatingCart(cartProducts) {
-	localStorage.setItem('cart', JSON.stringify(cartProducts));
-	const cart = JSON.parse(localStorage.getItem('cart'));
-
+export function updatingCart(product) {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  cart = cart.map((p) => {
+    if(p.id_product === product.id_product){
+      return product
+    }
+    
+    return p;
+  });
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
 	return {
 		type: 'UPDATING_CART',
 		payload: cart,
@@ -293,7 +298,6 @@ export function saveSendingData() {
 			property === 'zip_code' ||
 			property === 'others'
 		) {
-			console.log(data.address);
 			data.address[property] = value;
 			return;
 		}

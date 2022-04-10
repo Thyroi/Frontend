@@ -1,7 +1,7 @@
-import React from 'react';
-import style from './Cart.module.scss';
+import React from "react";
+import style from "./Cart.module.scss";
 
-import Quantity from '../Quantity/Quantity';
+import Quantity from "../Quantity/Quantity";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,14 +11,14 @@ import { totalDue, prepareProduct } from "../../utils/utils";
 // Add the context for showing the items
 
 function Cart(params) {
-	// Provisional remove this when context is implemented
-	const itemsCart = useSelector((state) => state.cart);
-	const dispatch = useDispatch();
+  // Provisional remove this when context is implemented
+  const itemsCart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
-	function handleNavigate(e) {
-		e.preventDefault();
-		params.history.push('/cart/pay');
-	}
+  function handleNavigate(e) {
+    e.preventDefault();
+    params.history.push("/cart/pay");
+  }
 
   if (!itemsCart) return <div>Loading</div>;
 
@@ -28,8 +28,12 @@ function Cart(params) {
         itemsCart.map((item) => {
           const { name, totalPrice, variants, id_product } = item;
           return (
-            <div className={style.itemContainer}>
+            <div key={item.id_product} className={style.itemContainer}>
               <div className={style.imgContainer}>
+                {item.is_offer && (
+                  <span className={style.offer}>{"Oferta"}</span>
+                )}
+
                 <Link to={`/detail/${id_product}`}>
                   <img
                     className={style.productImage}
@@ -86,8 +90,13 @@ function Cart(params) {
             itemsCart
           )}`}</span>
         </p>
-        <Link to="/form">
-          <button className={style.buyButton} onClick={() => prepareProduct(null, itemsCart)}>Buy</button>
+        <Link to="/form" className={style.buyButton}>
+          <button
+            className={style.buyLetter}
+            onClick={() => prepareProduct(null, itemsCart)}
+          >
+            Buy
+          </button>
         </Link>
       </div>
     </div>

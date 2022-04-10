@@ -30,9 +30,7 @@ export function getSelectorsCol() {
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			var name = await axios.get(
-				`http://localhost:3001/products?filters=${obj}`
-			);
+			var name = await axios.get(`http://localhost:3001/products/?filters=${obj}`);
 			return dispatch({
 				type: 'GET_BY_NAME',
 				payload: name.data,
@@ -40,7 +38,7 @@ export function getByName(obj) {
 		} catch (error) {
 			return dispatch({
 				type: 'GET_BY_NAME',
-				payload: [],
+				payload: name.data,
 			});
 		}
 	};

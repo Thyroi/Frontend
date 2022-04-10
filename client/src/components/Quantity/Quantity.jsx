@@ -32,6 +32,12 @@ function Quantity(props) {
       <button
         className={style.counterButton}
         onClick={() => {
+          if (location.pathname === "/Cart") {
+            const newItemsCart = changingAttributesCart(cartItems, product, "-");
+            
+            dispatch(updatingCart(newItemsCart));
+            return;
+          }
           const newProduct = decreaseLocalStock(product);
           dispatch(selectingProduct(newProduct));
           document.querySelector(
@@ -48,7 +54,7 @@ function Quantity(props) {
         className={style.counterButton}
         onClick={() => {
           if (location.pathname === "/Cart") {
-            const newItemsCart = changingAttributesCart(cartItems, product, number + 1);
+            const newItemsCart = changingAttributesCart(cartItems, product, "+");
             
             dispatch(updatingCart(newItemsCart));
             return;

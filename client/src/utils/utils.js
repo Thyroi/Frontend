@@ -234,7 +234,8 @@ function focusSelectedSize(size) {
 
 export function increaseLocalStock(product) {
   let amount = document.querySelector("#quantity");
-  let availableUnits = parseInt(document.querySelector("#units").textContent);
+  let availableUnits = parseInt(document.querySelector("#units") ? document.querySelector("#units").textContent : product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]]);
+
   let quantity = parseInt(amount.textContent);
 
   if (availableUnits > 0) {
@@ -244,24 +245,22 @@ export function increaseLocalStock(product) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity + 1;
     document.querySelector("#units").textContent = availableUnits - 1;
   }
-  // document.querySelector("#total").innerHTML = totalDue();
+  document.querySelector("#total").innerHTML = totalDue();
   return product;
 }
 
 export function decreaseLocalStock(product) {
   let amount = document.querySelector("#quantity");
   let quantity = parseInt(amount.textContent);
-  let availableUnits = parseInt(document.querySelector("#units").textContent);
-  let unitsForBuy = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  let availableUnits = parseInt(document.querySelector("#units") ? document.querySelector("#units").textContent : product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]]);  
  
   if (quantity > 1) {
-    console.log("___-");
     document.querySelector("#quantity").textContent = quantity - 1;
 
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity - 1;
     document.querySelector("#units").textContent = availableUnits + 1;
   }
-  // document.querySelector("#total").innerHTML = totalDue();
+  document.querySelector("#total").innerHTML = totalDue();
   return product;
 }
 
@@ -285,14 +284,11 @@ export function totalDue(product, cartItems) {
   return total;
 }
 
-export function changingAttributesCart(cartItems, product, quantity) {
-  console.log(cartItems, product);
+export function changingAttributesCart(cartItems, product, option) {
   const cart = cartItems.map((item) => {
     if (item.id_product === product.id_product) {
-      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-        quantity;
+      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = option = "+" ? increaseLocalStock(item): decreaseLocalStock(item);
       item.totalPrice = totalDue(item);
-
       return item;
     }
 
@@ -369,4 +365,35 @@ export function sendingCart(cartItems) {
   };
 
   axios.put("http://localhost:3001/cart/6631651", dataToSend);
+}
+
+export function newDataClient() {
+  let labels = document.querySelectorAll('label');
+  labels = Array.from(labels);
+  let data = {
+    address: {}
+  }
+  
+  labels.forEach((label) => {
+    const property = label.id;
+    const value = label.nextSibling.value;
+    console.log(value);
+
+    if (
+      property === "calle" ||
+      property === "numero" ||
+      property === "state" ||
+      property === "city" ||
+      property === "zip_code" ||
+      property === "others"
+    ) {
+      data.address[property] = value;
+      return;
+    }
+
+    data[property] = value;
+  });
+
+  axios.post("http://localhost:3001/client", data)
+  console.log(data);
 }

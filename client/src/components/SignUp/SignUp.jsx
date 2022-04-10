@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import {useDispatch} from 'react-redux'
 import { createClient } from '../../actions';
 import style from './SignUp.module.css'
+import { newDataClient } from '../../utils/utils';
 
 export default function SignUp(params) {
 
@@ -128,41 +129,41 @@ export default function SignUp(params) {
   return (
     <div >
         <form onSubmit={(e) => {handleSubmit(e)}} className={style.conteiner}>
-        <label>Address</label>
-        <label>Street</label>
+        <h3>Address</h3>
+        <label id="calle">Street</label>
         <input type="text" placeholder='Street' name='calle' value={direc.calle} onChange={(e) => {handleChangeAddress(e)}}/>
         {error.calle && (<p>{error.calle}</p>)}
-        <label>Number</label>
-        <input type="text" placeholder='Number' name='numero' value={direc.numero} onChange={(e) => {handleChangeAddress(e)}}/>
+        <label id="numero">Number</label>
+        <input  type="text" placeholder='Number' name='numero' value={direc.numero} onChange={(e) => {handleChangeAddress(e)}}/>
         {error.numero && (<p>{error.numero}</p>)}
-        <label>City</label>
+        <label id="city" >City</label>
         <input type="text" placeholder='City' name='city' value={direc.city} onChange={(e) => {handleChangeAddress(e)}}/>
         {error.city && (<p>{error.city}</p>)}
-        <label>Zip Code</label>
+        <label id="zip_code" >Zip Code</label>
         <input type="text" placeholder='Zip Code' name='zip_code' value={direc.zip_code} onChange={(e) => {handleChangeAddress(e)}}/>
         {error.zip_code && (<p>{error.zip_code}</p>)} 
         <br/>
-        <label>Personal Information</label>   
-        <label>Name</label>
-        <input type="text" placeholder='Name' name='name' value={inputs.name} onChange={(e) => {handleChange(e)}}/>
+        <h3>Personal Information</h3>   
+        <label id="name">Name</label>
+        <input  type="text" placeholder='Name' name='name' value={inputs.name} onChange={(e) => {handleChange(e)}}/>
         {error.name && (<p>{error.name}</p>)}
-        <label>Last Name</label>
-        <input type="text" placeholder='Last Name' name='lastname' value={inputs.lastname} onChange={(e) => {handleChange(e)}}/>
+        <label id="lastname">Last Name</label>
+        <input  type="text" placeholder='Last Name' name='lastname' value={inputs.lastname} onChange={(e) => {handleChange(e)}}/>
         {error.lastname && (<p>{error.lastname}</p>)}
-        <label>Email</label>
-        <input type="text" placeholder='Email' name='email' value={inputs.email} onChange={(e) => {handleChange(e)}}/>
+        <label id="email">Email</label>
+        <input  type="text" placeholder='Email' name='email' value={inputs.email} onChange={(e) => {handleChange(e)}}/>
         {error.email && (<p>{error.email}</p>)}
-        <label>Phone</label>
-        <input type="number" placeholder='Phone' name='phone' value={inputs.phone} onChange={(e) => {handleChange(e)}}/>
+        <label id="phone">Phone</label>
+        <input  type="number" placeholder='Phone' name='phone' value={inputs.phone} onChange={(e) => {handleChange(e)}}/>
         {error.phone && (<p>{error.phone}</p>)}
-        <label>Login Name</label>
+        <label id="login_name">Login Name</label>
         <input type="text" placeholder='Login Name' name='login_name' value={inputs.login_name} onChange={(e) => {handleChange(e)}}/>
         {error.login_name && (<p>{error.login_name}</p>)}
-        <label>Password</label>
-        <input type="password" placeholder='Login password' name='login_password' value={inputs.login_password} onChange={(e) => {handleChange(e)}}/>
+        <label id="login_password">Password</label>
+        <input  type="password" placeholder='Login password' name='login_password' value={inputs.login_password} onChange={(e) => {handleChange(e)}}/>
         {error.login_password && (<p>{error.login_password}</p>)}
         
-        <button disabled={disable} type="submit" >CREATE PROFILE</button>  
+        <button type="submit" onClick={()=>{newDataClient()}}>CREATE PROFILE</button>  
         </form>
     </div>
   )

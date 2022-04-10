@@ -90,9 +90,9 @@ function Cart(params) {
             itemsCart
           )}`}</span>
         </p>
-        <Link to="/form">
+        <Link to="/form" className={style.buyButton}>
           <button
-            className={style.buyButton}
+            className={style.buyLetter}
             onClick={() => prepareProduct(null, itemsCart)}
           >
             Buy

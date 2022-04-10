@@ -134,8 +134,18 @@
       border-radius: 5px;
       font-weight: 600;
       color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+    
+      .buyLetter {
+        background-color: #e4687c;
+        font-weight: 600;
+        color: #ffffff;
+        width: 80%;
+        cursor: pointer;
+      }
     }
-
   }
 }

@@ -151,8 +151,8 @@ export default function Product_detail() {
             </div>
 
             <div className={style.containerBuyCart}>
-              <Link to="/Form" onClick={() => prepareProduct(product)}>
-                <button className={style.buyButton}>Buy</button>
+              <Link className={style.buyButton} to="/Form" onClick={() => prepareProduct(product)}>
+                <button className={style.buyLetter}>Buy</button>
               </Link>
               <button
                 className={style.cartButton}

@@ -47,7 +47,10 @@ export default function Product_detail() {
 
   useEffect(() => {
     if (product.variants) {
-      const newProduct = Object.assign({},formattingProduct(product, templateProduct));
+      const newProduct = Object.assign(
+        {},
+        formattingProduct(product, templateProduct)
+      );
       dispatch(selectingProduct(newProduct));
     }
   }, [product.price]);
@@ -58,6 +61,7 @@ export default function Product_detail() {
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
+          {product.is_offer && <span className={style.offer}>{"Oferta"}</span>}
           <img
             className={style.mainImage}
             src={product.variants && product.variants[0].ProductImages[0]}
@@ -84,10 +88,9 @@ export default function Product_detail() {
         <div className={style.specificInf}>
           <h2 className={style.productName}>{name}</h2>
           <p className={style.collectionName}>{brand}</p>
-          <p
-            className={style.productPrice}
-            id="individualProductPrice"
-          >{`$${product.totalPrice || product.price}`}</p>
+          <p className={style.productPrice} id="individualProductPrice">{`$${
+            product.totalPrice || product.price
+          }`}</p>
 
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
@@ -100,7 +103,10 @@ export default function Product_detail() {
                       key={size}
                       className={style.size}
                       onClick={() => {
-                        const result = Object.assign({}, selectSize(templateProduct, product, size));
+                        const result = Object.assign(
+                          {},
+                          selectSize(templateProduct, product, size)
+                        );
                         dispatch(selectingProduct(result));
                         setState(size);
                       }}
@@ -120,7 +126,10 @@ export default function Product_detail() {
                     key={color}
                     className={style.color}
                     onClick={() => {
-                      const result = Object.assign({}, selectVariant(templateProduct, product, color));
+                      const result = Object.assign(
+                        {},
+                        selectVariant(templateProduct, product, color)
+                      );
                       dispatch(selectingProduct(result));
                       setState(color);
                     }}

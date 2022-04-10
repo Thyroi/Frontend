@@ -175,7 +175,6 @@ export function increaseLocalStock(product) {
 
     const totalToPay = totalDue(product);
     product.totalPrice = totalToPay;
-    console.log(product);
   }
 
   return product;

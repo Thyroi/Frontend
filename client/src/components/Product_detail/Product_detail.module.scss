@@ -16,6 +16,22 @@
     .containerMainImage {
       height: 100%;
       width: 100%;
+      position: relative;
+      
+      .offer {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 2rem;
+        background-color: #e4687c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: azure;
+        font-weight: 400;
+      }
 
       .mainImage {
         height: 100%;

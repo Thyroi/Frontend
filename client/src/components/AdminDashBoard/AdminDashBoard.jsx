@@ -40,7 +40,7 @@ function AdminDashBoard() {
 				id_user: parseInt(e.target.value),
 			})
 		);
-		console.log(e.target.value);
+
 		setTimeout(() => {
 			dispatch(getAllUsers());
 		}, 1000);
@@ -136,7 +136,7 @@ function AdminDashBoard() {
 			dispatch(getAllUsers());
 		}, 1000);
 	};
-	console.log(allUser.map((user) => user.id_user));
+
 	return (
 		<div className={style.divContainerAdmin}>
 			<div className={style.showUsers}>

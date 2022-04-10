@@ -16,23 +16,29 @@ import {
   selectVariant,
   selectSize,
   prepareProduct,
-  formattingProduct
+  formattingProduct,
 } from "../../utils/utils";
 
 //Data
-import { getById, addCart, selectingProduct, cleanProducts } from "../../actions/index";
+import {
+  getById,
+  addCart,
+  selectingProduct,
+  cleanProducts,
+} from "../../actions/index";
 
 export default function Product_detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const templateProduct = useSelector((state) => state.details);
-  const product = useSelector((state) => state.detailEdited);
+  let product = useSelector((state) => state.detailEdited);
 
+  console.log("product", product);
   const cartProducts = useSelector((state) => state.cart);
 
   const { name, brand, price, description } = product;
-  product.totalPrice = price;
+
   const [state, setState] = useState();
 
   useEffect(() => {
@@ -42,14 +48,19 @@ export default function Product_detail() {
 
   useEffect(() => {
     // Auto selecting details
+    // if (product.variants) {
+    //   
+    // }
     if (product.variants) {
-      const result = formattingProduct(product, templateProduct)
-      dispatch(selectingProduct(result));
-    };
-  }, [product]);
-
+      console.log("sss")
+      const newProduct = Object.assign({},formattingProduct(product, templateProduct));
+      dispatch(selectingProduct(newProduct));
+    }
+  }, [product.price]);
 
   if (!product.variants) return <div>Loading</div>;
+
+  console.log(product);
 
   return (
     <div className={style.container}>
@@ -85,7 +96,7 @@ export default function Product_detail() {
           <p
             className={style.productPrice}
             id="individualProductPrice"
-          >{`$${product.totalPrice}`}</p>
+          >{`$${product.totalPrice || product.price}`}</p>
 
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
@@ -167,7 +178,9 @@ export default function Product_detail() {
             <div className={style.containerUnits}>
               <p className={style.infoUnits}>
                 Available Units:{" "}
-                <span className={style.units} id="units"></span>
+                <span className={style.units}>
+                  {product.variants[0].leftUnits}
+                </span>
               </p>
             </div>
           </div>

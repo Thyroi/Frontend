@@ -77,13 +77,14 @@ export function productSizes(product) {
 // Dont judge me!
 export function formattingProduct(product, templateProduct) {
   const copyTemplateProduct = Object.assign({}, templateProduct);
-
-  product.variants = []
-  product.variants.push(copyTemplateProduct.variants[0]);
-
+  product.variants = [];
+  product.variants.push(Object.assign({}, copyTemplateProduct.variants[0]));
+  
   const key = Object.keys(copyTemplateProduct.variants[0].Stocks)[0];
+  
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
+  product.variants[0].leftUnits  = copyTemplateProduct.variants[0].Stocks[key] - 1; 
 
   return product;
 }
@@ -94,7 +95,6 @@ export function selectVariant(templateProduct, product, color) {
 
     const auxiliarObject = Object.assign({}, templateProduct);
     const variantsTemplate = auxiliarObject.variants;
-    console.log(variantsTemplate);
     const size = Object.keys(product.variants[0].Stocks)[0];
     const units = product.variants[0].Stocks[size];
 
@@ -228,36 +228,32 @@ function focusSelectedSize(size) {
   });
 }
 
-export function increaseLocalStock(product, templateProduct) {
-  const top = templateProduct.variants[0].Stocks[Object.keys(templateProduct.variants[0].Stocks)[0]];
-
+export function increaseLocalStock(product) {
+  const top = product.variants[0].leftUnits;
   let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
   if(nextAmount <= top){
-    console.log("wor")
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
-    templateProduct.variants[0].Stocks[Object.keys(templateProduct.variants[0].Stocks)[0]] -= 1;
+    product.variants[0].leftUnits -= 1;
 
     const totalToPay = totalDue(product);
-    product.totalToPrice = totalToPay;
+    product.totalPrice = totalToPay;
+    console.log(product);
   }
 
-  console.log(product)
   return product;
 }
 
-export function decreaseLocalStock(product) {
+export function decreaseLocalStock(product, templateProduct) {
 
-  let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] - 1;
-  if(nextAmount > 0){
-    console.log("wor")
+  let nextAmount = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if(nextAmount > 2){
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
-    templateProduct.variants[0].Stocks[Object.keys(templateProduct.variants[0].Stocks)[0]] += 1;
+    product.variants[0].leftUnits += 1;
 
     const totalToPay = totalDue(product);
-    product.totalToPrice = totalToPay;
+    product.totalPrice = totalToPay;
   }
 
-  console.log(product)
   return product;
 }
 
@@ -269,35 +265,33 @@ export function totalDue(product, cartItems) {
       total += item.totalPrice;
     });
 
-    console.log(total);
     return total;
   }
 
-  let total =
-    product.price *
-    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
-  product.totalPrice = total;
-  total = parseFloat(total).toFixed(2);
+  let price = product.price;
+  let units = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  let total = (price * units).toFixed(2);
+  
   return total;
 }
 
-export function changingAttributesCart(cartItems, product, quantity) {
-  console.log(cartItems, product);
-  const cart = cartItems.map((item) => {
-    if (item.id_product === product.id_product) {
-      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-        quantity;
-      item.totalPrice = totalDue(item);
+// export function changingAttributesCart(cartItems, product, quantity) {
+//   console.log(cartItems, product);
+//   const cart = cartItems.map((item) => {
+//     if (item.id_product === product.id_product) {
+//       item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
+//         quantity;
+//       item.totalPrice = totalDue(item);
 
-      return item;
-    }
+//       return item;
+//     }
 
-    return item;
-  });
+//     return item;
+//   });
 
-  console.log(cart);
-  return cart;
-}
+//   console.log(cart);
+//   return cart;
+// }
 
 // Patch del client
 

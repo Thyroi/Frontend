@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import style from "./Quantity.module.scss";
@@ -12,22 +12,28 @@ import {
 import { selectingProduct, updatingCart } from "../../actions/index";
 
 function Quantity(props) {
+  const [state, setState] = useState();
   const product = props.product;
-  const templateProduct = useSelector((state) => state.detailEdited);
+
+  useEffect(() => {
+    setState(product);
+  }, [product]);
 
   // const details = useSelector((state) => state.detailEdited);
   // const cartItems = useSelector(state => state.cart);
 
   const dispatch = useDispatch();
-  const [state, setState] = useState(1);
 
-  if(!product.variants) return <div>  </div>
+  if (!product.variants) return <div> </div>;
 
   return (
     <div className={style.counterContainer}>
       <button
         className={style.counterButton}
-        
+        onClick={() => {
+          const newProduct = Object.assign({}, decreaseLocalStock(product));
+          dispatch(selectingProduct(newProduct));
+        }}
       >
         -
       </button>
@@ -37,8 +43,8 @@ function Quantity(props) {
       <button
         className={style.counterButton}
         onClick={() => {
-          const newProduct = increaseLocalStock(product, templateProduct);
-          dispatch(selectingProduct({...newProduct}));
+          const newProduct = Object.assign({}, increaseLocalStock(product));
+          dispatch(selectingProduct(newProduct));
         }}
       >
         +

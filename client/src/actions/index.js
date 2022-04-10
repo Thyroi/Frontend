@@ -50,7 +50,6 @@ export function getByName(obj) {
 export function getById(params) {
 	return async function (dispatch) {
 		var id = await axios.get(`http://localhost:3001/products/${params}`);
-    console.log(id.data)
 		return dispatch({
 			type: 'GET_BY_ID',
 			payload: id.data,

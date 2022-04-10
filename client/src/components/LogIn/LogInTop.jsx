@@ -8,7 +8,7 @@ import { faCircleUser  } from "@fortawesome/free-solid-svg-icons";
 function LogInTop() {
 	return (
 		<div className={styles.loginContainer}>
-			<Link className={styles.text} to='/LogIn'>LogIn</Link>
+			{/* <Link className={styles.text} to='/LogIn'>LogIn</Link> */}
       <FontAwesomeIcon icon={faCircleUser} className={styles.icon} />
 		</div>
 	);

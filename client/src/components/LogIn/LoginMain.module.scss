@@ -143,6 +143,7 @@
         .containerLoginSignUp {
           width: 100%;
           display: flex;
+          flex-wrap: wrap;
           justify-content: space-between;
 
           .loginButton,
@@ -150,6 +151,7 @@
             width: 45%;
             height: 2.5rem;
             border-radius: 5px;
+            margin-bottom: 1rem;
             cursor: pointer;
           }
 
@@ -181,6 +183,26 @@
           .signUpButton:hover {
             background: #e4687c;
             color: #ffffff;
+          }
+
+          .googleButton {
+            width: 45%;
+            height: 2.5rem;
+            border-radius: 5px;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+          }
+
+          .googleButton > div {
+            height: 90%;
+          }
+          .googleButton > span {
+            font-family: "Montserrat", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
           }
         }
       }

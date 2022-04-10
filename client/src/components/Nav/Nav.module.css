@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -8,24 +8,65 @@
 
 .title {
 	text-align: left;
-  width: 80%;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  border-radius: 5px 0 0 5px;
+	width: 80%;
+	margin-bottom: 1.5rem;
+	padding: 1rem;
+	border-radius: 5px 0 0 5px;
 	font-weight: 600;
 	transition: all ease-in-out 0.2s;
+  position: relative;
 }
 
 .title:hover {
-  color: #e4687c;
+	color: #e4687c;
 }
 
 .icons {
-  width: 20px;
-  margin-right: 0.5rem;
+	width: 20px;
+	margin-right: 0.5rem;
 }
 
 .active {
-  background-color: #F3F3F3;
-  color: #e4687c;
+	background-color: #f3f3f3;
+	color: #e4687c;
+}
+
+.container button {
+	margin: 1rem;
+	background-color: #e4687c;
+	color: white;
+	font-weight: 600;
+	padding: 0.5rem;
+	width: auto;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	align-self: flex-end;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container button:hover {
+	background-color: white;
+	color: #e4687c;
+}
+
+.containerAdvise {
+  background: #e4687c;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  right: 20px;
+}
+
+.itemsNumber {
+  font-size: 0.9rem;
+  color: #ffffff;
 }

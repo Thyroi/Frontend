@@ -15,21 +15,29 @@ import {
   productSizes,
   selectVariant,
   selectSize,
-  prepareProduct
+  prepareProduct,
+  formattingProduct,
 } from "../../utils/utils";
 
 //Data
-import { getById, addCart, selectingProduct, cleanProducts } from "../../actions/index";
+import {
+  getById,
+  addCart,
+  selectingProduct,
+  cleanProducts,
+} from "../../actions/index";
 
 export default function Product_detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const templateProduct = useSelector((state) => state.details);
-  const product = useSelector((state) => state.detailEdited);
+  let product = useSelector((state) => state.detailEdited);
+
+  const cartProducts = useSelector((state) => state.cart);
 
   const { name, brand, price, description } = product;
-  product.totalPrice = price;
+
   const [state, setState] = useState();
 
   useEffect(() => {
@@ -38,28 +46,32 @@ export default function Product_detail() {
   }, []);
 
   useEffect(() => {
-    // Auto selecting details
-    if (product.variants) selectVariant(templateProduct, product);
-  }, [product]);
+    if (product?.variants) {
+      const newProduct = Object.assign(
+        {},
+        formattingProduct(product, templateProduct)
+      );
+      dispatch(selectingProduct(newProduct));
+    }
+  }, [product?.price]);
 
-  const cartProducts = useSelector((state) => state.cart);
-
-  if (!product.variants) return <div>Loading</div>;
-  console.log(templateProduct);
+  if (!product?.variants) return <div>Loading</div>;
 
   return (
     <div className={style.container}>
       <div className={style.containerImages}>
         <div className={style.containerMainImage}>
+          {product?.is_offer && <span className={style.offer}>{"Oferta"}</span>}
           <img
             className={style.mainImage}
-            src={product.variants && product.variants[0].ProductImages[0]}
+            src={product?.variants && product?.default_image}
             id="default_image"
+            alt=''
           />
         </div>
         <div className={style.containerSecondImages}>
-          {product.variants &&
-            product.variants[0].ProductImages.map((image) => (
+          {product?.variants &&
+            product?.variants[0]?.ProductImages.map((image) => (
               <img
                 key={image}
                 className={style.secondImages}
@@ -67,7 +79,6 @@ export default function Product_detail() {
                 alt=""
                 onClick={() => {
                   selectImage(image);
-                  console.log(product);
                 }}
               />
             ))}
@@ -78,26 +89,24 @@ export default function Product_detail() {
         <div className={style.specificInf}>
           <h2 className={style.productName}>{name}</h2>
           <p className={style.collectionName}>{brand}</p>
-          <p
-            className={style.productPrice}
-            id="individualProductPrice"
-          >{`$${product.totalPrice}`}</p>
+          <p className={style.productPrice} id="individualProductPrice">{`$${
+            product?.totalPrice || product?.price
+          }`}</p>
 
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
               <h3 className={style.sizeHeader}>Size</h3>
               <div className={style.sizes} id="sizes">
-                {product.variants &&
+                {product?.variants &&
                   productSizes(templateProduct).map((size) => (
                     <div
                       id={size}
                       key={size}
                       className={style.size}
                       onClick={() => {
-                        const result = selectSize(
-                          templateProduct,
-                          product,
-                          size
+                        const result = Object.assign(
+                          {},
+                          selectSize(templateProduct, product, size)
                         );
                         dispatch(selectingProduct(result));
                         setState(size);
@@ -118,10 +127,9 @@ export default function Product_detail() {
                     key={color}
                     className={style.color}
                     onClick={() => {
-                      const result = selectVariant(
-                        templateProduct,
-                        product,
-                        color
+                      const result = Object.assign(
+                        {},
+                        selectVariant(templateProduct, product, color)
                       );
                       dispatch(selectingProduct(result));
                       setState(color);
@@ -144,8 +152,8 @@ export default function Product_detail() {
             </div>
 
             <div className={style.containerBuyCart}>
-              <Link to="/Form" onClick={() => prepareProduct(product)}>
-                <button className={style.buyButton}>Buy</button>
+              <Link className={style.buyButton} to="/Form" onClick={() => prepareProduct(product)}>
+                <button className={style.buyLetter}>Buy</button>
               </Link>
               <button
                 className={style.cartButton}
@@ -163,7 +171,9 @@ export default function Product_detail() {
             <div className={style.containerUnits}>
               <p className={style.infoUnits}>
                 Available Units:{" "}
-                <span className={style.units} id="units"></span>
+                <span className={style.units}>
+                  {product?.variants[0]?.leftUnits}
+                </span>
               </p>
             </div>
           </div>

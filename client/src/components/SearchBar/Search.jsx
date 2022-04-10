@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 
 import styles from './Search.module.scss';
-import {useDispatch, useSelector} from 'react-redux'
-import { getByName } from '../../actions'
+import { useDispatch } from 'react-redux';
+import { getByName } from '../../actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-
 function Search() {
 	const [search, setSearch] = useState('');
+	const keypress = { Enter: handleClick };
 
 	const dispatch = useDispatch();
 
 	function handleClick(e) {
 		e.preventDefault();
-		return window.location.href === 'http://localhost:3000/products'
-			? () => (dispatch(getByName(search)), setSearch(''))
-			: alert("Go to 'products' and then search...");
+		return window.location.href.includes('http://localhost:3000/home')
+			? (dispatch(getByName(search)), setSearch(''))
+			: alert("Go to 'home' and then search...");
 	}
 
 	function handleChange(e) {
@@ -36,7 +36,10 @@ function Search() {
 				type='text'
 				value={search}
 				onChange={(e) => handleChange(e)}
-				placeholder='Search by Id or by Type'
+				placeholder='Search by name, brand or type'
+				onKeyPress={(e) => {
+					keypress[e.key] && keypress[e.key](e)
+				}}
 			/>
 			<button
 				className={styles.searchButton}

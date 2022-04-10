@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import style from "./LoginMain.module.scss";
 import { GoogleLogin } from 'react-google-login';
@@ -43,20 +43,21 @@ function LogInMain(params) {
               <input className={style.input} type="password" placeholder="Type password"/>
             </div>
 
-            <div className={style.containerOptions}>
-              <div className={style.containerRememberMe}>
+            {/* <div className={style.containerOptions}>
+              {/* <div className={style.containerRememberMe}>
                 <input className={style.buttonRemember} type="checkbox" />
                 <label className={style.textRemember}>Remember me?</label>
-              </div>
+              </div> 
 
               <Link className={style.forgotText} to="/retrievepassword">Forgot password?</Link>
-            </div>
+            </div> */}
 
             <div className={style.containerLoginSignUp}>
               <input className={style.loginButton} type="submit" value="Login" />
               <Link className={style.signUpButton} to="/signup">Sign Up</Link>
               <GoogleLogin
-                clientId="537829890364-0gr73bp197j7omes6f97ple6jn4mhb3u.apps.googleusercontent.com"
+                className={style.googleButton}
+                clientId="969216311730-erq289787jpgirnsaro1cnd34vcikq20.apps.googleusercontent.com"
                 buttonText="Login"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}

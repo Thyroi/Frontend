@@ -47,7 +47,7 @@ export function selectImage(image) {
 // Showing colors
 
 export function productColor(product) {
-  if (product == undefined) return [];
+  if (product === undefined) return [];
 
   let colors = [];
   product.variants?.forEach((variant) => {
@@ -60,7 +60,7 @@ export function productColor(product) {
 // Showing sizes
 
 export function productSizes(product) {
-  if (product == undefined) return [];
+  if (product === undefined) return [];
 
   let sizes = [];
   product.variants?.forEach((variant) => {
@@ -75,77 +75,34 @@ export function productSizes(product) {
 
 // Select variant
 // Dont judge me!
-function formattingProduct(variantsTemplate, product, size, units, color) {
-  if (color && size) {
-    variantsTemplate.forEach((variant) => {
-      if (variant.ColorName === color) {
-        document.querySelector("#units").innerHTML = variant.Stocks[size];
+export function formattingProduct(product, templateProduct) {
+  const copyTemplateProduct = Object.assign({}, templateProduct);
+  product.variants = [];
+  product.variants.push(Object.assign({}, copyTemplateProduct.variants[0]));
 
-        const auxiliar = Object.assign({}, variant);
-        product.variants = [auxiliar];
+  const key = Object.keys(copyTemplateProduct.variants[0].Stocks)[0];
 
-        product.variants[0].Stocks = {};
-        product.variants[0].Stocks[size] = 1;
-      }
-    });
-    return product;
-  }
+  product.variants[0].Stocks = {};
+  product.variants[0].Stocks[key] = 1;
+  product.variants[0].leftUnits =
+    copyTemplateProduct.variants[0].Stocks[key] - 1;
+
+  product.totalPrice = product.price;
+
+  focusSelectedColor(product.variants[0].ColorName);
+  focusSelectedSize(Object.keys(product.variants[0].Stocks)[0]);
+  return product;
 }
 
 export function selectVariant(templateProduct, product, color) {
-  if (!color) {
-    color = product.variants[0].ColorName;
-
-    const auxiliarObject = Object.assign({}, templateProduct);
-    const variantsTemplate = auxiliarObject.variants;
-    console.log(variantsTemplate);
-    const size = Object.keys(product.variants[0].Stocks)[0];
-    const units = product.variants[0].Stocks[size];
-
-    product = formattingProduct(variantsTemplate, product, size, units, color);
-    focusSelectedSize(size);
-    focusSelectedColor(color);
-
-    return product;
-  }
-
-  if (product.variants[0].ColorName === color) {
-    focusSelectedColor(color);
-    return product;
-  }
-
-  templateProduct.variants.forEach((variant) => {
+  const copyTemplateProduct = Object.assign({}, templateProduct);
+  copyTemplateProduct.variants.forEach((variant) => {
     if (variant.ColorName === color) {
-      let sizes = document.querySelector("#sizes");
-      let childSizes = sizes.childNodes;
+      copyTemplateProduct.variants = [];
+      copyTemplateProduct.variants.push(variant);
 
-      childSizes.forEach((childSize) => {
-        if (childSize.classList.contains(styleDetail.selectedSize)) {
-          const auxiliarObject = Object.assign({}, templateProduct);
-          const variantsTemplate = auxiliarObject.variants;
-          const size = childSize.innerHTML;
-
-          let units = 0;
-          variantsTemplate.find((variant) => {
-            if (
-              variant.ColorName === color &&
-              Object.keys(variant.Stocks).includes(size)
-            ) {
-              units = variant.Stocks[size];
-              return;
-            }
-          });
-
-          product = formattingProduct(
-            variantsTemplate,
-            product,
-            size,
-            units,
-            color
-          );
-          focusSelectedColor(color);
-        }
-      });
+      product = formattingProduct(product, copyTemplateProduct);
+      focusSelectedColor(color);
     }
   });
 
@@ -153,41 +110,17 @@ export function selectVariant(templateProduct, product, color) {
 }
 
 export function selectSize(templateProduct, product, size) {
-  let sizes = document.querySelector("#sizes");
-  let childSizes = sizes.childNodes;
-
-  childSizes.forEach((childSize) => {
-    if (childSize.textContent === size) {
-      let colors = document.querySelector("#colors");
-      let childColors = colors.childNodes;
-
-      childColors.forEach((childColor) => {
-        if (childColor.classList.contains(styleDetail.selectedColor)) {
-          const auxiliarObject = Object.assign({}, templateProduct);
-          const variantsTemplate = auxiliarObject.variants;
-          const color = childColor.innerHTML;
-
-          let units = 0;
-          variantsTemplate.find((variant) => {
-            if (
-              variant.ColorName === color &&
-              Object.keys(variant.Stocks).includes(size)
-            ) {
-              units = variant.Stocks[size];
-              return;
-            }
-          });
-
-          product = formattingProduct(
-            variantsTemplate,
-            product,
-            size,
-            units,
-            color
-          );
+  const variants = templateProduct.variants;
+  variants.forEach((variant) => {
+    if (variant.ColorName === product.variants[0].ColorName) {
+      const Stocks = variant.Stocks;
+      for (let s in Stocks) {
+        if (s === size) {
+          product.variants[0].Stocks = {};
+          product.variants[0].Stocks[s] = 1;
           focusSelectedSize(size);
         }
-      });
+      }
     }
   });
 
@@ -233,35 +166,31 @@ function focusSelectedSize(size) {
 }
 
 export function increaseLocalStock(product) {
-  let amount = document.querySelector("#quantity");
-  let availableUnits = parseInt(document.querySelector("#units").textContent);
-  let quantity = parseInt(amount.textContent);
+  const top = product.variants[0].leftUnits;
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount <= top) {
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
+    product.variants[0].leftUnits -= 1;
 
-  if (availableUnits > 0) {
-    console.log("___+");
-    document.querySelector("#quantity").textContent = quantity + 1;
-
-    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity + 1;
-    document.querySelector("#units").textContent = availableUnits - 1;
+    const totalToPay = totalDue(product);
+    product.totalPrice = totalToPay;
   }
-  // document.querySelector("#total").innerHTML = totalDue();
+
   return product;
 }
 
-export function decreaseLocalStock(product) {
-  let amount = document.querySelector("#quantity");
-  let quantity = parseInt(amount.textContent);
-  let availableUnits = parseInt(document.querySelector("#units").textContent);
-  let unitsForBuy = product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
- 
-  if (quantity > 1) {
-    console.log("___-");
-    document.querySelector("#quantity").textContent = quantity - 1;
+export function decreaseLocalStock(product, templateProduct) {
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount > 2) {
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
+    product.variants[0].leftUnits += 1;
 
-    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] = quantity - 1;
-    document.querySelector("#units").textContent = availableUnits + 1;
+    const totalToPay = totalDue(product);
+    product.totalPrice = totalToPay;
   }
-  // document.querySelector("#total").innerHTML = totalDue();
+
   return product;
 }
 
@@ -273,42 +202,23 @@ export function totalDue(product, cartItems) {
       total += item.totalPrice;
     });
 
-    console.log(total);
     return total;
   }
 
-  let total =
-    product.price *
+  let price = product.price;
+  let units =
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
-  product.totalPrice = total;
-  total = parseFloat(total).toFixed(2);
+  let total = (price * units).toFixed(2);
+
   return total;
 }
-
-export function changingAttributesCart(cartItems, product, quantity) {
-  console.log(cartItems, product);
-  const cart = cartItems.map((item) => {
-    if (item.id_product === product.id_product) {
-      item.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] =
-        quantity;
-      item.totalPrice = totalDue(item);
-
-      return item;
-    }
-
-    return item;
-  });
-
-  console.log(cart);
-  return cart;
-}
-
-// Patch del client
 
 export async function prepareProduct(product, cartItems) {
   let productToBuy = [];
 
   if (product) {
+    let totalPrice = parseFloat(product.totalPrice).toFixed(2);
+
     productToBuy = [
       {
         productid: product.id_product,
@@ -316,22 +226,22 @@ export async function prepareProduct(product, cartItems) {
           product.variants[0].Stocks[
             Object.keys(product.variants[0].Stocks)[0]
           ],
-        price: product.totalPrice,
+        price: totalPrice,
         color: product.variants[0].ColorName,
         size: Object.keys(product.variants[0].Stocks)[0],
       },
     ];
   }
 
-  console.log(productToBuy);
-
   if (cartItems) {
     productToBuy = cartItems.map((item) => {
+      let totalPrice = parseFloat(item.totalPrice);
+
       return {
         productid: item.id_product,
         quantity:
           item.variants[0].Stocks[Object.keys(item.variants[0].Stocks)[0]],
-        price: item.totalPrice,
+        price: totalPrice,
         color: item.variants[0].ColorName,
         size: Object.keys(item.variants[0].Stocks)[0],
       };
@@ -350,11 +260,28 @@ export async function purchaseOrder() {
   const productPrepared = JSON.parse(localStorage.getItem("productPrepared"));
   const datosDeEnvio = JSON.parse(localStorage.getItem("datosDeEnvio"));
 
+  let totalDue = 0
+  productPrepared.forEach((item) => {
+    let price = item.price;
+    price = parseFloat(price);
+    price = price.toFixed(2);
+    price = parseFloat(price);
+
+    totalDue += price;
+  });
+
+  // const totalDue = productPrepared.reduce((total, item) => {
+  //   return total + item.price;
+  // });
+
   const data = {
     orderDetails: [...productPrepared],
+    totalDue: totalDue,
     address: datosDeEnvio.address,
     clientPhone: parseInt(datosDeEnvio.phone),
   };
+
+  console.log(data);
 
   await axios.post("http://localhost:3001/orders", data);
 
@@ -363,14 +290,25 @@ export async function purchaseOrder() {
   // localStorage.removeItem("datosDeEnvio");
 }
 
-// const a = await axios.post("http://localhost:3001/orders");
+export function sendingCart(cartItems) {
+  if (cartItems.length === 0 || cartItems === undefined) return;
 
-// { "orderDetails": [{"productid":32131, "quantity":1, "price":15, "color": "black", "size":"s"},
-// 	{"productid":2451, "quantity":1, "price":10, "color": "white", "size":"s"}] ,
-//   "address": {
-//       		  "calle":"200",
-//        		 "numero":"9",
-//       		  "city":"Bogotá",
-//        			 "zip_code":"1111"
-//  		   },
-//  "clientPhone":314445982911}
+  const dataToSend = {
+    cart_items: { cartItems },
+  };
+
+  axios.put("http://localhost:3001/cart/6631651", dataToSend);
+}
+
+export function showingNumberCart(){
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if(!cart) return 0;
+  
+  let numberCart = 0;
+
+  cart.forEach(product => {
+    numberCart += product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  })
+
+  return numberCart;
+}

@@ -6,12 +6,12 @@ function CardCategory({ img, name, id }) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.background}>
-				<img src={img} alt='' />
+				<img className={styles.image} src={img} alt='' />
 			</div>
 
 			<Link
 				className={styles.title}
-			to={name === 'All' ? '/products' : `/products?collection=${id}`}>
+				to={name === 'All' ? '/home' : `/home?collection=${id}`}>
 				{name}
 			</Link>
 

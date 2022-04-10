@@ -1,96 +1,124 @@
-import React, { useEffect } from "react";
-import style from "./Form.module.scss";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import style from './Form.module.scss';
+import { Link } from 'react-router-dom';
 
-import { saveSendingData } from "../../actions/index";
+import { saveSendingData } from '../../actions/index';
 
 function Form() {
-  useEffect(() => {
-    document.querySelector("#sendDataButton").addEventListener("click", () => {
-      saveSendingData();
-    });
-  });
+	useEffect(() => {
+		document
+			.querySelector('#sendDataButton')
+			.addEventListener('click', () => {
+				saveSendingData();
+			});
+	});
 
-  return (
-    <div className={style.background}>
-      <div className={style.containerInputs}>
-        <label className={style.label} id="name">
-          Nombre{" "}
-        </label>
-        <input type="text" placeholder="Escribe tu nombre" />
-      </div>
+	return (
+		<div className={style.background}>
+			<div className={style.personalData}>
+				<label className={style.label} id='name'>
+					Name
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your name'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="lastname">
-          Apellido
-        </label>
-        <input type="text" placeholder="Escribe tu nombre" />
-      </div>
+				<label className={style.label} id='lastname'>
+					Last name
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your lastname'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="email">
-          Correo electrónico
-        </label>
-        <input type="text" placeholder="Escribe tu cor" />
-      </div>
+				<label className={style.label} id='email'>
+					e-mail
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your email'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="phone">
-          Teléfono
-        </label>
-        <input type="number" placeholder="Escribe tu phone" />
-      </div>
+				<label className={style.label} id='phone'>
+					Phone number
+				</label>
+				<input
+					className={style.input}
+					type='number'
+					placeholder='Write your phone number'
+				/>
+			</div>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="calle">
-          Calle
-        </label>
-        <input type="text" placeholder="Escribe tu calle" />
-      </div>
+			<div className={style.address}>
+				<label className={style.label} id='calle'>
+					Street
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your street'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="city">
-          Ciudad
-        </label>
-        <input type="text" placeholder="Escribe tu ciudad" />
-      </div>
+				<label className={style.label} id='city'>
+					City
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your city'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="zip_code">
-          Zip code
-        </label>
-        <input type="text" placeholder="Escribe tu zip code" />
-      </div>
+				<label className={style.label} id='zip_code'>
+					Zip code
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your zip code'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="state">
-          Departamento/Provincia
-        </label>
-        <input type="text" placeholder="Escribe tu departamento o provincia" />
-      </div>
+				<label className={style.label} id='state'>
+					Province/department
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='Write your province or department'
+				/>
 
-      <div className={style.containerInputs}>
-        <label className={style.label} id="others">
-          Otros
-        </label>
-        <input type="text" placeholder="Casa, apartamento..." />
-      </div>
+				<label className={style.label} id='others'>
+					Particular details
+				</label>
+				<input
+					className={style.input}
+					type='text'
+					placeholder='A detail that allows mail services to identify your home.'
+				/>
+			</div>
 
-      <div className={style.containerInputs}>
-        <input type="submit" value="Save data" id="saveNewData" />
-      </div>
+			<div className={style.submits}>
+				<input
+					className={style.button}
+					type='submit'
+					value='Save data'
+					id='saveNewData'
+				/>
 
-      <div className={style.containerInputs}>
-        <Link to="/cart/pay">
-          <input
-            type="submit"
-            value="Confirmar datos de envío"
-            id="sendDataButton"
-          />
-        </Link>
-      </div>
-    </div>
-  );
+				<Link to='/cart/pay'>
+					<input
+						className={style.button}
+						type='submit'
+						value='Confirm'
+						id='sendDataButton'
+					/>
+				</Link>
+			</div>
+		</div>
+	);
 }
 
 export default Form;

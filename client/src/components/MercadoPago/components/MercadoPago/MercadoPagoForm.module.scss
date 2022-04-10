@@ -1,0 +1,47 @@
+.containerResponseApproved,
+.containerResponseRejected,
+.containerResponsePending {
+  width: 80%;
+  height: auto;
+  border-radius: 20px;
+  color: #fff;
+  padding: 1rem;
+}
+
+.containerResponseApproved {
+  background: #77dd77;
+}
+
+.containerResponseRejected {
+  background: #ff6961;
+}
+
+.containerResponsePending {
+  background: #dddd54;
+}
+
+.line {
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.headerResponse {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.textResponse {
+  font-size: 0.9rem;
+  font-weight: thin;
+  margin-top: 0.5rem;
+}
+
+.subHeader {
+  margin-top: 0.5rem;
+}
+
+.listInfo {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

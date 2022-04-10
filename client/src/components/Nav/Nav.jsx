@@ -4,20 +4,29 @@ import { NavLink, useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-
 	faCartShopping,
 	faCirclePlus,
 	faHouse,
 	faChartLine,
+	faRotateLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Nav.module.css';
 
 export default function Nav() {
 	const history = useHistory();
+
+	function handleGoBack(e) {
+		e.preventDefault();
+		history.goBack();
+	}
+
 	const products = useSelector((state) => state.products);
 	return (
 		<div className={styles.container}>
+			<button onClick={(e) => handleGoBack(e)}>
+				<FontAwesomeIcon icon={faRotateLeft} />
+			</button>
 			<NavLink
 				to='/home'
 				exact
@@ -72,9 +81,6 @@ export default function Nav() {
 					</NavLink>
 				</>
 			)}
-
-			<button onClick={history.goBack}
-			>go Back!</button>
 		</div>
 	);
 }

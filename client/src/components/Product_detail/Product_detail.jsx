@@ -15,21 +15,29 @@ import {
   productSizes,
   selectVariant,
   selectSize,
-  prepareProduct
+  prepareProduct,
+  formattingProduct,
 } from "../../utils/utils";
 
 //Data
-import { getById, addCart, selectingProduct, cleanProducts } from "../../actions/index";
+import {
+  getById,
+  addCart,
+  selectingProduct,
+  cleanProducts,
+} from "../../actions/index";
 
 export default function Product_detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const templateProduct = useSelector((state) => state.details);
-  const product = useSelector((state) => state.detailEdited);
+  let product = useSelector((state) => state.detailEdited);
+
+  const cartProducts = useSelector((state) => state.cart);
 
   const { name, brand, price, description } = product;
-  product.totalPrice = price;
+
   const [state, setState] = useState();
 
   useEffect(() => {
@@ -39,13 +47,19 @@ export default function Product_detail() {
 
   useEffect(() => {
     // Auto selecting details
-    if (product.variants) selectVariant(templateProduct, product);
-  }, [product]);
-
-  const cartProducts = useSelector((state) => state.cart);
+    // if (product.variants) {
+    //   
+    // }
+    if (product.variants) {
+      console.log("sss")
+      const newProduct = Object.assign({},formattingProduct(product, templateProduct));
+      dispatch(selectingProduct(newProduct));
+    }
+  }, [product.price]);
 
   if (!product.variants) return <div>Loading</div>;
-  console.log(templateProduct);
+
+  console.log(product);
 
   return (
     <div className={style.container}>
@@ -81,7 +95,7 @@ export default function Product_detail() {
           <p
             className={style.productPrice}
             id="individualProductPrice"
-          >{`$${product.totalPrice}`}</p>
+          >{`$${product.totalPrice || product.price}`}</p>
 
           <div className={style.containerPreferences}>
             <div className={style.containerSizePreference}>
@@ -94,11 +108,7 @@ export default function Product_detail() {
                       key={size}
                       className={style.size}
                       onClick={() => {
-                        const result = selectSize(
-                          templateProduct,
-                          product,
-                          size
-                        );
+                        const result = Object.assign({}, selectSize(templateProduct, product, size));
                         dispatch(selectingProduct(result));
                         setState(size);
                       }}
@@ -118,11 +128,7 @@ export default function Product_detail() {
                     key={color}
                     className={style.color}
                     onClick={() => {
-                      const result = selectVariant(
-                        templateProduct,
-                        product,
-                        color
-                      );
+                      const result = Object.assign({}, selectVariant(templateProduct, product, color));
                       dispatch(selectingProduct(result));
                       setState(color);
                     }}
@@ -163,7 +169,9 @@ export default function Product_detail() {
             <div className={style.containerUnits}>
               <p className={style.infoUnits}>
                 Available Units:{" "}
-                <span className={style.units} id="units"></span>
+                <span className={style.units}>
+                  {product.variants[0].leftUnits}
+                </span>
               </p>
             </div>
           </div>

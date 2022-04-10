@@ -39,8 +39,8 @@ export default function MercadoPagoForm(params) {
 
   useEffect(() => {
     if (resultPayment && resultPayment.status === "approved") {
-      // localStorage.removeItem("cart");
-      // dispatch(clearCart());
+      localStorage.removeItem("cart");
+      dispatch(clearCart());
 
       const element = document.querySelector("#cardState");
 
@@ -65,6 +65,26 @@ export default function MercadoPagoForm(params) {
         element.classList.remove(style.containerResponseApproved);
         element.classList.remove(style.containerResponsePending);
         element.classList.add(style.containerResponseRejected);
+
+        document.querySelector("#header").textContent = header;
+        document.querySelector("#text").textContent = text;
+      }
+    }
+
+    if (resultPayment && resultPayment.status === "in_process") {
+      localStorage.removeItem("cart");
+      dispatch(clearCart());
+
+      const header = "Your order is in process";
+      const text =
+        "Hi, sr, hope you are okay. I glad to tell you that your order is in process. Please, check your email to pay attention. If you do not recieve anything in these days, that means we have stolen your money. By, by ";
+
+      const element = document.querySelector("#cardState");
+
+      if (resultPayment.status === "in_process") {
+        element.classList.remove(style.containerResponseApproved);
+        element.classList.remove(style.containerResponseRejected);
+        element.classList.add(style.containerResponsePending);
 
         document.querySelector("#header").textContent = header;
         document.querySelector("#text").textContent = text;

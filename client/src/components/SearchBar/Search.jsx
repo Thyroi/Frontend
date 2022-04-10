@@ -15,7 +15,7 @@ function Search() {
 
 	function handleClick(e) {
 		e.preventDefault();
-		return window.location.href.includes('http://localhost:3000/home')
+		return window.location.href.includes('/home')
 			? (dispatch(getByName(search)), setSearch(''))
 			: alert("Go to 'home' and then search...");
 	}

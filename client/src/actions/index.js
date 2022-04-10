@@ -2,19 +2,26 @@ import axios from 'axios';
 import { Notifications } from '../utils/utils.js';
 
 export function getInfo() {
+	
 	return async function (dispatch) {
-		var info = await axios.get('http://localhost:3001/products/');
-		return dispatch({
+		try{
+			var info = await axios.get('/products/');
+			return dispatch({
 			type: 'GET_ALL',
 			payload: info.data,
 		});
+		}
+		catch (error){
+			console.log(error)
+		}
 	};
 }
 
 export function getSelectorsCol() {
 	return async function (dispatch) {
-		var selectorsCol = await axios.get(
-			'http://localhost:3001/selectors/collections'
+		try{
+			var selectorsCol = await axios.get(
+			'/selectors/collections'
 		);
 		var response = selectorsCol.data.data.map((p) => {
 			return { id: p.id_collection, name: p.name };
@@ -24,13 +31,17 @@ export function getSelectorsCol() {
 			type: 'GET_SELECTOR_COL',
 			payload: response,
 		});
+		} catch (error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			var name = await axios.get(`http://localhost:3001/products/?filters=${obj}`);
+			var name = await axios.get(`/products/?filters=${obj}`);
 			return dispatch({
 				type: 'GET_BY_NAME',
 				payload: name.data,
@@ -46,23 +57,30 @@ export function getByName(obj) {
 
 export function getById(params) {
 	return async function (dispatch) {
-		var id = await axios.get(`http://localhost:3001/products/${params}`);
+		try{
+			var id = await axios.get(`/products/${params}`);
 
-    id.data.variants.forEach((variant) => {
-      variant.ProductImages.shift();
+   			 id.data.variants.forEach((variant) => {
+    		 variant.ProductImages.shift();
     });
 
 		return dispatch({
 			type: 'GET_BY_ID',
 			payload: id.data,
 		});
+		}
+		catch (error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function getSelectorsCat() {
 	return async function (dispatch) {
-		const { data } = await axios.get(
-			'http://localhost:3001/selectors/categories'
+		try{
+			const { data } = await axios.get(
+			'/selectors/categories'
 		);
 
 		const menArr = data?.men?.map((p) => {
@@ -77,13 +95,18 @@ export function getSelectorsCat() {
 			type: 'GET_SELECTOR_CAT',
 			payload: { men: menArr, women: womenArr },
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
 	};
 }
 
 export function getByCatId(payload) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycat`
+		try{
+			var { data } = await axios.get(
+			`/products/bycat`
 		);
 
 		const res = [];		
@@ -94,21 +117,33 @@ export function getByCatId(payload) {
 			type: 'GET_BY_CAT_ID',
 			payload: res
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function cleanProducts() {
 	return async function (dispatch) {
-		return dispatch({
+		try{
+			return dispatch({
 			type: 'CLEAR_PRODUCTS',
 			payload: [],
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
 	};
 }
+
 export function getByColId(payload) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycol?id=${payload}`
+		try{
+			var { data } = await axios.get(
+			`/products/bycol?id=${payload}`
 		);
 
 		const res = [];
@@ -123,33 +158,50 @@ export function getByColId(payload) {
 			type: 'GET_BY_COL_ID',
 			payload: res,
 		});
+		} 
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function getOffers(pay) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/byoffer?offer=${pay}`
+		try{
+			var { data } = await axios.get(
+			`/products/byoffer?offer=${pay}`
 		);
 
 		return dispatch({
 			type: 'GET_OFFERS',
 			payload: [...data.women, ...data.men],
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function addProduct(payload) {
 	return async function () {
-		await axios.post(
-			'http://localhost:3001/products/add',
+		try{
+			await axios.post(
+			'/products/add',
 			payload
 		);
 		return alert('Producto creado con exito');
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
-// Actions for Cart guest
+// Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 export function addCart(cartProducts, payload, dispatch) {
 	if (!cartProducts.some((p) => p.id_product === payload.id_product)) {
@@ -172,44 +224,75 @@ export function addCart(cartProducts, payload, dispatch) {
 
 // export function addProduct(payload){
 //     return async function(){
-//         const add = await axios.post("http://localhost:3001/products/add", payload)
+//         const add = await axios.post("/products/add", payload)
 //         return alert("Producto creado con exito")
 //     }
 // }
 
 export function getAllUsers() {
 	return async function (dispatch) {
-		const allusers = await axios.get('http://localhost:3001/users');
+		try{
+			const allusers = await axios.get('/users');
 		return dispatch({
 			type: 'GET_ALL_USERS',
 			payload: allusers.data,
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export function updatePermission(payload) {
 	return async function (dispatch) {
-		const update = await axios.put(`http://localhost:3001/users`, payload);
+		try{
+			const update = await axios.put(`/users`, payload);
 		return dispatch({
 			type: 'UPDATE_PERMISSION',
 			payload: update.data,
 		});
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
 
 export const deleteUser = (payload) => async (dispatch) => {
-	return await axios.delete(`http://localhost:3001/users`, { data: payload });
+	try{
+		return await axios.delete(`/users`, { data: payload });
+	}
+	catch(error){
+		console.log(error)
+	}
+	
 };
 
 export const addCategory = (payload) => async (dispatch) => {
-	return await axios.post(`http://localhost:3001/selectors/addCat`, payload);
+	try{
+		return await axios.post(`/selectors/addCat`, payload);
+	}
+	catch(error){
+		console.log(error)
+	}
 };
 
 export function addNewUser(payload) {
 	return async function () {
-		await axios.post('http://localhost:3001/users', payload);
+		try{
+			await axios.post('/users', payload);
+		}
+		catch(error){
+			console.log(error)
+		}
+		
 	};
 }
+
+//******************************* aca tambien x4
 
 export function removeCart(cartProducts, payload) {
 	const newConstProducts = cartProducts.filter(
@@ -266,7 +349,12 @@ export function removeWishList(payload) {
 
 export function createClient(payload) {
 	return async function () {
-		return await axios.post('http://localhost:3001/client', payload);
+		try{
+			return await axios.post('/client', payload);
+		}
+		catch(error){
+			console.log(error)
+		}
 	};
 }
 

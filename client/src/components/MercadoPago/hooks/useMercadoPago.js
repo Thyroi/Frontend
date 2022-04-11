@@ -52,7 +52,7 @@ export default function useMercadoPago() {
 							identificationType,
 						} = cardForm.getCardFormData();
 
-						fetch(`http://localhost:3001/process-payment`, {
+						fetch(`https://app-mytiendita.herokuapp.com/process-payment`, {
 							// entry point backend
 							method: 'POST',
 							headers: {

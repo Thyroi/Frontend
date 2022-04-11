@@ -11,7 +11,7 @@
 	transition: all 0.15s;
 }
 
-.container:hover{
+.container:hover {
 	border: none;
 	transform: translateY(-5px);
 	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
@@ -45,7 +45,7 @@
 	max-height: 50rem;
 }
 
-.noStock{
+.noStock {
 	-webkit-filter: grayscale(1);
 	filter: grayscale(1);
 }
@@ -61,7 +61,6 @@
 }
 
 .name,
-.brand,
 .price,
 .stock {
 	display: flex;
@@ -69,12 +68,23 @@
 	margin: 0.2rem 0.2rem 0.2rem 1rem;
 }
 
+.brand {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	font-size: 0.8rem;
+	font-weight: 400;
+}
+
+.brand span {
+	justify-self: flex-start;
+	margin-left: 1rem;
+}
+
 .name {
 	font-size: 1.2rem;
 	font-weight: 500;
 }
 
-.brand,
 .stock {
 	font-size: 0.7rem;
 	font-weight: 300;

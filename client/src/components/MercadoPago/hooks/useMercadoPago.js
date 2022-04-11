@@ -12,7 +12,7 @@ export default function useMercadoPago() {
   });
 
   totalDue = totalDue.toFixed(2);
-  console.log(totalDue);
+
 
 	const { MercadoPago } = useScript(
 		'https://sdk.mercadopago.com/js/v2',

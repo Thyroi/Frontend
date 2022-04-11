@@ -29,10 +29,12 @@ export default function Products() {
 	const collections = useSelector((state) => state.collections);
 
 	useEffect(() => {
-		dispatch(cleanProducts());
-		collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
-		dispatch(getSelectorsCat());
-		dispatch(getSelectorsCol());
+		setTimeout(() => {
+			dispatch(cleanProducts());
+			collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
+			dispatch(getSelectorsCat());
+			dispatch(getSelectorsCol());
+		}, 1000);
 	}, [dispatch]);
 
 	/* const products = data */

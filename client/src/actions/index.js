@@ -3,42 +3,47 @@ import { Notifications } from '../utils/utils.js';
 
 export function getInfo() {
 	return async function (dispatch) {
-		var info = await axios.get('http://localhost:3001/products/');
-		return dispatch({
-			type: 'GET_ALL',
-			payload: info.data,
-		});
+		try {
+			var info = await axios.get('/products/');
+			return dispatch({
+				type: 'GET_ALL',
+				payload: info.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function getSelectorsCol() {
 	return async function (dispatch) {
-		var selectorsCol = await axios.get(
-			'http://localhost:3001/selectors/collections'
-		);
-		var response = selectorsCol.data.data.map((p) => {
-			return { id: p.id_collection, name: p.name };
-		});
+		try {
+			var selectorsCol = await axios.get('/selectors/collections');
+			var response = selectorsCol.data.data.map((p) => {
+				return { id: p.id_collection, name: p.name };
+			});
 
-		return dispatch({
-			type: 'GET_SELECTOR_COL',
-			payload: response,
-		});
+			return dispatch({
+				type: 'GET_SELECTOR_COL',
+				payload: response,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			var name = await axios.get(`http://localhost:3001/products/?filters=${obj}`);
+			var name = await axios.get(`/products/?filters=${obj}`);
 			return dispatch({
 				type: 'GET_BY_NAME',
 				payload: name.data,
 			});
 		} catch (error) {
 			return dispatch({
-				type: 'GET_BY_NAME',
-				payload: name.data,
+				type: 'RECOVER_PRODUCTS',
 			});
 		}
 	};
@@ -46,114 +51,141 @@ export function getByName(obj) {
 
 export function getById(params) {
 	return async function (dispatch) {
-		var id = await axios.get(`http://localhost:3001/products/${params}`);
+		try {
+			var id = await axios.get(`/products/${params}`);
 
-    id.data.variants.forEach((variant) => {
-      variant.ProductImages.shift();
-    });
+			id.data.variants.forEach((variant) => {
+				variant.ProductImages.shift();
+			});
 
-		return dispatch({
-			type: 'GET_BY_ID',
-			payload: id.data,
-		});
+			return dispatch({
+				type: 'GET_BY_ID',
+				payload: id.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function getSelectorsCat() {
 	return async function (dispatch) {
-		const { data } = await axios.get(
-			'http://localhost:3001/selectors/categories'
-		);
+		try {
+			const { data } = await axios.get('/selectors/categories');
 
-		const menArr = data?.men?.map((p) => {
-			return { id: p.id_category, name: p.name };
-		});
+			const menArr = data?.men?.map((p) => {
+				return { id: p.id_category, name: p.name };
+			});
 
-		const womenArr = data?.women?.map((p) => {
-			return { id: p.id_category, name: p.name };
-		});
+			const womenArr = data?.women?.map((p) => {
+				return { id: p.id_category, name: p.name };
+			});
 
-		return dispatch({
-			type: 'GET_SELECTOR_CAT',
-			payload: { men: menArr, women: womenArr },
-		});
+			return dispatch({
+				type: 'GET_SELECTOR_CAT',
+				payload: { men: menArr, women: womenArr },
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function getByCatId(payload) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycat`
-		);
+		try {
+			var { data } = await axios.get(`/products/bycat`);
 
-		const res = [];		
-		data?.women?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
-		data?.men?.forEach(cat => cat.id_category === parseInt(payload) && res.push(...cat.Products));
-		
-		return dispatch({
-			type: 'GET_BY_CAT_ID',
-			payload: res
-		});
+			const res = [];
+			data?.women?.forEach(
+				(cat) =>
+					cat.id_category === parseInt(payload) &&
+					res.push(...cat.Products)
+			);
+			data?.men?.forEach(
+				(cat) =>
+					cat.id_category === parseInt(payload) &&
+					res.push(...cat.Products)
+			);
+
+			return dispatch({
+				type: 'GET_BY_CAT_ID',
+				payload: res,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function cleanProducts() {
 	return async function (dispatch) {
-		return dispatch({
-			type: 'CLEAR_PRODUCTS',
-			payload: [],
-		});
+		try {
+			return dispatch({
+				type: 'CLEAR_PRODUCTS',
+				payload: [],
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
+
 export function getByColId(payload) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/bycol?id=${payload}`
-		);
+		try {
+			var { data } = await axios.get(`/products/bycol?id=${payload}`);
 
-		const res = [];
-		data?.women?.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
-		data.men.forEach((e) => {
-			e?.Products?.forEach((e) => res?.push(e));
-		});
+			const res = [];
+			data?.women?.forEach((e) => {
+				e?.Products?.forEach((e) => res?.push(e));
+			});
+			data.men.forEach((e) => {
+				e?.Products?.forEach((e) => res?.push(e));
+			});
 
-		return dispatch({
-			type: 'GET_BY_COL_ID',
-			payload: res,
-		});
+			return dispatch({
+				type: 'GET_BY_COL_ID',
+				payload: res,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function getOffers(pay) {
 	return async function (dispatch) {
-		var { data } = await axios.get(
-			`http://localhost:3001/products/byoffer?offer=${pay}`
-		);
+		try {
+			var { data } = await axios.get(`/products/byoffer?offer=${pay}`);
 
-		return dispatch({
-			type: 'GET_OFFERS',
-			payload: [...data.women, ...data.men],
-		});
+			return dispatch({
+				type: 'GET_OFFERS',
+				payload: [...data.women, ...data.men],
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function addProduct(payload) {
 	return async function () {
-		await axios.post(
-			'http://localhost:3001/products/add',
-			payload
-		);
-		return alert('Producto creado con exito');
+		try {
+			await axios.post('/products/add', payload);
+			return alert('Producto creado con exito');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
-// Actions for Cart guest
+// Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 export function addCart(cartProducts, payload, dispatch) {
 	if (!cartProducts.some((p) => p.id_product === payload.id_product)) {
-		if (localStorage.getItem('cart') != null) localStorage.removeItem('cart');
+		if (localStorage.getItem('cart') != null)
+			localStorage.removeItem('cart');
 		cartProducts.unshift(payload);
 
 		localStorage.setItem('cart', JSON.stringify(cartProducts));
@@ -172,44 +204,66 @@ export function addCart(cartProducts, payload, dispatch) {
 
 // export function addProduct(payload){
 //     return async function(){
-//         const add = await axios.post("http://localhost:3001/products/add", payload)
+//         const add = await axios.post("/products/add", payload)
 //         return alert("Producto creado con exito")
 //     }
 // }
 
 export function getAllUsers() {
 	return async function (dispatch) {
-		const allusers = await axios.get('http://localhost:3001/users');
-		return dispatch({
-			type: 'GET_ALL_USERS',
-			payload: allusers.data,
-		});
+		try {
+			const allusers = await axios.get('/users');
+			return dispatch({
+				type: 'GET_ALL_USERS',
+				payload: allusers.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export function updatePermission(payload) {
 	return async function (dispatch) {
-		const update = await axios.put(`http://localhost:3001/users`, payload);
-		return dispatch({
-			type: 'UPDATE_PERMISSION',
-			payload: update.data,
-		});
+		try {
+			const update = await axios.put(`/users`, payload);
+			return dispatch({
+				type: 'UPDATE_PERMISSION',
+				payload: update.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
 export const deleteUser = (payload) => async (dispatch) => {
-	return await axios.delete(`http://localhost:3001/users`, { data: payload });
+	try {
+		return await axios.delete(`/users`, { data: payload });
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const addCategory = (payload) => async (dispatch) => {
-	return await axios.post(`http://localhost:3001/selectors/addCat`, payload);
+	try {
+		return await axios.post(`/selectors/addCat`, payload);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export function addNewUser(payload) {
 	return async function () {
-		await axios.post('http://localhost:3001/users', payload);
+		try {
+			await axios.post('/users', payload);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
+
+//******************************* aca tambien x4
 
 export function removeCart(cartProducts, payload) {
 	const newConstProducts = cartProducts.filter(
@@ -227,27 +281,27 @@ export function removeCart(cartProducts, payload) {
 }
 
 export function updatingCart(product) {
-  let cart = JSON.parse(localStorage.getItem('cart'));
-  cart = cart.map((p) => {
-    if(p.id_product === product.id_product){
-      return product
-    }
-    
-    return p;
-  });
-  
-  localStorage.setItem('cart', JSON.stringify(cart));
+	let cart = JSON.parse(localStorage.getItem('cart'));
+	cart = cart.map((p) => {
+		if (p.id_product === product.id_product) {
+			return product;
+		}
+
+		return p;
+	});
+
+	localStorage.setItem('cart', JSON.stringify(cart));
 	return {
 		type: 'UPDATING_CART',
 		payload: cart,
 	};
 }
 
-export function clearCart(){
-  return {
-    type: 'CLEAR_CART',
-    payload: [],
-  }
+export function clearCart() {
+	return {
+		type: 'CLEAR_CART',
+		payload: [],
+	};
 }
 
 export function addWishList(payload) {
@@ -266,7 +320,11 @@ export function removeWishList(payload) {
 
 export function createClient(payload) {
 	return async function () {
-		return await axios.post('http://localhost:3001/client', payload);
+		try {
+			return await axios.post('/client', payload);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 
@@ -289,11 +347,11 @@ export function selectingProduct(payload) {
 // Data for buying products
 export function saveSendingData() {
 	let labels = document.querySelectorAll('label');
-  labels = Array.from(labels);
-  
+	labels = Array.from(labels);
+
 	const data = {
-    address: {}
-  };
+		address: {},
+	};
 
 	labels.forEach((label) => {
 		const property = label.id;

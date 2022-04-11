@@ -8,7 +8,7 @@ const initialState = {
 	copyUsers: [],
 	wishlist: [],
 	google: {},
-	cart: JSON.parse(window.localStorage.getItem("cart")) || [],
+	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
 };
@@ -21,6 +21,9 @@ export default function rootReducer(state = initialState, action) {
 				products: action.payload,
 				allproducts: action.payload,
 			};
+		case 'RECOVER_PRODUCTS':
+			alert('Nothing found, showing all products');
+			return { ...state, products: state.allproducts };
 
 		case 'GET_BY_NAME':
 			return {
@@ -59,7 +62,7 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				detailEdited: {},
-				products: []
+				products: [],
 			};
 		case 'GET_OFFERS':
 			state.products = state.allproducts;
@@ -93,31 +96,33 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				copyUsers: action.payload,
 			};
-		case "ADD_WISH_LIST":
-			if (state.wishlist?.find(e => e.id === action.payload.id)) {
-				alert("This item is in your wish list")
-				return {
-					...state
-				};
-			} else {
-				alert("Item add to your wishlist succesfully")
+		case 'ADD_WISH_LIST':
+			if (state.wishlist?.find((e) => e.id === action.payload.id)) {
+				alert('This item is in your wish list');
 				return {
 					...state,
-					wishlist: [...state.wishlist, action.payload]
-				}
-			};
+				};
+			} else {
+				alert('Item add to your wishlist succesfully');
+				return {
+					...state,
+					wishlist: [...state.wishlist, action.payload],
+				};
+			}
 
-		case "REMOVE_WISH_LIST":
-			let eliminated = state.wishlist.filter(e => e.id !== action.payload)
+		case 'REMOVE_WISH_LIST':
+			let eliminated = state.wishlist.filter(
+				(e) => e.id !== action.payload
+			);
 			return {
 				...state,
-				wishlist: eliminated
+				wishlist: eliminated,
 			};
 
-		case "GET_GOOGLE_INFO":
+		case 'GET_GOOGLE_INFO':
 			return {
 				...state,
-				google: action.payload
+				google: action.payload,
 			};
 
 		case 'SELECTING_PRODUCT':
@@ -138,12 +143,12 @@ export default function rootReducer(state = initialState, action) {
 				datosDeEnvío: action.payload,
 			};
 
-    case 'CLEAR_CART':
-      return {
-        ...state,
-        cart: []
-      }
-      
+		case 'CLEAR_CART':
+			return {
+				...state,
+				cart: [],
+			};
+
 		default:
 			return state;
 	}

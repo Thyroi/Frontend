@@ -131,6 +131,26 @@ export function cleanProducts() {
 	};
 }
 
+export function clearDetail() {
+	return async function (dispatch) {
+		try {
+			return dispatch({
+				type: 'CLEAR_DETAIL',
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function setActualPage(page) {
+
+	return {
+		type: 'SET_ACTUAL_PAGE',
+		payload: page,
+	};
+}
+
 export function getByColId(payload) {
 	return async function (dispatch) {
 		try {

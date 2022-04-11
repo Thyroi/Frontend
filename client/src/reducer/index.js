@@ -1,4 +1,5 @@
 const initialState = {
+	actualPage: 1,
 	products: [],
 	allproducts: [],
 	details: {},
@@ -61,9 +62,17 @@ export default function rootReducer(state = initialState, action) {
 		case 'CLEAR_PRODUCTS':
 			return {
 				...state,
-				detailEdited: {},
+
 				products: [],
 			};
+		case 'CLEAR_DETAIL':
+			return {
+				...state,
+				details: {},
+				detailEdited: {},
+			};
+		case 'SET_ACTUAL_PAGE':
+			return { ...state, actualPage: action.payload };
 		case 'GET_OFFERS':
 			state.products = state.allproducts;
 			return {

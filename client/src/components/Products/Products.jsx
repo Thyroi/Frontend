@@ -14,7 +14,8 @@ import {
 	getOffers,
 	getSelectorsCat,
 	getSelectorsCol,
-	cleanProducts,
+	clearDetail,
+	setActualPage,
 } from '../../actions';
 
 export default function Products() {
@@ -22,36 +23,41 @@ export default function Products() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
+
 	const collection = useQuery().get('collection');
 	const dispatch = useDispatch();
-	const products = useSelector((state) => state.products);
+	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
 	const collections = useSelector((state) => state.collections);
 
 	useEffect(() => {
-		setTimeout(() => {
-			dispatch(cleanProducts());
-			collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
-			dispatch(getSelectorsCat());
-			dispatch(getSelectorsCol());
-		}, 1000);
+		console.log(`home rendered, products.length is ${products.length}`);
+		dispatch(clearDetail());
+		!products.length &&
+			setTimeout(() => {
+				collection
+					? dispatch(getByColId(collection))
+					: dispatch(getInfo());
+				dispatch(getSelectorsCat());
+				dispatch(getSelectorsCol());
+			}, 1000);
 	}, [dispatch]);
-
-	/* const products = data */
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
-	const [results] = useState(9);
-	const [currentPage, setCurrentPage] = useState(1);
+	const actualPage = useSelector((state) => state.actualPage);
+	const [results] = useState(12);
+	const [currentPage, setCurrentPage] = useState(actualPage);
 	const [i, setI] = useState(0);
 	const [j, setJ] = useState(i + 3);
 
 	useEffect(() => {
-		setCurrentPage(1);
+		setCurrentPage(actualPage);
 	}, [products]);
 
 	useEffect(() => {
 		document.querySelector('.container').scrollTop = 0;
+		dispatch(setActualPage(currentPage));
 	}, [currentPage]);
 
 	//probar Element.scrollIntoView();
@@ -59,6 +65,7 @@ export default function Products() {
 	function previousPage(e) {
 		e.preventDefault();
 		setCurrentPage((current) => (current -= 1));
+
 		if (currentPage < pageNumbers.length) {
 			setI((i) => (i > 1 ? i - 1 : 0));
 			setJ((j) => (i > 0 ? j - 1 : j));

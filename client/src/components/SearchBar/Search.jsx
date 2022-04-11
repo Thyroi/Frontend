@@ -15,7 +15,7 @@ function Search() {
 
 	function handleClick(e) {
 		e.preventDefault();
-		return window.location.href.includes('http://localhost:3000/home')
+		return window.location.href.includes('/home')
 			? (dispatch(getByName(search)), setSearch(''))
 			: alert("Go to 'home' and then search...");
 	}
@@ -36,9 +36,9 @@ function Search() {
 				type='text'
 				value={search}
 				onChange={(e) => handleChange(e)}
-				placeholder='Search by name, brand or type'
+				placeholder='Search by name, brand, type, color'
 				onKeyPress={(e) => {
-					keypress[e.key] && keypress[e.key](e)
+					keypress[e.key] && keypress[e.key](e);
 				}}
 			/>
 			<button

@@ -1,300 +1,303 @@
 .container {
-  display: flex;
+	display: flex;
 
-  width: 100%;
-  padding: 0 3rem 3rem 3rem;
+	width: 100%;
+	padding: 0 3rem 3rem 3rem;
 
-  .containerImages {
-    width: 100%;
-    height: 800px;
-    background: #ffffff;
-    border-radius: 5px;
+	.containerImages {
+		width: 100%;
+		height: 800px;
+		background: #ffffff;
+		border-radius: 5px;
 
-    display: flex;
-    justify-content: space-between;
+		display: flex;
+		justify-content: space-between;
 
-    .containerMainImage {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      
-      .offer {
-        position: absolute;
-        left: 1rem;
-        top: 1rem;
-        width: 4rem;
-        height: 4rem;
-        border-radius: 2rem;
-        background-color: #e4687c;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: azure;
-        font-weight: 400;
-      }
+		.containerMainImage {
+			height: 100%;
+			width: 100%;
+			position: relative;
 
-      .mainImage {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 5px 0 0 5px;
-      }
-    }
+			.offer {
+				position: absolute;
+				left: 1rem;
+				top: 1rem;
+				width: 4rem;
+				height: 4rem;
+				border-radius: 2rem;
+				background-color: #e4687c;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: azure;
+				font-weight: 400;
+			}
 
-    .containerSecondImages {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
+			.mainImage {
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+				object-position: top;
+				border-radius: 5px 0 0 5px;
+			}
+		}
 
-      height: 95%;
-      width: 200px;
-      margin-top: 2rem;
+		.containerSecondImages {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
 
-      overflow-x: scroll;
+			height: 95%;
+			width: 200px;
+			margin-top: 2rem;
 
-      .secondImages {
-        margin-bottom: 2rem;
-        height: 150px;
-        width: 100px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    }
-  }
+			overflow-x: scroll;
 
-  .containerInf {
-    width: 50%;
-    margin-left: 3rem;
+			.secondImages {
+				margin-bottom: 2rem;
+				height: 150px;
+				width: 100px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+		}
+	}
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	.containerInf {
+		width: 50%;
+		margin-left: 3rem;
 
-    height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 
-    .specificInf {
-      border-radius: 5px;
-      background: #ffffff;
+		height: 100%;
 
-      height: auto;
-      margin-bottom: 3rem;
+		.specificInf {
+			border-radius: 5px;
+			background: #ffffff;
 
-      .productName {
-        width: 85%;
-        margin: 1rem auto 0;
-        text-align: left;
-      }
+			height: auto;
+			margin-bottom: 3rem;
 
-      .collectionName {
-        width: 85%;
-        margin: 1rem auto 0;
-        text-align: left;
+			.productName {
+				width: 85%;
+				margin: 1rem auto 0;
+				text-align: left;
+			}
 
-        font-size: 0.9rem;
-      }
+			.collectionName {
+				width: 85%;
+				margin: 1rem auto 0;
+				text-align: left;
 
-      .productPrice {
-        width: 85%;
-        margin: 1rem auto 0;
-        text-align: left;
+				font-size: 0.9rem;
+			}
 
-        font-weight: 600;
-      }
+			.productPrice {
+				width: 85%;
+				margin: 1rem auto 0;
+				text-align: left;
 
-      .containerPreferences {
-        width: 85%;
-        margin: 1rem auto 0;
+				font-weight: 600;
+			}
 
-        .containerSizePreference,
-        .containerColorPreference {
-          display: flex;
-          flex-direction: column;
+			.containerPreferences {
+				width: 85%;
+				margin: 1rem auto 0;
 
-          .sizeHeader,
-          .colorHeader {
-            text-align: left;
-            margin-bottom: 1rem;
-          }
+				.containerSizePreference,
+				.containerColorPreference {
+					display: flex;
+					flex-direction: column;
 
-          .sizes,
-          .colors {
-            display: flex;
-            flex-wrap: wrap;
+					.sizeHeader,
+					.colorHeader {
+						text-align: left;
+						margin-bottom: 1rem;
+					}
 
-            .size,
-            .color, .selectedColor, .selectedSize {
-              display: flex;
-              justify-content: center;
-              align-items: center;
+					.sizes,
+					.colors {
+						display: flex;
+						flex-wrap: wrap;
 
-              flex-basis: auto;
+						.size,
+						.color,
+						.selectedColor,
+						.selectedSize {
+							display: flex;
+							justify-content: center;
+							align-items: center;
 
-              height: 30px;
-              padding: 0 0.5rem;
-              margin-right: 1rem;
-              margin-bottom: 1rem;
-              border-radius: 5px;
-              border: 1px solid #D1D3D4;
-              font-weight: 300;
-              cursor: pointer;
-            }
+							flex-basis: auto;
 
-            .color, .selectedColor {
-              flex-basis: auto;
-              padding: 0 5px;
-            }
+							height: 30px;
+							padding: 0 0.5rem;
+							margin-right: 1rem;
+							margin-bottom: 1rem;
+							border-radius: 5px;
+							border: 1px solid #d1d3d4;
+							font-weight: 300;
+							cursor: pointer;
+						}
 
-            .selectedColor, .selectedSize{
-              border: #E4687C solid 1px;
-            }
-          }
-        }
+						.color,
+						.selectedColor {
+							flex-basis: auto;
+							padding: 0 5px;
+						}
 
-        .containerAmountFavorite {
-          display: flex;
-          margin-bottom: 1rem;
-          align-items: center;
+						.selectedColor,
+						.selectedSize {
+							border: #e4687c solid 1px;
+						}
+					}
+				}
 
-          .favoriteIcon {
-            width: 20px;
-            height: 20px;
-            color: #949494;
-            transition: 0.3s all ease;
-            cursor: pointer;
-          }
+				.containerAmountFavorite {
+					display: flex;
+					margin-bottom: 1rem;
+					align-items: center;
 
-          .favoriteIcon:hover {
-            color: #E4687C;
-          }
-        }
+					.favoriteIcon {
+						width: 20px;
+						height: 20px;
+						color: #949494;
+						transition: 0.3s all ease;
+						cursor: pointer;
+					}
 
-        .containerBuyCart {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 1rem;
+					.favoriteIcon:hover {
+						color: #e4687c;
+					}
+				}
 
-          .buyButton {
-            appearance: none;
-            width: 70%;
-            height: 50px;
-            margin-right: 2rem;
-            background-color: #e4687c;
-            color: #ffffff;
-            font-weight: 600;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-          }
+				.containerBuyCart {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 1rem;
 
-          .buyLetter {
-            width: 80%;
-            background-color: #e4687c;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-          }
+					.buyButton {
+						appearance: none;
+						width: 70%;
+						height: 50px;
+						margin-right: 2rem;
+						background-color: #e4687c;
+						color: #ffffff;
+						font-weight: 600;
+						border-radius: 5px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						cursor: pointer;
+					}
 
-          .cartButton {
-            width: 30%;
-            background-color: #e4687c;
-            border-radius: 5px;
-            cursor: pointer;
+					.buyLetter {
+						width: 80%;
+						background-color: #e4687c;
+						color: #ffffff;
+						font-weight: 600;
+						cursor: pointer;
+					}
 
-            .cartIcon {
-              width: 20px;
-              height: 20px;
-              color: #ffffff;
-            }
+					.cartButton {
+						width: 30%;
+						background-color: #e4687c;
+						border-radius: 5px;
+						cursor: pointer;
 
+						.cartIcon {
+							width: 20px;
+							height: 20px;
+							color: #ffffff;
+						}
+					}
+				}
 
-          }
-        }
+				.containerUnits {
+					width: 100%;
+					margin-bottom: 1rem;
 
-        .containerUnits {
-          width: 100%;
-          margin-bottom: 1rem;
+					.infoUnits {
+						text-align: left;
+						font-size: 0.8rem;
 
-          .infoUnits {
-            text-align: left;
-            font-size: .8rem;
+						.units {
+							font-weight: 600;
+						}
+					}
+				}
+			}
+		}
 
-            .units {
-              font-weight: 600;
-            }
-          }
-        }
-      }
-    }
+		.generalInformation {
+			display: flex;
+			flex-direction: column;
 
-    .generalInformation {
-      display: flex;
-      flex-direction: column;
+			height: 300px;
+			border-radius: 5px;
+			background: #ffffff;
 
-      height: 300px;
-      border-radius: 5px;
-      background: #ffffff;
+			.headerDescription {
+				width: 85%;
+				margin: 0.5rem auto 0 auto;
+				padding: 0.5rem 0;
+				text-align: left;
+				border-bottom: 1px solid #565656;
+			}
 
-      .headerDescription {
-        width: 85%;
-        margin: 0.5rem auto 0 auto;
-        padding: 0.5rem 0;
-        text-align: left;
-        border-bottom: 1px solid #565656;
-      }
+			// .line {
+			//   margin-left: 1rem;
+			//   width: 80%;
+			//   border: 1px solid #565656;
+			// }
 
-      // .line {
-      //   margin-left: 1rem;
-      //   width: 80%;
-      //   border: 1px solid #565656;
-      // }
-
-      .description {
-        width: 85%;
-        text-align: justify;
-        line-height: 1.5rem;
-        margin: 1rem auto;
-        overflow: scroll;
-      }
-    }
-  }
+			.description {
+				width: 85%;
+				text-align: justify;
+				line-height: 1.5rem;
+				margin: 1rem auto;
+				overflow: scroll;
+			}
+		}
+	}
 }
 
 @media (max-width: 1100px) {
-  .container {
-    flex-direction: column;
+	.container {
+		flex-direction: column;
 
-    .containerInf {
-      width: 100%;
-      height: auto;
-      margin-left: 0;
-      margin-top: 3rem;
+		.containerInf {
+			width: 100%;
+			height: auto;
+			margin-left: 0;
+			margin-top: 3rem;
 
-      flex-direction: row;
+			flex-direction: row;
 
-      .specificInf {
-        width: 100%;
-        margin-right: 3rem;
-      }
+			.specificInf {
+				width: 100%;
+				margin-right: 3rem;
+			}
 
-      .generalInformation {
-        width: 100%;
-      }
-    }
-  }
+			.generalInformation {
+				width: 100%;
+			}
+		}
+	}
 }
 
 @media (max-width: 750px) {
-  .container {
-    .containerInf {
-      margin: 0;
-      flex-direction: column;
-    }
+	.container {
+		.containerInf {
+			margin: 0;
+			flex-direction: column;
+		}
 
-    .specificInf {
-      margin-top: 3rem;
-    }
-  }
+		.specificInf {
+			margin-top: 3rem;
+		}
+	}
 }

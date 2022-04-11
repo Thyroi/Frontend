@@ -55,12 +55,12 @@ function Form() {
 
 			<div className={style.address}>
 				<label className={style.label} id='calle'>
-					Street
+					Street and number
 				</label>
 				<input
 					className={style.input}
 					type='text'
-					placeholder='Write your street'
+					placeholder='Write your street and number'
 				/>
 
 				<label className={style.label} id='city'>

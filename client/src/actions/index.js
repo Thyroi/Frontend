@@ -19,8 +19,8 @@ export function getSelectorsCol() {
 	return async function (dispatch) {
 		try {
 			var selectorsCol = await axios.get('/selectors/collections');
-			var response = selectorsCol.data.data.map((p) => {
-				return { id: p.id_collection, name: p.name };
+			var response = selectorsCol?.data?.data?.map((p) => {
+				return { id: p?.id_collection, name: p?.name };
 			});
 
 			return dispatch({
@@ -144,7 +144,6 @@ export function clearDetail() {
 }
 
 export function setActualPage(page) {
-
 	return {
 		type: 'SET_ACTUAL_PAGE',
 		payload: page,

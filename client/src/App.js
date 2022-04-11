@@ -43,7 +43,7 @@ export default function App() {
 					<div className='container'>
 						<Route
 							exact
-							path='/AddNewProduct'
+							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
 						{/* <Route exact path='/products' component={Products} /> */}
@@ -51,17 +51,17 @@ export default function App() {
 						{/* //para que funcione el home */}
 						<Route
 							exact
-							path='/AdminDashBoard'
+							path='/adminfashboard'
 							component={AdminDashBoard}
 						/>
-						<Route exact path='/Cart' component={Cart} />
+						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/cart/pay' component={Main} />
 						<Route
 							exact
 							path='/products/:id'
 							component={Product_detail}
 						/>
-						<Route exact path='/Form' component={Form} />
+						<Route exact path='/form' component={Form} />
 						{/* <Route exact path="/" component={Landing} /> */}
 						<Route exact path='/signup' component={SignUp} />
 						<Route

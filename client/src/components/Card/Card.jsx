@@ -19,9 +19,9 @@ export default function Card({ data }) {
 
 	const collection_name = collections
 		?.filter((c) => {
-			return c.id === collection;
+			return c?.id === collection;
 		})
-		.pop().name;
+		.pop()?.name;
 
 	let stocks = 0;
 	variants?.forEach((v) =>

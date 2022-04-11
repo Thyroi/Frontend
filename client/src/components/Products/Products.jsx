@@ -31,7 +31,6 @@ export default function Products() {
 	const collections = useSelector((state) => state.collections);
 
 	useEffect(() => {
-		console.log(`home rendered, products.length is ${products.length}`);
 		dispatch(clearDetail());
 		!products.length &&
 			setTimeout(() => {

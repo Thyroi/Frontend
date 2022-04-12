@@ -120,11 +120,14 @@ export default function Products() {
  */
 	const handleTypeChange = (event) => {
 		event.preventDefault();
+		setCurrentPage(1);
 		if (event.target.value === '0') {
 			return dispatch(getInfo());
 		} else {
 			dispatch(getByCatId(event.target.value));
 		}
+	
+
 	};
 
 	/* const handleBrandChange = (event) => {
@@ -133,6 +136,7 @@ export default function Products() {
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
+		setCurrentPage(1);
 		event.target.value === '0'
 			? dispatch(getInfo())
 			: dispatch(getByColId(event.target.value));

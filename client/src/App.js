@@ -17,6 +17,8 @@ import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
+import Alert from './components/Notification/Alert';
+import Confirmation from './components/Confirmation/Confirmation';
 
 export default function App() {
 	const location = useLocation();
@@ -25,7 +27,9 @@ export default function App() {
 	}
 	return (
 		<Switch>
-			<Route exact path='/LogIn' component={LogIn} />
+			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/alert' component={Alert} />
+			<Route exact path='/confirmation' component={Confirmation} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -51,7 +55,7 @@ export default function App() {
 						{/* //para que funcione el home */}
 						<Route
 							exact
-							path='/adminfashboard'
+							path='/admindashboard'
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />

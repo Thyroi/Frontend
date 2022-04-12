@@ -18,7 +18,7 @@ import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
-import Confirmation from './components/Confirmation/Confirmation';
+import iFrame from './components/iFrame/iFrame';
 
 export default function App() {
 	const location = useLocation();
@@ -29,7 +29,7 @@ export default function App() {
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
 			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/confirmation' component={Confirmation} />
+			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>

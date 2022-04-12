@@ -1,80 +1,75 @@
 .container {
-	position: fixed;
-	z-index: 1;
+	width: 600px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	height: 100%;
-	-webkit-backdrop-filter: blur(2px);
-	background-color: rgba(255, 255, 255, 0.75);
+	background-color: transparent;
 }
-
-.alert {
+.frame {
+	margin: 1rem;
+	width: 100%;
 	border-radius: 5px;
 	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
 	background-color: #f6f6f6;
-	height: 40%;
-	width: 40%;
 	display: flex;
 	flex-direction: column;
 }
 
-.icon,
+.header,
 .title,
 .text,
-.buttons {
+.button,
+.footer {
+	margin: 1rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.icon {
-	height: 30%;
+
+.header {
+	height: 2rem;
+	font-weight: 200;
+	color: black;
 }
 
 .title {
-	height: 20%;
+	height: 2rem;
 }
 
 .text {
-	height: 20%;
-	font-weight: 400;
 	font-size: 1.2rem;
 }
 
-.buttons {
-	height: 30%;
+.button {
+	height: 2rem;
 	justify-content: space-around;
 }
-
-.cancel_button,
-.accept_button {
+.button button {
+	background-color: #e4687c;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
 	width: 150px;
-	margin: 1rem;
 	border: 1px solid transparent;
 	border-radius: 0.3rem;
 	transition: all ease-in-out 0.15s;
-	align-self: flex-end;
 	cursor: pointer;
 }
 
-.cancel_button {
-	background-color: gray;
-}
-
-.accept_button {
-	background-color: #e4687c;
-}
-
-.cancel_button:hover {
-	background-color: white;
-	color: gray;
-}
-
-.accept_button:hover {
+.button button:hover {
 	background-color: white;
 	color: #e4687c;
+}
+
+.footer {
+	margin-left: 2rem;
+	height: 4rem;
+	font-weight: 200;
+	color: rgb(0 0 0);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }

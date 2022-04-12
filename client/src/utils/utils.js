@@ -116,8 +116,10 @@ export function selectSize(templateProduct, product, size) {
       const Stocks = variant.Stocks;
       for (let s in Stocks) {
         if (s === size) {
+          product.variants[0].leftUnits = Stocks[s] - 1;
           product.variants[0].Stocks = {};
           product.variants[0].Stocks[s] = 1;
+          console.log(product);
           focusSelectedSize(size);
         }
       }

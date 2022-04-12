@@ -53,6 +53,10 @@ export default function Product_detail() {
 		}
 	}, [product?.price]);
 
+  useEffect(() => {
+    console.log("working")
+  }, [product && product.variants])
+
 	if (!product?.variants) return <div>Loading</div>;
 
 	return (
@@ -119,7 +123,6 @@ export default function Product_detail() {
 													dispatch(
 														selectingProduct(result)
 													);
-													setState(size);
 												}}>
 												{size}
 											</div>
@@ -146,7 +149,6 @@ export default function Product_detail() {
 												)
 											);
 											dispatch(selectingProduct(result));
-											setState(color);
 										}}>
 										{color}
 									</div>

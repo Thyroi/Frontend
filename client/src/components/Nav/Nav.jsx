@@ -42,7 +42,7 @@ export default function Nav() {
 			{!!products.length && (
 				<>
 					<NavLink
-						to='/AdminDashBoard'
+						to='/admindashboard'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon
@@ -63,7 +63,7 @@ export default function Nav() {
 					</NavLink> */}
 
 					<NavLink
-						to='/AddNewProduct'
+						to='/addnewproduct'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon

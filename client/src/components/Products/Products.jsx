@@ -39,7 +39,7 @@ export default function Products() {
 					: dispatch(getInfo());
 				dispatch(getSelectorsCat());
 				dispatch(getSelectorsCol());
-			}, 1000);
+			}, 1500);
 	}, [dispatch]);
 
 	//---------------------------------------------PAGINADO--------------------------------//
@@ -174,10 +174,10 @@ export default function Products() {
 					options={[
 						{ id: 0, name: 'All' },
 						...categories?.women?.filter((c) => {
-							return c.id > 2;
+							return c?.id > 2;
 						}),
 						...categories?.men?.filter((c) => {
-							return c.id > 2;
+							return c?.id > 2;
 						}),
 					]}
 					handler={handleTypeChange}

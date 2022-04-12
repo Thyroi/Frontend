@@ -1,15 +1,21 @@
 import React from 'react';
 import styles from './iFrame.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faCamera,
+	faThumbsUp,
+	faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 
 function Confirmation({
 	header = 'This is the header',
 	title = 'This is the title',
 	text = 'This is the text',
-	button = 'Go!',
+	button = true,
+	button_text = 'Go!',
 	handleClick = () => {
 		window.location.href = 'http://localhost:3000';
 	},
-	footer = 'This is the footer',
 }) {
 	return (
 		<div className={styles.container}>
@@ -21,10 +27,34 @@ function Confirmation({
 				<div className={styles.text}>
 					<p>{text}</p>
 				</div>
-				<div className={styles.button}>
-					<button onClick={handleClick}>{button}</button>
+				{button && (
+					<div className={styles.button}>
+						<button onClick={handleClick}>{button_text}</button>
+					</div>
+				)}
+				<div className={styles.footer}>
+					<p>
+						<FontAwesomeIcon
+							icon={faCamera}
+							style={{ color: '#e4687c' }}
+						/>{' '}
+						Instagram
+					</p>
+					<p>
+						<FontAwesomeIcon
+							icon={faThumbsUp}
+							style={{ color: '#e4687c' }}
+						/>{' '}
+						Facebook
+					</p>
+					<p>
+						<FontAwesomeIcon
+							icon={faEnvelope}
+							style={{ color: '#e4687c' }}
+						/>{' '}
+						Unsuscribe (meter el link)
+					</p>
 				</div>
-				<div className={styles.footer}>{footer}</div>
 			</div>
 		</div>
 	);

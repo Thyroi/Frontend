@@ -6,6 +6,8 @@
 	background-color: transparent;
 }
 .frame {
+	margin: 1rem;
+	width: 100%;
 	border-radius: 5px;
 	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
 	background-color: #f6f6f6;
@@ -13,12 +15,40 @@
 	flex-direction: column;
 }
 
+.header,
+.title,
+.text,
+.button,
+.footer {
+	margin: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header {
+	height: 2rem;
+	font-weight: 200;
+	color: black;
+}
+
+.title {
+	height: 2rem;
+}
+
+.text {
+	font-size: 1.2rem;
+}
+
+.button {
+	height: 2rem;
+	justify-content: space-around;
+}
 .button button {
 	background-color: #e4687c;
 	color: white;
 	font-weight: 600;
 	padding: 0.5rem;
-
 	width: 150px;
 	border: 1px solid transparent;
 	border-radius: 0.3rem;
@@ -31,26 +61,15 @@
 	color: #e4687c;
 }
 
-.header,
-.title,
-.text,
-.button,
 .footer {
+	margin-left: 2rem;
+	height: 4rem;
+	font-weight: 200;
+	color: rgb(0 0 0);
 	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.title {
-	height: 20%;
-}
-
-.text {
-	height: 20%;
-	font-weight: 400;
-}
-
-.button {
-	height: 30%;
-	justify-content: space-around;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }

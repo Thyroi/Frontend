@@ -1,0 +1,56 @@
+.container {
+	width: 600px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+}
+.frame {
+	border-radius: 5px;
+	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
+	background-color: #f6f6f6;
+	display: flex;
+	flex-direction: column;
+}
+
+.button button {
+	background-color: #e4687c;
+	color: white;
+	font-weight: 600;
+	padding: 0.5rem;
+
+	width: 150px;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	cursor: pointer;
+}
+
+.button button:hover {
+	background-color: white;
+	color: #e4687c;
+}
+
+.header,
+.title,
+.text,
+.button,
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	height: 20%;
+}
+
+.text {
+	height: 20%;
+	font-weight: 400;
+}
+
+.button {
+	height: 30%;
+	justify-content: space-around;
+}

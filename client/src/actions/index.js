@@ -18,10 +18,13 @@ export function getInfo() {
 export function getSelectorsCol() {
 	return async function (dispatch) {
 		try {
-			var selectorsCol = await axios.get('/selectors/collections');
-			var response = selectorsCol?.data?.data?.map((p) => {
-				return { id: p?.id_collection, name: p?.name };
-			});
+			var { data } = await axios.get('/selectors/collections');
+			var response =
+				typeof data?.data === 'string'
+					? [{ id: 10, name: 'error loading collections' }]
+					: data?.data?.map((p) => {
+							return { id: p?.id_collection, name: p?.name };
+					  });
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',

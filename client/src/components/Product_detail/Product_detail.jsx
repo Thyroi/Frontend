@@ -20,11 +20,7 @@ import {
 } from '../../utils/utils';
 
 //Data
-import {
-	getById,
-	addCart,
-	selectingProduct,
-} from '../../actions/index';
+import { getById, addCart, selectingProduct } from '../../actions/index';
 
 export default function Product_detail() {
 	const { id } = useParams();
@@ -167,7 +163,7 @@ export default function Product_detail() {
 						<div className={style.containerBuyCart}>
 							<Link
 								className={style.buyButton}
-								to='/Form'
+								to='/form'
 								onClick={() => prepareProduct(product)}>
 								<button className={style.buyLetter}>Buy</button>
 							</Link>

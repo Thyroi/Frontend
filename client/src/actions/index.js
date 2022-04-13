@@ -219,7 +219,7 @@ export function addCart(cartProducts, payload, dispatch) {
   if(cart.some(i => i.id_product === payload.id_product && i.variants[0].ColorName === payload.variants[0].ColorName && Object.keys(i.variants[0].Stocks)[0] === Object.keys(payload.variants[0].Stocks)[0])){
 
     cart = cart.map(i => {
-      if(cart.some(i => i.id_product === payload.id_product && i.variants[0].ColorName === payload.variants[0].ColorName && Object.keys(i.variants[0].Stocks)[0] === Object.keys(payload.variants[0].Stocks)[0])){
+      if(i.id_product === payload.id_product && i.variants[0].ColorName === payload.variants[0].ColorName && Object.keys(i.variants[0].Stocks)[0] === Object.keys(payload.variants[0].Stocks)[0]){
         
         i.variants[0].Stocks[Object.keys(payload.variants[0].Stocks)[0]] += payload.variants[0].Stocks[Object.keys(payload.variants[0].Stocks)[0]];
         return i;
@@ -308,14 +308,18 @@ export function addNewUser(payload) {
 //******************************* aca tambien x4
 
 export function removeCart(cartProducts, payload) {
-  const newConstProducts = cartProducts.filter(
-    (p) => p.id_product !== payload.id_product
-  );
+  let cart = JSON.parse(localStorage.getItem("cart"));
 
-  window.localStorage.setItem("cart", JSON.stringify(newConstProducts));
-  const cart = JSON.parse(window.localStorage.getItem("cart"));
+  if(cart.some(i => i.id_product === payload.id_product && i.variants[0].ColorName === payload.variants[0].ColorName && Object.keys(i.variants[0].Stocks)[0] === Object.keys(payload.variants[0].Stocks)[0])){
+    
+    cart = cart.filter(i => {
+      if(!(i.id_product === payload.id_product && i.variants[0].ColorName === payload.variants[0].ColorName && Object.keys(i.variants[0].Stocks)[0] === Object.keys(payload.variants[0].Stocks)[0])){
+        return i;
+      }
+    })
+  }
 
-  Notifications("Product removed from cart");
+  localStorage.setItem("cart", JSON.stringify(cart));
   return {
     type: "REMOVE_CART",
     payload: cart,

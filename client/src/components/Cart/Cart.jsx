@@ -51,6 +51,14 @@ function Cart(params) {
                     className={style.productPrice}
                     id="individualProductPrice"
                   >{`$${totalPrice}`}</p>
+                  <p
+                    className={style.productPrice}
+                    id="individualProductPrice"
+                  >{`Color: ${item.variants[0].ColorName}`}</p>
+                  <p
+                    className={style.productPrice}
+                    id="individualProductPrice"
+                  >{`Size: ${Object.keys(item.variants[0].Stocks)[0]}`}</p>
 
                   <Quantity product={item} />
 

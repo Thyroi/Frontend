@@ -4,6 +4,7 @@ const initialState = {
 	allproducts: [],
 	details: {},
 	categories: [],
+	orders: [],
 	collections: [],
 	users: [],
 	copyUsers: [],
@@ -31,6 +32,11 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				products: action.payload,
 			};
+		case 'GET_ORDERS':
+			return {
+				...state,
+				orders: action.payload,
+			}
 		case 'GET_BY_ID':
 			return {
 				...state,

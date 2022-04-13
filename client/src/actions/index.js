@@ -202,6 +202,19 @@ export function addProduct(payload) {
 	};
 }
 
+export function getOrders(){
+	return async function (dispatch) {
+		try {
+			var orders = await axios.get('/orders');
+			return dispatch({
+				type: 'GET_ORDERS',
+				payload: orders.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 export function addCart(cartProducts, payload, dispatch) {

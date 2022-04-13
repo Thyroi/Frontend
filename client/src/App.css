@@ -12,7 +12,9 @@
 	grid-template-columns: 20vw 1fr;
 	grid-template-rows: 15vh 1fr;
 }
-
+.swal-button {
+	background-color: #e4687c !important;
+}
 .appName {
 	background-color: white;
 	grid-row: 1;

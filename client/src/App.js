@@ -55,7 +55,9 @@ export default function App() {
 						{/* //para que funcione el home */}
 						<Route
 							exact
+
 							path='/admindashboard'
+
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />

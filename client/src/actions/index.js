@@ -216,6 +216,10 @@ export function getOrders(){
 
 export function addCart(cartProducts, payload, dispatch) {
   let cart = JSON.parse(localStorage.getItem("cart"));
+  if (!cart){
+    localStorage.setItem("cart", JSON.stringify([]));
+    cart = JSON.parse(localStorage.getItem("cart"));
+  };
   console.log(payload)
 
   if (cart.length === 0) {

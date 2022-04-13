@@ -13,6 +13,8 @@ const initialState = {
 	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
+	allClients: [],
+	loggedInClient: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -36,7 +38,7 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				orders: action.payload,
-			}
+			};
 		case 'GET_BY_ID':
 			return {
 				...state,
@@ -92,6 +94,11 @@ export default function rootReducer(state = initialState, action) {
 				cart: [...action.payload],
 			};
 
+		case 'ADD_TO_CART':
+			return state.cart.includes(action.payload)
+				? alert('product already in cart')
+				: { ...state, cart: [...state.cart, action.payload] };
+
 		case 'REMOVE_CART':
 			return {
 				...state,
@@ -133,6 +140,25 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				wishlist: eliminated,
 			};
+
+		case 'GET_CLIENTS':
+			return { ...state, allClients: action.payload };
+
+		case 'LOG_IN_USER':
+			return {
+				...state,
+				loggedInClient: action.payload,
+			};
+
+		case 'LOG_OUT_USER':
+			return {
+				...state,
+				loggedInClient: {},
+			};
+
+		case 'GET_CART':
+			if (action.payload)
+				return { ...state, cart: [...state.cart, action.payload] };
 
 		case 'GET_GOOGLE_INFO':
 			return {

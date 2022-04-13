@@ -200,7 +200,7 @@ export function addProduct(payload) {
   };
 }
 
-export function getOrders(){
+export function getOrders() {
 	return async function (dispatch) {
 		try {
 			var orders = await axios.get('/orders');
@@ -260,6 +260,9 @@ export function addCart(cartProducts, payload, dispatch) {
   });
 }
 
+export function addToCart(product) {
+	return { type: 'ADD_TO_CART', payload: product };
+}
 // export function addProduct(payload){
 //     return async function(){
 //         const add = await axios.post("/products/add", payload)
@@ -395,6 +398,60 @@ export function createClientGoogle(payload) {
     type: "GET_GOOGLE_INFO",
     payload,
   };
+}
+
+export function getClients() {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get('/client');
+			return dispatch({
+				type: 'GET_CLIENTS',
+				payload: data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function logInUser(user) {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get(
+				`/clientes/?login_name=${user.login_name}&login_password=${user.login_password}`
+			);
+
+			return !data
+				? alert('Username/password not found')
+				: (alert('You are logged in!'),
+				  dispatch({
+						type: 'LOG_IN_USER',
+						payload: data,
+				  }));
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function logOutUser() {
+	return {
+		type: 'LOG_OUT_USER',
+	};
+}
+
+export function getCart(phone) {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get(`/cart/${phone}`);
+			return dispatch({
+				type: 'GET_CART',
+				payload: data.cart_items,
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	};
 }
 
 // Actions for customize products

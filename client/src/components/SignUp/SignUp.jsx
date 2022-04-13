@@ -16,10 +16,11 @@ export default function SignUp(params) {
 		login_name: '',
 		login_password: '',
 		address: {
-		calle: '',
-		numero: '',
-		city: '',
-		zip_code: ''}
+			calleNumero: '',
+			province: '',
+			city: '',
+			zip_code: '',
+		},
 	});
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ export default function SignUp(params) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 
 		setError({
@@ -39,14 +40,13 @@ export default function SignUp(params) {
 		});
 	}
 
-	function handleAdress(e){
+	function handleAdress(e) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
-			address: {...inputs.address, [e.target.name]: e.target.value},
-		})
+			address: { ...inputs.address, [e.target.name]: e.target.value },
+		});
 	}
-
 
 	function validator(inputs) {
 		let error = {};
@@ -74,10 +74,10 @@ export default function SignUp(params) {
 			error.login_name = 'Login name is required';
 		} else if (!inputs.login_password) {
 			error.login_password = 'Password is required';
-		} else if (!inputs.address.calle) {
-			error.calle = 'Street is required';
-		} else if (!inputs.address.numero) {
-			error.numero = 'Street number is required';
+		} else if (!inputs.address.calleNumero) {
+			error.calle = 'Street and number are required';
+		} else if (!inputs.address.province) {
+			error.province = 'Province is required';
 		} else if (!inputs.address.city) {
 			error.city = 'City is required';
 		} else if (typeof inputs.address.city !== 'string') {
@@ -85,6 +85,8 @@ export default function SignUp(params) {
 				'Insert a valid city (without special caracters or numbers)';
 		} else if (!inputs.address.zip_code) {
 			error.zip_code = 'Zip code is required';
+		} else if (!inputs.address.particular_details) {
+			error.zip_code = 'a particular detail is required';
 		}
 		return error;
 	}
@@ -97,10 +99,11 @@ export default function SignUp(params) {
 			error.email ||
 			error.login_name ||
 			error.login_password ||
-			error.calle ||
-			error.numero ||
+			error.calleNumero ||
 			error.city ||
-			error.zip_code
+			error.zip_code ||
+			error.province ||
+			error.particular_details
 		) {
 			return true;
 		}
@@ -112,8 +115,10 @@ export default function SignUp(params) {
 		setInputs({
 			...inputs,
 			phone: parseInt(inputs.phone),
+			isRegistered: true,
 		});
 		dispatch(createClient(inputs));
+		alert("You're registered!");
 		setInputs({
 			name: '',
 			lastname: '',
@@ -122,12 +127,14 @@ export default function SignUp(params) {
 			login_name: '',
 			login_password: '',
 			address: {
-			calle: '',
-			numero: '',
-			city: '',
-			zip_code: ''},
+				calleNumero: '',
+				city: '',
+				zip_code: '',
+				province: '',
+				particular_details: '',
+			},
 		});
-		params.history.push('/LogIn');
+		params.history.push('/login');
 	}
 
 	return (
@@ -142,25 +149,14 @@ export default function SignUp(params) {
 					<div className={style.address}>
 						<input
 							type='text'
-							placeholder='Street'
-							name='calle'
-							value={inputs.address.calle}
+							placeholder='Street and number'
+							name='calleNumero'
+							value={inputs.address.calleNumero}
 							onChange={(e) => {
 								handleAdress(e);
 							}}
 						/>
-						{error.calle && <p>{error.calle}</p>}
-
-						<input
-							type='text'
-							placeholder='Number'
-							name='numero'
-							value={inputs.address.numero}
-							onChange={(e) => {
-								handleAdress(e);
-							}}
-						/>
-						{error.numero && <p>{error.numero}</p>}
+						{error.calleNumero && <p>{error.calleNumero}</p>}
 
 						<input
 							type='text'
@@ -183,6 +179,30 @@ export default function SignUp(params) {
 							}}
 						/>
 						{error.zip_code && <p>{error.zip_code}</p>}
+
+						<input
+							type='text'
+							placeholder='Province'
+							name='province'
+							value={inputs.address.province}
+							onChange={(e) => {
+								handleAdress(e);
+							}}
+						/>
+						{error.province && <p>{error.province}</p>}
+
+						<input
+							type='text'
+							placeholder='Particular details'
+							name='particular_details'
+							value={inputs.address.particular_details}
+							onChange={(e) => {
+								handleAdress(e);
+							}}
+						/>
+						{error.particular_details && (
+							<p>{error.particular_details}</p>
+						)}
 					</div>
 				</div>
 

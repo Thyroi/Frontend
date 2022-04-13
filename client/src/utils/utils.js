@@ -85,7 +85,7 @@ export function formattingProduct(product, templateProduct) {
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
   product.variants[0].leftUnits =
-    copyTemplateProduct.variants[0].Stocks[key] - 1;
+    copyTemplateProduct.variants[0].Stocks[key];
 
   product.totalPrice = product.price;
 
@@ -116,8 +116,10 @@ export function selectSize(templateProduct, product, size) {
       const Stocks = variant.Stocks;
       for (let s in Stocks) {
         if (s === size) {
+          product.variants[0].leftUnits = Stocks[s];
           product.variants[0].Stocks = {};
           product.variants[0].Stocks[s] = 1;
+          console.log(product);
           focusSelectedSize(size);
         }
       }
@@ -171,7 +173,6 @@ export function increaseLocalStock(product) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
   if (nextAmount <= top) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
-    product.variants[0].leftUnits -= 1;
 
     const totalToPay = totalDue(product);
     product.totalPrice = totalToPay;
@@ -185,7 +186,6 @@ export function decreaseLocalStock(product, templateProduct) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
   if (nextAmount > 2) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
-    product.variants[0].leftUnits += 1;
 
     const totalToPay = totalDue(product);
     product.totalPrice = totalToPay;
@@ -202,7 +202,9 @@ export function totalDue(product, cartItems) {
       total += item.totalPrice;
     });
 
-    return total.toFixed(2);
+    total = total.toFixed(2);
+    return total;
+
   }
 
   let price = product.price;

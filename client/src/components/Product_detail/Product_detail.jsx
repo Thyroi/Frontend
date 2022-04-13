@@ -49,6 +49,9 @@ export default function Product_detail() {
 		}
 	}, [product?.price]);
 
+  useEffect(() => {
+  }, [product && product.variants])
+
 	if (!product?.variants) return <div>Loading</div>;
 
 	return (
@@ -60,7 +63,7 @@ export default function Product_detail() {
 					)}
 					<img
 						className={style.mainImage}
-						src={product?.variants && product?.default_image}
+						src={product?.variants && product.variants[0].ProductImages[0]}
 						id='default_image'
 						alt=''
 					/>
@@ -115,7 +118,6 @@ export default function Product_detail() {
 													dispatch(
 														selectingProduct(result)
 													);
-													setState(size);
 												}}>
 												{size}
 											</div>
@@ -142,7 +144,6 @@ export default function Product_detail() {
 												)
 											);
 											dispatch(selectingProduct(result));
-											setState(color);
 										}}>
 										{color}
 									</div>

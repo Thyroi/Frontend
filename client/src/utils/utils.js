@@ -89,10 +89,12 @@ export function formattingProduct(product, templateProduct) {
 
 	const key = Object.keys(copyTemplateProduct.variants[0].Stocks)[0];
 
-	product.variants[0].Stocks = {};
-	product.variants[0].Stocks[key] = 1;
-	product.variants[0].leftUnits =
-		copyTemplateProduct.variants[0].Stocks[key] - 1;
+
+  product.variants[0].Stocks = {};
+  product.variants[0].Stocks[key] = 1;
+  product.variants[0].leftUnits =
+    copyTemplateProduct.variants[0].Stocks[key];
+
 
 	product.totalPrice = product.price;
 
@@ -117,21 +119,25 @@ export function selectVariant(templateProduct, product, color) {
 }
 
 export function selectSize(templateProduct, product, size) {
-	const variants = templateProduct.variants;
-	variants.forEach((variant) => {
-		if (variant.ColorName === product.variants[0].ColorName) {
-			const Stocks = variant.Stocks;
-			for (let s in Stocks) {
-				if (s === size) {
-					product.variants[0].Stocks = {};
-					product.variants[0].Stocks[s] = 1;
-					focusSelectedSize(size);
-				}
-			}
-		}
-	});
 
-	return product;
+  const variants = templateProduct.variants;
+  variants.forEach((variant) => {
+    if (variant.ColorName === product.variants[0].ColorName) {
+      const Stocks = variant.Stocks;
+      for (let s in Stocks) {
+        if (s === size) {
+          product.variants[0].leftUnits = Stocks[s];
+          product.variants[0].Stocks = {};
+          product.variants[0].Stocks[s] = 1;
+          console.log(product);
+          focusSelectedSize(size);
+        }
+      }
+    }
+  });
+
+  return product;
+
 }
 
 function focusSelectedColor(color) {
@@ -172,98 +178,93 @@ function focusSelectedSize(size) {
 	});
 }
 
-export function increaseLocalStock(product) {
-	const top = product.variants[0].leftUnits;
-	let nextAmount =
-		product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] +
-		1;
-	if (nextAmount <= top) {
-		product.variants[0].Stocks[
-			Object.keys(product.variants[0].Stocks)[0]
-		] += 1;
-		product.variants[0].leftUnits -= 1;
 
-		const totalToPay = totalDue(product);
-		product.totalPrice = totalToPay;
-	}
+  const top = product.variants[0].leftUnits;
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount <= top) {
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
 
-	return product;
+    const totalToPay = totalDue(product);
+    product.totalPrice = totalToPay;
+  }
+
+  return product;
 }
 
 export function decreaseLocalStock(product, templateProduct) {
-	let nextAmount =
-		product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] +
-		1;
-	if (nextAmount > 2) {
-		product.variants[0].Stocks[
-			Object.keys(product.variants[0].Stocks)[0]
-		] -= 1;
-		product.variants[0].leftUnits += 1;
+  let nextAmount =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
+  if (nextAmount > 2) {
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
 
-		const totalToPay = totalDue(product);
-		product.totalPrice = totalToPay;
-	}
+    const totalToPay = totalDue(product);
+    product.totalPrice = totalToPay;
+  }
 
-	return product;
+  return product;
 }
 
 export function totalDue(product, cartItems) {
-	if (cartItems) {
-		let total = 0;
-		cartItems.forEach((item) => {
-			item.totalPrice = parseFloat(item.totalPrice);
-			total += item.totalPrice;
-		});
+  if (cartItems) {
+    let total = 0;
+    cartItems.forEach((item) => {
+      item.totalPrice = parseFloat(item.totalPrice);
+      total += item.totalPrice;
+    });
 
-		return total.toFixed(2);
-	}
+    total = total.toFixed(2);
+    return total;
 
-	let price = product.price;
-	let units =
-		product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
-	let total = (price * units).toFixed(2);
+  }
 
-	return total;
+  let price = product.price;
+  let units =
+    product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]];
+  let total = (price * units).toFixed(2);
+
+  return total;
 }
 
 export async function prepareProduct(product, cartItems) {
-	let productToBuy = [];
+  let productToBuy = [];
 
-	if (product) {
-		let totalPrice = parseFloat(product.totalPrice).toFixed(2);
+  if (product) {
+    let totalPrice = parseFloat(product.totalPrice).toFixed(2);
 
-		productToBuy = [
-			{
-				productid: product.id_product,
-				quantity:
-					product.variants[0].Stocks[
-						Object.keys(product.variants[0].Stocks)[0]
-					],
-				price: totalPrice,
-				color: product.variants[0].ColorName,
-				size: Object.keys(product.variants[0].Stocks)[0],
-			},
-		];
-	}
+    productToBuy = [
+      {
+        productid: product.id_product,
+        quantity:
+          product.variants[0].Stocks[
+            Object.keys(product.variants[0].Stocks)[0]
+          ],
+        //image: product.variants[0].ProducImages[0],
+        price: totalPrice,
+        color: product.variants[0].ColorName,
+        size: Object.keys(product.variants[0].Stocks)[0],
+      },
+    ];
+  }
 
-	if (cartItems) {
-		productToBuy = cartItems.map((item) => {
-			let totalPrice = parseFloat(item.totalPrice);
+  if (cartItems) {
+    productToBuy = cartItems.map((item) => {
+      let totalPrice = parseFloat(item.totalPrice);
 
-			return {
-				productid: item.id_product,
-				quantity:
-					item.variants[0].Stocks[
-						Object.keys(item.variants[0].Stocks)[0]
-					],
-				price: totalPrice,
-				color: item.variants[0].ColorName,
-				size: Object.keys(item.variants[0].Stocks)[0],
-			};
-		});
-	}
+      return {
+        productid: item.id_product,
+        quantity:
+          item.variants[0].Stocks[Object.keys(item.variants[0].Stocks)[0]],
+       // image: item.variants[0].ProducImages[0],
+        price: totalPrice,
+        color: item.variants[0].ColorName,
+        size: Object.keys(item.variants[0].Stocks)[0],
+      };
+    });
+  }
 
-	localStorage.setItem('productPrepared', JSON.stringify(productToBuy));
+  localStorage.setItem("productPrepared", JSON.stringify(productToBuy));
+
 }
 
 

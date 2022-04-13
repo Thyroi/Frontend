@@ -202,6 +202,7 @@ export function totalDue(product, cartItems) {
       total += item.totalPrice;
     });
 
+    total = total.toFixed(2);
     return total;
   }
 

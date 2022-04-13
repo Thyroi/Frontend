@@ -19,6 +19,7 @@ import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
 import iFrame from './components/iFrame/iFrame';
+import ClientProfile from './components/Client_profile/Client_profile';
 
 export default function App() {
 	const location = useLocation();
@@ -71,6 +72,7 @@ export default function App() {
 							path='/signupgoogle'
 							component={SignUpGoogle}
 						/>
+            <Route exact path="/client/profile" component={ClientProfile} />
 					</div>
 				</div>
 			</Route>

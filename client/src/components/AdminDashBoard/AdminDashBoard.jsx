@@ -9,8 +9,10 @@ import {
 	getSelectorsCat,
 	addNewUser,
 	addCategory,
+	getOrders,
 } from '../../actions/index';
 import style from './AdminDashBoard.module.css';
+import swal from '@sweetalert/with-react'
 
 
 function AdminDashBoard() {
@@ -28,12 +30,15 @@ function AdminDashBoard() {
 		rol: '',
 	});
 	const allUser = useSelector((state) => state.users);
+	const orders = useSelector((state) => state.orders);
 
 	useEffect(() => {
 		dispatch(getAllUsers());
 		dispatch(getSelectorsCat());
+		dispatch(getOrders())
 	}, [dispatch]);
 
+	console.log(orders)
 	const removeFunction = (e) => {
 		dispatch(
 			deleteUser({
@@ -137,6 +142,32 @@ function AdminDashBoard() {
 		}, 1000);
 	};
 
+	const prueba = orders.filter(o => o.orderId === 1)
+	console.log(prueba)
+	console.log(prueba.map(os=> os.orderDetails.map(d => d.price)))
+
+	function seeAlert (e) {
+		e.preventDefault()
+		const prueba1 = parseInt(e.target.value)
+		const prueba2 =  orders.filter(o => o.orderId === prueba1)
+		 
+		const mapeo = swal(
+		<div>
+			<h1>Order Details</h1>
+			{prueba2[0].orderDetails.map(d => {return(
+			<ul className={style.orderList} 
+			key={d.productid}> 
+			<li>Product ID = <span>{d.productid}</span> </li>
+			<li>Color = <span>{d.color}</span></li>
+			<li>Size = <span>{d.size}</span></li>
+			<li>Quantity = <span>{d.quantity}</span></li> 
+			<li>Unit Price = $ <span>{d.price}</span></li>
+			</ul>)})}
+			</div>)
+		return mapeo
+
+
+	}
 	return (
 		<div className={style.divContainerAdmin}>
 			<div className={style.showUsers}>
@@ -228,6 +259,34 @@ function AdminDashBoard() {
 					onChange={idCateg}
 					placeholder='Write your ID'></input>
 				<button onClick={addNewCategory}>Create category</button>
+			</div>
+			<div>
+				{orders.map((order) =>{
+					return	<div key={order.orderId}>
+						<table>
+							<thead>
+							<tr>
+								<th>Client</th>
+								<th>Order status</th>
+								<th>Adress</th>
+								<th>Phone Number</th>
+								<th></th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								{/* <td>{order.Client.name}</td> */}
+								<td>{order.orderStatus}</td>
+								<td>`{order.address.calle} {order.address.city} ZIP {order.address.zip_code}`</td>
+								<td>{order.ClientPhone}</td>
+								<td><button value={order.orderId} onClick={seeAlert}> Ver Orden </button></td>
+							</tr>
+						</tbody>
+
+						</table>
+					</div>
+				})
+			}
 			</div>
 		</div>
 	);

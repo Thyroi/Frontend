@@ -204,6 +204,7 @@ export function totalDue(product, cartItems) {
 
     total = total.toFixed(2);
     return total;
+
   }
 
   let price = product.price;
@@ -253,11 +254,13 @@ export async function prepareProduct(product, cartItems) {
 }
 
 export async function createGuestClient() {
+ 
   const data = JSON.parse(localStorage.getItem("datosDeEnvio"));
+  console.log(data, "_______________client");
   await axios.post("/client", data);
 }
 
-export async function purchaseOrder() {
+export async function purchaseOrder(status) {
   const productPrepared = JSON.parse(localStorage.getItem("productPrepared"));
   const datosDeEnvio = JSON.parse(localStorage.getItem("datosDeEnvio"));
 
@@ -277,12 +280,13 @@ export async function purchaseOrder() {
 
   const data = {
     orderDetails: [...productPrepared],
-    totalDue: totalDue,
+    total: totalDue,
     address: datosDeEnvio.address,
     clientPhone: parseInt(datosDeEnvio.phone),
+    orderStatus: status==='rejected'?'Canceled':status==='pending'?'Processing':'Completed'
   };
 
-  console.log(data);
+  console.log(data, "_____________purchase");
 
   await axios.post("/orders", data);
 
@@ -312,4 +316,9 @@ export function showingNumberCart(){
   })
 
   return numberCart;
-}
+};
+
+export function sendPaymentData(info) {
+console.log(info, "______________sendinpayment")
+  axios.post("/payments", info);
+};

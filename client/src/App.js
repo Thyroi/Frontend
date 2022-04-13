@@ -18,7 +18,7 @@ import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
-import Confirmation from './components/Confirmation/Confirmation';
+import iFrame from './components/iFrame/iFrame';
 
 export default function App() {
 	const location = useLocation();
@@ -29,11 +29,10 @@ export default function App() {
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
 			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/confirmation' component={Confirmation} />
+			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
-					{/* <div className="appName">Shop</div> */}
 					<div className='left'>
 						<Nav />
 					</div>
@@ -50,12 +49,12 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
-						{/* <Route exact path='/products' component={Products} /> */}
 						<Route exact path='/home' component={Products} />
-						{/* //para que funcione el home */}
 						<Route
 							exact
+
 							path='/admindashboard'
+
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />
@@ -66,7 +65,6 @@ export default function App() {
 							component={Product_detail}
 						/>
 						<Route exact path='/form' component={Form} />
-						{/* <Route exact path="/" component={Landing} /> */}
 						<Route exact path='/signup' component={SignUp} />
 						<Route
 							exact
@@ -75,8 +73,8 @@ export default function App() {
 						/>
 					</div>
 				</div>
-				<Redirect to='/home' />
 			</Route>
+			<Redirect to='/home' />
 		</Switch>
 	);
 }

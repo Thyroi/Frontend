@@ -200,7 +200,19 @@ export function addProduct(payload) {
   };
 }
 
-// Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO (No sé)
+export function getOrders(){
+	return async function (dispatch) {
+		try {
+			var orders = await axios.get('/orders');
+			return dispatch({
+				type: 'GET_ORDERS',
+				payload: orders.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
 
 export function addCart(cartProducts, payload, dispatch) {
   let cart = JSON.parse(localStorage.getItem("cart"));

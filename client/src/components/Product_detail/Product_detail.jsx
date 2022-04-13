@@ -20,7 +20,12 @@ import {
 } from '../../utils/utils';
 
 //Data
-import { getById, addCart, selectingProduct } from '../../actions/index';
+import {
+	getById,
+	addCart,
+	addToCart,
+	selectingProduct,
+} from '../../actions/index';
 
 export default function Product_detail() {
 	const { id } = useParams();
@@ -30,6 +35,7 @@ export default function Product_detail() {
 	let product = useSelector((state) => state.detailEdited);
 
 	const cartProducts = useSelector((state) => state.cart);
+	const client = useSelector((state) => state.loggedInClient);
 
 	const { name, brand, price, description } = product;
 
@@ -171,7 +177,13 @@ export default function Product_detail() {
 								className={style.cartButton}
 								id='addCartButton'
 								onClick={() => {
-									addCart(cartProducts, product, dispatch);
+									client.phone
+										? dispatch(addToCart(product))
+										: addCart(
+												cartProducts,
+												product,
+												dispatch
+										  );
 								}}>
 								<FontAwesomeIcon
 									className={style.cartIcon}

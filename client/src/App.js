@@ -28,9 +28,9 @@ export default function App() {
 	}
 	return (
 		<Switch>
-			<Route exact path='/login' component={LogIn} />
-			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/iframe' component={iFrame} />
+				<Route exact path='/login' component={LogIn} />
+				<Route exact path='/alert' component={Alert} />
+				<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -83,7 +83,6 @@ export default function App() {
 				</Route>
 
 
-			</Route>
 			<Redirect to='/home' />
 
 		</Switch>

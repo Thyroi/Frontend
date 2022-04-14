@@ -15,7 +15,6 @@ import {
 import style from './AdminDashBoard.module.css';
 // import swal from '@sweetalert/with-react'
 import {Link} from 'react-router-dom'
-import Dropdown from "../Dropdown/Dropdown";
 
 function AdminDashBoard() {
 	const dispatch = useDispatch();

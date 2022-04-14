@@ -93,11 +93,12 @@ function Form(params) {
 		e.preventDefault();
 		const { name, value } = e.target;
 		setData({ ...data, [name]: value });
+		
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		saveSendingData();
+		(saveSendingData(data));
 		return params.history.push('/cart/pay');
 	}
 

@@ -464,33 +464,26 @@ export function selectingProduct(payload) {
 }
 
 // Data for buying products
-export function saveSendingData() {
-  let labels = document.querySelectorAll("label");
-  labels = Array.from(labels);
 
-  const data = {
-    address: {},
+
+export function saveSendingData(payload) {
+  const{city, eMail, lastName, name, particularDetails, phoneNumber, provinceDepartment,
+  streetNumber, zipCode}= payload
+  const data = { 
+    phone:phoneNumber,
+    email:eMail,
+    name,
+    lastname:lastName,
+    address: {
+      streetNumber,
+      city,
+      zipCode,
+      provinceDepartment,
+      particularDetails
+    },
   };
 
-  labels.forEach((label) => {
-    const property = label.id;
-    const value = label.nextSibling.value;
-
-    if (
-      property === "calle" ||
-      property === "numero" ||
-      property === "state" ||
-      property === "city" ||
-      property === "zip_code" ||
-      property === "others"
-    ) {
-      data.address[property] = value;
-      return;
-    }
-
-    data[property] = value;
-  });
-
   localStorage.setItem("datosDeEnvio", JSON.stringify(data));
-  JSON.parse(localStorage.getItem("datosDeEnvio"));
+
+
 }

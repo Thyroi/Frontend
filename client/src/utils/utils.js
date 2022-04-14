@@ -239,7 +239,7 @@ export async function prepareProduct(product, cartItems) {
 					product.variants[0].Stocks[
 						Object.keys(product.variants[0].Stocks)[0]
 					],
-				//image: product.variants[0].ProducImages[0],
+				image: product.variants[0].ProducImages[0],
 				price: totalPrice,
 				color: product.variants[0].ColorName,
 				size: Object.keys(product.variants[0].Stocks)[0],
@@ -257,7 +257,7 @@ export async function prepareProduct(product, cartItems) {
 					item.variants[0].Stocks[
 						Object.keys(item.variants[0].Stocks)[0]
 					],
-				// image: item.variants[0].ProducImages[0],
+				 image: item.variants[0].ProducImages[0],
 				price: totalPrice,
 				color: item.variants[0].ColorName,
 				size: Object.keys(item.variants[0].Stocks)[0],
@@ -340,7 +340,3 @@ export function showingNumberCart() {
 	return numberCart;
 }
 
-export function sendPaymentData(info) {
-	console.log(info, '______________sendinpayment');
-	axios.post('/payments', info);
-}

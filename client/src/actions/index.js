@@ -217,11 +217,11 @@ export function getOrders() {
 export function orderFilter(payload){
 	return async function (dispatch) {
 		try {
-			const {fil} = await axios.get(`/orders/filter?fil=${payload}`);
+			const fil = await axios.get(`/orders?status=${payload}`);
 			console.log(fil)
 			return dispatch({
 				type: 'ORDER_FILTER',
-				payload: fil,
+				payload: fil.data,
 			})
 		}catch (error) {
 			console.log(error);

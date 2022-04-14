@@ -85,7 +85,7 @@ export function formattingProduct(product, templateProduct) {
   product.variants[0].Stocks = {};
   product.variants[0].Stocks[key] = 1;
   product.variants[0].leftUnits =
-    copyTemplateProduct.variants[0].Stocks[key] - 1;
+    copyTemplateProduct.variants[0].Stocks[key];
 
   product.totalPrice = product.price;
 
@@ -116,8 +116,10 @@ export function selectSize(templateProduct, product, size) {
       const Stocks = variant.Stocks;
       for (let s in Stocks) {
         if (s === size) {
+          product.variants[0].leftUnits = Stocks[s];
           product.variants[0].Stocks = {};
           product.variants[0].Stocks[s] = 1;
+          console.log(product);
           focusSelectedSize(size);
         }
       }
@@ -171,7 +173,6 @@ export function increaseLocalStock(product) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
   if (nextAmount <= top) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] += 1;
-    product.variants[0].leftUnits -= 1;
 
     const totalToPay = totalDue(product);
     product.totalPrice = totalToPay;
@@ -185,7 +186,6 @@ export function decreaseLocalStock(product, templateProduct) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] + 1;
   if (nextAmount > 2) {
     product.variants[0].Stocks[Object.keys(product.variants[0].Stocks)[0]] -= 1;
-    product.variants[0].leftUnits += 1;
 
     const totalToPay = totalDue(product);
     product.totalPrice = totalToPay;
@@ -202,7 +202,9 @@ export function totalDue(product, cartItems) {
       total += item.totalPrice;
     });
 
-    return total.toFixed(2);
+    total = total.toFixed(2);
+    return total;
+
   }
 
   let price = product.price;
@@ -218,7 +220,7 @@ export async function prepareProduct(product, cartItems) {
 
   if (product) {
     let totalPrice = parseFloat(product.totalPrice).toFixed(2);
-
+console.log(product); 
     productToBuy = [
       {
         productid: product.id_product,
@@ -226,6 +228,7 @@ export async function prepareProduct(product, cartItems) {
           product.variants[0].Stocks[
             Object.keys(product.variants[0].Stocks)[0]
           ],
+        image: product.variants[0].ProductImages[0],
         price: totalPrice,
         color: product.variants[0].ColorName,
         size: Object.keys(product.variants[0].Stocks)[0],
@@ -241,13 +244,14 @@ export async function prepareProduct(product, cartItems) {
         productid: item.id_product,
         quantity:
           item.variants[0].Stocks[Object.keys(item.variants[0].Stocks)[0]],
+        image: item.variants[0].ProductImages[0],
         price: totalPrice,
         color: item.variants[0].ColorName,
         size: Object.keys(item.variants[0].Stocks)[0],
       };
     });
   }
-
+  console.log(productToBuy);
   localStorage.setItem("productPrepared", JSON.stringify(productToBuy));
 }
 
@@ -316,7 +320,3 @@ export function showingNumberCart(){
   return numberCart;
 };
 
-export function sendPaymentData(info) {
-console.log(info, "______________sendinpayment")
-  axios.post("/payments", info);
-};

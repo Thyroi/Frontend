@@ -152,7 +152,7 @@ export default function rootReducer(state = initialState, action) {
 				cart: [...action.payload],
 			};
 
-		case 'DATOS_DE_EVNIO':
+		case 'DATOS_DE_ENVIO':
 			return {
 				...state,
 				datosDeEnvío: action.payload,

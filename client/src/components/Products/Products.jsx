@@ -39,7 +39,7 @@ export default function Products() {
 					: dispatch(getInfo());
 				dispatch(getSelectorsCat());
 				dispatch(getSelectorsCol());
-			}, 1500);
+			}, 2000);
 	}, [dispatch]);
 
 	//---------------------------------------------PAGINADO--------------------------------//
@@ -55,11 +55,13 @@ export default function Products() {
 	}, [products]);
 
 	useEffect(() => {
-		document.querySelector('.container').scrollTop = 0;
+		document.querySelector('.container').scrollBy({
+			top: -2000,
+			left: 0,
+			behavior: 'smooth',
+		});
 		dispatch(setActualPage(currentPage));
 	}, [currentPage]);
-
-	//probar Element.scrollIntoView();
 
 	function previousPage(e) {
 		e.preventDefault();

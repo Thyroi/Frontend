@@ -5,6 +5,7 @@ const initialState = {
 	details: {},
 	categories: [],
 	orders: [],
+	orderDetail: {},
 	collections: [],
 	users: [],
 	copyUsers: [],
@@ -28,7 +29,6 @@ export default function rootReducer(state = initialState, action) {
 		case 'RECOVER_PRODUCTS':
 			alert('Nothing found, showing all products');
 			return { ...state, products: state.allproducts };
-
 		case 'GET_BY_NAME':
 			return {
 				...state,
@@ -39,6 +39,24 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				orders: action.payload,
 			};
+
+		case 'GET_ORDER_BY_ID':
+			return {
+				...state,
+				orderDetail: action.payload,
+				
+			};
+		case 'UPDATE_ORDER':
+			return {
+				...state,
+				orderDetail: action.payload,
+			};
+		case 'ORDER_FILTER':
+			return {
+				...state,
+				orders: action.payload,
+			}
+
 		case 'GET_BY_ID':
 			return {
 				...state,
@@ -87,7 +105,6 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				products: action.payload,
 			};
-
 		case 'ADD_CART':
 			return {
 				...state,
@@ -99,19 +116,18 @@ export default function rootReducer(state = initialState, action) {
 				? alert('product already in cart')
 				: { ...state, cart: [...state.cart, action.payload] };
 
+
 		case 'REMOVE_CART':
 			return {
 				...state,
 				cart: [...action.payload],
 			};
-
 		case 'GET_ALL_USERS':
 			return {
 				...state,
 				users: action.payload,
 				copyUsers: action.payload,
 			};
-
 		case 'UPDATE_PERMISSION':
 			state.users = state.copyUsers;
 			return {
@@ -130,8 +146,7 @@ export default function rootReducer(state = initialState, action) {
 					...state,
 					wishlist: [...state.wishlist, action.payload],
 				};
-			}
-
+			};
 		case 'REMOVE_WISH_LIST':
 			let eliminated = state.wishlist.filter(
 				(e) => e.id !== action.payload
@@ -140,6 +155,7 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				wishlist: eliminated,
 			};
+
 
 		case 'GET_CLIENTS':
 			return { ...state, allClients: action.payload };
@@ -160,36 +176,35 @@ export default function rootReducer(state = initialState, action) {
 			if (action.payload)
 				return { ...state, cart: [...state.cart, action.payload] };
 
+
 		case 'GET_GOOGLE_INFO':
 			return {
 				...state,
 				google: action.payload,
 			};
-
 		case 'SELECTING_PRODUCT':
 			return {
 				...state,
 				detailEdited: action.payload,
 			};
-
 		case 'UPDATING_CART':
 			return {
 				...state,
 				cart: [...action.payload],
 			};
 
+
 		case 'DATOS_DE_ENVIO':
+
 			return {
 				...state,
 				datosDeEnvío: action.payload,
 			};
-
 		case 'CLEAR_CART':
 			return {
 				...state,
 				cart: [],
 			};
-
 		default:
 			return state;
 	}

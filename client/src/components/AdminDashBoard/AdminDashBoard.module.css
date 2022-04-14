@@ -119,3 +119,55 @@
 .icons {
 	width: 20px;
 }
+
+.imageDetail {
+	width: 100%;
+	display: flex;
+
+}
+.imagenProd {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+  	width: 200px;
+	
+}
+.textOrder{
+	width: 100%;
+	margin: 10px;
+}
+.tableOrder {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.tableOrder td, .tableOrder th {
+	border: 1px solid #ddd;
+	padding: 8px;
+  }
+
+  .tableOrder tr:nth-child(even){background-color: #f2f2f2;}
+
+.tableOrder tr:hover {background-color: #ddd;}
+
+.tableOrder th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #e4687c;
+	color: white;
+  }
+
+.buttonChange {
+	margin: 0.3rem 10% 0 0;
+	background-color: #ee2445;
+	color: white;
+	font-weight: 600;
+	padding: 0.5rem;
+	width: 15rem;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	align-self: flex-end;
+	cursor: pointer;
+}

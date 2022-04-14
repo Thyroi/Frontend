@@ -19,6 +19,7 @@ import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
 import iFrame from './components/iFrame/iFrame';
+import OrderDetails from './components/AdminDashBoard/OrderDetails';
 
 export default function App() {
 	const location = useLocation();
@@ -49,12 +50,17 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
+
+						<Route
+							exact
+							path='/admindashboard/:id'
+							component={OrderDetails}
+						/>
+
 						<Route exact path='/home' component={Products} />
 						<Route
 							exact
-
 							path='/admindashboard'
-
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />
@@ -73,8 +79,13 @@ export default function App() {
 						/>
 					</div>
 				</div>
+
+				</Route>
+
+
 			</Route>
 			<Redirect to='/home' />
+
 		</Switch>
 	);
 }

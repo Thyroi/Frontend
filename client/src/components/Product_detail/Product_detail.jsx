@@ -23,6 +23,7 @@ import {
 import {
 	getById,
 	addCart,
+	addToCart,
 	selectingProduct,
 } from '../../actions/index';
 
@@ -34,6 +35,7 @@ export default function Product_detail() {
 	let product = useSelector((state) => state.detailEdited);
 
 	const cartProducts = useSelector((state) => state.cart);
+	const client = useSelector((state) => state.loggedInClient);
 
 	const { name, brand, price, description } = product;
 
@@ -53,6 +55,9 @@ export default function Product_detail() {
 		}
 	}, [product?.price]);
 
+  useEffect(() => {
+  }, [product && product.variants])
+
 	if (!product?.variants) return <div>Loading</div>;
 
 	return (
@@ -64,7 +69,7 @@ export default function Product_detail() {
 					)}
 					<img
 						className={style.mainImage}
-						src={product?.variants && product?.default_image}
+						src={product?.variants && product.variants[0].ProductImages[0]}
 						id='default_image'
 						alt=''
 					/>
@@ -119,7 +124,6 @@ export default function Product_detail() {
 													dispatch(
 														selectingProduct(result)
 													);
-													setState(size);
 												}}>
 												{size}
 											</div>
@@ -146,7 +150,6 @@ export default function Product_detail() {
 												)
 											);
 											dispatch(selectingProduct(result));
-											setState(color);
 										}}>
 										{color}
 									</div>
@@ -167,7 +170,7 @@ export default function Product_detail() {
 						<div className={style.containerBuyCart}>
 							<Link
 								className={style.buyButton}
-								to='/Form'
+								to='/form'
 								onClick={() => prepareProduct(product)}>
 								<button className={style.buyLetter}>Buy</button>
 							</Link>
@@ -175,7 +178,13 @@ export default function Product_detail() {
 								className={style.cartButton}
 								id='addCartButton'
 								onClick={() => {
-									addCart(cartProducts, product, dispatch);
+									client.phone
+										? dispatch(addToCart(product))
+										: addCart(
+												cartProducts,
+												product,
+												dispatch
+										  );
 								}}>
 								<FontAwesomeIcon
 									className={style.cartIcon}

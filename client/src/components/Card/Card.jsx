@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './Card.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
 export default function Card({ data }) {
 	const collections = useSelector((state) => state.collections);
@@ -11,11 +13,34 @@ export default function Card({ data }) {
 		name,
 		price,
 		brand,
+		rating,
 		collection,
 		is_offer,
 		default_image,
 		variants,
 	} = data;
+
+	function showRating() {
+		let stars = [];
+		for (let i = 1; i <= Math.floor(rating); i++) {
+			stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
+		}
+		if (stars.length < 5) {
+			if (rating - Math.floor(rating) > 0.2) {
+				stars.push(
+					rating - Math.floor(rating) < 0.7 ? (
+						<FontAwesomeIcon icon={faStarHalfStroke} />
+					) : (
+						<FontAwesomeIcon icon={faStar} />
+					)
+				);
+			} else {
+				stars.length === 0 &&
+					stars.push(<FontAwesomeIcon icon={faStarHalfStroke} />);
+			}
+		}
+		return stars.slice(0, 5);
+	}
 
 	const collection_name = collections
 		?.filter((c) => {
@@ -45,10 +70,9 @@ export default function Card({ data }) {
 				<div className={style.brand}>
 					<span>{brand}</span>
 					<span>{collection_name}</span>
-					<span>{'rating'}</span>
+					<span style={{ color: '#e4687c' }}>{showRating()}</span>
 				</div>
 				<div className={style.price}>{`$${price}`}</div>
-				{/* falta colección que no está aún en el json creo */}
 				{stocks === 0 ? (
 					<span
 						style={{

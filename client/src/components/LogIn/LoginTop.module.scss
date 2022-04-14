@@ -1,20 +1,38 @@
 .loginContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100px;
+	display: flex;
+}
 
-  .text {
-    font-weight: 600;
-    transition: 0.3s all ease;
-  }
+.loginContainer button {
+	cursor: pointer;
+	margin: 1rem;
+	padding: 0.3rem;
+	border-radius: 5px;
+	border: 1px solid #e4687c;
+	color: #e4687c;
+}
 
-  .text:hover {
-    color: #E4687C;
-  }
+.loginContainer a {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 600;
+	transition: 0.15s all ease;
 
-  .icon {
-    width: 30px;
-    height: 30px;
-  }
+	.icon {
+		width: 40px;
+		height: 40px;
+		margin: 0 1rem;
+	}
+}
+
+.loginContainer a:hover {
+	color: #e4687c;
+}
+
+.userDisplay {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: center;
+	font-size: 0.8rem;
 }

@@ -34,7 +34,6 @@ export default function App() {
 
 			<Route path='/'>
 				<div className='app'>
-					{/* <div className="appName">Shop</div> */}
 					<div className='left'>
 						<Nav />
 					</div>
@@ -51,14 +50,14 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
+
 						<Route
 							exact
 							path='/admindashboard/:id'
 							component={OrderDetails}
 						/>
-						{/* <Route exact path='/products' component={Products} /> */}
+
 						<Route exact path='/home' component={Products} />
-						{/* //para que funcione el home */}
 						<Route
 							exact
 							path='/admindashboard'
@@ -72,7 +71,6 @@ export default function App() {
 							component={Product_detail}
 						/>
 						<Route exact path='/form' component={Form} />
-						{/* <Route exact path="/" component={Landing} /> */}
 						<Route exact path='/signup' component={SignUp} />
 						<Route
 							exact
@@ -81,8 +79,13 @@ export default function App() {
 						/>
 					</div>
 				</div>
+
 				</Route>
-				<Redirect to='/home' />
+
+
+			</Route>
+			<Redirect to='/home' />
+
 		</Switch>
 	);
 }

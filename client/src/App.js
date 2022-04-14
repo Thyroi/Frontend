@@ -17,6 +17,8 @@ import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
+import Alert from './components/Notification/Alert';
+import iFrame from './components/iFrame/iFrame';
 
 export default function App() {
 	const location = useLocation();
@@ -25,11 +27,12 @@ export default function App() {
 	}
 	return (
 		<Switch>
-			<Route exact path='/LogIn' component={LogIn} />
+			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/alert' component={Alert} />
+			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
-					{/* <div className="appName">Shop</div> */}
 					<div className='left'>
 						<Nav />
 					</div>
@@ -43,26 +46,25 @@ export default function App() {
 					<div className='container'>
 						<Route
 							exact
-							path='/AddNewProduct'
+							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
-						{/* <Route exact path='/products' component={Products} /> */}
 						<Route exact path='/home' component={Products} />
-						{/* //para que funcione el home */}
 						<Route
 							exact
-							path='/AdminDashBoard'
+
+							path='/admindashboard'
+
 							component={AdminDashBoard}
 						/>
-						<Route exact path='/Cart' component={Cart} />
+						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/cart/pay' component={Main} />
 						<Route
 							exact
 							path='/products/:id'
 							component={Product_detail}
 						/>
-						<Route exact path='/Form' component={Form} />
-						{/* <Route exact path="/" component={Landing} /> */}
+						<Route exact path='/form' component={Form} />
 						<Route exact path='/signup' component={SignUp} />
 						<Route
 							exact
@@ -71,8 +73,8 @@ export default function App() {
 						/>
 					</div>
 				</div>
-				<Redirect to='/home' />
 			</Route>
+			<Redirect to='/home' />
 		</Switch>
 	);
 }

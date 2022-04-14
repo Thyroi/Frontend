@@ -6,7 +6,9 @@
 	grid-template-rows: 1fr 2fr;
 	text-align: center;
 }
-
+.orderList {
+	margin: 10px
+}
 .divContainerAdmin input,
 .divContainerAdmin select {
 	margin: 0.3rem;

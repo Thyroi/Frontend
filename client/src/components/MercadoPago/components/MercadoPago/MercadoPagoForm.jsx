@@ -5,7 +5,7 @@ import Card from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import useMercadoPago from '../../hooks/useMercadoPago';
 
-import { createGuestClient, purchaseOrder } from '../../../../utils/utils';
+import { createGuestClient, purchaseOrder, sendPaymentData } from '../../../../utils/utils';
 import { clearCart } from '../../../../actions/index';
 
 import style from './MercadoPagoForm.module.scss';
@@ -38,10 +38,15 @@ export default function MercadoPagoForm() {
 	};
 
 	useEffect(() => {
+		if(resultPayment&&resultPayment.status) {
+			/* sendPaymentData(resultPayment); */
+		 	purchaseOrder(resultPayment.status); 
+			
+		}
 		if (resultPayment && resultPayment.status === 'approved') {
 			localStorage.removeItem('cart');
 			dispatch(clearCart());
-
+		
 			const element = document.querySelector('#cardState');
 
 			if (resultPayment.status === 'approved') {
@@ -195,7 +200,7 @@ export default function MercadoPagoForm() {
 								button.id === 'form-checkout__submit'
 							) {
 								createGuestClient();
-								purchaseOrder();
+								//setTimeout(()=>purchaseOrder(),2000);
 								document.querySelector(
 									'#form-checkout__submit'
 								).textContent = 'Go back';

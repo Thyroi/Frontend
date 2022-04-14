@@ -42,7 +42,7 @@ export default function Nav() {
 			{!!products.length && (
 				<>
 					<NavLink
-						to='/AdminDashBoard'
+						to='/admindashboard'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon
@@ -51,19 +51,9 @@ export default function Nav() {
 						/>
 						Dashboard
 					</NavLink>
-					{/* <NavLink
-						to='/products'
-						activeClassName={styles.active}
-						className={styles.title}>
-						<FontAwesomeIcon
-							className={styles.icons}
-							icon={faShirt}
-						/>
-						Products
-					</NavLink> */}
-
+					
 					<NavLink
-						to='/AddNewProduct'
+						to='/addnewproduct'
 						activeClassName={styles.active}
 						className={styles.title}>
 						<FontAwesomeIcon

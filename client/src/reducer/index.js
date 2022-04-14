@@ -1,8 +1,10 @@
 const initialState = {
+	actualPage: 1,
 	products: [],
 	allproducts: [],
 	details: {},
 	categories: [],
+	orders: [],
 	collections: [],
 	users: [],
 	copyUsers: [],
@@ -11,6 +13,8 @@ const initialState = {
 	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
+	allClients: [],
+	loggedInClient: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -29,6 +33,11 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				products: action.payload,
+			};
+		case 'GET_ORDERS':
+			return {
+				...state,
+				orders: action.payload,
 			};
 		case 'GET_BY_ID':
 			return {
@@ -61,9 +70,17 @@ export default function rootReducer(state = initialState, action) {
 		case 'CLEAR_PRODUCTS':
 			return {
 				...state,
-				detailEdited: {},
+
 				products: [],
 			};
+		case 'CLEAR_DETAIL':
+			return {
+				...state,
+				details: {},
+				detailEdited: {},
+			};
+		case 'SET_ACTUAL_PAGE':
+			return { ...state, actualPage: action.payload };
 		case 'GET_OFFERS':
 			state.products = state.allproducts;
 			return {
@@ -76,6 +93,11 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				cart: [...action.payload],
 			};
+
+		case 'ADD_TO_CART':
+			return state.cart.includes(action.payload)
+				? alert('product already in cart')
+				: { ...state, cart: [...state.cart, action.payload] };
 
 		case 'REMOVE_CART':
 			return {
@@ -118,6 +140,25 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				wishlist: eliminated,
 			};
+
+		case 'GET_CLIENTS':
+			return { ...state, allClients: action.payload };
+
+		case 'LOG_IN_USER':
+			return {
+				...state,
+				loggedInClient: action.payload,
+			};
+
+		case 'LOG_OUT_USER':
+			return {
+				...state,
+				loggedInClient: {},
+			};
+
+		case 'GET_CART':
+			if (action.payload)
+				return { ...state, cart: [...state.cart, action.payload] };
 
 		case 'GET_GOOGLE_INFO':
 			return {

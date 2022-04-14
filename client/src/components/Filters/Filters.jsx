@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styles from './Filters.module.css';
-import { useFilter } from '../../context';
-
 import { filterReducer } from '../../context';
 import data from '../../Assets/Products.json';
 

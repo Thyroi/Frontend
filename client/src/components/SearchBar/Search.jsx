@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { getByName } from '../../actions';
+import { Notifications } from '../../utils/utils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +18,7 @@ function Search() {
 		e.preventDefault();
 		return window.location.href.includes('/home')
 			? (dispatch(getByName(search)), setSearch(''))
-			: alert("Go to 'home' and then search...");
+			: Notifications('Go home to search');
 	}
 
 	function handleChange(e) {

@@ -15,7 +15,7 @@ import {
 import style from './AdminDashBoard.module.css';
 // import swal from '@sweetalert/with-react'
 import {Link} from 'react-router-dom'
-
+import Dropdown from "../Dropdown/Dropdown";
 
 function AdminDashBoard() {
 	const dispatch = useDispatch();
@@ -37,7 +37,6 @@ function AdminDashBoard() {
 		dispatch(getAllUsers());
 		dispatch(getSelectorsCat());
 		dispatch(getOrders())
-		
 	}, [dispatch]);
 
 
@@ -143,12 +142,14 @@ function AdminDashBoard() {
 			dispatch(getAllUsers());
 		}, 1000);
 	};
-
-	// const prueba = orders.filter(o => o.orderId === 1)
-	// console.log(prueba)
-	// console.log(prueba.map(os=> os.orderDetails.map(d => d.price)))
-
-
+	function handleFilterStatus(e) {
+		e.preventDefault();
+		dispatch(orderFilter(e.target.value));
+	}
+	function bringAllOrders (e) {
+		e.preventDefault();
+		dispatch(getOrders())
+	}
 	return (
 		<div className={style.divContainerAdmin}>
 			<div className={style.showUsers}>
@@ -241,8 +242,17 @@ function AdminDashBoard() {
 					placeholder='Write your ID'></input>
 				<button onClick={addNewCategory}>Create category</button>
 			</div>
+
 			<div>
-				{orders.map((order) =>{
+				<button onClick={bringAllOrders}>All orders</button>
+			<select onChange={handleFilterStatus}>
+					<option value=''>Filter By Status</option>
+					<option value='Canceled'>Canceled</option>
+					<option value='Submited'>Submited</option>
+					<option value='Completed'>Completed</option>
+					<option value='Processing'>Processing</option>
+				</select> 
+				{orders?.map((order) =>{
 					return	<div key={order?.orderId}>
 						<table className={style.tableOrder}>
 							<thead>

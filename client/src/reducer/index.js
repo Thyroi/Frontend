@@ -5,6 +5,7 @@ const initialState = {
 	details: {},
 	categories: [],
 	orders: [],
+	copyOrders:[],
 	orderDetail: {},
 	collections: [],
 	users: [],
@@ -36,6 +37,7 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				orders: action.payload,
+				copyOrders: action.payload,
 			};
 		case 'GET_ORDER_BY_ID':
 			return {
@@ -49,6 +51,7 @@ export default function rootReducer(state = initialState, action) {
 				orderDetail: action.payload,
 			};
 		case 'ORDER_FILTER':
+			state.orders = state.copyOrders
 			return {
 				...state,
 				orders: action.payload,

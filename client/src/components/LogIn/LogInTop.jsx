@@ -12,12 +12,13 @@ function LogInTop() {
 
   const { login_name, name } = useSelector((state) => state?.loggedInClient);
 
-  function handleLogOut(e) {
-    e.preventDefault();
-    dispatch(clearCart());
-    dispatch(logOutUser());
-    alert("logged out");
-  }
+
+	function handleLogOut(e) {
+		e.preventDefault();
+		dispatch(logOutUser());
+		dispatch(clearCart());
+		alert('logged out');
+	}
 
   return (
     <div className={styles.loginContainer}>

@@ -323,10 +323,6 @@ export function addCart(cartProducts, payload, dispatch) {
 	});
 }
 
-export function addToCart(product) {
-	return { type: 'ADD_TO_CART', payload: product };
-}
-
 // export function addProduct(payload){
 //     return async function(){
 //         const add = await axios.post("/products/add", payload)

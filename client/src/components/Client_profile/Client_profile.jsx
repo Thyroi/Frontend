@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { sendModifiedData } from "../../actions";
+
 
 import style from "./Client_profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,18 +14,21 @@ import {
 
 function ClientProfile() {
   const client_info = useSelector((state) => state.loggedInClient);
-  console.log(client_info);
-  const { login_name, login_password, name, lastname, phone, email } =
-    client_info;
-  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
-    client_info.address;
+  const [dataToChange, setDataToChange] = useState(Object.assign({}, client_info));
 
-  // useEffect(() => {
-  //   document.querySelector("#form").addEventListener("onSubmit", (e) => {
-  //     e.preventDefault();
-  //     console.log(e.target);
-  //   });
-  // }, []);
+  const { login_name, login_password, name, lastname, phone, email } = client_info;
+  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } = client_info.address;
+
+  const dispatch = useDispatch();
+
+  function onChangeData(e) {
+    const key = e.target.name;
+    if(dataToChange.hasOwnProperty(key)){
+      setDataToChange({...dataToChange, [key]: e.target.value})
+    } else {
+      setDataToChange({...dataToChange, address: {...dataToChange.address, [key]: e.target.value}});
+    }
+  }
 
   return (
     <div className={style.background}>
@@ -34,7 +39,7 @@ function ClientProfile() {
             id="form"
             onSubmit={(e) => {
               e.preventDefault();
-              console.log(e);
+              sendModifiedData(dataToChange, dispatch);
             }}
           >
             <div className={style.formGroups}>
@@ -45,6 +50,7 @@ function ClientProfile() {
                   type="text"
                   name="login_name"
                   defaultValue={login_name}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
               <div className={style.inputContainer}>
@@ -54,6 +60,7 @@ function ClientProfile() {
                   type="password"
                   name="login_password"
                   defaultValue={login_password}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -66,6 +73,7 @@ function ClientProfile() {
                   type="text"
                   name="name"
                   defaultValue={name}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
               <div className={style.inputContainer}>
@@ -75,6 +83,7 @@ function ClientProfile() {
                   type="text"
                   name="lastname"
                   defaultValue={lastname}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -87,6 +96,7 @@ function ClientProfile() {
                   type="text"
                   name="phone"
                   defaultValue={phone}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
               <div className={style.inputContainer}>
@@ -96,6 +106,7 @@ function ClientProfile() {
                   type="email"
                   name="email"
                   defaultValue={email}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -108,6 +119,7 @@ function ClientProfile() {
                   type="text"
                   name="streetNumber"
                   defaultValue={streetNumber}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
@@ -118,6 +130,7 @@ function ClientProfile() {
                   type="text"
                   name="provinceDepartment"
                   defaultValue={provinceDepartment}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
@@ -128,6 +141,7 @@ function ClientProfile() {
                   type="text"
                   name="city"
                   defaultValue={city}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
@@ -138,6 +152,7 @@ function ClientProfile() {
                   type="text"
                   name="zipCode"
                   defaultValue={zipCode}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
@@ -148,6 +163,7 @@ function ClientProfile() {
                   type="text"
                   name="particularDetails"
                   defaultValue={particularDetails}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -158,6 +174,7 @@ function ClientProfile() {
                   className={style.saveDataButton}
                   type="submit"
                   value="Modify data"
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -192,7 +209,7 @@ function ClientProfile() {
         <div className={style.profileImageContainer}>
           <img
             className={style.profileImage}
-            src="https://ichef.bbci.co.uk/news/624/amz/worldservice/live/assets/images/2015/05/11/150511213032_sp_bin_laden_624x351_ap.jpg"
+            src="https://prephoopsnext.com/wp-content/themes/prepsports/resources/assets/images/default-user.png"
             alt="profile"
           />
         </div>
@@ -203,7 +220,6 @@ function ClientProfile() {
         </div>
 
         <div className={style.generalButtons}>
-          <div className={style.generalButton}>History</div>
           <div className={style.generalButton}>Favorites</div>
           <div className={style.generalButton}>Orders</div>
         </div>

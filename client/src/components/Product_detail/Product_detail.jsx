@@ -23,7 +23,6 @@ import {
 import {
 	getById,
 	addCart,
-	addToCart,
 	selectingProduct,
 } from '../../actions/index';
 
@@ -180,13 +179,7 @@ export default function Product_detail() {
 								className={style.cartButton}
 								id='addCartButton'
 								onClick={() => {
-									client.phone
-										? dispatch(addToCart(product))
-										: addCart(
-												cartProducts,
-												product,
-												dispatch
-										  );
+									addCart(cartProducts, product, dispatch);
 								}}>
 								<FontAwesomeIcon
 									className={style.cartIcon}

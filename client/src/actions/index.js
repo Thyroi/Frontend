@@ -524,7 +524,7 @@ export function getCart(phone) {
 		try {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
-			cart = cart.concat(data.cart_items);
+      if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
 
 			
 

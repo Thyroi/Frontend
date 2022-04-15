@@ -1,6 +1,7 @@
-import React from "react";
-import style from "./Client_profile.module.scss";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
+import style from "./Client_profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -10,79 +11,144 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function ClientProfile() {
+  const client_info = useSelector((state) => state.loggedInClient);
+  console.log(client_info);
+  const { login_name, login_password, name, lastname, phone, email } =
+    client_info;
+  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
+    client_info.address;
+
+  // useEffect(() => {
+  //   document.querySelector("#form").addEventListener("onSubmit", (e) => {
+  //     e.preventDefault();
+  //     console.log(e.target);
+  //   });
+  // }, []);
+
   return (
     <div className={style.background}>
       <div className={style.firstColumn}>
         <div className={style.containerForm}>
-          <form className={style.subContainerForm}>
+          <form
+            className={style.subContainerForm}
+            id="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log(e);
+            }}
+          >
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>User</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="login_name"
+                  defaultValue={login_name}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Password</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="password"
+                  name="login_password"
+                  defaultValue={login_password}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Name</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="name"
+                  defaultValue={name}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Last name</label>
-                <input className={style.input} type="text" />
-              </div>
-            </div>
-
-            <div className={style.formGroups}>
-              <div className={style.inputContainer}>
-                <label className={style.titleInput}>Age</label>
-                <input className={style.input} type="text" />
-              </div>
-              <div className={style.inputContainer}>
-                <label className={style.titleInput}>DNI</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="lastname"
+                  defaultValue={lastname}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Phone</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="phone"
+                  defaultValue={phone}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Email</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="email"
+                  name="email"
+                  defaultValue={email}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Street</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="streetNumber"
+                  defaultValue={streetNumber}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>State</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="provinceDepartment"
+                  defaultValue={provinceDepartment}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>City</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="city"
+                  defaultValue={city}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Zip code</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="zipCode"
+                  defaultValue={zipCode}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Other details</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="particularDetails"
+                  defaultValue={particularDetails}
+                />
               </div>
             </div>
 
@@ -91,7 +157,7 @@ function ClientProfile() {
                 <input
                   className={style.saveDataButton}
                   type="submit"
-                  value="Save data"
+                  value="Modify data"
                 />
               </div>
             </div>

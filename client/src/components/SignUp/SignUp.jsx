@@ -16,10 +16,10 @@ export default function SignUp(params) {
 		login_name: '',
 		login_password: '',
 		address: {
-			calleNumero: '',
-			province: '',
+			streetNumber: '',
+			provinceDepartment: '',
 			city: '',
-			zip_code: '',
+			zipCode: '',
 		},
 	});
 
@@ -74,19 +74,19 @@ export default function SignUp(params) {
 			error.login_name = 'Login name is required';
 		} else if (!inputs.login_password) {
 			error.login_password = 'Password is required';
-		} else if (!inputs.address.calleNumero) {
+		} else if (!inputs.address.streetNumber) {
 			error.calle = 'Street and number are required';
-		} else if (!inputs.address.province) {
+		} else if (!inputs.address.provinceDeparment) {
 			error.province = 'Province is required';
 		} else if (!inputs.address.city) {
 			error.city = 'City is required';
 		} else if (typeof inputs.address.city !== 'string') {
 			error.city =
 				'Insert a valid city (without special caracters or numbers)';
-		} else if (!inputs.address.zip_code) {
-			error.zip_code = 'Zip code is required';
-		} else if (!inputs.address.particular_details) {
-			error.zip_code = 'a particular detail is required';
+		} else if (!inputs.address.zipCode) {
+			error.zipCode = 'Zip code is required';
+		} else if (!inputs.address.particularDetails) {
+			error.zipCode = 'a particular detail is required';
 		}
 		return error;
 	}
@@ -99,11 +99,11 @@ export default function SignUp(params) {
 			error.email ||
 			error.login_name ||
 			error.login_password ||
-			error.calleNumero ||
+			error.streetNumber ||
 			error.city ||
-			error.zip_code ||
-			error.province ||
-			error.particular_details
+			error.zipCode ||
+			error.provinceDepartment ||
+			error.particularDetails
 		) {
 			return true;
 		}
@@ -127,11 +127,11 @@ export default function SignUp(params) {
 			login_name: '',
 			login_password: '',
 			address: {
-				calleNumero: '',
+				streetNumber: '',
 				city: '',
-				zip_code: '',
-				province: '',
-				particular_details: '',
+				zipCode: '',
+				provinceDepartment: '',
+				particularDetails: '',
 			},
 		});
 		params.history.push('/login');
@@ -150,13 +150,13 @@ export default function SignUp(params) {
 						<input
 							type='text'
 							placeholder='Street and number'
-							name='calleNumero'
-							value={inputs.address.calleNumero}
+							name='streetNumber'
+							value={inputs.address.streetNumber}
 							onChange={(e) => {
 								handleAdress(e);
 							}}
 						/>
-						{error.calleNumero && <p>{error.calleNumero}</p>}
+						{error.streetNumber && <p>{error.streetNumber}</p>}
 
 						<input
 							type='text'
@@ -172,19 +172,19 @@ export default function SignUp(params) {
 						<input
 							type='text'
 							placeholder='Zip Code'
-							name='zip_code'
-							value={inputs.address.zip_code}
+							name='zipCode'
+							value={inputs.address.zipCode}
 							onChange={(e) => {
 								handleAdress(e);
 							}}
 						/>
-						{error.zip_code && <p>{error.zip_code}</p>}
+						{error.zipCode && <p>{error.zipCode}</p>}
 
 						<input
 							type='text'
-							placeholder='Province'
-							name='province'
-							value={inputs.address.province}
+							placeholder='province'
+							name='provinceDepartment'
+							value={inputs.address.provinceDepartment}
 							onChange={(e) => {
 								handleAdress(e);
 							}}
@@ -194,14 +194,14 @@ export default function SignUp(params) {
 						<input
 							type='text'
 							placeholder='Particular details'
-							name='particular_details'
-							value={inputs.address.particular_details}
+							name='particularDetails'
+							value={inputs.address.particularDetails}
 							onChange={(e) => {
 								handleAdress(e);
 							}}
 						/>
-						{error.particular_details && (
-							<p>{error.particular_details}</p>
+						{error.particularDetails && (
+							<p>{error.particularDetails}</p>
 						)}
 					</div>
 				</div>

@@ -1,6 +1,11 @@
-import React from "react";
-import style from "./Client_profile.module.scss";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
+import { sendModifiedData, logOutUser } from "../../actions";
+import { deleteAccount } from "../../utils/utils";
+
+import style from "./Client_profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -9,80 +14,167 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
-function ClientProfile() {
+function ClientProfile(params) {
+  const client_info = useSelector((state) => state.loggedInClient);
+  const [dataToChange, setDataToChange] = useState(
+    Object.assign({}, client_info)
+  );
+
+  const { login_name, login_password, name, lastname, phone, email } =
+    client_info;
+  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
+    client_info.address;
+
+  const dispatch = useDispatch();
+
+  function onChangeData(e) {
+    const key = e.target.name;
+    if (dataToChange.hasOwnProperty(key)) {
+      setDataToChange({ ...dataToChange, [key]: e.target.value });
+      return;
+    }
+
+    setDataToChange({
+      ...dataToChange,
+      address: { ...dataToChange.address, [key]: e.target.value },
+    });
+  }
+
   return (
     <div className={style.background}>
       <div className={style.firstColumn}>
         <div className={style.containerForm}>
-          <form className={style.subContainerForm}>
+          <form
+            className={style.subContainerForm}
+            id="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendModifiedData(dataToChange, dispatch);
+            }}
+          >
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>User</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="login_name"
+                  defaultValue={login_name}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Password</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="password"
+                  name="login_password"
+                  defaultValue={login_password}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Name</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="name"
+                  defaultValue={name}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Last name</label>
-                <input className={style.input} type="text" />
-              </div>
-            </div>
-
-            <div className={style.formGroups}>
-              <div className={style.inputContainer}>
-                <label className={style.titleInput}>Age</label>
-                <input className={style.input} type="text" />
-              </div>
-              <div className={style.inputContainer}>
-                <label className={style.titleInput}>DNI</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="lastname"
+                  defaultValue={lastname}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Phone</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="phone"
+                  defaultValue={phone}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Email</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="email"
+                  name="email"
+                  defaultValue={email}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
             </div>
 
             <div className={style.formGroups}>
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Street</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="streetNumber"
+                  defaultValue={streetNumber}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>State</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="provinceDepartment"
+                  defaultValue={provinceDepartment}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>City</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="city"
+                  defaultValue={city}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Zip code</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="zipCode"
+                  defaultValue={zipCode}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
 
               <div className={style.inputContainer}>
                 <label className={style.titleInput}>Other details</label>
-                <input className={style.input} type="text" />
+                <input
+                  className={style.input}
+                  type="text"
+                  name="particularDetails"
+                  defaultValue={particularDetails}
+                  onChange={(e) => onChangeData(e)}
+                />
               </div>
             </div>
 
@@ -91,7 +183,8 @@ function ClientProfile() {
                 <input
                   className={style.saveDataButton}
                   type="submit"
-                  value="Save data"
+                  value="Modify data"
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
             </div>
@@ -111,11 +204,19 @@ function ClientProfile() {
             <FontAwesomeIcon className={style.infoIconB} icon={faBagShopping} />
             <div className={style.textInfo}>
               <p className={style.textInfoTitle}>Total purchase</p>
-              <p className={style.textInfoContent}>$600000</p>
+              <p className={style.textInfoContent}>50</p>
             </div>
           </div>
 
-          <div className={style.deleteAccountContainer}>
+          <div
+            className={style.deleteAccountContainer}
+            onClick={() => {
+              alert("Are you sure you want to delete your account?");
+              deleteAccount(phone);
+              dispatch(logOutUser());
+              params.history.push("/home");
+            }}
+          >
             <FontAwesomeIcon className={style.infoIconC} icon={faTrashCan} />
             <p className={style.deleteText}>Delete account</p>
           </div>
@@ -126,7 +227,7 @@ function ClientProfile() {
         <div className={style.profileImageContainer}>
           <img
             className={style.profileImage}
-            src="https://ichef.bbci.co.uk/news/624/amz/worldservice/live/assets/images/2015/05/11/150511213032_sp_bin_laden_624x351_ap.jpg"
+            src="https://prephoopsnext.com/wp-content/themes/prepsports/resources/assets/images/default-user.png"
             alt="profile"
           />
         </div>
@@ -137,9 +238,10 @@ function ClientProfile() {
         </div>
 
         <div className={style.generalButtons}>
-          <div className={style.generalButton}>History</div>
           <div className={style.generalButton}>Favorites</div>
-          <div className={style.generalButton}>Orders</div>
+          <div className={style.generalButton}>
+            <Link to="/orders">Orders</Link>
+          </div>
         </div>
       </div>
     </div>

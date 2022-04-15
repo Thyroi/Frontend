@@ -518,6 +518,11 @@ export function getCart(phone) {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
 
+      if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
+
+			await axios.put(`/cart/${phone}`, { cart_items: cart });
+
+
 			data?.cart_items?.forEach((i) => {
 				if (
 					//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
@@ -611,4 +616,14 @@ export function saveSendingData(payload) {
 	};
 
 	localStorage.setItem('datosDeEnvio', JSON.stringify(data));
+}
+
+// Modified user data
+
+export async function sendModifiedData(payload, dispatch) {
+  axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+  dispatch({
+    type: 'LOG_IN_USER',
+    payload: payload,
+  });
 }

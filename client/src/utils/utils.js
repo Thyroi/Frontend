@@ -228,18 +228,20 @@ export function totalDue(product, cartItems) {
 
 export async function prepareProduct(product, cartItems) {
 	let productToBuy = [];
+  console.log(product, cartItems)
 
 	if (product) {
 		let totalPrice = parseFloat(product.totalPrice).toFixed(2);
 
 		productToBuy = [
 			{
+        name: product.name,
 				productid: product.id_product,
 				quantity:
 					product.variants[0].Stocks[
 						Object.keys(product.variants[0].Stocks)[0]
 					],
-				image: product.variants[0].ProducImages[0],
+				image: product.variants[0].ProductImages[0],
 				price: totalPrice,
 				color: product.variants[0].ColorName,
 				size: Object.keys(product.variants[0].Stocks)[0],
@@ -252,12 +254,13 @@ export async function prepareProduct(product, cartItems) {
 			let totalPrice = parseFloat(item.totalPrice);
 
 			return {
+        name: item.name,
 				productid: item.id_product,
 				quantity:
 					item.variants[0].Stocks[
 						Object.keys(item.variants[0].Stocks)[0]
 					],
-				image: item.variants[0].ProducImages[0],
+				image: item.variants[0].ProductImages[0],
 				price: totalPrice,
 				color: item.variants[0].ColorName,
 				size: Object.keys(item.variants[0].Stocks)[0],
@@ -321,20 +324,21 @@ export function saveCart(id, cart) {
 	}
 }
 
-export function sendingCart(cartItems) {
+export function sendingCart(cartItems, phone) {
 	if (cartItems.length === 0 || cartItems === undefined) return;
 
 	const dataToSend = {
 		cart_items: { cartItems },
 	};
 
-	axios.put('/cart/6631651', dataToSend);
+	axios.put(`http://localhost:3001/cart/${phone}`, dataToSend);
 }
 
 export function showingNumberCart() {
-	const cart = JSON.parse(localStorage.getItem('cart'));
+	const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 	if (!cart || cart.length === 0) return 0;
+  if(cart.includes(null)) return 0;
 
 	let numberCart = 0;
 
@@ -346,4 +350,14 @@ export function showingNumberCart() {
 	});
 
 	return numberCart;
+}
+
+export async function getOrders(phone){
+  console.log(phone)
+  const orders = await axios.get(`http://localhost:3001/orders?client=${phone}`);
+  return orders.data;
+}
+
+export async function deleteAccount(phone){
+  await axios.delete(`http://localhost:3001/client/${phone}`);
 }

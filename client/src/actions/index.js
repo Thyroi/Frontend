@@ -520,7 +520,7 @@ export function getCart(phone) {
 		try {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
-			cart = cart.concat(data.cart_items);
+      if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
 
 			
 
@@ -578,4 +578,14 @@ export function saveSendingData(payload) {
 	};
 
 	localStorage.setItem('datosDeEnvio', JSON.stringify(data));
+}
+
+// Modified user data
+
+export async function sendModifiedData(payload, dispatch) {
+  axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+  dispatch({
+    type: 'LOG_IN_USER',
+    payload: payload,
+  });
 }

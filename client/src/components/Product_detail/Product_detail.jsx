@@ -23,7 +23,6 @@ import {
 import {
 	getById,
 	addCart,
-	addToCart,
 	selectingProduct,
 } from '../../actions/index';
 
@@ -55,8 +54,7 @@ export default function Product_detail() {
 		}
 	}, [product?.price]);
 
-  useEffect(() => {
-  }, [product && product.variants])
+	useEffect(() => {}, [product && product.variants]);
 
 	if (!product?.variants) return <div>Loading</div>;
 
@@ -69,7 +67,10 @@ export default function Product_detail() {
 					)}
 					<img
 						className={style.mainImage}
-						src={product?.variants && product.variants[0].ProductImages[0]}
+						src={
+							product?.variants &&
+							product.variants[0].ProductImages[0]
+						}
 						id='default_image'
 						alt=''
 					/>
@@ -178,13 +179,7 @@ export default function Product_detail() {
 								className={style.cartButton}
 								id='addCartButton'
 								onClick={() => {
-									client.phone
-										? dispatch(addToCart(product))
-										: addCart(
-												cartProducts,
-												product,
-												dispatch
-										  );
+									addCart(cartProducts, product, dispatch);
 								}}>
 								<FontAwesomeIcon
 									className={style.cartIcon}

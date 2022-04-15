@@ -15,7 +15,6 @@ const initialState = {
 	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
-	allClients: [],
 	loggedInClient: {},
 };
 
@@ -77,7 +76,6 @@ export default function rootReducer(state = initialState, action) {
 				collections: action.payload,
 			};
 		case 'GET_BY_CAT_ID':
-			// state.products = state.allproducts;
 			return {
 				...state,
 				products: action.payload,
@@ -115,9 +113,7 @@ export default function rootReducer(state = initialState, action) {
 			};
 
 		case 'ADD_TO_CART':
-			return state.cart.includes(action.payload)
-				? alert('product already in cart')
-				: { ...state, cart: [...state.cart, action.payload] };
+			return { ...state, cart: [...action.payload] };
 
 
 		case 'REMOVE_CART':
@@ -173,11 +169,13 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				loggedInClient: {},
+				cart: [],
 			};
 
 		case 'GET_CART':
-			if (action.payload)
-				return { ...state, cart: [...state.cart, action.payload] };
+			if (action.payload) {
+				return { ...state, cart: [...action.payload] };
+			}
 
 
 		case 'GET_GOOGLE_INFO':

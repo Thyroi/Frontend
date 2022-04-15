@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logOutUser } from '../../actions';
+import { clearCart, logOutUser } from '../../actions';
 
 import styles from './LoginTop.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,6 +15,7 @@ function LogInTop() {
 	function handleLogOut(e) {
 		e.preventDefault();
 		dispatch(logOutUser());
+		dispatch(clearCart());
 		alert('logged out');
 	}
 

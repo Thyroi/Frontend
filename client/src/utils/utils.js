@@ -1,7 +1,7 @@
 import styleDetail from '../components/Product_detail/Product_detail.module.scss';
 import styleNotification from '../components/Notification/Notification.module.scss';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Notification
 export function Notifications(text) {
@@ -257,7 +257,7 @@ export async function prepareProduct(product, cartItems) {
 					item.variants[0].Stocks[
 						Object.keys(item.variants[0].Stocks)[0]
 					],
-				 image: item.variants[0].ProducImages[0],
+				image: item.variants[0].ProducImages[0],
 				price: totalPrice,
 				color: item.variants[0].ColorName,
 				size: Object.keys(item.variants[0].Stocks)[0],
@@ -314,6 +314,13 @@ export async function purchaseOrder(status) {
 	// localStorage.removeItem("datosDeEnvio");
 }
 
+export function saveCart(id, cart) {
+	if (id) {
+
+		axios.put(`/cart/${id}`, { cart_items: cart });
+	}
+}
+
 export function sendingCart(cartItems) {
 	if (cartItems.length === 0 || cartItems === undefined) return;
 
@@ -326,7 +333,8 @@ export function sendingCart(cartItems) {
 
 export function showingNumberCart() {
 	const cart = JSON.parse(localStorage.getItem('cart'));
-	if (!cart) return 0;
+
+	if (!cart || cart.length === 0) return 0;
 
 	let numberCart = 0;
 
@@ -339,4 +347,3 @@ export function showingNumberCart() {
 
 	return numberCart;
 }
-

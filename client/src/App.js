@@ -1,6 +1,9 @@
 import './App.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { saveCart } from './utils/utils';
 
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
@@ -19,18 +22,26 @@ import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
 import iFrame from './components/iFrame/iFrame';
+import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 
 export default function App() {
 	const location = useLocation();
+
+	const cart = useSelector((state) => state?.cart);
+	const client = useSelector((state) => state?.loggedInClient);
+	useEffect(() => {
+		saveCart(client?.phone, cart);
+	}, [cart]);
+
 	if (location.pathname === '/') {
 		return <Landing />;
 	}
 	return (
 		<Switch>
-				<Route exact path='/login' component={LogIn} />
-				<Route exact path='/alert' component={Alert} />
-				<Route exact path='/iframe' component={iFrame} />
+			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/alert' component={Alert} />
+			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -56,13 +67,14 @@ export default function App() {
 							path='/admindashboard/:id'
 							component={OrderDetails}
 						/>
-
-						<Route exact path='/home' component={Products} />
 						<Route
 							exact
 							path='/admindashboard'
 							component={AdminDashBoard}
 						/>
+
+						<Route exact path='/home' component={Products} />
+
 						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/cart/pay' component={Main} />
 						<Route
@@ -77,13 +89,16 @@ export default function App() {
 							path='/signupgoogle'
 							component={SignUpGoogle}
 						/>
+						<Route
+							exact
+							path='/client/profile'
+							component={ClientProfile}
+						/>
 					</div>
 				</div>
-
-				</Route>
+			</Route>
 
 			<Redirect to='/home' />
-
 		</Switch>
 	);
 }

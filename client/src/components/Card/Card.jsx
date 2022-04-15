@@ -29,14 +29,16 @@ export default function Card({ data }) {
 			if (rating - Math.floor(rating) > 0.2) {
 				stars.push(
 					rating - Math.floor(rating) < 0.7 ? (
-						<FontAwesomeIcon icon={faStarHalfStroke} />
+						<FontAwesomeIcon key={99} icon={faStarHalfStroke} />
 					) : (
-						<FontAwesomeIcon icon={faStar} />
+						<FontAwesomeIcon key={99} icon={faStar} />
 					)
 				);
 			} else {
 				stars.length === 0 &&
-					stars.push(<FontAwesomeIcon icon={faStarHalfStroke} />);
+					stars.push(
+						<FontAwesomeIcon key={99} icon={faStarHalfStroke} />
+					);
 			}
 		}
 		return stars.slice(0, 5);

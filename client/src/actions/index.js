@@ -216,21 +216,21 @@ export function getOrders() {
 	};
 }
 
-export function orderFilter(payload){
+export function orderFilter(payload) {
 	return async function (dispatch) {
 		try {
 			const fil = await axios.get(`/orders?status=${payload}`);
-			console.log(fil)
+			console.log(fil);
 			return dispatch({
 				type: 'ORDER_FILTER',
 				payload: fil.data,
-			})
-		}catch (error) {
+			});
+		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 }
-export function getOrdersById(id){
+export function getOrdersById(id) {
 	return async function (dispatch) {
 		try {
 			var order = await axios.get(`/orders/${id}`);
@@ -251,7 +251,6 @@ export function UpdateOrder(id, payload) {
 			return dispatch({
 				type: 'UPDATE_ORDER',
 				payload: update.data,
-				
 			});
 		} catch (error) {
 			console.log(error);
@@ -260,7 +259,12 @@ export function UpdateOrder(id, payload) {
 }
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
-
+// export function addProduct(payload){
+//     return async function(){
+//         const add = await axios.post("/products/add", payload)
+//         return alert("Producto creado con exito")
+//     }
+// }
 
 export function addCart(cartProducts, payload, dispatch) {
 	let cart = JSON.parse(localStorage.getItem('cart'));
@@ -322,13 +326,6 @@ export function addCart(cartProducts, payload, dispatch) {
 		payload: cart,
 	});
 }
-
-// export function addProduct(payload){
-//     return async function(){
-//         const add = await axios.post("/products/add", payload)
-//         return alert("Producto creado con exito")
-//     }
-// }
 
 export function getAllUsers() {
 	return async function (dispatch) {
@@ -520,16 +517,57 @@ export function getCart(phone) {
 		try {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
+
       if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
 
 			await axios.put(`/cart/${phone}`, { cart_items: cart });
 
-			//escribir una función que elimine repetidos y los agregue al número de unidades que corresponda. 
 
+			data?.cart_items?.forEach((i) => {
+				if (
+					//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
+					cart.some(
+						(c) =>
+							c.id_product === i.id_product &&
+							c.variants[0].ColorName ===
+								i.variants[0].ColorName &&
+							Object.keys(c.variants[0].Stocks)[0] ===
+								Object.keys(i.variants[0].Stocks)[0]
+					)
+				) {
+					//entonces se suma la cantidad de ese item de cart al item de data
+					cart = cart.map((c) => {
+						if (
+							c.id_product === i.id_product &&
+							c.variants[0].ColorName ===
+								i.variants[0].ColorName &&
+							Object.keys(c.variants[0].Stocks)[0] ===
+								Object.keys(i.variants[0].Stocks)[0]
+						) {
+							c.variants[0].Stocks[
+								Object.keys(i.variants[0].Stocks)[0]
+							] +=
+								i.variants[0].Stocks[
+									Object.keys(i.variants[0].Stocks)[0]
+								];
+							return c; //y se devuelve el objeto con el item de la BD sumado
+						}
+						return c; //si no hay coincidencia, se devuelve el ítem sin sumar nada.
+					});
+				} else {
+					cart.push(i); //si no tengo coincidencias entre BD y localstorage, pusheo ítems de BD en localstorage
+				}
+			});
+
+			if (cart.length === 0) {
+				return dispatch({
+					type: 'ADD_CART',
+					payload: null,
+				});
+			}
 
 			localStorage.setItem('cart', JSON.stringify(cart));
 
-			
 			return dispatch({
 				type: 'GET_CART',
 				payload: cart,

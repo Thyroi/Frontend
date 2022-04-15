@@ -324,14 +324,14 @@ export function saveCart(id, cart) {
 	}
 }
 
-export function sendingCart(cartItems) {
+export function sendingCart(cartItems, phone) {
 	if (cartItems.length === 0 || cartItems === undefined) return;
 
 	const dataToSend = {
 		cart_items: { cartItems },
 	};
 
-	axios.put('/cart/6631651', dataToSend);
+	axios.put(`http://localhost:3001/cart/${phone}`, dataToSend);
 }
 
 export function showingNumberCart() {
@@ -356,4 +356,8 @@ export async function getOrders(phone){
   console.log(phone)
   const orders = await axios.get(`http://localhost:3001/orders?client=${phone}`);
   return orders.data;
+}
+
+export async function deleteAccount(phone){
+  await axios.delete(`http://localhost:3001/client/${phone}`);
 }

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { sendModifiedData } from "../../actions";
 
+import { sendModifiedData, logOutUser } from "../../actions";
+import { deleteAccount } from "../../utils/utils";
 
 import style from "./Client_profile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,22 +14,30 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
-function ClientProfile() {
+function ClientProfile(params) {
   const client_info = useSelector((state) => state.loggedInClient);
-  const [dataToChange, setDataToChange] = useState(Object.assign({}, client_info));
+  const [dataToChange, setDataToChange] = useState(
+    Object.assign({}, client_info)
+  );
 
-  const { login_name, login_password, name, lastname, phone, email } = client_info;
-  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } = client_info.address;
+  const { login_name, login_password, name, lastname, phone, email } =
+    client_info;
+  const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
+    client_info.address;
 
   const dispatch = useDispatch();
 
   function onChangeData(e) {
     const key = e.target.name;
-    if(dataToChange.hasOwnProperty(key)){
-      setDataToChange({...dataToChange, [key]: e.target.value})
-    } else {
-      setDataToChange({...dataToChange, address: {...dataToChange.address, [key]: e.target.value}});
+    if (dataToChange.hasOwnProperty(key)) {
+      setDataToChange({ ...dataToChange, [key]: e.target.value });
+      return;
     }
+
+    setDataToChange({
+      ...dataToChange,
+      address: { ...dataToChange.address, [key]: e.target.value },
+    });
   }
 
   return (
@@ -195,11 +204,19 @@ function ClientProfile() {
             <FontAwesomeIcon className={style.infoIconB} icon={faBagShopping} />
             <div className={style.textInfo}>
               <p className={style.textInfoTitle}>Total purchase</p>
-              <p className={style.textInfoContent}>$600000</p>
+              <p className={style.textInfoContent}>50</p>
             </div>
           </div>
 
-          <div className={style.deleteAccountContainer}>
+          <div
+            className={style.deleteAccountContainer}
+            onClick={() => {
+              alert("Are you sure you want to delete your account?");
+              deleteAccount(phone);
+              dispatch(logOutUser());
+              params.history.push("/home");
+            }}
+          >
             <FontAwesomeIcon className={style.infoIconC} icon={faTrashCan} />
             <p className={style.deleteText}>Delete account</p>
           </div>
@@ -222,7 +239,9 @@ function ClientProfile() {
 
         <div className={style.generalButtons}>
           <div className={style.generalButton}>Favorites</div>
-          <div className={style.generalButton}><Link to='/orders'>Orders</Link></div>
+          <div className={style.generalButton}>
+            <Link to="/orders">Orders</Link>
+          </div>
         </div>
       </div>
     </div>

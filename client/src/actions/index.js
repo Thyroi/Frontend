@@ -522,7 +522,7 @@ export function getCart(phone) {
 			const { data } = await axios.get(`/cart/${phone}`);
       if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
 
-			
+			await axios.put(`/cart/${phone}`, { cart_items: cart });
 
 			//escribir una función que elimine repetidos y los agregue al número de unidades que corresponda. 
 

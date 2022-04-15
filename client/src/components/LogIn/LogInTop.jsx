@@ -14,8 +14,8 @@ function LogInTop() {
 
 	function handleLogOut(e) {
 		e.preventDefault();
-		dispatch(clearCart());
 		dispatch(logOutUser());
+		dispatch(clearCart());
 		alert('logged out');
 	}
 

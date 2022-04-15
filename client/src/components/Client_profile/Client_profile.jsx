@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { sendModifiedData } from "../../actions";
 
 
@@ -221,7 +222,7 @@ function ClientProfile() {
 
         <div className={style.generalButtons}>
           <div className={style.generalButton}>Favorites</div>
-          <div className={style.generalButton}>Orders</div>
+          <div className={style.generalButton}><Link to='/orders'>Orders</Link></div>
         </div>
       </div>
     </div>

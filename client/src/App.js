@@ -24,6 +24,7 @@ import Alert from './components/Notification/Alert';
 import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
+import Orders from './components/Orders/Orders';
 
 export default function App() {
 	const location = useLocation();
@@ -94,6 +95,11 @@ export default function App() {
 							path='/client/profile'
 							component={ClientProfile}
 						/>
+            <Route
+              exact
+              path='/orders'
+              component={Orders}
+            />
 					</div>
 				</div>
 			</Route>

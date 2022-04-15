@@ -216,6 +216,52 @@ export function getOrders() {
 	};
 }
 
+export function orderFilter(payload){
+	return async function (dispatch) {
+		try {
+			const fil = await axios.get(`/orders?status=${payload}`);
+			console.log(fil)
+			return dispatch({
+				type: 'ORDER_FILTER',
+				payload: fil.data,
+			})
+		}catch (error) {
+			console.log(error);
+		}
+	}
+}
+export function getOrdersById(id){
+	return async function (dispatch) {
+		try {
+			var order = await axios.get(`/orders/${id}`);
+			return dispatch({
+				type: 'GET_ORDER_BY_ID',
+				payload: order.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+export function UpdateOrder(id, payload) {
+	return async function (dispatch) {
+		try {
+			const update = await axios.patch(`/orders/${id}`, payload);
+			console.log(update + 'ok');
+			return dispatch({
+				type: 'UPDATE_ORDER',
+				payload: update.data,
+				
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+// Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
+
+
+
 export function addCart(cartProducts, payload, dispatch) {
 	let cart = JSON.parse(localStorage.getItem('cart'));
 	if (!cart) {

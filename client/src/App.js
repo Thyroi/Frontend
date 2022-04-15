@@ -1,6 +1,9 @@
 import './App.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { saveCart } from './utils/utils';
 
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
@@ -22,6 +25,13 @@ import iFrame from './components/iFrame/iFrame';
 
 export default function App() {
 	const location = useLocation();
+
+	const cart = useSelector((state) => state?.cart);
+	const client = useSelector((state) => state?.loggedInClient);
+	useEffect(() => {
+		saveCart(client?.phone, cart);
+	}, [cart]);
+
 	if (location.pathname === '/') {
 		return <Landing />;
 	}
@@ -52,9 +62,7 @@ export default function App() {
 						<Route exact path='/home' component={Products} />
 						<Route
 							exact
-
 							path='/admindashboard'
-
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />

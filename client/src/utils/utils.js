@@ -332,9 +332,10 @@ export function sendingCart(cartItems) {
 }
 
 export function showingNumberCart() {
-	const cart = JSON.parse(localStorage.getItem('cart'));
+	const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 	if (!cart || cart.length === 0) return 0;
+  if(cart.includes(null)) return 0;
 
 	let numberCart = 0;
 

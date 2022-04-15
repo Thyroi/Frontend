@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faSquareCheck,
@@ -11,6 +12,7 @@ import style from './Form.module.scss';
 import { saveSendingData } from '../../actions/index';
 
 function Form(params) {
+	const client = useSelector((state) => state.loggedInClient);
 	/* useEffect(() => {
 		document
 			.querySelector('#sendDataButton')
@@ -26,14 +28,26 @@ function Form(params) {
 
 	const zipCodeRegEx = useMemo(() => new RegExp(/^\d{4}$/), []);
 
+	// address: {calle: 'Calle falsa', numero: '123', city: 'Mardel', zip_code: 7600'}
+	// email: "pablo.rovito@outlook.com"
+	// isRegistered: true
+	// isVerified: false
+	// lastname: "Rovito"
+	// login_name: "rovito.pablito"
+	// login_password: "pablo"
+	// name: "Pablo"
+	// newsletter: false
+	// phone: "123456789"
+	// token: "e9517134556897a978fe4b9e1d16dcb0"
+
 	const [data, setData] = useState({
-		name: '',
-		lastName: '',
-		eMail: '',
-		phoneNumber: '',
-		streetNumber: '',
-		city: '',
-		zipCode: '',
+		name: client?.name || '',
+		lastName: client?.lastname || '',
+		eMail: client?.email || '',
+		phoneNumber: parseInt(client?.phone) || '',
+		streetNumber: client?.address?.calle + client?.address?.numero || '',
+		city: client?.address?.city || '',
+		zipCode: client?.address?.zip_code || '',
 		provinceDepartament: '',
 		particularDetails: '',
 	});
@@ -79,11 +93,12 @@ function Form(params) {
 		e.preventDefault();
 		const { name, value } = e.target;
 		setData({ ...data, [name]: value });
+		
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		saveSendingData();
+		(saveSendingData(data));
 		return params.history.push('/cart/pay');
 	}
 

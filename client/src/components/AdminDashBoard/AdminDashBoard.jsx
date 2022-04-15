@@ -10,14 +10,14 @@ import {
 	addNewUser,
 	addCategory,
 	getOrders,
+	orderFilter,
 } from '../../actions/index';
 import style from './AdminDashBoard.module.css';
-import swal from '@sweetalert/with-react'
-
+// import swal from '@sweetalert/with-react'
+import {Link} from 'react-router-dom'
 
 function AdminDashBoard() {
 	const dispatch = useDispatch();
-
 	const [users, setUsers] = useState('');
 	const [newCategory, setNewCategory] = useState({
 		id_category: '',
@@ -31,14 +31,14 @@ function AdminDashBoard() {
 	});
 	const allUser = useSelector((state) => state.users);
 	const orders = useSelector((state) => state.orders);
-
+	
 	useEffect(() => {
 		dispatch(getAllUsers());
 		dispatch(getSelectorsCat());
 		dispatch(getOrders())
 	}, [dispatch]);
 
-	console.log(orders)
+
 	const removeFunction = (e) => {
 		dispatch(
 			deleteUser({
@@ -141,32 +141,13 @@ function AdminDashBoard() {
 			dispatch(getAllUsers());
 		}, 1000);
 	};
-
-	const prueba = orders.filter(o => o.orderId === 1)
-	console.log(prueba)
-	console.log(prueba.map(os=> os.orderDetails.map(d => d.price)))
-
-	function seeAlert (e) {
-		e.preventDefault()
-		const prueba1 = parseInt(e.target.value)
-		const prueba2 =  orders.filter(o => o.orderId === prueba1)
-		 
-		const mapeo = swal(
-		<div>
-			<h1>Order Details</h1>
-			{prueba2[0].orderDetails.map(d => {return(
-			<ul className={style.orderList} 
-			key={d.productid}> 
-			<li>Product ID = <span>{d.productid}</span> </li>
-			<li>Color = <span>{d.color}</span></li>
-			<li>Size = <span>{d.size}</span></li>
-			<li>Quantity = <span>{d.quantity}</span></li> 
-			<li>Unit Price = $ <span>{d.price}</span></li>
-			</ul>)})}
-			</div>)
-		return mapeo
-
-
+	function handleFilterStatus(e) {
+		e.preventDefault();
+		dispatch(orderFilter(e.target.value));
+	}
+	function bringAllOrders (e) {
+		e.preventDefault();
+		dispatch(getOrders())
 	}
 	return (
 		<div className={style.divContainerAdmin}>
@@ -260,26 +241,37 @@ function AdminDashBoard() {
 					placeholder='Write your ID'></input>
 				<button onClick={addNewCategory}>Create category</button>
 			</div>
+
 			<div>
-				{orders.map((order) =>{
-					return	<div key={order.orderId}>
-						<table>
+				<button onClick={bringAllOrders}>All orders</button>
+			<select onChange={handleFilterStatus}>
+					<option value=''>Filter By Status</option>
+					<option value='Canceled'>Canceled</option>
+					<option value='Submited'>Submited</option>
+					<option value='Completed'>Completed</option>
+					<option value='Processing'>Processing</option>
+				</select> 
+				{orders?.map((order) =>{
+					return	<div key={order?.orderId}>
+						<table className={style.tableOrder}>
 							<thead>
 							<tr>
 								<th>Client</th>
 								<th>Order status</th>
-								<th>Adress</th>
-								<th>Phone Number</th>
+								{/* <th>Adress</th>
+								<th>Phone Number</th> */}
+								<th>Total </th>
 								<th></th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr>
-								{/* <td>{order.Client.name}</td> */}
-								<td>{order.orderStatus}</td>
-								<td>`{order.address.calle} {order.address.city} ZIP {order.address.zip_code}`</td>
-								<td>{order.ClientPhone}</td>
-								<td><button value={order.orderId} onClick={seeAlert}> Ver Orden </button></td>
+								<td>{order?.Client.name} {order?.Client.lastname}</td>
+								<td>{order?.orderStatus}</td>
+								{/*<td>`{order.address.calle} {order.address.city} ZIP {order.address.zip_code}`</td>
+								<td>{order.ClientPhone}</td> */}
+								<td>$ {order?.total}</td>
+								<td><Link to={`/admindashboard/${order?.orderId}`}> Ver Detalle</Link>  </td>
 							</tr>
 						</tbody>
 

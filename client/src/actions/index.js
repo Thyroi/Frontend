@@ -200,7 +200,7 @@ export function addProduct(payload) {
   };
 }
 
-export function getOrders(){
+export function getOrders() {
 	return async function (dispatch) {
 		try {
 			var orders = await axios.get('/orders');
@@ -214,8 +214,58 @@ export function getOrders(){
 	};
 }
 
+export function orderFilter(payload){
+	return async function (dispatch) {
+		try {
+			const fil = await axios.get(`/orders?status=${payload}`);
+			console.log(fil)
+			return dispatch({
+				type: 'ORDER_FILTER',
+				payload: fil.data,
+			})
+		}catch (error) {
+			console.log(error);
+		}
+	}
+}
+export function getOrdersById(id){
+	return async function (dispatch) {
+		try {
+			var order = await axios.get(`/orders/${id}`);
+			return dispatch({
+				type: 'GET_ORDER_BY_ID',
+				payload: order.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+export function UpdateOrder(id, payload) {
+	return async function (dispatch) {
+		try {
+			const update = await axios.patch(`/orders/${id}`, payload);
+			console.log(update + 'ok');
+			return dispatch({
+				type: 'UPDATE_ORDER',
+				payload: update.data,
+				
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+// Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
+
+
+
 export function addCart(cartProducts, payload, dispatch) {
   let cart = JSON.parse(localStorage.getItem("cart"));
+  if (!cart){
+    localStorage.setItem("cart", JSON.stringify([]));
+    cart = JSON.parse(localStorage.getItem("cart"));
+  };
   console.log(payload)
 
   if (cart.length === 0) {
@@ -256,6 +306,9 @@ export function addCart(cartProducts, payload, dispatch) {
   });
 }
 
+export function addToCart(product) {
+	return { type: 'ADD_TO_CART', payload: product };
+}
 // export function addProduct(payload){
 //     return async function(){
 //         const add = await axios.post("/products/add", payload)
@@ -393,6 +446,60 @@ export function createClientGoogle(payload) {
   };
 }
 
+export function getClients() {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get('/client');
+			return dispatch({
+				type: 'GET_CLIENTS',
+				payload: data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function logInUser(user) {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get(
+				`/clientes/?login_name=${user.login_name}&login_password=${user.login_password}`
+			);
+
+			return !data
+				? alert('Username/password not found')
+				: (alert('You are logged in!'),
+				  dispatch({
+						type: 'LOG_IN_USER',
+						payload: data,
+				  }));
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function logOutUser() {
+	return {
+		type: 'LOG_OUT_USER',
+	};
+}
+
+export function getCart(phone) {
+	return async function (dispatch) {
+		try {
+			const { data } = await axios.get(`/cart/${phone}`);
+			return dispatch({
+				type: 'GET_CART',
+				payload: data.cart_items,
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	};
+}
+
 // Actions for customize products
 
 export function selectingProduct(payload) {
@@ -403,33 +510,26 @@ export function selectingProduct(payload) {
 }
 
 // Data for buying products
-export function saveSendingData() {
-  let labels = document.querySelectorAll("label");
-  labels = Array.from(labels);
 
-  const data = {
-    address: {},
+
+export function saveSendingData(payload) {
+  const{city, eMail, lastName, name, particularDetails, phoneNumber, provinceDepartment,
+  streetNumber, zipCode}= payload
+  const data = { 
+    phone:phoneNumber,
+    email:eMail,
+    name,
+    lastname:lastName,
+    address: {
+      streetNumber,
+      city,
+      zipCode,
+      provinceDepartment,
+      particularDetails
+    },
   };
 
-  labels.forEach((label) => {
-    const property = label.id;
-    const value = label.nextSibling.value;
-
-    if (
-      property === "calle" ||
-      property === "numero" ||
-      property === "state" ||
-      property === "city" ||
-      property === "zip_code" ||
-      property === "others"
-    ) {
-      data.address[property] = value;
-      return;
-    }
-
-    data[property] = value;
-  });
-
   localStorage.setItem("datosDeEnvio", JSON.stringify(data));
-  JSON.parse(localStorage.getItem("datosDeEnvio"));
+
+
 }

@@ -39,7 +39,7 @@ export default function Card({ data }) {
 					stars.push(<FontAwesomeIcon icon={faStarHalfStroke} />);
 			}
 		}
-		return stars;
+		return stars.slice(0, 5);
 	}
 
 	const collection_name = collections

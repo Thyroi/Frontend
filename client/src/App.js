@@ -20,6 +20,7 @@ import SignUpGoogle from './components/SignUp/SignUpGoogle';
 import Alert from './components/Notification/Alert';
 import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
+import OrderDetails from './components/AdminDashBoard/OrderDetails';
 
 export default function App() {
 	const location = useLocation();
@@ -28,9 +29,9 @@ export default function App() {
 	}
 	return (
 		<Switch>
-			<Route exact path='/login' component={LogIn} />
-			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/iframe' component={iFrame} />
+				<Route exact path='/login' component={LogIn} />
+				<Route exact path='/alert' component={Alert} />
+				<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -50,12 +51,17 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
+
+						<Route
+							exact
+							path='/admindashboard/:id'
+							component={OrderDetails}
+						/>
+
 						<Route exact path='/home' component={Products} />
 						<Route
 							exact
-
 							path='/admindashboard'
-
 							component={AdminDashBoard}
 						/>
 						<Route exact path='/cart' component={Cart} />
@@ -75,8 +81,11 @@ export default function App() {
             <Route exact path="/client/profile" component={ClientProfile} />
 					</div>
 				</div>
-			</Route>
+
+				</Route>
+
 			<Redirect to='/home' />
+
 		</Switch>
 	);
 }

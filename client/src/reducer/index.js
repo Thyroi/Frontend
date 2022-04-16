@@ -18,6 +18,7 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
+}
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {

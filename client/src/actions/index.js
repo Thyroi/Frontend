@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { Notifications } from '../utils/utils.js';
 
 export function getInfo() {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get('/products/');
+			console.log("q hay0_____\n"+JSON.stringify(info));
 			return dispatch({
 				type: 'GET_ALL',
 				payload: info.data,
 			});
 		} catch (error) {
-			console.log(error);
+			console.log("q hay1_____\n"+JSON.stringify(info));
+			console.log("AQUIIII_____\n"+error);
 		}
 	};
 }
@@ -230,7 +231,9 @@ export function orderFilter(payload) {
 		}
 	};
 }
+
 export function getOrdersById(id) {
+
 	return async function (dispatch) {
 		try {
 			var order = await axios.get(`/orders/${id}`);
@@ -243,6 +246,7 @@ export function getOrdersById(id) {
 		}
 	};
 }
+
 export function UpdateOrder(id, payload) {
 	return async function (dispatch) {
 		try {
@@ -625,9 +629,62 @@ export function saveSendingData(payload) {
 // Modified user data
 
 export async function sendModifiedData(payload, dispatch) {
-	axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
-	dispatch({
-		type: 'LOG_IN_USER',
-		payload: payload,
-	});
+
+  axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+  dispatch({
+    type: 'LOG_IN_USER',
+    payload: payload,
+  });
 }
+
+export function getUserLists(id){
+	return async function (dispatch){
+		try {
+			let lists = await axios.get(`/lists/get?ClientPhone=${id}`)
+			return dispatch({
+				type: "GET_USER_LISTS",
+				payload: lists.data
+			})
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function createList(payload){
+	return async function(){
+		try{
+			await axios.post("/lists/create", payload)
+			return alert("Added succesfully to your new list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function updateList(payload){
+	return async function(){
+		try{
+			await axios.patch("/lists/update", payload)
+			return alert("Added succesfully to your list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function updateListDeleted(payload){
+	return async function(){
+		try{
+			await axios.patch("/lists/update", payload)
+			return alert("Deleted succesfully from your list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+

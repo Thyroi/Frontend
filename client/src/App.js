@@ -25,9 +25,13 @@ import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
+import Wishlist from './components/WishList/WishList';
+
 
 export default function App() {
 	const location = useLocation();
+
+	var products = useSelector((state) => state.products);
 
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);
@@ -59,7 +63,7 @@ export default function App() {
 					</div>
 
 					<div className='top'>
-						<Search />
+						<Search data={products}/>
 						<LogInTop />
 						<Notification />
 					</div>
@@ -103,7 +107,15 @@ export default function App() {
 							path='/client/profile'
 							component={ClientProfile}
 						/>
-						<Route exact path='/orders' component={Orders} />
+
+            			<Route
+            			  exact
+            			  path='/orders'
+            			  component={Orders}
+            			/>
+						<Route exact path='/lists/:id' component={Wishlist}/>
+
+
 					</div>
 				</div>
 			</Route>

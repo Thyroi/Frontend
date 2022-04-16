@@ -518,10 +518,10 @@ export function getCart(phone) {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
 
-      if(!data.cart_items.includes(null)) cart = cart.concat(data.cart_items);
+			if (!data.cart_items.includes(null))
+				cart = cart.concat(data.cart_items);
 
 			await axios.put(`/cart/${phone}`, { cart_items: cart });
-
 
 			data?.cart_items?.forEach((i) => {
 				if (
@@ -578,6 +578,10 @@ export function getCart(phone) {
 	};
 }
 
+export function setRememberMe() {
+	return { type: 'SET_REMEMBER_ME' };
+}
+
 // Actions for customize products
 
 export function selectingProduct(payload) {
@@ -621,9 +625,9 @@ export function saveSendingData(payload) {
 // Modified user data
 
 export async function sendModifiedData(payload, dispatch) {
-  axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
-  dispatch({
-    type: 'LOG_IN_USER',
-    payload: payload,
-  });
+	axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+	dispatch({
+		type: 'LOG_IN_USER',
+		payload: payload,
+	});
 }

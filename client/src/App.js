@@ -31,6 +31,14 @@ export default function App() {
 
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);
+	const rememberMe = useSelector((state) => state.rememberMe);
+
+	useEffect(() => {
+		rememberMe
+			? localStorage.setItem('loggedInClient', JSON.stringify(client))
+			: localStorage.removeItem('loggedInClient');
+	}, [client]);
+
 	useEffect(() => {
 		saveCart(client?.phone, cart);
 	}, [cart]);
@@ -95,11 +103,7 @@ export default function App() {
 							path='/client/profile'
 							component={ClientProfile}
 						/>
-            <Route
-              exact
-              path='/orders'
-              component={Orders}
-            />
+						<Route exact path='/orders' component={Orders} />
 					</div>
 				</div>
 			</Route>

@@ -2,11 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import style from './LoginMain.module.scss';
 import { GoogleLogin } from 'react-google-login';
-import { createClientGoogle, logInUser, getCart } from '../../actions';
+import {
+	createClientGoogle,
+	logInUser,
+	getCart,
+	setRememberMe,
+} from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
+
+	const loggedInClient = useSelector((state) => state.loggedInClient);
+
+	const [user, setUser] = useState({
+		login_name: '',
+		login_password: '',
+	});
+
+	useEffect(() => {
+		if (loggedInClient.phone) {
+			dispatch(getCart(loggedInClient.phone));
+			params.history.push('/home');
+		}
+	}, [loggedInClient]);
 
 	function responseGoogle(response) {
 		const info = {
@@ -18,17 +37,6 @@ function LogInMain(params) {
 		params.history.push('/signupgoogle');
 	}
 
-	const [user, setUser] = useState({ login_name: '', login_password: '' });
-
-	const loggedInClient = useSelector((state) => state.loggedInClient);
-
-	useEffect(() => {
-		if (loggedInClient.phone) {
-			dispatch(getCart(loggedInClient.phone));
-			params.history.push('/home');
-		}
-	}, [loggedInClient]);
-
 	function handleOnChange(e) {
 		e.preventDefault();
 		let { name, value } = e.target;
@@ -36,33 +44,12 @@ function LogInMain(params) {
 		setUser({ ...user, [name]: value });
 	}
 
-	// function logIn(client) {
-	// 	dispatch(getCart(parseInt(client?.phone)));
-	// 	params.history.push('/home');
-	// }
-
 	function handleSubmit(e) {
 		e.preventDefault();
 		if (!user?.login_name || !user?.login_password) {
 			alert('Please fill all fields');
 		}
 		dispatch(logInUser(user));
-
-		// return client
-		// 	? logIn(client)
-		// 	: alert('client not found, check your credentials');
-
-		// address: {calle: 'Calle falsa', numero: '123', city: 'Mardel', zip_code: 7600'}
-		// email: "pablo.rovito@outlook.com"
-		// isRegistered: true
-		// isVerified: false
-		// lastname: "Rovito"
-		// login_name: "rovito.pablito"
-		// login_password: "pablo"
-		// name: "Pablo"
-		// newsletter: false
-		// phone: "123456789"
-		// token: "e9517134556897a978fe4b9e1d16dcb0"
 	}
 
 	return (
@@ -113,6 +100,8 @@ function LogInMain(params) {
 								<input
 									className={style.buttonRemember}
 									type='checkbox'
+									name='rememberMe'
+									onClick={() => dispatch(setRememberMe())}
 								/>
 								<label className={style.textRemember}>
 									Remember me?

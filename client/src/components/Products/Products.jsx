@@ -138,9 +138,8 @@ export default function Products() {
 		if (event.target.value === '0') {
 			return dispatch(getInfo());
 		} else {
-			dispatch(getByCatId({...event.target.value}));
+			dispatch(getByCatId(event.target.value));
 		}
-
 
 	};
 

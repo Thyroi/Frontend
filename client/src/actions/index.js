@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import axios from 'axios';
 
 export function getInfo() {
@@ -676,6 +677,17 @@ export function updateListDeleted(payload){
 		try{
 			await axios.patch("/lists/update", payload)
 			return alert("Deleted succesfully from your list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function deleteList(id){
+	return async function(){
+		try{
+			await axios.delete(`lists/delete?id=${id}`)
 		}
 		catch(error){
 			console.log(error)

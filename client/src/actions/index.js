@@ -4,14 +4,12 @@ export function getInfo() {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get('/products/');
-			console.log("q hay0_____\n"+JSON.stringify(info));
 			return dispatch({
 				type: 'GET_ALL',
 				payload: info.data,
 			});
 		} catch (error) {
-			console.log("q hay1_____\n"+JSON.stringify(info));
-			console.log("AQUIIII_____\n"+error);
+			console.log(error);
 		}
 	};
 }

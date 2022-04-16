@@ -76,5 +76,14 @@
 		color: #e4687c;
 	}
 	a:hover {
-		color: #eeb4bd;
+		background-color: #e4687c;
+		color: #ffffff;
+	}
+	a:active {
+		background-color: #e4687c;
+		color: #000000;
+	}
+	a:focus {
+		background-color: #e4687c;
+		color: #000000;
 	}

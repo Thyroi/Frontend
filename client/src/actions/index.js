@@ -230,6 +230,7 @@ export function orderFilter(payload){
 		}
 	}
 }
+
 export function getOrdersById(id){
 	return async function (dispatch) {
 		try {
@@ -243,6 +244,7 @@ export function getOrdersById(id){
 		}
 	};
 }
+
 export function UpdateOrder(id, payload) {
 	return async function (dispatch) {
 		try {
@@ -589,3 +591,55 @@ export async function sendModifiedData(payload, dispatch) {
     payload: payload,
   });
 }
+
+export function getUserLists(id){
+	return async function (dispatch){
+		try {
+			let lists = await axios.get(`/lists/get?ClientPhone=${id}`)
+			return dispatch({
+				type: "GET_USER_LISTS",
+				payload: lists.data
+			})
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function createList(payload){
+	return async function(){
+		try{
+			await axios.post("/lists/create", payload)
+			return alert("Added succesfully to your new list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function updateList(payload){
+	return async function(){
+		try{
+			await axios.patch("/lists/update", payload)
+			return alert("Added succesfully to your list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function updateListDeleted(payload){
+	return async function(){
+		try{
+			await axios.patch("/lists/update", payload)
+			return alert("Deleted succesfully from your list")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+

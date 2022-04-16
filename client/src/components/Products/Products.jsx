@@ -30,17 +30,29 @@ export default function Products() {
 	const categories = useSelector((state) => state.categories);
 	const collections = useSelector((state) => state.collections);
 
+	// useEffect(() => {
+	// 	dispatch(clearDetail());
+	// 	!products.length &&
+	// 		setTimeout(() => {
+	// 			collection
+	// 				? dispatch(getByColId(collection))
+	// 				: dispatch(getInfo());
+	// 			dispatch(getSelectorsCat());
+	// 			dispatch(getSelectorsCol());
+	// 		}, 2000);
+	// }, [dispatch]);
+
 	useEffect(() => {
 		dispatch(clearDetail());
-		!products.length &&
-			setTimeout(() => {
-				collection
-					? dispatch(getByColId(collection))
-					: dispatch(getInfo());
-				dispatch(getSelectorsCat());
-				dispatch(getSelectorsCol());
-			}, 2000);
-	}, [dispatch]);
+		if (!products.length) {
+			collection
+				? dispatch(getByColId(collection))
+				: dispatch(getInfo());
+		}
+		// dispatch(getByCatId());
+		dispatch(getSelectorsCat());
+		dispatch(getSelectorsCol());
+	}, []);
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
@@ -128,7 +140,6 @@ export default function Products() {
 		} else {
 			dispatch(getByCatId(event.target.value));
 		}
-	
 
 	};
 
@@ -146,7 +157,7 @@ export default function Products() {
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	return !products.length ? (
+	return !products.length || !categories.women?.length || !collections.length ? (
 		<h2>Loading...</h2>
 	) : (
 		<div className={style.container}>
@@ -212,15 +223,13 @@ export default function Products() {
 
 			<div className={style.pagination}>
 				<div className={style.text}>
-					{`Showing ${
-						results < products.length
-							? `${
-									currentPage === 1
-										? 1
-										: results * currentPage - 1
-							  } - ${results * currentPage}`
+					{`Showing ${results < products.length
+							? `${currentPage === 1
+								? 1
+								: results * currentPage - 1
+							} - ${results * currentPage}`
 							: products.length
-					} of ${products.length}`}
+						} of ${products.length}`}
 				</div>
 				<div className={style.pages}>
 					<button

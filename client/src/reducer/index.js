@@ -5,7 +5,7 @@ const initialState = {
 	details: {},
 	categories: [],
 	orders: [],
-	copyOrders:[],
+	copyOrders: [],
 	orderDetail: {},
 	collections: [],
 	users: [],
@@ -15,10 +15,9 @@ const initialState = {
 	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
-	loggedInClient: {},
-	lists: [],
-	allClients:[]
-};
+	rememberMe: !!window.localStorage.getItem('loggedInClient'),
+	loggedInClient:
+		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
@@ -47,7 +46,6 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				orderDetail: action.payload,
-				
 			};
 		case 'UPDATE_ORDER':
 			return {
@@ -55,11 +53,11 @@ export default function rootReducer(state = initialState, action) {
 				orderDetail: action.payload,
 			};
 		case 'ORDER_FILTER':
-			state.orders = state.copyOrders
+			state.orders = state.copyOrders;
 			return {
 				...state,
 				orders: action.payload,
-			}
+			};
 
 		case 'GET_BY_ID':
 			return {
@@ -117,7 +115,6 @@ export default function rootReducer(state = initialState, action) {
 		case 'ADD_TO_CART':
 			return { ...state, cart: [...action.payload] };
 
-
 		case 'REMOVE_CART':
 			return {
 				...state,
@@ -147,7 +144,7 @@ export default function rootReducer(state = initialState, action) {
 					...state,
 					wishlist: [...state.wishlist, action.payload],
 				};
-			};
+			}
 		case 'REMOVE_WISH_LIST':
 			let eliminated = state.wishlist.filter(
 				(e) => e.id !== action.payload
@@ -156,7 +153,6 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				wishlist: eliminated,
 			};
-
 
 		case 'GET_CLIENTS':
 			return { ...state, allClients: action.payload };
@@ -167,18 +163,25 @@ export default function rootReducer(state = initialState, action) {
 				loggedInClient: action.payload,
 			};
 
+		case 'SET_REMEMBER_ME':
+			return {
+				...state,
+				rememberMe: !state.rememberMe,
+			};
+
 		case 'LOG_OUT_USER':
+			window.localStorage.removeItem('loggedInClient');
 			return {
 				...state,
 				loggedInClient: {},
 				cart: [],
+				rememberMe: false,
 			};
 
 		case 'GET_CART':
 			if (action.payload) {
 				return { ...state, cart: [...action.payload] };
 			}
-
 
 		case 'GET_GOOGLE_INFO':
 			return {
@@ -196,9 +199,7 @@ export default function rootReducer(state = initialState, action) {
 				cart: [...action.payload],
 			};
 
-
 		case 'DATOS_DE_ENVIO':
-
 			return {
 				...state,
 				datosDeEnvío: action.payload,

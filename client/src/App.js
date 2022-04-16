@@ -25,6 +25,8 @@ import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
+import Wishlist from './components/WishList/WishList';
+
 
 export default function App() {
 	const location = useLocation();
@@ -97,11 +99,13 @@ export default function App() {
 							path='/client/profile'
 							component={ClientProfile}
 						/>
-            <Route
-              exact
-              path='/orders'
-              component={Orders}
-            />
+            			<Route
+            			  exact
+            			  path='/orders'
+            			  component={Orders}
+            			/>
+						<Route exact path='/lists/:id' component={Wishlist}/>
+
 					</div>
 				</div>
 			</Route>

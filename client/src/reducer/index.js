@@ -16,6 +16,8 @@ const initialState = {
 	detailEdited: {},
 	datosDeEnvío: JSON.parse(window.localStorage.getItem('datosDeEnvío')) || {},
 	loggedInClient: {},
+	lists: [],
+	allClients:[]
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -206,6 +208,13 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				cart: [],
 			};
+
+		case "GET_USER_LISTS":
+			return{
+				...state,
+				lists: action.payload
+			}	
+
 		default:
 			return state;
 	}

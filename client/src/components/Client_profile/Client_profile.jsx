@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Dropdown from "../Dropdown/Dropdown";
 
-import { sendModifiedData, logOutUser } from "../../actions";
+import { sendModifiedData, logOutUser, getUserLists } from "../../actions";
 import { deleteAccount } from "../../utils/utils";
 
 import style from "./Client_profile.module.scss";
@@ -38,6 +39,25 @@ function ClientProfile(params) {
       ...dataToChange,
       address: { ...dataToChange.address, [key]: e.target.value },
     });
+  }
+
+  const lists = useSelector((state) => state.lists)
+
+  useEffect(() => {
+    dispatch(getUserLists(client_info.phone))
+  }, [dispatch])
+
+  function opt (){
+    let nuevo = []
+    for(var i = 0; i < lists.length; i++){
+    nuevo = [...nuevo, {id: lists[i].id, name: lists[i].title}]
+  }
+    return nuevo
+  }
+
+  function handleRedirect(e){
+    e.preventDefault()
+    params.history.push(`/lists/${e.target.value}`)
   }
 
   return (
@@ -242,6 +262,7 @@ function ClientProfile(params) {
           <div className={style.generalButton}>
             <Link to="/orders">Orders</Link>
           </div>
+          <Dropdown placeHolder={'Choose a List'} options={[...opt()]} handler={handleRedirect} />
         </div>
       </div>
     </div>

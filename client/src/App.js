@@ -29,6 +29,8 @@ import Orders from './components/Orders/Orders';
 export default function App() {
 	const location = useLocation();
 
+	var products = useSelector((state) => state.products);
+
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);
 	useEffect(() => {
@@ -51,7 +53,7 @@ export default function App() {
 					</div>
 
 					<div className='top'>
-						<Search />
+						<Search data={products}/>
 						<LogInTop />
 						<Notification />
 					</div>

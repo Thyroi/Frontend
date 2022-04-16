@@ -259,7 +259,7 @@ export default function Product_detail() {
 								</span>
 							</p>
 							<Dropdown 
-        					placeHolder={'Lists'}
+        					placeHolder={'Add to your wishlist'}
         					options={[...opt(), {id: 0, name: "➕ New List"}]}
         					handler={handleLists} 
         					/>

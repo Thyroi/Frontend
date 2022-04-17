@@ -373,6 +373,7 @@ export async function resetPassword(phone, login_password) {
 			window.history.push('/home');
 		} else {
 			alert('there has been a problem, contact support');
+			window.history.push('/home');
 		}
 	} catch (e) {
 		console.log(e);

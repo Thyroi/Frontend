@@ -370,10 +370,10 @@ export async function resetPassword(phone, login_password) {
 
 		if (data === 'success') {
 			alert('password successfully set, happy shopping!');
-			window.history.push('/home');
+			window.location.href = '/home';
 		} else {
 			alert('there has been a problem, contact support');
-			window.history.push('/home');
+			window.location.href = '/home';
 		}
 	} catch (e) {
 		console.log(e);

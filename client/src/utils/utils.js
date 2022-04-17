@@ -1,7 +1,6 @@
 import styleDetail from '../components/Product_detail/Product_detail.module.scss';
 import styleNotification from '../components/Notification/Notification.module.scss';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
 
 // Notification
 export function Notifications(text) {
@@ -228,14 +227,14 @@ export function totalDue(product, cartItems) {
 
 export async function prepareProduct(product, cartItems) {
 	let productToBuy = [];
-  console.log(product, cartItems)
+	console.log(product, cartItems);
 
 	if (product) {
 		let totalPrice = parseFloat(product.totalPrice).toFixed(2);
 
 		productToBuy = [
 			{
-        name: product.name,
+				name: product.name,
 				productid: product.id_product,
 				quantity:
 					product.variants[0].Stocks[
@@ -254,7 +253,7 @@ export async function prepareProduct(product, cartItems) {
 			let totalPrice = parseFloat(item.totalPrice);
 
 			return {
-        name: item.name,
+				name: item.name,
 				productid: item.id_product,
 				quantity:
 					item.variants[0].Stocks[
@@ -319,7 +318,6 @@ export async function purchaseOrder(status) {
 
 export function saveCart(id, cart) {
 	if (id) {
-
 		axios.put(`/cart/${id}`, { cart_items: cart });
 	}
 }
@@ -331,14 +329,14 @@ export function sendingCart(cartItems, phone) {
 		cart_items: { cartItems },
 	};
 
-	axios.put(`http://localhost:3001/cart/${phone}`, dataToSend);
+	axios.put(`/cart/${phone}`, dataToSend);
 }
 
 export function showingNumberCart() {
 	const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 	if (!cart || cart.length === 0) return 0;
-  if(cart.includes(null)) return 0;
+	if (cart.includes(null)) return 0;
 
 	let numberCart = 0;
 
@@ -352,12 +350,31 @@ export function showingNumberCart() {
 	return numberCart;
 }
 
-export async function getOrders(phone){
-  console.log(phone)
-  const orders = await axios.get(`http://localhost:3001/orders?client=${phone}`);
-  return orders.data;
+export async function getOrders(phone) {
+	console.log(phone);
+	const orders = await axios.get(`/orders?client=${phone}`);
+	return orders.data;
 }
 
-export async function deleteAccount(phone){
-  await axios.delete(`http://localhost:3001/client/${phone}`);
+export async function deleteAccount(phone) {
+	await axios.delete(`/client/${phone}`);
+}
+
+export async function resetPassword(phone, login_password) {
+	try {
+		const { data } = await axios.patch(`/client/${phone}`, {
+			login_password: login_password,
+		});
+
+		//CONTROLAR LA RESPUESTA DEL SERVER PARA CONTROLAR LO QUE PASA.
+
+		if (data === 'success') {
+			alert('password successfully set, happy shopping!');
+			window.history.push('/home');
+		} else {
+			alert('there has been a problem, contact support');
+		}
+	} catch (e) {
+		console.log(e);
+	}
 }

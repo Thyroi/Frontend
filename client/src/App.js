@@ -1,10 +1,11 @@
 import './App.css';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { saveCart } from './utils/utils';
 
+import ResetPassword from './components/ResetPassword/ResetPassword';
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
 import Nav from './components/Nav/Nav';
@@ -53,6 +54,11 @@ export default function App() {
 	return (
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
+			<Route
+				exact
+				path='/resetpassword/:phone'
+				component={ResetPassword}
+			/>
 			<Route exact path='/alert' component={Alert} />
 			<Route exact path='/iframe' component={iFrame} />
 
@@ -120,8 +126,6 @@ export default function App() {
 					</div>
 				</div>
 			</Route>
-
-			<Redirect to='/home' />
 		</Switch>
 	);
 }

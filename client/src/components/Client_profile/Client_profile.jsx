@@ -49,7 +49,7 @@ function ClientProfile(params) {
 
   function opt (){
     let nuevo = []
-    for(var i = 0; i < lists.length; i++){
+    for(var i = 0; i < lists?.length; i++){
     nuevo = [...nuevo, {id: lists[i].id, name: lists[i].title}]
   }
     return nuevo

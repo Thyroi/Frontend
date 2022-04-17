@@ -9,28 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function Search({ placeholder, data }) {
-  const [search, setSearch] = useState("");
-  const [cursor, setCursor] = useState(-1);
-  const [filteredData, setFilteredData] = useState([]);
-  const keypress = {
-    Enter: handleClick,
-    Escape: handleClear,
-    ArrowDown: handleCursor,
-    ArrowUp: handleCursor,
-  };
+	const [search, setSearch] = useState('');
+	const [cursor, setCursor] = useState(-1);
+	const [filteredData, setFilteredData] = useState([]);
+	const keypress = {
+		Enter: handleClick,
+		Escape: handleClear,
+		ArrowDown: handleCursor,
+		ArrowUp: handleCursor,
+	}
+
 
   const resultados = useRef();
   const busqueda = useRef();
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //     /* settimeout make sure this run after components have rendered. This will help fixing bug for some views where scroll to top not working perfectly */
-
-  // 	setTimeout(() => {
-  //         resultados.current.scrollTop=0;
-  // 		// resultados.current.scrollTop=0
-  //     }, 5000)
-  // },[]);
 
   function handleCursor(e) {
     e.key === "ArrowUp" &&
@@ -56,8 +48,8 @@ function Search({ placeholder, data }) {
     setCursor(-1);
     busqueda.current.focus();
   }
-
-  function handleClick(e) {
+  
+    function handleClick(e) {
     e.preventDefault();
     resultados.current.children[cursor].click();
     return window.location.href.includes("/home")
@@ -75,17 +67,17 @@ function Search({ placeholder, data }) {
     searchWord !== "" ? setFilteredData(filtered) : setFilteredData([]);
   }
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.searchInputs}>
-        <div className={styles.searchIcon}>
-          <FontAwesomeIcon
-            className={styles.iconSearch}
-            icon={faMagnifyingGlass}
-            onClick={(e) => (resultados.current.scrollTop = 0)}
-          />
-        </div>
-        <input
+
+	return (
+		<div className={styles.container}>
+			<div className={styles.searchInputs}>
+				
+					<FontAwesomeIcon
+						className={styles.iconSearch}
+						icon={faMagnifyingGlass}
+					/>
+				
+				<input
           className={styles.searchInput}
           type="text"
           value={search}
@@ -97,36 +89,34 @@ function Search({ placeholder, data }) {
             keypress[e.key] && keypress[e.key](e);
           }}
         />
-        <button
+				<button
           className={styles.searchButton}
           onClick={(e) => {
             handleClick(e);
           }}
         >
-          Search
-        </button>
-      </div>
-      {filteredData.length !== 0 && (
-        <div
-          className={styles.searchResult}
-          ref={resultados}
-          onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
-        >
-          {filteredData.map((value, key) => {
-            return (
-              <a
-                className={styles.dataItem}
-                key={key}
-                href={`http://localhost:3000/products/${value.id_product}`}
-              >
-                <p>{value.name}</p>
-              </a>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
+					Search
+				</button>
+			</div>
+			{filteredData.length !== 0 && (
+				<div
+					className={styles.searchResult}
+					ref={resultados}
+					onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}>
+					{filteredData.map((value, key) => {
+						return (
+							<a
+								className={styles.dataItem}
+								key={key}
+								href={`http://localhost:3000/products/${value.id_product}`}>
+								<p>{value.name}</p>
+							</a>
+						);
+					})}
+				</div>
+			)}
+		</div>
+	);
 }
 
 export default Search;

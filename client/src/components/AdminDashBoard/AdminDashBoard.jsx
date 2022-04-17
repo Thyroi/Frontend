@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -14,7 +13,7 @@ import {
 } from '../../actions/index';
 import style from './AdminDashBoard.module.css';
 // import swal from '@sweetalert/with-react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function AdminDashBoard() {
 	const dispatch = useDispatch();
@@ -31,13 +30,12 @@ function AdminDashBoard() {
 	});
 	const allUser = useSelector((state) => state.users);
 	const orders = useSelector((state) => state.orders);
-	
+
 	useEffect(() => {
 		dispatch(getAllUsers());
 		dispatch(getSelectorsCat());
-		dispatch(getOrders())
+		dispatch(getOrders());
 	}, [dispatch]);
-
 
 	const removeFunction = (e) => {
 		dispatch(
@@ -145,9 +143,9 @@ function AdminDashBoard() {
 		e.preventDefault();
 		dispatch(orderFilter(e.target.value));
 	}
-	function bringAllOrders (e) {
+	function bringAllOrders(e) {
 		e.preventDefault();
-		dispatch(getOrders())
+		dispatch(getOrders());
 	}
 	return (
 		<div className={style.divContainerAdmin}>
@@ -188,8 +186,9 @@ function AdminDashBoard() {
 										onClick={removeFunction}
 										style={{
 											maxWidth: '3rem',
-										}}> ✖
-										
+										}}>
+										{' '}
+										✖
 									</button>
 								</div>
 								<div className={style.bottom}>
@@ -242,47 +241,69 @@ function AdminDashBoard() {
 				<button onClick={addNewCategory}>Create category</button>
 			</div>
 
-			<div>
-				<button onClick={bringAllOrders}>All orders</button>
-			<select onChange={handleFilterStatus}>
-					<option value=''>Filter By Status</option>
-					<option value='Canceled'>Canceled</option>
-					<option value='Submited'>Submited</option>
-					<option value='Completed'>Completed</option>
-					<option value='Processing'>Processing</option>
-				</select> 
-				{orders?.map((order) =>{
-					return	<div key={order?.orderId}>
-						<table className={style.tableOrder}>
-							<thead>
-							<tr>
-								<th>Client</th>
-								<th>Order status</th>
-								{/* <th>Adress</th>
+			<div className={style.orders}>
+				<hr
+					style={{
+						border: '1px solid lightgray',
+						width: '80%',
+					}}
+				/>
+				<label>Orders</label>
+				<div className={style.orderHandlers}>
+					<select onChange={handleFilterStatus}>
+						<option value=''>Filter By Status</option>
+						<option value='Canceled'>Canceled</option>
+						<option value='Submited'>Submited</option>
+						<option value='Completed'>Completed</option>
+						<option value='Processing'>Processing</option>
+					</select>
+					<button onClick={bringAllOrders}>All orders</button>
+				</div>
+				<div style={{ margin: '1rem', width: '90%' }}>
+					{' '}
+					{orders?.map((order) => {
+						return (
+							<div
+								key={order?.orderId}
+								className={style.tableContainer}>
+								<table className={style.tableOrder}>
+									<thead>
+										<tr>
+											<th>Client</th>
+											<th>Order status</th>
+											{/* <th>Adress</th>
 								<th>Phone Number</th> */}
-								<th>Total </th>
-								<th></th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr>
-								<td>{order?.Client.name} {order?.Client.lastname}</td>
-								<td>{order?.orderStatus}</td>
-								{/*<td>`{order.address.calle} {order.address.city} ZIP {order.address.zip_code}`</td>
+											<th>Total </th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												{order?.Client.name}{' '}
+												{order?.Client.lastname}
+											</td>
+											<td>{order?.orderStatus}</td>
+											{/*<td>`{order.address.calle} {order.address.city} ZIP {order.address.zip_code}`</td>
 								<td>{order.ClientPhone}</td> */}
-								<td>$ {order?.total}</td>
-								<td><Link to={`/admindashboard/${order?.orderId}`}> Ver Detalle</Link>  </td>
-							</tr>
-						</tbody>
-
-						</table>
-					</div>
-				})
-			}
+											<td>$ {order?.total}</td>
+											<td>
+												<Link
+													to={`/admindashboard/${order?.orderId}`}>
+													{' '}
+													View detail
+												</Link>{' '}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);
 }
 
 export default AdminDashBoard;
-

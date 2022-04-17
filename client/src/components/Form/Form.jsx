@@ -28,18 +28,6 @@ function Form(params) {
 
 	const zipCodeRegEx = useMemo(() => new RegExp(/^\d{4}$/), []);
 
-	// address: {calle: 'Calle falsa', numero: '123', city: 'Mardel', zip_code: 7600'}
-	// email: "pablo.rovito@outlook.com"
-	// isRegistered: true
-	// isVerified: false
-	// lastname: "Rovito"
-	// login_name: "rovito.pablito"
-	// login_password: "pablo"
-	// name: "Pablo"
-	// newsletter: false
-	// phone: "123456789"
-	// token: "e9517134556897a978fe4b9e1d16dcb0"
-
 	const [data, setData] = useState({
 		name: client?.name || '',
 		lastName: client?.lastname || '',
@@ -51,6 +39,7 @@ function Form(params) {
 		provinceDepartament: '',
 		particularDetails: '',
 	});
+
 	useEffect(() => {
 		setValidate({
 			n: data.name ? true : false,
@@ -62,6 +51,7 @@ function Form(params) {
 			zc: zipCodeRegEx.test(data.zipCode),
 			pd: data.provinceDepartament ? true : false,
 		});
+		
 		setDisabled(
 			!(
 				validate.n &&

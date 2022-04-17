@@ -18,11 +18,24 @@ function Search({ placeholder, data }) {
 	const busqueda = useRef();
 	const dispatch = useDispatch();
 
+    // useEffect(() => {
+    //     /* settimeout make sure this run after components have rendered. This will help fixing bug for some views where scroll to top not working perfectly */
+        
+	// 	setTimeout(() => {
+    //         resultados.current.scrollTop=0;
+	// 		// resultados.current.scrollTop=0
+    //     }, 5000)
+    // },[]);
+
 	function handleCursor(e) {
 		e.key==='ArrowUp' && cursor>0 && setCursor(prevCursor => prevCursor - 1);
 		e.key==='ArrowDown' && cursor<filteredData.length-1 && setCursor(prevCursor => prevCursor + 1);
 		setCursor(state=> {
 			resultados.current.children[state].focus();
+			state===0 &&
+			setTimeout(() => {
+				resultados.current.scrollTop=0;
+			}, 200)
 			return state;
 		})
 	}
@@ -31,6 +44,7 @@ function Search({ placeholder, data }) {
 		e.preventDefault();
 		setSearch('');
 		setFilteredData([]);
+		setCursor(-1);
 		busqueda.current.focus();
 	}
 
@@ -56,7 +70,10 @@ function Search({ placeholder, data }) {
 		<div className={styles.container}>
 			<div className={styles.searchInputs}>
 				<div className={styles.searchIcon}>
+					<button
+					onClick={e=>resultados.current.scrollTop=0}>
 					<FontAwesomeIcon className={styles.iconSearch} icon={faMagnifyingGlass} />
+					</button>
 				</div>
 				<input
 					className={styles.searchInput}
@@ -79,7 +96,8 @@ function Search({ placeholder, data }) {
 				</button>
 			</div>
 			{filteredData.length !== 0 && (
-				<div className={styles.searchResult} ref={resultados} onKeyDown={e=>keypress[e.key] && keypress[e.key](e)}>
+				<div className={styles.searchResult} ref={resultados} 
+				onKeyDown={e=>keypress[e.key] && keypress[e.key](e)}>
 					{filteredData.map((value, key) => {
 						return (
 							<a className={styles.dataItem} key={key} 

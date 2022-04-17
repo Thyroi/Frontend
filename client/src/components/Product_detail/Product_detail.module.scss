@@ -289,6 +289,20 @@
 	}
 }
 
+.wishList {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem 0;
+}
+
+.wishList .dropdown,
+.wishList button {
+	width: 100%;
+	flex-wrap: nowrap;
+}
+
 @media (max-width: 750px) {
 	.container {
 		.containerInf {

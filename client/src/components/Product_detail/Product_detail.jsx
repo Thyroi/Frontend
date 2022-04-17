@@ -7,8 +7,12 @@ import style from './Product_detail.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons';
-import swal from '@sweetalert/with-react'
+import {
+	faCartShopping,
+	faHeart,
+	faPlusSquare,
+} from '@fortawesome/free-solid-svg-icons';
+import swal from '@sweetalert/with-react';
 
 import {
 	selectImage,
@@ -25,12 +29,12 @@ import {
 	getById,
 	addCart,
 	selectingProduct,
-	createList, 
-	getUserLists, 
-	updateList
+	createList,
+	getUserLists,
+	updateList,
 } from '../../actions/index';
 
-import Dropdown from '../Dropdown/Dropdown'
+import Dropdown from '../Dropdown/Dropdown';
 
 export default function Product_detail() {
 	const { id } = useParams();
@@ -41,7 +45,7 @@ export default function Product_detail() {
 
 	const cartProducts = useSelector((state) => state.cart);
 	const client = useSelector((state) => state.loggedInClient);
-	const lists = useSelector((state) => state.lists)
+	const lists = useSelector((state) => state.lists);
 
 	const { name, brand, price, description } = product;
 
@@ -61,64 +65,70 @@ export default function Product_detail() {
 		}
 	}, [product?.price]);
 
-	useEffect(() => {}, [product && product.variants]);
+	useEffect(() => {}, [product && product?.variants]);
 
 	useEffect(() => {
-        dispatch(getUserLists(client.phone))
-    }, [dispatch]);
+		dispatch(getUserLists(client?.phone));
+	}, [dispatch]);
 
-	function opt (){
-        let nuevo = []
-        for(var i = 0; i < lists.length; i++){
-        nuevo = [...nuevo, {id: lists[i].id, name: lists[i].title}]
-    }
-        return nuevo
-    }
-
-	async function handleLists(e){
-        e.preventDefault();
-		if(client.phone){
-		if(e.target.value == 0){ // CREACION DE NUEVA LISTA
-            const listName = await swal({
-                text: "List name",
-                content: "input",
-                button: "OK"
-            })
-            if(listName){
-                const newList = {
-                    ClientPhone: client.phone,
-                    rList: [parseInt(id)],
-                    Colaborators: [],
-                    title: listName
-                }           
-                dispatch(createList(newList))
-				setTimeout(() => {
-                    dispatch(getUserLists(client.phone));
-                }, 1000);
-                }
-                
-        } else {
-            const updated = lists.find(l => l.id == e.target.value)
-			if(updated?.List.map(p => p.id_product).includes(parseInt(id))){
-				return alert("This product already is on this list")
-			} else{
-				if(updated){
-                const listUpdated = {
-                    id: updated?.id,
-                    ClientPhone: parseInt(updated?.ClientPhone),
-                    rList: [...updated?.List.map(p => p.id_product), parseInt(id)],
-                    Colaborators: [...updated.Colaborators],
-                    title: updated?.title
-                }
-                dispatch(updateList(listUpdated))
-            }
-			}
-        }
-		} else {
-			alert("You have to be registered to create a wishlist")
+	function opt() {
+		let nuevo = [];
+		for (var i = 0; i < lists?.length; i++) {
+			nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
 		}
-        
-    }
+		return nuevo;
+	}
+
+	async function handleLists(e) {
+		e.preventDefault();
+		if (client?.phone) {
+			if (e.target.value == 0) {
+				// CREACION DE NUEVA LISTA
+				const listName = await swal({
+					text: 'List name',
+					content: 'input',
+					button: 'OK',
+				});
+				if (listName) {
+					const newList = {
+						ClientPhone: client.phone,
+						rList: [parseInt(id)],
+						Colaborators: [],
+						title: listName,
+					};
+					dispatch(createList(newList));
+					setTimeout(() => {
+						dispatch(getUserLists(client.phone));
+					}, 1000);
+				}
+			} else {
+				const updated = lists.find((l) => l.id == e.target.value);
+				if (
+					updated?.List.map((p) => p.id_product).includes(
+						parseInt(id)
+					)
+				) {
+					return alert('This product already is on this list');
+				} else {
+					if (updated) {
+						const listUpdated = {
+							id: updated?.id,
+							ClientPhone: parseInt(updated?.ClientPhone),
+							rList: [
+								...updated?.List.map((p) => p.id_product),
+								parseInt(id),
+							],
+							Colaborators: [...updated.Colaborators],
+							title: updated?.title,
+						};
+						dispatch(updateList(listUpdated));
+					}
+				}
+			}
+		} else {
+			alert('You have to be registered to create a wishlist');
+		}
+	}
 
 	if (!product?.variants) return <div>Loading</div>;
 
@@ -258,11 +268,19 @@ export default function Product_detail() {
 									{product?.variants[0]?.leftUnits}
 								</span>
 							</p>
-							<Dropdown 
-        					placeHolder={'Add to your wishlist'}
-        					options={[...opt(), {id: 0, name: "➕ New List"}]}
-        					handler={handleLists} 
-        					/>
+						</div>
+						<div className={style.wishList}>
+							<Dropdown
+								placeHolder={'Add to your wishlist'}
+								options={[
+									...opt(),
+									{
+										id: 0,
+										name: '+ New List',
+									},
+								]}
+								handler={handleLists}
+							/>
 						</div>
 					</div>
 				</div>

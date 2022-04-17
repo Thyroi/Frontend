@@ -18,6 +18,7 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
+};
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
@@ -210,11 +211,11 @@ export default function rootReducer(state = initialState, action) {
 				cart: [],
 			};
 
-		case "GET_USER_LISTS":
-			return{
+		case 'GET_USER_LISTS':
+			return {
 				...state,
-				lists: action.payload
-			}	
+				lists: action.payload,
+			};
 
 		default:
 			return state;

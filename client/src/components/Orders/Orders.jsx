@@ -15,8 +15,8 @@ function Orders() {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    let hpone = 3144459829;
-    getOrders(hpone).then((res) => {
+    let phone = 3144459829;
+    getOrders(phone).then((res) => {
       setOrders(res);
       console.log(res);
     });

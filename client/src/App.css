@@ -66,4 +66,5 @@
 	display: flex;
 	flex-wrap: wrap;
 	overflow: scroll;
+	scroll-behavior: smooth;
 }

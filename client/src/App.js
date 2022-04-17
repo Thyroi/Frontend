@@ -26,7 +26,7 @@ import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
 import Wishlist from './components/WishList/WishList';
-
+import AdminProfile from './components/AdminProfile/AdminProfile';
 
 export default function App() {
 	const location = useLocation();
@@ -63,7 +63,7 @@ export default function App() {
 					</div>
 
 					<div className='top'>
-						<Search data={products}/>
+						<Search data={products} />
 						<LogInTop />
 						<Notification />
 					</div>
@@ -77,13 +77,20 @@ export default function App() {
 
 						<Route
 							exact
-							path='/admindashboard/:id'
-							component={OrderDetails}
+							path='/admindashboard'
+							component={AdminProfile}
 						/>
+
 						<Route
 							exact
-							path='/admindashboard'
+							path='/admindashboard/users'
 							component={AdminDashBoard}
+						/>
+
+						<Route
+							exact
+							path='/admindashboard/orders/:id'
+							component={OrderDetails}
 						/>
 
 						<Route exact path='/home' component={Products} />
@@ -108,14 +115,8 @@ export default function App() {
 							component={ClientProfile}
 						/>
 
-            			<Route
-            			  exact
-            			  path='/orders'
-            			  component={Orders}
-            			/>
-						<Route exact path='/lists/:id' component={Wishlist}/>
-
-
+						<Route exact path='/orders' component={Orders} />
+						<Route exact path='/lists/:id' component={Wishlist} />
 					</div>
 				</div>
 			</Route>

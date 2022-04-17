@@ -12,32 +12,41 @@ function Search({ placeholder, data }) {
 	const [search, setSearch] = useState('');
 	const [cursor, setCursor] = useState(-1);
 	const [filteredData, setFilteredData] = useState([]);
-	const keypress = { Enter: handleClick, Escape: handleClear, ArrowDown: handleCursor, ArrowUp: handleCursor };
+	const keypress = {
+		Enter: handleClick,
+		Escape: handleClear,
+		ArrowDown: handleCursor,
+		ArrowUp: handleCursor,
+	};
 
 	const resultados = useRef();
 	const busqueda = useRef();
 	const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     /* settimeout make sure this run after components have rendered. This will help fixing bug for some views where scroll to top not working perfectly */
-        
+	// useEffect(() => {
+	//     /* settimeout make sure this run after components have rendered. This will help fixing bug for some views where scroll to top not working perfectly */
+
 	// 	setTimeout(() => {
-    //         resultados.current.scrollTop=0;
+	//         resultados.current.scrollTop=0;
 	// 		// resultados.current.scrollTop=0
-    //     }, 5000)
-    // },[]);
+	//     }, 5000)
+	// },[]);
 
 	function handleCursor(e) {
-		e.key==='ArrowUp' && cursor>0 && setCursor(prevCursor => prevCursor - 1);
-		e.key==='ArrowDown' && cursor<filteredData.length-1 && setCursor(prevCursor => prevCursor + 1);
-		setCursor(state=> {
+		e.key === 'ArrowUp' &&
+			cursor > 0 &&
+			setCursor((prevCursor) => prevCursor - 1);
+		e.key === 'ArrowDown' &&
+			cursor < filteredData.length - 1 &&
+			setCursor((prevCursor) => prevCursor + 1);
+		setCursor((state) => {
 			resultados.current.children[state].focus();
-			state===0 &&
-			setTimeout(() => {
-				resultados.current.scrollTop=0;
-			}, 200)
+			state === 0 &&
+				setTimeout(() => {
+					resultados.current.scrollTop = 0;
+				}, 200);
 			return state;
-		})
+		});
 	}
 
 	function handleClear(e) {
@@ -60,21 +69,21 @@ function Search({ placeholder, data }) {
 		e.preventDefault();
 		const searchWord = e.target.value;
 		setSearch(searchWord);
-		const filtered = data.filter(value => {
+		const filtered = data.filter((value) => {
 			return value.name.toLowerCase().includes(searchWord.toLowerCase());
 		});
-		searchWord !== "" ? setFilteredData(filtered) : setFilteredData([]);
+		searchWord !== '' ? setFilteredData(filtered) : setFilteredData([]);
 	}
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.searchInputs}>
-				<div className={styles.searchIcon}>
-					<button
-					onClick={e=>resultados.current.scrollTop=0}>
-					<FontAwesomeIcon className={styles.iconSearch} icon={faMagnifyingGlass} />
-					</button>
-				</div>
+				
+					<FontAwesomeIcon
+						className={styles.iconSearch}
+						icon={faMagnifyingGlass}
+					/>
+				
 				<input
 					className={styles.searchInput}
 					type='text'
@@ -96,16 +105,19 @@ function Search({ placeholder, data }) {
 				</button>
 			</div>
 			{filteredData.length !== 0 && (
-				<div className={styles.searchResult} ref={resultados} 
-				onKeyDown={e=>keypress[e.key] && keypress[e.key](e)}>
+				<div
+					className={styles.searchResult}
+					ref={resultados}
+					onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}>
 					{filteredData.map((value, key) => {
 						return (
-							<a className={styles.dataItem} key={key} 
-							href={`http://localhost:3000/products/${value.id_product}`}
-							>
+							<a
+								className={styles.dataItem}
+								key={key}
+								href={`http://localhost:3000/products/${value.id_product}`}>
 								<p>{value.name}</p>
 							</a>
-						)
+						);
 					})}
 				</div>
 			)}

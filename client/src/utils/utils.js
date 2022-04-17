@@ -379,12 +379,12 @@ export async function resetPassword(phone, login_password) {
 
 export async function sendReset(email) {
 	try {
-		const { data } = await axios.get(`/resetPass?email=${email}`);
-		if (data ==="Correo de reseteo enviado" ) {
-			alert('An email has been sent to you, please check your inbox');
+		const { data } = await axios.get(`/client/resetPass?email=${email}`);
+		if (data === `Correo de reseteo enviado`) {
+			alert(`Correo de reseteo enviado a ${email}`);
 			window.location.href = '/home';
 		} else {
-			alert('there has been a problem, contact support');
+			alert('There is not such an email in our database, please sign up');
 			window.location.href = '/home';
 		}
 	} catch (e) {

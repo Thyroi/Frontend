@@ -28,12 +28,14 @@ export default function AddNewProduct() {
 		handleSubmit,
 		formState: { errors },
 		reset,
+		
 	} = useForm({
 		defaultValues: {
 			variants: [
 				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' } },
 			],
 		},
+		mode: 'all',
 	});
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -41,7 +43,7 @@ export default function AddNewProduct() {
 	});
 	const onSubmit = (data) => {
 		data.collection = parseInt(data.collection);
-		data.price = parseInt(data.price);
+		data.price = parseFloat(data.price);
 		data.categories = [data.categories];
 		data.default_image = imageUrls[0];
 		data.id_product = productos.length + 1;
@@ -69,7 +71,7 @@ export default function AddNewProduct() {
 			});
 		});
 	};
-
+	//console.log(errors)
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -79,11 +81,16 @@ export default function AddNewProduct() {
 						name='name'
 						autoComplete='off'
 						placeholder='Name'
-						ref={register({ required: true })}
+						ref={register({
+							required: true,
+							pattern: {
+								value: /^[^0-9]+$/,
+							}
+						  })}
 					/>
 					{errors.name && (
 						<span className={styles.error}>
-							This field is required
+							This field is mandatory and can only contain letters
 						</span>
 					)}
 
@@ -96,7 +103,7 @@ export default function AddNewProduct() {
 					/>
 					{errors.brand && (
 						<span className={styles.error}>
-							This field is required
+							This field is mandatory
 						</span>
 					)}
 
@@ -117,7 +124,7 @@ export default function AddNewProduct() {
 					</select>
 					{errors.categories && (
 						<span className={styles.error}>
-							This field is required
+							You should select a category
 						</span>
 					)}
 
@@ -133,16 +140,26 @@ export default function AddNewProduct() {
 					</select>
 					{errors.collection && (
 						<span className={styles.error}>
-							This field is required
+							This should select a collection
 						</span>
 					)}
 
 					<input
-						type='number'
+						type='text'
 						name='price'
 						autoComplete='off'
 						placeholder='Price'
-						ref={register({ required: true })}
+						ref={register({
+							required: true,
+							pattern: {
+								value: /^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/,
+							}
+						  })}
+						onKeyPress={(e) => {
+							if (e.key === "e" || e.key === "-") {
+							  e.preventDefault();
+							}
+						  }}
 					/>
 					{errors.price && (
 						<span className={styles.error}>
@@ -165,17 +182,32 @@ export default function AddNewProduct() {
 						ref={register({ required: true })}
 					/>
 				</div>
-
+						{errors.description && (
+						<span className={styles.error}>
+							This field is required
+						</span>
+						)}
 				<div className={styles.center}>
 					<ul>
 						{fields.map((item, index) => {
 							return (
 								<li key={item.id}>
 									<input
-										ref={register()}
+										ref={register({
+											required: true,
+											pattern: {
+												value: /^[^0-9]+$/,
+											}
+										  })}
 										placeholder='Color'
 										name={`variants[${index}].ColorName`}
+
 									/>
+									{errors.variants && (
+										<span className={styles.error}>
+											This field is required and can contain only letters
+										</span>
+									)}
 
 									<Controller
 										as={<input />}
@@ -184,7 +216,9 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stock for Size S'
+										
 									/>
+										
 									<Controller
 										as={<input />}
 										type='number'

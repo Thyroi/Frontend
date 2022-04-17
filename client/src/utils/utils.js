@@ -365,11 +365,23 @@ export async function resetPassword(phone, login_password) {
 		const { data } = await axios.patch(`/client/${phone}`, {
 			login_password: login_password,
 		});
-
-		//CONTROLAR LA RESPUESTA DEL SERVER PARA CONTROLAR LO QUE PASA.
-
-		if (data === 'success') {
+		if (data === 'Cliente actualizado') {
 			alert('password successfully set, happy shopping!');
+			window.location.href = '/home';
+		} else {
+			alert('there has been a problem, contact support');
+			window.location.href = '/home';
+		}
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+export async function sendReset(email) {
+	try {
+		const { data } = await axios.get(`/resetPass?email=${email}`);
+		if (data ==="Correo de reseteo enviado" ) {
+			alert('An email has been sent to you, please check your inbox');
 			window.location.href = '/home';
 		} else {
 			alert('there has been a problem, contact support');

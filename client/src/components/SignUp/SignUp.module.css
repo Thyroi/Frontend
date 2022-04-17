@@ -116,3 +116,6 @@ select {
 .submit button {
 	margin-bottom: 2rem;
 }
+.error{
+	font-size:small;
+}

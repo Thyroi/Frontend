@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
+
 import style from "./Orders.module.scss";
 
-import Quantity from "../Quantity/Quantity";
-
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { totalDue, prepareProduct, getOrders } from "../../utils/utils";
+import { getOrders } from "../../utils/utils";
 
 function Orders() {
-  const itemsCart = useSelector((state) => state.cart);
-
   const [orders, setOrders] = useState([]);
-  const phone = useSelector((state) => state.loggedInClient.phone);
-  const dispatch = useDispatch();
-  
+
   useEffect(() => {
     let phone = 3144459829;
     getOrders(phone).then((res) => {
@@ -22,41 +15,43 @@ function Orders() {
     });
   }, []);
 
-  if(!orders) return <div>Loading</div>
+  if (!orders) return <div>Loading</div>;
 
   return (
-    <div className={style.containerCart}>
-			{orders &&
-				orders.map((o) => {
+    <div className={style.containerOrders}>
+      {orders &&
+        orders.map((o) => {
           const { orderStatus, orderId, createdAt, total } = o;
-					return (
-						<div>
-              <p>{orderStatus}</p>
-              <p>{createdAt}</p>
-              <p>{orderId}</p>
-              <p>{`$${total}`}</p>
+          return (
+            <div className={style.containerOrder}>
+              <p className={style.orderStatus}>{orderStatus}</p>
+              <p className={style.orderDate}>{createdAt}</p>
+              <p className={style.orderId}>{`Order id: $${orderId}`}</p>
+              <p className={style.orderTotal}>{`$${total}`}</p>
 
-              {o.orderDetails.map((p) => {
-                const {color, image, price, quantity, size} = p;
-                return (
-                  <div>
-                    <div>
-                      <img src={image} alt="product" />
+              <div className={style.containerItems}>
+                {o.orderDetails.map((p) => {
+                  const { color, image, price, quantity, size, name } = p;
+                  return (
+                    <div className={style.containerItem}>
+                      <div className={style.containerImage}>
+                        <img className={style.img} src={image} alt="product" />
+                      </div>
+                      <div className={style.containerInfo}>
+                        <h2 className={style.itemName}>{name || `Change`}</h2>
+                        <p className={style.itemColor}>{`Color: ${color}`}</p>
+                        <p className={style.itemSize}>{`Size: ${size}`}</p>
+                        <p className={style.itemQuantity}>{`Units: ${quantity}`}</p>
+                        <p className={style.itemPrice}>{`$${price}`}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h2>Name</h2>
-                      <p>{color}</p>
-                      <p>{size}</p>
-                      <p>{quantity}</p>
-                      <p>{price}</p>
-                    </div>
-                  </div>
-                )
-              })}
+                  );
+                })}
+              </div>
             </div>
-					);
-				})}
-		</div>
+          );
+        })}
+    </div>
   );
 }
 

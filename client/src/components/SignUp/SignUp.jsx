@@ -5,8 +5,24 @@ import style from './SignUp.module.css';
 
 export default function SignUp(params) {
 	const dispatch = useDispatch();
+	
 
 	const [error, setError] = useState({});
+	const [show, setShow] = useState({
+		name: false,
+		lastname: false,
+		email: false,
+		phone: false,
+		login_name:false,
+		login_password:false,
+		address: {
+			streetNumber:false,
+			provinceDepartment:false,
+			city:false,
+			zipCode:false,
+		},
+	});
+
 
 	const [inputs, setInputs] = useState({
 		name: '',
@@ -38,6 +54,28 @@ export default function SignUp(params) {
 			...inputs,
 			[e.target.name]: e.target.value,
 		});
+		
+	};
+	function handleBlur (e){
+		e.preventDefault();
+		setShow((prevState)=>{
+			const newState={
+			...prevState,
+			[e.target.name]: true
+		};
+		return newState;
+	})}
+	function handleBlurAddress(e){
+		e.preventDefault();
+		setShow((prevState)=>{
+			const newState={
+			...prevState,
+			address: { ...prevState.address,
+				 [e.target.name]:true }};
+			return newState;
+
+		});
+
 	}
 
 	function handleAdress(e) {
@@ -55,12 +93,12 @@ export default function SignUp(params) {
 		} else if (typeof inputs.name !== 'string') {
 			error.name =
 				'Insert a valid name (without special caracters or numbers)';
-		} else if (!inputs.lastname) {
+		} if (!inputs.lastname) {
 			error.lastname = 'Lastname is required';
 		} else if (typeof inputs.lastname !== 'string') {
 			error.lastname =
 				'Insert a valid lastname (without special caracters or numbers)';
-		} else if (!inputs.email) {
+		} if (!inputs.email) {
 			error.email = 'Email is required';
 		} else if (
 			/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(
@@ -68,28 +106,29 @@ export default function SignUp(params) {
 			) === false
 		) {
 			error.email = 'Email should be a valid email';
-		} else if (!inputs.phone) {
+		} if (!inputs.phone) {
 			error.phone = 'Phone is required';
-		} else if (!inputs.login_name) {
+		} if (!inputs.login_name) {
 			error.login_name = 'Login name is required';
-		} else if (!inputs.login_password) {
+		} if (!inputs.login_password) {
 			error.login_password = 'Password is required';
-		} else if (!inputs.address.streetNumber) {
+		} if (!inputs.address.streetNumber) {
 			error.calle = 'Street and number are required';
-		} else if (!inputs.address.provinceDeparment) {
-			error.province = 'Province is required';
-		} else if (!inputs.address.city) {
+		} if (!inputs.address.provinceDepartment) {
+			error.provinceDepartment = 'Province is required';
+		} if (!inputs.address.city) {
 			error.city = 'City is required';
 		} else if (typeof inputs.address.city !== 'string') {
 			error.city =
 				'Insert a valid city (without special caracters or numbers)';
-		} else if (!inputs.address.zipCode) {
+		}if (!inputs.address.zipCode) {
 			error.zipCode = 'Zip code is required';
-		} else if (!inputs.address.particularDetails) {
+		} /* if (!inputs.address.particularDetails) {
 			error.zipCode = 'a particular detail is required';
-		}
+		} */
 		return error;
 	}
+	//let show=false;
 
 	const disable = useMemo(() => {
 		if (
@@ -155,8 +194,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
+							onBlur={e=>{handleBlurAddress(e)}}
 						/>
-						{error.streetNumber && <p>{error.streetNumber}</p>}
+						{error.calle && show.address.streetNumber && <p className={style.error}>{error.calle}</p>}
 
 						<input
 							type='text'
@@ -166,8 +206,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
+							onBlur={e=>{handleBlurAddress(e)}}
 						/>
-						{error.city && <p>{error.city}</p>}
+						{error.city && show.address.city && <p  className={style.error}>{error.city}</p>}
 
 						<input
 							type='text'
@@ -177,8 +218,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
+							onBlur={e=>{handleBlurAddress(e)}}
 						/>
-						{error.zipCode && <p>{error.zipCode}</p>}
+						{error.zipCode && show.address.zipCode && <p  className={style.error}>{error.zipCode}</p>}
 
 						<input
 							type='text'
@@ -188,8 +230,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
+							onBlur={e=>{handleBlurAddress(e)}}
 						/>
-						{error.province && <p>{error.province}</p>}
+						{error.provinceDepartment &&  show.address.provinceDepartment && <p  className={style.error}>{error.provinceDepartment}</p>}
 
 						<input
 							type='text'
@@ -199,9 +242,10 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
+							onBlur={e=>{handleBlurAddress(e)}}
 						/>
-						{error.particularDetails && (
-							<p>{error.particularDetails}</p>
+						{error.particularDetails &&  show.address.particularDetails && (
+							<p  className={style.error}>{error.particularDetails}</p>
 						)}
 					</div>
 				</div>
@@ -217,8 +261,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleChange(e);
 							}}
+							onBlur={e=>{handleBlur(e)}}
 						/>
-						{error.name && <p>{error.name}</p>}
+						{error.name && show.name && <p  className={style.error}>{error.name}</p>}
 
 						<input
 							type='text'
@@ -227,9 +272,12 @@ export default function SignUp(params) {
 							value={inputs.lastname}
 							onChange={(e) => {
 								handleChange(e);
+								
 							}}
+							onBlur={e=>{handleBlur(e)}}
+
 						/>
-						{error.lastname && <p>{error.lastname}</p>}
+						{ error.lastname && show.lastname && <p  className={style.error}>{error.lastname}</p>}
 
 						<input
 							type='text'
@@ -239,8 +287,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleChange(e);
 							}}
+							onBlur={e=>{handleBlur(e)}}
 						/>
-						{error.email && <p>{error.email}</p>}
+						{error.email && show.email && <p  className={style.error}>{error.email}</p>}
 
 						<input
 							type='number'
@@ -250,8 +299,9 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleChange(e);
 							}}
+							onBlur={e=>{handleBlur(e)}}
 						/>
-						{error.phone && <p>{error.phone}</p>}
+						{error.phone && show.phone && <p  className={style.error}>{error.phone}</p>}
 					</div>
 				</div>
 
@@ -265,8 +315,9 @@ export default function SignUp(params) {
 						onChange={(e) => {
 							handleChange(e);
 						}}
+						onBlur={e=>{handleBlur(e)}}
 					/>
-					{error.login_name && <p>{error.login_name}</p>}
+					{error.login_name && show.login_name && <p  className={style.error}>{error.login_name}</p>}
 					<label>Password</label>
 					<input
 						type='password'
@@ -276,8 +327,9 @@ export default function SignUp(params) {
 						onChange={(e) => {
 							handleChange(e);
 						}}
+						onBlur={e=>{handleBlur(e)}}
 					/>
-					{error.login_password && <p>{error.login_password}</p>}
+					{error.login_password && show.login_password && <p  className={style.error}>{error.login_password}</p>}
 				</div>
 
 				<div className={style.submit}>

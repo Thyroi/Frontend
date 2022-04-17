@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams} from "react-router-dom";
-import { deleteList, getClients, getUserLists ,updateListDeleted } from "../../actions";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import {
+	deleteList,
+	getClients,
+	getUserLists,
+	updateListDeleted,
+} from '../../actions';
 import style from './WishList.module.scss';
 import swal from '@sweetalert/with-react';
 
-export default function Wishlist( {match, history}  ){
-  
+export default function Wishlist({ match, history }) {
 	const lists = useSelector((state) => state.lists);
 	const clients = useSelector((state) => state.allClients);
 	const client = useSelector((state) => state.loggedInClient);
@@ -18,11 +22,9 @@ export default function Wishlist( {match, history}  ){
 		dispatch(getClients());
 	}, [dispatch]);
 
+	const id = match.params.id;
 
-    const id = match.params.id
-    
-    const list = lists?.find(l => l.id === parseInt(id))
-    
+	const list = lists?.find((l) => l.id === parseInt(id));
 
 	function handleDelete(e) {
 		const borrar = list.List.filter((p) => p.id_product !== e.id_product);
@@ -51,57 +53,18 @@ export default function Wishlist( {match, history}  ){
 		}
 	}
 
+	function handleDeleteList(e) {
+		e.preventDefault();
+		dispatch(deleteList(id));
+		history.push('/client/profile');
+	}
 
-    function handleDeleteList(e){
-        e.preventDefault()
-        dispatch(deleteList(id))
-        history.push("/client/profile")
-    }
-
-    return(
-        <div className={style.containerList}>
-            <h1>{list?.title}</h1>
-            <button onClick={handleDeleteList}>DELETE LIST</button>
-            
-            {list && 
-                list.List.map(e => {
-                    
-                        
-                        return (
-                            <div key={e?.id_product} className={style.conteinerProduct}>
-                                <div className={style.imgContainer}>
-                                {e?.is_offer && (
-                                    <span className={style.offer}>
-                                        {'Oferta'}
-                                    </span>
-                                )}
-                                <Link to={`/products/${e?.id_product}`}>
-                                    <img
-                                        className={style.productImage}
-                                        src={e?.default_image}
-                                        alt='iconOff'
-                                    />
-                                </Link>
-                                </div>
-                                <div className={style.infoContainer}>
-                                    <div className={style.subInfoContainer}>
-                                    <h3 className={style.nameProduct}>
-                                        {e?.name}
-                                    </h3>
-                                    <p className={style.productPrice} id='individualProductPrice'>
-                                        {`$${e?.price}`}
-                                    </p>
-                                    <p className={style.description}>
-                                        {e?.description}
-                                    </p>
-                                    <div className={style.buttonConteiner}>
-                                        <button onClick={() => {handleDelete(e)}}>Remove</button>
-                                    </div>
-                                    <div>
-                                        <button onClick={handleInvite}>Invite someone to your list</button>
-                                    </div>
-                                    </div>
-                                </div>
+	return (
+		<div className={style.containerList}>
+			<h1>{list?.title}</h1>
+			<button onClick={handleDeleteList} style={{ marginRight: '5%' }}>
+				Delete list
+			</button>
 
 			{list &&
 				list?.List.map((e) => {

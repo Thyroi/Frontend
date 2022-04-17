@@ -56,17 +56,24 @@
 	justify-content: space-between;
 }
 
+.description {
+	height: 50%;
+	overflow: scroll;
+	margin: 0.5rem;
+}
+
 .productPrice {
 	font-size: 1.5rem;
 	font-weight: 600;
+	margin: 1rem;
 }
 
 .buttonContainer {
 	display: flex;
-	margin: 0.5rem;
 	justify-content: flex-end;
 }
 
+.containerList button,
 .buttonContainer button {
 	background-color: #e4687c;
 	color: white;
@@ -79,7 +86,7 @@
 	align-self: flex-end;
 	cursor: pointer;
 }
-
+.containerList button:hover,
 .buttonContainer button:hover {
 	background-color: white;
 	color: #e4687c;

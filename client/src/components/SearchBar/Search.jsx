@@ -70,10 +70,7 @@ function Search({ placeholder, data }) {
 		<div className={styles.container}>
 			<div className={styles.searchInputs}>
 				<div className={styles.searchIcon}>
-					<button
-					onClick={e=>resultados.current.scrollTop=0}>
 					<FontAwesomeIcon className={styles.iconSearch} icon={faMagnifyingGlass} />
-					</button>
 				</div>
 				<input
 					className={styles.searchInput}

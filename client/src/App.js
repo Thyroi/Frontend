@@ -13,6 +13,7 @@ import Landing from './components/Landing/Landing';
 import Search from './components/SearchBar/Search';
 import LogInTop from './components/LogIn/LogInTop';
 import LogIn from './components/LogIn/LogInMain';
+import LogInAdmin from './components/LogInAdmin/LogInAdmin';
 import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
@@ -54,6 +55,7 @@ export default function App() {
 	return (
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/loginadmin' component={LogInAdmin} />
 			<Route
 				exact
 				path='/resetpassword/:phone'

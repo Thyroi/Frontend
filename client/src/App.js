@@ -13,6 +13,7 @@ import Landing from './components/Landing/Landing';
 import Search from './components/SearchBar/Search';
 import LogInTop from './components/LogIn/LogInTop';
 import LogIn from './components/LogIn/LogInMain';
+import LogInAdmin from './components/LogInAdmin/LogInAdmin';
 import Products from './components/Products/Products';
 import Product_detail from './components/Product_detail/Product_detail';
 import Cart from './components/Cart/Cart';
@@ -21,8 +22,6 @@ import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
-import Alert from './components/Notification/Alert';
-import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
@@ -54,13 +53,12 @@ export default function App() {
 	return (
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/loginadmin' component={LogInAdmin} />
 			<Route
 				exact
 				path='/resetpassword/:phone'
 				component={ResetPassword}
 			/>
-			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -69,9 +67,15 @@ export default function App() {
 					</div>
 
 					<div className='top'>
-						<Search data={products} />
-						<LogInTop />
-						<Notification />
+						<div className='topSearch'>
+							{location.pathname === '/home' && (
+								<Search data={products} />
+							)}
+						</div>
+						<div className='topLogin'>
+							<LogInTop />
+							<Notification />
+						</div>
 					</div>
 
 					<div className='container'>

@@ -260,7 +260,6 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
-
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 // export function addProduct(payload){
@@ -499,11 +498,10 @@ export function logInUser(user) {
 
 			return !data
 				? alert('Username/password not found')
-				: (alert('You are logged in!'),
-				  dispatch({
+				: dispatch({
 						type: 'LOG_IN_USER',
 						payload: data,
-				  }));
+				  });
 		} catch (error) {
 			console.log(error);
 		}

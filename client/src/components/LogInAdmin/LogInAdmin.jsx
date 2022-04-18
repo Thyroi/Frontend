@@ -68,7 +68,6 @@ function LogInMain(params) {
 	function handleResetPass(e) {
 		e.preventDefault();
 		sendReset(email);
-
 	}
 
 	return (
@@ -77,17 +76,14 @@ function LogInMain(params) {
 				<div className={style.containerImage}>
 					<img
 						className={style.img}
-						src={require('../../Assets/img/login_side.jpg')}
+						src={require('../../Assets/img/20-michael-scott-quotes-that-prove-he-s-the-best-boss-ever-u2.jpg')}
 						alt=''
 					/>
 				</div>
 				<form onSubmit={handleSubmit} className={style.containerForm}>
 					<div className={style.subContainerForm}>
 						<div className={style.containerHeader}>
-							<h1 className={style.header}>Welcome back!</h1>
-							<p className={style.subHeader}>
-								It's great to have you back!
-							</p>
+							<h1 className={style.header}>Admin site</h1>
 						</div>
 
 						<div className={style.containerInput}>
@@ -155,14 +151,6 @@ function LogInMain(params) {
 							<Link className={style.signUpButton} to='/signup'>
 								Sign Up
 							</Link>
-							<GoogleLogin
-								className={style.googleButton}
-								clientId='969216311730-erq289787jpgirnsaro1cnd34vcikq20.apps.googleusercontent.com'
-								buttonText='Login'
-								onSuccess={responseGoogle}
-								onFailure={responseGoogle}
-								cookiePolicy={'single_host_origin'}
-							/>
 						</div>
 					</div>
 				</form>

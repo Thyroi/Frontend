@@ -260,7 +260,6 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
-
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 // export function addProduct(payload){

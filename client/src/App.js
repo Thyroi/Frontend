@@ -22,8 +22,6 @@ import AdminDashBoard from './components/AdminDashBoard/AdminDashBoard';
 import Form from './components/Form/Form';
 import SignUp from './components/SignUp/SignUp';
 import SignUpGoogle from './components/SignUp/SignUpGoogle';
-import Alert from './components/Notification/Alert';
-import iFrame from './components/iFrame/iFrame';
 import ClientProfile from './components/Client_profile/Client_profile';
 import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
@@ -61,8 +59,6 @@ export default function App() {
 				path='/resetpassword/:phone'
 				component={ResetPassword}
 			/>
-			<Route exact path='/alert' component={Alert} />
-			<Route exact path='/iframe' component={iFrame} />
 
 			<Route path='/'>
 				<div className='app'>
@@ -71,9 +67,15 @@ export default function App() {
 					</div>
 
 					<div className='top'>
-						<Search data={products} />
-						<LogInTop />
-						<Notification />
+						<div className='topSearch'>
+							{location.pathname === '/home' && (
+								<Search data={products} />
+							)}
+						</div>
+						<div className='topLogin'>
+							<LogInTop />
+							<Notification />
+						</div>
 					</div>
 
 					<div className='container'>

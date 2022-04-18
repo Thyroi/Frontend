@@ -459,10 +459,12 @@ export function removeWishList(payload) {
 	};
 }
 
-export function createClient(payload) {
+export function createClient(payload, setLoad) {
 	return async function () {
 		try {
-			return await axios.post('/client', payload);
+      const result = await axios.post('/client', payload);
+      setLoad(false);
+      return result;
 		} catch (error) {
 			console.log(error);
 		}

@@ -2,9 +2,12 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { createClient } from '../../actions';
 import style from './SignUp.module.css';
+import swal from 'sweetalert';
+import Loader from '../Loader/Loader';
 
 export default function SignUp(params) {
 	const dispatch = useDispatch();
+  const [load, setLoad] = useState(false);
 	
 
 	const [error, setError] = useState({});
@@ -151,13 +154,14 @@ export default function SignUp(params) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+    setLoad(true);
 		setInputs({
 			...inputs,
 			phone: parseInt(inputs.phone),
 			isRegistered: true,
 		});
-		dispatch(createClient(inputs));
-		alert("You're registered!");
+		dispatch(createClient(inputs, setLoad));
+		swal("Welcome","You're registered!", "success");
 		setInputs({
 			name: '',
 			lastname: '',
@@ -175,6 +179,10 @@ export default function SignUp(params) {
 		});
 		params.history.push('/login');
 	}
+
+  if(load === true){
+    return <Loader/>  
+  }
 
 	return (
 		<div className={style.container}>

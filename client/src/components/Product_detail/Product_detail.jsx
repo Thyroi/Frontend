@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import Quantity from '../Quantity/Quantity';
-
+import Loader from '../Loader/Loader';
 import style from './Product_detail.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -130,7 +130,7 @@ export default function Product_detail() {
 		}
 	}
 
-	if (!product?.variants) return <div>Loading</div>;
+	if (!product?.variants) return <Loader />;
 
 	return (
 		<div className={style.container}>

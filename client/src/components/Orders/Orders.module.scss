@@ -1,150 +1,66 @@
-.containerCart {
+.containerOrders {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0 3rem;
 
-  .itemContainer {
-    width: 90%;
-    height: 250px;
-    background: #ffffff;
+  .containerOrder {
+    background: #fff;
     border-radius: 5px;
+    padding: 2rem;
     margin-bottom: 3rem;
-    display: flex;
 
-    position: relative;
-
-    .offer {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
-      width: 4rem;
-      height: 4rem;
-      border-radius: 2rem;
-      background-color: #e4687c;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: azure;
-      font-weight: 400;
+    .orderStatus {
+      color: #77dd77;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-left: 1rem;
     }
 
-    .imgContainer {
-      width: 400px;
+    .orderDate {
+      margin-bottom: 0.5rem;
 
-      .productImage {
-        width: 100%;
-        height: 100%;
-        border-radius: 5px 0 0 5px;
-        object-fit: cover;
-      }
     }
 
-    .infoContainer {
-      width: 100%;
-      height: 100%;
+    .orderId {
+      margin-bottom: 0.5rem;
+    }
 
+    .orderTotal {
+    }
+
+    .containerItems {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
 
-      .subInfoContainer {
-        width: 95%;
-        height: 85%;
-
+      .containerItem {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        height: 200px;
+        margin-top: 2rem;
 
-        .containerButtons {
-          display: flex;
-          justify-content: space-between;
+        .containerImage {
+          width: 200px;
+          height: 100%;
 
-          .containerDiscount {
-            display: flex;
-            justify-content: flex-start;
-            height: 3rem;
-
-            .inputDiscount {
-              background: #F3F3F3;
-              border-radius: 5px 0 0 5px;
-              padding-left: 1rem;
-              font-size: 0.9rem;
-            }
-
-            .applyDiscount {
-              background: #e4687c;
-              border-radius: 0 5px 5px 0;
-              padding: 0 1rem;
-              color: #ffffff;
-              font-weight: 600;
-              cursor: pointer;
-              transition: 0.3s all ease;
-            }
-
-            .applyDiscount:hover {
-              background: #F3F3F3;
-              color: #e4687c;
-            }
-          }
-
-          .removeButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 0 1rem;
-            background: #e4687c;
+          .img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 5px;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
           }
         }
-      }
-    }
-  }
 
-  .purchaseContainer {
-    width: 90%;
-    height: 3rem;
-    margin-bottom: 3rem;
-    display: flex;
-    justify-content: flex-end;
+        .containerInfo {
+          padding-left: 1rem;
 
-    .totalInfo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+          .itemName, .itemColor, .itemSize, .itemQuantity, .itemPrice {
+            margin-bottom: 0.8rem;
+          }
 
-      padding: 0 1rem;
-      background: #ffffff;
-      border-radius: 5px;
-    
-      .totalPrice {
-        font-weight: 600;
-        margin-left: 1rem;
-      }
-    }
+          .itemPrice {
+            font-weight: 600;
+          }
 
-    .buyButton {
-      width: 10rem;
-      margin-left: 3rem;
-      background: #e4687c;
-      border-radius: 5px;
-      font-weight: 600;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    
-      .buyLetter {
-        background-color: #e4687c;
-        font-weight: 600;
-        color: #ffffff;
-        width: 80%;
-        cursor: pointer;
+        }
       }
     }
   }

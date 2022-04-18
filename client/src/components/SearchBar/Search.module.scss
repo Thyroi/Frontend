@@ -1,27 +1,17 @@
 .container {
-	position: relative;
-	min-width: 40%;
-	max-width: 50%;
+  position: relative;
+  min-width: 40%;
+  max-width: 50%;
 }
 
 .searchInputs {
+
 	display: flex;
-	// margin-top: 105px;
 }
-
-.searchIcon {
-	display: grid;
-	place-items: center;
-	border-radius: 50% 0% 0% 50%;
-	width: 40px;
-	height: 40px;
-	background-color: white;
-}
-
 .iconSearch {
-	// position: absolute;
-	// top: 25%;
-	left: 10px;
+	background-color: white;
+	border-radius: 50% 0 0 50%;
+	padding: 10px;
 	width: 20px;
 	height: 20px;
 	color: #e4687c;
@@ -30,10 +20,7 @@
 .searchInput {
 	height: 40px;
 	width: 100%;
-	// border-radius: 5px 0 0 5px;
-	border-radius: 0px 0 0 0px;
 	font-size: 0.9rem;
-	padding-left: 1 rem;
 }
 
 .searchButton {
@@ -51,14 +38,12 @@
 	background: #ffffff;
 	color: #e4687c;
 }
-
 .searchResult {
-	display: flex;
-	flex-wrap: wrap;
+	display: inline;
 
-	padding: .8rem;
+	padding-left: 0.8rem;
 	position: absolute;
-	margin-top: .5rem;
+	margin-top: 0.5rem;
 	width: 100%;
 	height: auto;
 	max-height: 200px;
@@ -69,32 +54,28 @@
 	overflow-y: auto;
 	z-index: 1;
 }
-
 .searchResult::-webkit-scrollbar {
 	display: none;
 }
-
+.searchResult .dataItem {
+	padding: 0.5rem 0rem;
+	width: 100%;
+	height: 50px;
+	flex-wrap: wrap;
+	display: flex;
+}
 .dataItem {
 	text-decoration: none;
 	color: #565656;
-	width: 100%;
-	height: 40px;
-	// padding: .7rem 0rem;
-
-	// display: flex;
-	// align-items: center;
 }
-
 .dataItem:hover {
 	background-color: #e4687c;
 	color: #000000;
 }
-
 .dataItem:active {
 	background-color: #e4687c;
 	color: #ffffff;
 }
-
 .dataItem:focus {
 	color: #e4687c;
 	font-weight: 600;

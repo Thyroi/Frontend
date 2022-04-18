@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import style from './LoginMain.module.scss';
 import { GoogleLogin } from 'react-google-login';
@@ -8,6 +8,7 @@ import {
 	getCart,
 	setRememberMe,
 } from '../../actions';
+import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 
 function LogInMain(params) {
@@ -19,6 +20,13 @@ function LogInMain(params) {
 		login_name: '',
 		login_password: '',
 	});
+
+	const emailRegEx = useMemo(
+		() => new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+		[]
+	);
+
+	const [email, setEmail] = useState('');
 
 	useEffect(() => {
 		if (loggedInClient.phone) {
@@ -40,7 +48,6 @@ function LogInMain(params) {
 	function handleOnChange(e) {
 		e.preventDefault();
 		let { name, value } = e.target;
-
 		setUser({ ...user, [name]: value });
 	}
 
@@ -50,6 +57,18 @@ function LogInMain(params) {
 			alert('Please fill all fields');
 		}
 		dispatch(logInUser(user));
+	}
+
+	function handleMailChange(e) {
+		e.preventDefault();
+		var { value } = e.target;
+		setEmail(value);
+	}
+
+	function handleResetPass(e) {
+		e.preventDefault();
+		sendReset(email);
+
 	}
 
 	return (
@@ -107,12 +126,24 @@ function LogInMain(params) {
 									Remember me?
 								</label>
 							</div>
-
-							<Link
-								className={style.forgotText}
-								to='/retrievepassword'>
-								Forgot password?
-							</Link>
+							<div className={style.dropdownContainer}>
+								<span className={style.forgotText}>
+									Forgot password?
+								</span>
+								<div className={style.dropdown}>
+									<input
+										onChange={handleMailChange}
+										type='text'
+										placeholder='Type a valid email address'
+										value={email}
+									/>
+									<button
+										onClick={handleResetPass}
+										disabled={!emailRegEx.test(email)}>
+										Send
+									</button>
+								</div>
+							</div>
 						</div>
 
 						<div className={style.containerLoginSignUp}>

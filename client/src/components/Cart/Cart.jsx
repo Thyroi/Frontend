@@ -2,6 +2,7 @@ import React from 'react';
 import style from './Cart.module.scss';
 
 import Quantity from '../Quantity/Quantity';
+import Loader from '../Loader/Loader';
 
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +21,7 @@ function Cart(params) {
 		params.history.push('/cart/pay');
 	}
 
-	if (!itemsCart) return <div>Loading</div>;
+	if (!itemsCart) return <Loader />;
 
 	return (
 		<div className={style.containerCart}>

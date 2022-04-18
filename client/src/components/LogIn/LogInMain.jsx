@@ -10,9 +10,12 @@ import {
 } from '../../actions';
 import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../Loader/Loader';
+import swal from 'sweetalert';
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
+  const [load, setLoad] = useState("false");
 
 	const loggedInClient = useSelector((state) => state.loggedInClient);
 
@@ -54,9 +57,11 @@ function LogInMain(params) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		if (!user?.login_name || !user?.login_password) {
-			alert('Please fill all fields');
+			swal("Please!", "Complete the fields", "warning");
+      return;
 		}
-		dispatch(logInUser(user));
+    setLoad("true");
+		dispatch(logInUser(user, swal, setLoad));
 	}
 
 	function handleMailChange(e) {
@@ -70,6 +75,10 @@ function LogInMain(params) {
 		sendReset(email);
 
 	}
+
+  if(load === "true") {
+    return <Loader />
+  }
 
 	return (
 		<div className={style.background}>

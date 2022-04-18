@@ -17,6 +17,7 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
+  cleanProducts
 } from '../../actions';
 
 export default function Products() {
@@ -118,6 +119,7 @@ export default function Products() {
 
 	const handleOfferChange = (e) => {
 		e.preventDefault();
+    dispatch(cleanProducts());
 		var res = '';
 		if (e.target.value === '0') {
 			res = 'true';
@@ -135,6 +137,7 @@ export default function Products() {
  */
 	const handleTypeChange = (event) => {
 		event.preventDefault();
+    dispatch(cleanProducts());
 		setCurrentPage(1);
 		if (event.target.value === '0') {
 			return dispatch(getInfo());
@@ -150,6 +153,7 @@ export default function Products() {
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
+    dispatch(cleanProducts());
 		setCurrentPage(1);
 		event.target.value === '0'
 			? dispatch(getInfo())

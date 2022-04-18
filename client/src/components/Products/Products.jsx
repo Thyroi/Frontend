@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './Products.module.css';
 import Card from '../Card/Card';
+import Loader from '../Loader/Loader';
 import Dropdown from '../Dropdown/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -158,7 +159,7 @@ export default function Products() {
 	//-----------------------------------HANDLERS------------------------------------------//
 
 	return !products.length || !categories.women?.length || !collections.length ? (
-		<h2>Loading...</h2>
+		<Loader />
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>

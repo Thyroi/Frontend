@@ -270,10 +270,10 @@ export async function prepareProduct(product, cartItems) {
 	localStorage.setItem('productPrepared', JSON.stringify(productToBuy));
 }
 
-export async function createGuestClient() {
+export async function createGuestClient(setLoad) {
 	const data = JSON.parse(localStorage.getItem('datosDeEnvio'));
-	console.log(data, '_______________client');
 	await axios.post('/client', data);
+  setLoad(false);
 }
 
 export async function purchaseOrder(status) {

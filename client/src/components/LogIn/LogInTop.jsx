@@ -17,6 +17,7 @@ function LogInTop() {
 		dispatch(logOutUser());
 		dispatch(clearCart());
 		alert('logged out');
+		window.location.href = '/home';
 	}
 
 	return (
@@ -39,7 +40,7 @@ function LogInTop() {
 			) : (
 				<div className={styles.dropdown}>
 					<Link to='/login'>Client Log in/Sign up</Link>
-					<Link to='/login'>Admin Log in</Link>
+					<Link to='/loginadmin'>Admin Log in</Link>
 				</div>
 			)}
 		</div>

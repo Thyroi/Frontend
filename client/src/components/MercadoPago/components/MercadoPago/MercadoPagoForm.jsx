@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Card from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import useMercadoPago from '../../hooks/useMercadoPago';
+import Loader from '../../../Loader/Loader';
 
 import { createGuestClient, purchaseOrder } from '../../../../utils/utils';
 import { clearCart } from '../../../../actions/index';
@@ -25,6 +26,8 @@ export default function MercadoPagoForm() {
 	const resultPayment = useMercadoPago(); //custom hook
 	const dispatch = useDispatch();
 	const history = useHistory();
+
+  const [load, setLoad] = useState(false);
 
 	const handleInputChange = (e) => {
 		setState({
@@ -95,6 +98,8 @@ export default function MercadoPagoForm() {
 			}
 		}
 	}, resultPayment);
+
+  if(load === true) return <Loader />
 
 	return (
 		<div className='cont'>
@@ -191,6 +196,7 @@ export default function MercadoPagoForm() {
 						id='form-checkout__submit'
 						className='pay'
 						onClick={() => {
+              setLoad(true);
 							const button = document.querySelector(
 								'#form-checkout__submit'
 							);
@@ -198,7 +204,7 @@ export default function MercadoPagoForm() {
 								button &&
 								button.id === 'form-checkout__submit'
 							) {
-								createGuestClient();
+								createGuestClient(setLoad);
 								document.querySelector(
 									'#form-checkout__submit'
 								).textContent = 'Go back';

@@ -260,7 +260,6 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
-
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 // export function addProduct(payload){
@@ -459,10 +458,12 @@ export function removeWishList(payload) {
 	};
 }
 
-export function createClient(payload) {
+export function createClient(payload, setLoad) {
 	return async function () {
 		try {
-			return await axios.post('/client', payload);
+      const result = await axios.post('/client', payload);
+      setLoad(false);
+      return result;
 		} catch (error) {
 			console.log(error);
 		}
@@ -490,20 +491,23 @@ export function getClients() {
 	};
 }
 
-export function logInUser(user) {
+export function logInUser(user, swal, setLoad) {
 	return async function (dispatch) {
 		try {
 			const { data } = await axios.get(
 				`/clientes/?login_name=${user.login_name}&login_password=${user.login_password}`
 			);
 
-			return !data
-				? alert('Username/password not found')
-				: (alert('You are logged in!'),
-				  dispatch({
-						type: 'LOG_IN_USER',
-						payload: data,
-				  }));
+      if(!data){
+        swal("Oh, oh!", "User or password not found", "warning");
+        setLoad("false")
+        return
+      }
+			
+			return dispatch({
+				type: 'LOG_IN_USER',
+				payload: data,
+			});
 		} catch (error) {
 			console.log(error);
 		}

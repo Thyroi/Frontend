@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
-import styles from "./Search.module.scss";
-import { useDispatch } from "react-redux";
-import { getByName } from "../../actions";
-import { Notifications } from "../../utils/utils";
+import styles from './Search.module.scss';
+import { useDispatch } from 'react-redux';
+import { getByName } from '../../actions';
+import { Notifications } from '../../utils/utils';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function Search({ allData, data, filtrado }) {
   const [search, setSearch] = useState('');
@@ -20,26 +20,26 @@ function Search({ allData, data, filtrado }) {
     ArrowUp: handleCursor,
   }
 
-  const resultados = useRef();
-  const busqueda = useRef();
-  const dispatch = useDispatch();
+	const resultados = useRef();
+	const busqueda = useRef();
+	const dispatch = useDispatch();
 
-  function handleCursor(e) {
-    e.key === "ArrowUp" &&
-      cursor > 0 &&
-      setCursor((prevCursor) => prevCursor - 1);
-    e.key === "ArrowDown" &&
-      cursor < filteredData.length - 1 &&
-      setCursor((prevCursor) => prevCursor + 1);
-    setCursor((state) => {
-      resultados.current.children[state].focus();
-      state === 0 &&
-        setTimeout(() => {
-          resultados.current.scrollTop = 0;
-        }, 200);
-      return state;
-    });
-  }
+	function handleCursor(e) {
+		e.key === 'ArrowUp' &&
+			cursor > 0 &&
+			setCursor((prevCursor) => prevCursor - 1);
+		e.key === 'ArrowDown' &&
+			cursor < filteredData.length - 1 &&
+			setCursor((prevCursor) => prevCursor + 1);
+		setCursor((state) => {
+			resultados.current.children[state].focus();
+			state === 0 &&
+				setTimeout(() => {
+					resultados.current.scrollTop = 0;
+				}, 200);
+			return state;
+		});
+	}
 
   function handleClear(e) {
      e && e.preventDefault();
@@ -51,12 +51,9 @@ function Search({ allData, data, filtrado }) {
 
   function handleClick(e) {
     e.preventDefault();
-    console.log("focus:\n")
-    console.log(document.activeElement)
     cursor>-1 && resultados.current.children[cursor].click();
-    return window.location.href.includes("/home")
-      ? (handleClear(), dispatch(getByName(search)))
-      : Notifications("Go home to search");
+    handleClear();
+    dispatch(getByName(search));
   }
 
   function handleChange(e) {
@@ -72,9 +69,9 @@ function Search({ allData, data, filtrado }) {
 
   function handleOnBlur(e) {
     if (!e.currentTarget.contains(e.relatedTarget) && !resultados.current.contains(e.relatedTarget)) {
-      console.log(e.relatedTarget)
-      console.log(resultados.current)
-      console.log(resultados.current.contains(e.relatedTarget))
+      console.log(e.relatedTarget);
+      console.log(resultados.current);
+      console.log(resultados.current.contains(e.relatedTarget));
       setSearch("");
       setFilteredData([]);
       setCursor(-1);
@@ -128,9 +125,13 @@ function Search({ allData, data, filtrado }) {
           Search
         </button>
       </div>
-      {filteredData.length !== 0 && (
-        <div
-          className={styles.searchResult}
+      {
+				<div
+					className={
+						filteredData.length !== 0
+							? styles.searchResult
+							: styles.searchResultNone
+					}
           ref={resultados}
           onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
           onBlur={(e)=>handleOnBlur(e)}
@@ -146,7 +147,7 @@ function Search({ allData, data, filtrado }) {
             );
           })}
         </div>
-      )}
+      }
     </div>
   );
 }

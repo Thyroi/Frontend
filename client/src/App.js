@@ -44,9 +44,9 @@ export default function App() {
 			: localStorage.removeItem('loggedInClient');
 	}, [client]);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		saveCart(client?.phone, cart);
-	}, [cart]);
+	}, [cart]); */
 
 	if (location.pathname === '/') {
 		return <Landing />;

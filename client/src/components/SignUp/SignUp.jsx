@@ -157,7 +157,7 @@ export default function SignUp(params) {
 			isRegistered: true,
 		});
 		dispatch(createClient(inputs));
-		//alert("You're registered!");
+		alert("You're registered!");
 		setInputs({
 			name: '',
 			lastname: '',

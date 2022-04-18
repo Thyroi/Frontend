@@ -18,13 +18,16 @@ import {
 	setActualPage,
 } from '../../actions';
 
-export default function Products() {
+export default function Products({filtrado, filtradoOnChange}) {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
 
 	const collection = useQuery().get('collection');
+	const collectionName = useQuery().get('name');
+	console.log(collectionName);
+	console.log(filtrado);
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
@@ -46,7 +49,7 @@ export default function Products() {
 		dispatch(clearDetail());
 		if (!products.length) {
 			collection
-				? dispatch(getByColId(collection))
+				? dispatch(getByColId(collection)) && filtradoOnChange(collectionName)
 				: dispatch(getInfo());
 		}
 		// dispatch(getByCatId());
@@ -123,8 +126,9 @@ export default function Products() {
 		} else if (e.target.value === '1') {
 			res = 'false';
 		} else {
-			return dispatch(getInfo());
+			return dispatch(getInfo()) && filtradoOnChange('All');
 		}
+		filtradoOnChange(res==='true'?'onOffer':'noOffer');
 		dispatch(getOffers(res));
 	};
 
@@ -136,8 +140,9 @@ export default function Products() {
 		event.preventDefault();
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-			return dispatch(getInfo());
+			return dispatch(getInfo()) && filtradoOnChange('All');
 		} else {
+			filtradoOnChange(event.target.textContent);
 			dispatch(getByCatId(event.target.value));
 		}
 
@@ -151,8 +156,8 @@ export default function Products() {
 		event.preventDefault();
 		setCurrentPage(1);
 		event.target.value === '0'
-			? dispatch(getInfo())
-			: dispatch(getByColId(event.target.value));
+			? dispatch(getInfo()) && filtradoOnChange('All')
+			: dispatch(getByColId(event.target.value)) && filtradoOnChange(event.target.textContent);
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//

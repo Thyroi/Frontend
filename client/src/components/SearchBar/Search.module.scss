@@ -22,7 +22,17 @@
 	width: 100%;
 	font-size: 0.9rem;
 }
-
+.searchIn {
+	display: flex;
+	align-items: center;
+    justify-content: space-evenly;
+	border: none;
+	width: 350px;
+	background: #ffffff;
+	color: #00000036;
+	outline: none;
+	font-weight: 600;
+}
 .searchButton {
 	height: 40px;
 	background: #e4687c;

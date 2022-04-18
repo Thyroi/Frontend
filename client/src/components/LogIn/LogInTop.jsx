@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { clearCart, logOutUser } from '../../actions';
 
 import styles from './LoginTop.module.scss';
@@ -9,6 +10,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 function LogInTop() {
 	const dispatch = useDispatch();
+	let history= useHistory();
 
 	const { login_name, name } = useSelector((state) => state?.loggedInClient);
 
@@ -17,6 +19,8 @@ function LogInTop() {
 		dispatch(logOutUser());
 		dispatch(clearCart());
 		alert('logged out');
+		history.push('/home');
+
 	}
 
 	return (

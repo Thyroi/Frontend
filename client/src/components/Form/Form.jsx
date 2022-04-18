@@ -33,14 +33,16 @@ function Form(params) {
 		lastName: client?.lastname || '',
 		eMail: client?.email || '',
 		phoneNumber: parseInt(client?.phone) || '',
-		streetNumber: client?.address?.calle + client?.address?.numero || '',
+		streetNumber: client?.address?.streetNumber || '',
 		city: client?.address?.city || '',
-		zipCode: client?.address?.zip_code || '',
-		provinceDepartament: '',
-		particularDetails: '',
+		zipCode: parseInt(client?.address?.zipCode) || '',
+		provinceDepartament: client?.address?.provinceDepartment || '',
+		particularDetails: client?.address?.particularDetails || '',
 	});
+	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
+	
 		setValidate({
 			n: data.name ? true : false,
 			ln: data.lastName ? true : false,
@@ -51,6 +53,7 @@ function Form(params) {
 			zc: zipCodeRegEx.test(data.zipCode),
 			pd: data.provinceDepartament ? true : false,
 		});
+		console.log(validate);
 		
 		setDisabled(
 			!(
@@ -77,7 +80,6 @@ function Form(params) {
 		pd: false,
 	});
 
-	const [disabled, setDisabled] = useState(true);
 
 	function handleChange(e) {
 		e.preventDefault();
@@ -352,12 +354,12 @@ function Form(params) {
 					</div>
 				</div>
 				<div className={style.submits}>
-					<input
+					{/* <input
 						className={style.button}
 						type='submit'
 						value='Save data'
 						id='saveNewData'
-					/>
+					/> */}
 
 					{/* <Link to='/cart/pay'> */}
 					<div className={style.inputCont}>

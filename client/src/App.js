@@ -34,8 +34,8 @@ export default function App() {
 	var products = useSelector((state) => state.products);
 	var allproducts = useSelector((state) => state.allproducts);
 	var [filtrado, setFiltrado] = useState('All');
-	// console.log(`products load: ${products.length}`);
-	// console.log(`allproducts load: ${allproducts.length}`);
+	console.log(`products load: ${products.length}`);
+	console.log(`allproducts load: ${allproducts.length}`);
 
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);

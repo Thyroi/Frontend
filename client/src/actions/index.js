@@ -1,10 +1,10 @@
 import { async } from '@firebase/util';
 import axios from 'axios';
 
-export function getInfo() {
+export function getInfo(nested) {
 	return async function (dispatch) {
 		try {
-			var info = await axios.get('/products/');
+			var info = await axios.get(`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}`);
 			return dispatch({
 				type: 'GET_ALL',
 				payload: info.data,
@@ -697,4 +697,11 @@ export function deleteList(id) {
 			console.log(error);
 		}
 	};
+}
+
+export function nested(payload){
+  return {
+    type: 'NESTED',
+    payload: payload
+  }
 }

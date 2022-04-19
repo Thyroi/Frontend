@@ -17,8 +17,10 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
-	cleanProducts
+	cleanProducts,
+  nested
 } from '../../actions';
+// import state from 'sweetalert/typings/modules/state';
 
 export default function Products({ filtrado, filtradoOnChange }) {
 	function useQuery() {
@@ -26,10 +28,18 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
 
+  // const [nested, setNested] = useState({
+  //   offer: null,
+  //   category: null,
+  //   collection: null
+  // });
+
 	const collection = useQuery().get('collection');
 	const collectionName = useQuery().get('name');
-	console.log(collectionName);
-	console.log(filtrado);
+
+  const nestedF = useSelector(state => state.nested);
+  console.log(nestedF);
+
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
@@ -52,12 +62,13 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		if (!products.length) {
 			collection
 				? dispatch(getByColId(collection)) && filtradoOnChange(collectionName)
-				: dispatch(getInfo());
+				: dispatch(getInfo(nestedF));
 		}
 		// dispatch(getByCatId());
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
 	}, []);
+
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
@@ -120,18 +131,31 @@ export default function Products({ filtrado, filtradoOnChange }) {
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	const handleOfferChange = (e) => {
+	const handleOfferChange = async (e) => {
 		e.preventDefault();
 		var res = '';
 		if (e.target.value === '0') {
-			res = 'true';
+			res = true;
+      // await setNested({...nested, offer : res});
+      nestedF.offer = res;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
+
 		} else if (e.target.value === '1') {
-			res = 'false';
+			res = false;
+      // await setNested({...nested, offer : res});
+      // await dispatch(getInfo({...nested, offer : res}));
+      nestedF.offer = res;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
+
 		} else {
-			return dispatch(getInfo()) && filtradoOnChange('All');
+      nestedF.offer = null;
+      dispatch(nested(nestedF));
+			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		}
 		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
-		dispatch(getOffers(res));
+		// dispatch(getOffers(res));
 	};
 
 	/* const handleStockChange = (event) => {
@@ -142,10 +166,19 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		event.preventDefault();
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-			return dispatch(getInfo()) && filtradoOnChange('All');
+      nestedF.category = 0;
+      dispatch(nested(nestedF));
+			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		} else {
 			filtradoOnChange(event.target.textContent);
-			dispatch(getByCatId(event.target.value));
+
+      // setNested({...nested, category : event.target.value});
+      // dispatch(getInfo({...nested, category : event.target.value}));
+			// dispatch(getByCatId(event.target.value));
+
+      nestedF.category = event.target.value;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
 		}
 
 	};
@@ -157,9 +190,20 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
 		setCurrentPage(1);
-		event.target.value === '0'
-			? dispatch(getInfo()) && filtradoOnChange('All')
-			: dispatch(getByColId(event.target.value)) && filtradoOnChange(event.target.textContent);
+
+    if(event.target.value === '0'){
+      nestedF.collection = null;
+      dispatch(nested(nestedF));
+      dispatch(getInfo({...nestedF}));
+      filtradoOnChange('All');
+      return;
+    }
+		
+    nestedF.collection = event.target.value;
+    dispatch(nested(nestedF));
+    dispatch(getInfo({...nestedF}));
+    // dispatch(getByColId(event.target.value));
+    filtradoOnChange(event.target.textContent);
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//

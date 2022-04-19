@@ -4,7 +4,14 @@ import axios from 'axios';
 export function getInfo() {
 	return async function (dispatch) {
 		try {
-			var info = await axios.get('/products/');
+			var info = await axios.get('/products/', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_ALL',
 				payload: info.data,
@@ -18,7 +25,14 @@ export function getInfo() {
 export function getSelectorsCol() {
 	return async function (dispatch) {
 		try {
-			var { data } = await axios.get('/selectors/collections');
+			var { data } = await axios.get('/selectors/collections', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			var response =
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
@@ -39,7 +53,14 @@ export function getSelectorsCol() {
 export function getByName(obj) {
 	return async function (dispatch) {
 		try {
-			var name = await axios.get(`/products/?filters=${obj}`);
+			var name = await axios.get(`/products/?filters=${obj}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_BY_NAME',
 				payload: name.data,
@@ -55,7 +76,14 @@ export function getByName(obj) {
 export function getById(params) {
 	return async function (dispatch) {
 		try {
-			var id = await axios.get(`/products/${params}`);
+			var id = await axios.get(`/products/${params}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			id.data.variants.forEach((variant) => {
 				variant.ProductImages.shift();
@@ -74,7 +102,14 @@ export function getById(params) {
 export function getSelectorsCat() {
 	return async function (dispatch) {
 		try {
-			const { data } = await axios.get('/selectors/categories');
+			const { data } = await axios.get('/selectors/categories', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			const menArr = data?.men?.map((p) => {
 				return { id: p.id_category, name: p.name };
@@ -97,7 +132,14 @@ export function getSelectorsCat() {
 export function getByCatId(payload) {
 	return async function (dispatch) {
 		try {
-			var { data } = await axios.get(`/products/bycat`);
+			var { data } = await axios.get(`/products/bycat`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			const res = [];
 			data?.women?.forEach(
@@ -156,7 +198,14 @@ export function setActualPage(page) {
 export function getByColId(payload) {
 	return async function (dispatch) {
 		try {
-			var { data } = await axios.get(`/products/bycol?id=${payload}`);
+			var { data } = await axios.get(`/products/bycol?id=${payload}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			const res = [];
 			data?.women?.forEach((e) => {
@@ -179,7 +228,14 @@ export function getByColId(payload) {
 export function getOffers(pay) {
 	return async function (dispatch) {
 		try {
-			var { data } = await axios.get(`/products/byoffer?offer=${pay}`);
+			var { data } = await axios.get(`/products/byoffer?offer=${pay}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			return dispatch({
 				type: 'GET_OFFERS',
@@ -194,7 +250,14 @@ export function getOffers(pay) {
 export function addProduct(payload) {
 	return async function () {
 		try {
-			await axios.post('/products/add', payload);
+			await axios.post('/products/add', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return alert('Producto creado con exito');
 		} catch (error) {
 			console.log(error);
@@ -205,7 +268,14 @@ export function addProduct(payload) {
 export function getOrders() {
 	return async function (dispatch) {
 		try {
-			var orders = await axios.get('/orders');
+			var orders = await axios.get('/orders', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_ORDERS',
 				payload: orders.data,
@@ -219,7 +289,14 @@ export function getOrders() {
 export function orderFilter(payload) {
 	return async function (dispatch) {
 		try {
-			const fil = await axios.get(`/orders?status=${payload}`);
+			const fil = await axios.get(`/orders?status=${payload}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			console.log(fil);
 			return dispatch({
 				type: 'ORDER_FILTER',
@@ -234,7 +311,14 @@ export function orderFilter(payload) {
 export function getOrdersById(id) {
 	return async function (dispatch) {
 		try {
-			var order = await axios.get(`/orders/${id}`);
+			var order = await axios.get(`/orders/${id}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_ORDER_BY_ID',
 				payload: order.data,
@@ -248,7 +332,14 @@ export function getOrdersById(id) {
 export function UpdateOrder(id, payload) {
 	return async function (dispatch) {
 		try {
-			const update = await axios.patch(`/orders/${id}`, payload);
+			const update = await axios.patch(`/orders/${id}`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			console.log(update + 'ok');
 			return dispatch({
 				type: 'UPDATE_ORDER',
@@ -333,7 +424,14 @@ export function addCart(cartProducts, payload, dispatch) {
 export function getAllUsers() {
 	return async function (dispatch) {
 		try {
-			const allusers = await axios.get('/users');
+			const allusers = await axios.get('/users', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_ALL_USERS',
 				payload: allusers.data,
@@ -347,7 +445,14 @@ export function getAllUsers() {
 export function updatePermission(payload) {
 	return async function (dispatch) {
 		try {
-			const update = await axios.put(`/users`, payload);
+			const update = await axios.put(`/users`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'UPDATE_PERMISSION',
 				payload: update.data,
@@ -360,7 +465,13 @@ export function updatePermission(payload) {
 
 export const deleteUser = (payload) => async (dispatch) => {
 	try {
-		return await axios.delete(`/users`, { data: payload });
+		return await axios.delete(`/users`, {
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+			},
+			data: payload,
+		});
 	} catch (error) {
 		console.log(error);
 	}
@@ -368,7 +479,12 @@ export const deleteUser = (payload) => async (dispatch) => {
 
 export const addCategory = (payload) => async (dispatch) => {
 	try {
-		return await axios.post(`/selectors/addCat`, payload);
+		return await axios.post(`/selectors/addCat`, payload, {
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 	}
@@ -377,7 +493,14 @@ export const addCategory = (payload) => async (dispatch) => {
 export function addNewUser(payload) {
 	return async function () {
 		try {
-			await axios.post('/users', payload);
+			await axios.post('/users', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -461,9 +584,16 @@ export function removeWishList(payload) {
 export function createClient(payload, setLoad) {
 	return async function () {
 		try {
-      const result = await axios.post('/client', payload);
-      setLoad(false);
-      return result;
+			const result = await axios.post('/client', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			setLoad(false);
+			return result;
 		} catch (error) {
 			console.log(error);
 		}
@@ -480,7 +610,14 @@ export function createClientGoogle(payload) {
 export function getClients() {
 	return async function (dispatch) {
 		try {
-			const { data } = await axios.get('/client');
+			const { data } = await axios.get('/client', {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_CLIENTS',
 				payload: data,
@@ -494,21 +631,43 @@ export function getClients() {
 export function logInUser(user, swal, setLoad) {
 	return async function (dispatch) {
 		try {
-			const { data } = await axios.get(
-				`/clientes/?login_name=${user.login_name}&login_password=${user.login_password}`
-			);
+			const dato = { login_name: user.login_name };
+			const { data } = await axios.post('/login', dato);
+			window.localStorage.setItem('token', data.token);
 
-      if(!data){
-        swal("Oh, oh!", "User or password not found", "warning");
-        setLoad("false")
-        return
-      }
-			
+			if (!data) {
+				swal('Oh, oh!', 'User or password not found', 'warning');
+				setLoad('false');
+				return;
+			}
+
 			return dispatch({
 				type: 'LOG_IN_USER',
-				payload: data,
+				payload: data.client,
 			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
 
+export function logInAdmin(user, swal, setLoad) {
+	return async function (dispatch) {
+		try {
+			const dato = { login_name: user.login_name };
+			const { data } = await axios.post('/login/admin', dato);
+			window.localStorage.setItem('token', data.token);
+
+			if (!data) {
+				swal('Oh, oh!', 'User or password not found', 'warning');
+				setLoad('false');
+				return;
+			}
+
+			return dispatch({
+				type: 'LOG_IN_ADMIN',
+				payload: data.client,
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -516,6 +675,7 @@ export function logInUser(user, swal, setLoad) {
 }
 
 export function logOutUser() {
+	window.localStorage.removeItem('token');
 	return {
 		type: 'LOG_OUT_USER',
 	};
@@ -525,56 +685,63 @@ export function getCart(phone) {
 	return async function (dispatch) {
 		try {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
-			const { data } = await axios.get(`/cart/${phone}`);
+			const { data } = await axios.get(`/cart/${phone}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 
 			/* if (!data.cart_items.includes(null))
 				cart = cart.concat(data.cart_items); */
-				
-				data?.cart_items?.forEach((i) => {
-					if (
-						//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
-						cart.some(
-							(c) =>
+
+			data?.cart_items?.forEach((i) => {
+				if (
+					//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
+					cart.some(
+						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
-							)
-							) {
-								//entonces se suma la cantidad de ese item de cart al item de data
-								cart = cart.map((c) => {
-									if (
-										c.id_product === i.id_product &&
-										c.variants[0].ColorName ===
-										i.variants[0].ColorName &&
-										Object.keys(c.variants[0].Stocks)[0] ===
-										Object.keys(i.variants[0].Stocks)[0]
-										) {
-											c.variants[0].Stocks[
-												Object.keys(i.variants[0].Stocks)[0]
-											] +=
-											i.variants[0].Stocks[
-												Object.keys(i.variants[0].Stocks)[0]
-											];
-											return c; //y se devuelve el objeto con el item de la BD sumado
-										}
-										return c; //si no hay coincidencia, se devuelve el ítem sin sumar nada.
-									});
-								} else {
-									cart.push(i); //si no tengo coincidencias entre BD y localstorage, pusheo ítems de BD en localstorage
-								}
-							});
-							
-							if (cart.length === 0) {
-								return dispatch({
-									type: 'ADD_CART',
-									payload: null,
-								});
-							}
-							
-							localStorage.setItem('cart', JSON.stringify(cart));
-							//await axios.put(`/cart/${phone}`, { cart_items: cart });
+								Object.keys(i.variants[0].Stocks)[0]
+					)
+				) {
+					//entonces se suma la cantidad de ese item de cart al item de data
+					cart = cart.map((c) => {
+						if (
+							c.id_product === i.id_product &&
+							c.variants[0].ColorName ===
+								i.variants[0].ColorName &&
+							Object.keys(c.variants[0].Stocks)[0] ===
+								Object.keys(i.variants[0].Stocks)[0]
+						) {
+							c.variants[0].Stocks[
+								Object.keys(i.variants[0].Stocks)[0]
+							] +=
+								i.variants[0].Stocks[
+									Object.keys(i.variants[0].Stocks)[0]
+								];
+							return c; //y se devuelve el objeto con el item de la BD sumado
+						}
+						return c; //si no hay coincidencia, se devuelve el ítem sin sumar nada.
+					});
+				} else {
+					cart.push(i); //si no tengo coincidencias entre BD y localstorage, pusheo ítems de BD en localstorage
+				}
+			});
+
+			if (cart.length === 0) {
+				return dispatch({
+					type: 'ADD_CART',
+					payload: null,
+				});
+			}
+
+			localStorage.setItem('cart', JSON.stringify(cart));
+			//await axios.put(`/cart/${phone}`, { cart_items: cart });
 
 			return dispatch({
 				type: 'GET_CART',
@@ -633,9 +800,14 @@ export function saveSendingData(payload) {
 // Modified user data
 
 export async function sendModifiedData(payload, dispatch, lastphone) {
-	
 	//axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
-	axios.patch(`http://localhost:3001/client/${lastphone}`, payload);
+
+	axios.patch(`http://localhost:3001/client/${lastphone}`, payload, {
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+		},
+	});
 	dispatch({
 		type: 'LOG_IN_USER',
 		payload: payload,
@@ -645,7 +817,14 @@ export async function sendModifiedData(payload, dispatch, lastphone) {
 export function getUserLists(id) {
 	return async function (dispatch) {
 		try {
-			let lists = await axios.get(`/lists/get?ClientPhone=${id}`);
+			let lists = await axios.get(`/lists/get?ClientPhone=${id}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return dispatch({
 				type: 'GET_USER_LISTS',
 				payload: lists.data,
@@ -659,7 +838,14 @@ export function getUserLists(id) {
 export function createList(payload) {
 	return async function () {
 		try {
-			await axios.post('/lists/create', payload);
+			await axios.post('/lists/create', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return alert('Added succesfully to your new list');
 		} catch (error) {
 			console.log(error);
@@ -670,7 +856,14 @@ export function createList(payload) {
 export function updateList(payload) {
 	return async function () {
 		try {
-			await axios.patch('/lists/update', payload);
+			await axios.patch('/lists/update', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return alert('Added succesfully to your list');
 		} catch (error) {
 			console.log(error);
@@ -681,7 +874,14 @@ export function updateList(payload) {
 export function updateListDeleted(payload) {
 	return async function () {
 		try {
-			await axios.patch('/lists/update', payload);
+			await axios.patch('/lists/update', payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			return alert('Deleted succesfully from your list');
 		} catch (error) {
 			console.log(error);
@@ -692,7 +892,14 @@ export function updateListDeleted(payload) {
 export function deleteList(id) {
 	return async function () {
 		try {
-			await axios.delete(`lists/delete?id=${id}`);
+			await axios.delete(`lists/delete?id=${id}`, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 		} catch (error) {
 			console.log(error);
 		}

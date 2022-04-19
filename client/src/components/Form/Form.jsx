@@ -33,14 +33,15 @@ function Form(params) {
 		lastName: client?.lastname || '',
 		eMail: client?.email || '',
 		phoneNumber: parseInt(client?.phone) || '',
-		streetNumber: client?.address?.calle + client?.address?.numero || '',
+		streetNumber: client?.address?.streetNumber || '',
 		city: client?.address?.city || '',
-		zipCode: client?.address?.zip_code || '',
-		provinceDepartament: '',
-		particularDetails: '',
+		zipCode: parseInt(client?.address?.zipCode) || '',
+		provinceDepartament: client?.address?.provinceDepartment || '',
+		particularDetails: client?.address?.particularDetails || '',
 	});
-
+  
 	useEffect(() => {
+	
 		setValidate({
 			n: data.name ? true : false,
 			ln: data.lastName ? true : false,
@@ -89,6 +90,7 @@ function Form(params) {
 			validate.pd
 		)
 	);
+
 
 	function handleChange(e) {
 		e.preventDefault();
@@ -362,12 +364,12 @@ function Form(params) {
 					</div>
 				</div>
 				<div className={style.submits}>
-					<input
+					{/* <input
 						className={style.button}
 						type='submit'
 						value='Save data'
 						id='saveNewData'
-					/>
+					/> */}
 
 					{/* <Link to='/cart/pay'> */}
 					<div className={style.inputCont}>

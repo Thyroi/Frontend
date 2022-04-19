@@ -166,7 +166,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		event.preventDefault();
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-      nestedF.category = 0;
+      nestedF.category = null;
       dispatch(nested(nestedF));
 			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		} else {
@@ -203,7 +203,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
     dispatch(nested(nestedF));
     dispatch(getInfo({...nestedF}));
     // dispatch(getByColId(event.target.value));
-    filtradoOnChange(event.target.textContent);
+    // filtradoOnChange(event.target.textContent);
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//

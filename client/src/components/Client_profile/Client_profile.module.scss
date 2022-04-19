@@ -212,3 +212,25 @@
     }
   }
 }
+
+
+@media screen and (max-width: 840px) {
+  .background {
+    flex-direction: column-reverse;
+    padding: 0 0;
+
+    .firstColumn {
+      width: 100%;
+    }
+
+    .secondColumn {
+      width: 100%;
+      display: flex;
+
+      .profileImageContainer {
+        margin-right: 3rem;
+      }
+    }
+  }
+
+}

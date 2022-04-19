@@ -272,8 +272,15 @@ export async function prepareProduct(product, cartItems) {
 
 export async function createGuestClient(/* setLoad */) {
 	const data = JSON.parse(localStorage.getItem('datosDeEnvio'));
-	await axios.post('/client', data);
+
+	await axios.post('/client', data, {
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+		},
+	});
   //setLoad(false);
+
 }
 
 export async function purchaseOrder(status) {
@@ -302,7 +309,17 @@ export async function purchaseOrder(status) {
 		clientPhone: parseInt(datosDeEnvio.phone),
 		orderStatus: statusM,
 	};
-	await axios.post('/orders', data);
+
+
+	console.log(data, '_____________purchase');
+
+	await axios.post('/orders', data, {
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+		},
+	});
+
 
 	// Remove purchase info from localStorage
 	// localStorage.removeItem("productPrepared");
@@ -311,7 +328,18 @@ export async function purchaseOrder(status) {
 
 export function saveCart(id, cart) {
 	if (id) {
-		axios.put(`/cart/${id}`, { cart_items: cart });
+		axios.put(
+			`/cart/${id}`,
+			{ cart_items: cart },
+			{
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			}
+		);
 	}
 }
 
@@ -345,19 +373,40 @@ export function showingNumberCart() {
 
 export async function getOrders(phone) {
 	console.log(phone);
-	const orders = await axios.get(`/orders?client=${phone}`);
+	const orders = await axios.get(`/orders?client=${phone}`, {
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+		},
+	});
 	return orders.data;
 }
 
 export async function deleteAccount(phone) {
-	await axios.delete(`/client/${phone}`);
+	await axios.delete(`/client/${phone}`, {
+		headers: {
+			'content-type': 'application/json',
+			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+		},
+	});
 }
 
 export async function resetPassword(phone, login_password) {
 	try {
-		const { data } = await axios.patch(`/client/${phone}`, {
-			login_password: login_password,
-		});
+		const { data } = await axios.patch(
+			`/client/${phone}`,
+			{
+				login_password: login_password,
+			},
+			{
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			}
+		);
 		if (data === 'Cliente actualizado') {
 			alert('password successfully set, happy shopping!');
 			window.location.href = '/home';
@@ -372,7 +421,12 @@ export async function resetPassword(phone, login_password) {
 
 export async function sendReset(email) {
 	try {
-		const { data } = await axios.get(`/client/resetPass?email=${email}`);
+		const { data } = await axios.get(`/client/resetPass?email=${email}`, {
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+			},
+		});
 		if (data === `Correo de reseteo enviado`) {
 			alert(`Correo de reseteo enviado a ${email}`);
 			window.location.href = '/home';

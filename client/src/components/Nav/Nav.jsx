@@ -52,7 +52,7 @@ export default function Nav() {
 						Dashboard
 					</NavLink>
 					
-					<NavLink
+					{/* <NavLink
 						to='/addnewproduct'
 						activeClassName={styles.active}
 						className={styles.title}>
@@ -61,7 +61,7 @@ export default function Nav() {
 							icon={faCirclePlus}
 						/>
 						Add Products
-					</NavLink>
+					</NavLink> */}
 
 					<NavLink
 						to='/cart'

@@ -16,8 +16,7 @@ import {
 	getSelectorsCat,
 	getSelectorsCol,
 	clearDetail,
-	setActualPage,
-  cleanProducts
+	setActualPage
 } from '../../actions';
 
 export default function Products({filtrado, filtradoOnChange}) {
@@ -122,7 +121,6 @@ export default function Products({filtrado, filtradoOnChange}) {
 
 	const handleOfferChange = (e) => {
 		e.preventDefault();
-    dispatch(cleanProducts());
 		var res = '';
 		if (e.target.value === '0') {
 			res = 'true';
@@ -141,7 +139,6 @@ export default function Products({filtrado, filtradoOnChange}) {
  */
 	const handleTypeChange = (event) => {
 		event.preventDefault();
-    dispatch(cleanProducts());
 		setCurrentPage(1);
 		if (event.target.value === '0') {
 			return dispatch(getInfo()) && filtradoOnChange('All');
@@ -158,7 +155,6 @@ export default function Products({filtrado, filtradoOnChange}) {
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
-    dispatch(cleanProducts());
 		setCurrentPage(1);
 		event.target.value === '0'
 			? dispatch(getInfo()) && filtradoOnChange('All')

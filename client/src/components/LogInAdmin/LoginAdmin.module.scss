@@ -78,71 +78,14 @@
 					}
 				}
 
-				.containerOptions {
-					width: 100%;
-					display: flex;
-					justify-content: space-between;
-
-					.containerRememberMe {
-						display: flex;
-						align-items: center;
-						position: relative;
-
-						// .checkIcon {
-						//   position: absolute;
-						//   width: 15px;
-						//   height: 15px;
-						//   left: 2px;
-						//   color: #ffffff;
-						// }
-
-						.buttonRemember {
-							appearance: none;
-							width: 20px;
-							height: 20px;
-							border: 2px solid #e4687c;
-							border-radius: 5px;
-							flex-shrink: 0;
-							cursor: pointer;
-							transition: 0.15s all ease-out;
-						}
-
-						.buttonRemember:checked {
-							background: #e4687c;
-						}
-
-						.buttonRemember:checked::after {
-							content: '\2714';
-							color: #ffffff;
-						}
-
-						.textRemember {
-							margin-left: 0.5rem;
-							font-size: 0.9rem;
-						}
-					}
-
-					.forgotText {
-						font-weight: 600;
-						font-size: 0.9rem;
-						transition: 0.15s all ease;
-						background-color: transparent;
-						color: #565656;
-					}
-
-					.forgotText:hover {
-						color: #e4687c;
-					}
-				}
-
+				
 				.containerLoginSignUp {
 					width: 100%;
 					display: flex;
 					flex-wrap: wrap;
 					justify-content: space-between;
 
-					.loginButton,
-					.signUpButton {
+					.loginButton {
 						width: 45%;
 						height: 2.5rem;
 						border-radius: 5px;
@@ -162,43 +105,11 @@
 						background: #d3566a;
 					}
 
-					.signUpButton {
-						display: flex;
-						justify-content: center;
-						align-items: center;
+		
+					
+			
 
-						background: #ffffff;
-						border: 3px solid #e4687c;
-						color: #e4687c;
-						font-weight: 500;
-
-						transition: 0.15s all ease;
-					}
-
-					.signUpButton:hover {
-						background: #e4687c;
-						color: #ffffff;
-					}
-
-					.googleButton {
-						width: 45%;
-						height: 2.5rem;
-						border-radius: 5px;
-						border: 0;
-						outline: 0;
-						cursor: pointer;
-
-						box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
-					}
-
-					.googleButton > div {
-						height: 90%;
-					}
-					.googleButton > span {
-						font-family: 'Montserrat', sans-serif;
-						font-size: 1rem;
-						font-weight: 500;
-					}
+					
 				}
 			}
 		}

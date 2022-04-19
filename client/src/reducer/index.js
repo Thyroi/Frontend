@@ -18,6 +18,10 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
+
+	loggedInAdmin:
+		JSON.parse(window.localStorage.getItem('loggedInAdmin')) || {},
+
 	lists: [],
 
   nested:{
@@ -26,8 +30,8 @@ const initialState = {
     collection: null
   }
 
-};
 
+};
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
@@ -151,6 +155,12 @@ export default function rootReducer(state = initialState, action) {
 				loggedInClient: action.payload,
 			};
 
+		case 'LOG_IN_ADMIN':
+			return {
+				...state,
+				loggedInAdmin: action.payload,
+			};
+
 		case 'SET_REMEMBER_ME':
 			return {
 				...state,
@@ -162,6 +172,7 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				loggedInClient: {},
+				loggedInAdmin: {},
 				cart: [],
 				rememberMe: false,
 			};

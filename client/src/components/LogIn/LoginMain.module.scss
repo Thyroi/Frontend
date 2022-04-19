@@ -270,7 +270,6 @@
 	background-color: white;
 	border-radius: 5px;
 	transform: scaleY(0) translateY(-100%);
-	box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
 	transition: all 0.15s;
 }
 
@@ -289,6 +288,7 @@
 	flex-direction: column;
 	background-color: rgba(255, 255, 255);
 	transform: scaleY(1);
+	box-shadow: 0 0 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
 	transition: all 0.15s;
 }
 

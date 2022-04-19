@@ -25,7 +25,7 @@ function ClientProfile(params) {
     client_info;
   const lastPhone=phone;
   const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
-    client_info.address;
+    client_info?.address;
 
   const dispatch = useDispatch();
 

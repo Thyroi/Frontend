@@ -7,8 +7,27 @@
   grid-template-columns: 3fr 1fr;
 }
 
+.container button {
+	margin: 0.5rem;
+	background-color: #e4687c;
+	color: white;
+	width: 90%;
+	font-weight: 600;
+	padding: 0.2rem;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	transition: all ease-in-out 0.15s;
+	align-self: center;
+	justify-self: center;
+	cursor: pointer;
+}
+.container button:hover {
+	background-color: white;
+	color: #e4687c;
+}
+
 .revenue,
-.customers,
+.orders,
 .stats,
 .products {
   background-color: white;
@@ -19,12 +38,25 @@
 }
 
 .revenue h4,
-.customers h4,
+.orders h4,
 .stats h4,
 .products h4 {
   grid-row: 1;
   margin: 0.5rem;
   justify-self: center;
+}
+
+.orders p {
+	padding: 0.2rem;
+}
+
+.orders .content {
+	grid-row: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-start;
+	margin-left: 1rem;
 }
 
 .content {

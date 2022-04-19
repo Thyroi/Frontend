@@ -1,20 +1,15 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import style from './LoginAdmin.module.scss';
-import { GoogleLogin } from 'react-google-login';
-import {
-	createClientGoogle,
-	logInUser,
-	getCart,
-	setRememberMe,
-} from '../../actions';
+
+import { logInAdmin } from '../../actions';
 import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
 
-	const loggedInClient = useSelector((state) => state.loggedInClient);
+	const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 
 	const [user, setUser] = useState({
 		login_name: '',
@@ -29,21 +24,10 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		if (loggedInClient.phone) {
-			dispatch(getCart(loggedInClient.phone));
-			params.history.push('/home');
+		if (loggedInAdmin.phone) {
+			params.history.push('/admindashboard');
 		}
-	}, [loggedInClient]);
-
-	function responseGoogle(response) {
-		const info = {
-			name: response.profileObj.givenName,
-			lastname: response.profileObj.familyName,
-			email: response.profileObj.email,
-		};
-		dispatch(createClientGoogle(info));
-		params.history.push('/signupgoogle');
-	}
+	}, [loggedInAdmin]);
 
 	function handleOnChange(e) {
 		e.preventDefault();
@@ -56,7 +40,7 @@ function LogInMain(params) {
 		if (!user?.login_name || !user?.login_password) {
 			alert('Please fill all fields');
 		}
-		dispatch(logInUser(user));
+		dispatch(logInAdmin(user));
 	}
 
 	function handleMailChange(e) {
@@ -111,17 +95,6 @@ function LogInMain(params) {
 						</div>
 
 						<div className={style.containerOptions}>
-							<div className={style.containerRememberMe}>
-								<input
-									className={style.buttonRemember}
-									type='checkbox'
-									name='rememberMe'
-									onClick={() => dispatch(setRememberMe())}
-								/>
-								<label className={style.textRemember}>
-									Remember me?
-								</label>
-							</div>
 							<div className={style.dropdownContainer}>
 								<span className={style.forgotText}>
 									Forgot password?

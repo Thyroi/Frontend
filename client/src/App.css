@@ -90,3 +90,12 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 420px) {
+  
+  .app {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10vh 1fr;
+  }
+  
+}

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { saveCart } from './utils/utils';
 
+import Offers from './components/Offers/Offers';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Main from './components/MercadoPago/Main';
@@ -34,6 +35,7 @@ export default function App() {
 
 	var products = useSelector((state) => state.products);
 	var allproducts = useSelector((state) => state.allproducts);
+	var loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 	var [filtrado, setFiltrado] = useState('All');
 	console.log(`products load: ${products.length}`);
 	console.log(`allproducts load: ${allproducts.length}`);
@@ -74,7 +76,11 @@ export default function App() {
 					<div className='top'>
 						<div className='topSearch'>
 							{location.pathname === '/home' && (
-								<Search data={products} allData={allproducts} filtrado={filtrado}  />
+								<Search
+									data={products}
+									allData={allproducts}
+									filtrado={filtrado}
+								/>
 							)}
 						</div>
 						<div className='topLogin'>
@@ -89,7 +95,8 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
-
+						{/* {loggedInAdmin.phone && (
+							<> */}
 						<Route
 							exact
 							path='/admindashboard'
@@ -108,7 +115,23 @@ export default function App() {
 							component={OrderDetails}
 						/>
 
-						<Route exact path='/home' component={()=>(<Products filtrado={filtrado} filtradoOnChange={setFiltrado} />)}/>
+						<Route
+							exact
+							path='/admindashboard/offers'
+							component={Offers}
+						/>
+						{/* </>
+						)} */}
+						<Route
+							exact
+							path='/home'
+							component={() => (
+								<Products
+									filtrado={filtrado}
+									filtradoOnChange={setFiltrado}
+								/>
+							)}
+						/>
 
 						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/cart/pay' component={Main} />

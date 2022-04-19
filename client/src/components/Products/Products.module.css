@@ -164,3 +164,9 @@
     justify-content: space-evenly;
   }
 }
+
+@media screen and (max-width: 920px) {
+  .cards {
+    flex-shrink: 0;
+  }
+}

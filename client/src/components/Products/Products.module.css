@@ -4,6 +4,7 @@
 
 .filters {
   width: 100%;
+  margin-left: 2rem;
 	display: flex;
   flex-wrap: wrap;
 	color: #565656;

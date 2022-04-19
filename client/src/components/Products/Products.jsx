@@ -17,7 +17,6 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
-	cleanProducts,
   nested,
 	orderByPrice,
 	orderByArrive,

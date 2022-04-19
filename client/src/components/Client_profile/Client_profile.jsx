@@ -23,15 +23,19 @@ function ClientProfile(params) {
 
   const { login_name, login_password, name, lastname, phone, email } =
     client_info;
+  const lastPhone=phone;
   const { streetNumber, provinceDepartment, city, zipCode, particularDetails } =
     client_info.address;
 
   const dispatch = useDispatch();
 
   function onChangeData(e) {
+    
     const key = e.target.name;
+    console.log(key)
     if (dataToChange.hasOwnProperty(key)) {
       setDataToChange({ ...dataToChange, [key]: e.target.value });
+     
       return;
     }
 
@@ -77,7 +81,8 @@ function ClientProfile(params) {
             id="form"
             onSubmit={(e) => {
               e.preventDefault();
-              sendModifiedData(dataToChange, dispatch);
+              sendModifiedData(dataToChange, dispatch, lastPhone);
+               alert ("Datos actualizados")
             }}
           >
             <div className={style.formGroups}>
@@ -213,6 +218,7 @@ function ClientProfile(params) {
                   type="submit"
                   value="Modify data"
                   onChange={(e) => onChangeData(e)}
+                 
                 />
               </div>
             </div>
@@ -220,21 +226,21 @@ function ClientProfile(params) {
         </div>
 
         <div className={style.infoContainer}>
-          <div className={style.totalSpendContainer}>
+          {/* <div className={style.totalSpendContainer}>
             <FontAwesomeIcon className={style.infoIconW} icon={faWallet} />
             <div className={style.textInfo}>
               <p className={style.textInfoTitle}>Total spend</p>
               <p className={style.textInfoContent}>$600000</p>
             </div>
-          </div>
+          </div> */}
 
-          <div className={style.totalPurchaseContainer}>
+       {/*    <div className={style.totalPurchaseContainer}>
             <FontAwesomeIcon className={style.infoIconB} icon={faBagShopping} />
             <div className={style.textInfo}>
               <p className={style.textInfoTitle}>Total purchase</p>
               <p className={style.textInfoContent}>50</p>
             </div>
-          </div>
+          </div> */}
 
           <div
             className={style.deleteAccountContainer}
@@ -260,11 +266,11 @@ function ClientProfile(params) {
           />
         </div>
 
-        <div className={style.containerCart}>
+       {/*  <div className={style.containerCart}>
           <FontAwesomeIcon className={style.cartImage} icon={faCartShopping} />
           <p className={style.itemsInCart}>8</p>
         </div>
-
+ */}
         <div className={style.generalButtons}>
           <div className={style.generalButton} onClick={handleFavorite}>Favorites</div>
           <div className={style.generalButton}>

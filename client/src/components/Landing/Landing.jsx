@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import CardCategory from '../CardCategory/CardCategory';
-import { cleanProducts } from '../../actions';
+import { cleanProducts, getInfo } from '../../actions';
 import styles from './Landing.module.css';
 
 export default function Landing() {
 	const dispatch = useDispatch();
-	useEffect(() => dispatch(cleanProducts()), [dispatch]);
+	useEffect(() => {
+		dispatch(getInfo())
+		.then(() => dispatch(cleanProducts()))
+	}, [dispatch]);
 
 	let collections = [
 		{

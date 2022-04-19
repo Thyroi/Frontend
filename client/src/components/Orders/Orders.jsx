@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useSelector} from 'react-redux';
 
 import style from "./Orders.module.scss";
 
@@ -6,9 +7,10 @@ import { getOrders } from "../../utils/utils";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  let phone= useSelector((state)=>state.loggedInClient.phone);
 
   useEffect(() => {
-    let phone = 3144459829;
+   
     getOrders(phone).then((res) => {
       setOrders(res);
       console.log(res);
@@ -16,6 +18,7 @@ function Orders() {
   }, []);
 
   if (!orders) return <div>Loading</div>;
+  if (!orders.length) return <div className={style.empty}>No hay registros en tu historial de compras</div>
 
   return (
     <div className={style.containerOrders}>

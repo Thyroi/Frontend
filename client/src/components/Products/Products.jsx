@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './Products.module.css';
 import Card from '../Card/Card';
+import Loader from '../Loader/Loader';
 import Dropdown from '../Dropdown/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -18,15 +19,19 @@ import {
 	setActualPage,
 	orderByPrice,
 	orderByArrive,
+	cleanProducts
 } from '../../actions';
 
-export default function Products() {
+export default function Products({ filtrado, filtradoOnChange }) {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
 
 	const collection = useQuery().get('collection');
+	const collectionName = useQuery().get('name');
+	console.log(collectionName);
+	console.log(filtrado);
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
@@ -48,7 +53,7 @@ export default function Products() {
 		dispatch(clearDetail());
 		if (!products.length) {
 			collection
-				? dispatch(getByColId(collection))
+				? dispatch(getByColId(collection)) && filtradoOnChange(collectionName)
 				: dispatch(getInfo());
 		}
 		// dispatch(getByCatId());
@@ -125,8 +130,9 @@ export default function Products() {
 		} else if (e.target.value === '1') {
 			res = 'false';
 		} else {
-			return dispatch(getInfo());
+			return dispatch(getInfo()) && filtradoOnChange('All');
 		}
+		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
 		dispatch(getOffers(res));
 	};
 
@@ -138,9 +144,12 @@ export default function Products() {
 		event.preventDefault();
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-			return dispatch(getInfo());
+			return dispatch(getInfo()) && filtradoOnChange('All');
 		} else {
-			dispatch(getByCatId(event.target.name));
+
+			filtradoOnChange(event.target.textContent);
+			dispatch(getByCatId(event.target.value));
+
 		}
 
 	};
@@ -153,8 +162,8 @@ export default function Products() {
 		event.preventDefault();
 		setCurrentPage(1);
 		event.target.value === '0'
-			? dispatch(getInfo())
-			: dispatch(getByColId(event.target.value));
+			? dispatch(getInfo()) && filtradoOnChange('All')
+			: dispatch(getByColId(event.target.value)) && filtradoOnChange(event.target.textContent);
 	};
 
 	const handlePriceFilter = (event) =>{
@@ -174,7 +183,7 @@ export default function Products() {
 	//-----------------------------------HANDLERS------------------------------------------//
 
 	return !products.length || !categories.women?.length || !collections.length ? (
-		<h2>Loading...</h2>
+		<Loader />
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
@@ -253,11 +262,11 @@ export default function Products() {
 			<div className={style.pagination}>
 				<div className={style.text}>
 					{`Showing ${results < products.length
-							? `${currentPage === 1
-								? 1
-								: results * currentPage - 1
-							} - ${results * currentPage}`
-							: products.length
+						? `${currentPage === 1
+							? 1
+							: results * currentPage - 1
+						} - ${results * currentPage}`
+						: products.length
 						} of ${products.length}`}
 				</div>
 				<div className={style.pages}>

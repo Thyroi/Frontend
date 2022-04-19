@@ -93,7 +93,6 @@ export default function rootReducer(state = initialState, action) {
 		case 'CLEAR_PRODUCTS':
 			return {
 				...state,
-
 				products: [],
 			};
 		case 'CLEAR_DETAIL':

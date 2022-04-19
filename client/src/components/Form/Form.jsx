@@ -33,14 +33,15 @@ function Form(params) {
 		lastName: client?.lastname || '',
 		eMail: client?.email || '',
 		phoneNumber: parseInt(client?.phone) || '',
-		streetNumber: client?.address?.calle + client?.address?.numero || '',
+		streetNumber: client?.address?.streetNumber || '',
 		city: client?.address?.city || '',
-		zipCode: client?.address?.zip_code || '',
-		provinceDepartament: '',
-		particularDetails: '',
+		zipCode: parseInt(client?.address?.zipCode) || '',
+		provinceDepartament: client?.address?.provinceDepartment || '',
+		particularDetails: client?.address?.particularDetails || '',
 	});
-
+  
 	useEffect(() => {
+	
 		setValidate({
 			n: data.name ? true : false,
 			ln: data.lastName ? true : false,
@@ -51,7 +52,7 @@ function Form(params) {
 			zc: zipCodeRegEx.test(data.zipCode),
 			pd: data.provinceDepartament ? true : false,
 		});
-		
+
 		setDisabled(
 			!(
 				validate.n &&
@@ -67,28 +68,39 @@ function Form(params) {
 	}, [data]);
 
 	const [validate, setValidate] = useState({
-		n: false,
-		ln: false,
-		e: false,
-		p: false,
-		sn: false,
-		c: false,
-		zc: false,
-		pd: false,
+		n: data.name ? true : false,
+		ln: data.lastName ? true : false,
+		e: emailRegEx.test(data.eMail),
+		p: data.phoneNumber ? true : false,
+		sn: data.streetNumber ? true : false,
+		c: data.city ? true : false,
+		zc: zipCodeRegEx.test(data.zipCode),
+		pd: data.provinceDepartament ? true : false,
 	});
 
-	const [disabled, setDisabled] = useState(true);
+	const [disabled, setDisabled] = useState(
+		!(
+			validate.n &&
+			validate.ln &&
+			validate.e &&
+			validate.p &&
+			validate.sn &&
+			validate.c &&
+			validate.zc &&
+			validate.pd
+		)
+	);
+
 
 	function handleChange(e) {
 		e.preventDefault();
 		const { name, value } = e.target;
 		setData({ ...data, [name]: value });
-		
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		(saveSendingData(data));
+		saveSendingData(data);
 		return params.history.push('/cart/pay');
 	}
 
@@ -352,12 +364,12 @@ function Form(params) {
 					</div>
 				</div>
 				<div className={style.submits}>
-					<input
+					{/* <input
 						className={style.button}
 						type='submit'
 						value='Save data'
 						id='saveNewData'
-					/>
+					/> */}
 
 					{/* <Link to='/cart/pay'> */}
 					<div className={style.inputCont}>

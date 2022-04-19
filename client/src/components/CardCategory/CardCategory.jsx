@@ -11,7 +11,7 @@ function CardCategory({ img, name, id }) {
 
 			<Link
 				className={styles.title}
-				to={name === 'All' ? '/home' : `/home?collection=${id}`}>
+				to={name === 'All' ? '/home' : `/home?collection=${id}&name=${name}`}>
 				{name}
 			</Link>
 

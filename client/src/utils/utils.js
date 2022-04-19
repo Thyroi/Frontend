@@ -270,10 +270,10 @@ export async function prepareProduct(product, cartItems) {
 	localStorage.setItem('productPrepared', JSON.stringify(productToBuy));
 }
 
-export async function createGuestClient() {
+export async function createGuestClient(/* setLoad */) {
 	const data = JSON.parse(localStorage.getItem('datosDeEnvio'));
-	console.log(data, '_______________client');
 	await axios.post('/client', data);
+  //setLoad(false);
 }
 
 export async function purchaseOrder(status) {
@@ -302,7 +302,7 @@ export async function purchaseOrder(status) {
 		orderStatus:
 			status === 'rejected'
 				? 'Canceled'
-				: status === 'pending'
+				: status === 'in_process'
 				? 'Processing'
 				: 'Completed',
 	};
@@ -322,7 +322,7 @@ export function saveCart(id, cart) {
 	}
 }
 
-export function sendingCart(cartItems, phone) {
+/* export function sendingCart(cartItems, phone) {
 	if (cartItems.length === 0 || cartItems === undefined) return;
 
 	const dataToSend = {
@@ -330,7 +330,7 @@ export function sendingCart(cartItems, phone) {
 	};
 
 	axios.put(`/cart/${phone}`, dataToSend);
-}
+} */
 
 export function showingNumberCart() {
 	const cart = JSON.parse(localStorage.getItem('cart')) || [];

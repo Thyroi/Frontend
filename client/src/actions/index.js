@@ -260,7 +260,6 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
-
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 // export function addProduct(payload){
@@ -459,10 +458,12 @@ export function removeWishList(payload) {
 	};
 }
 
-export function createClient(payload) {
+export function createClient(payload, setLoad) {
 	return async function () {
 		try {
-			return await axios.post('/client', payload);
+      const result = await axios.post('/client', payload);
+      setLoad(false);
+      return result;
 		} catch (error) {
 			console.log(error);
 		}
@@ -490,20 +491,24 @@ export function getClients() {
 	};
 }
 
-export function logInUser(user) {
+export function logInUser(user, swal, setLoad) {
 	return async function (dispatch) {
 		try {
 			const { data } = await axios.get(
 				`/clientes/?login_name=${user.login_name}&login_password=${user.login_password}`
 			);
 
-			return !data
-				? alert('Username/password not found')
-				: (alert('You are logged in!'),
-				  dispatch({
-						type: 'LOG_IN_USER',
-						payload: data,
-				  }));
+      if(!data){
+        swal("Oh, oh!", "User or password not found", "warning");
+        setLoad("false")
+        return
+      }
+			
+			return dispatch({
+				type: 'LOG_IN_USER',
+				payload: data,
+			});
+
 		} catch (error) {
 			console.log(error);
 		}
@@ -522,55 +527,54 @@ export function getCart(phone) {
 			let cart = JSON.parse(localStorage.getItem('cart')) || [];
 			const { data } = await axios.get(`/cart/${phone}`);
 
-			if (!data.cart_items.includes(null))
-				cart = cart.concat(data.cart_items);
-
-			await axios.put(`/cart/${phone}`, { cart_items: cart });
-
-			data?.cart_items?.forEach((i) => {
-				if (
-					//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
-					cart.some(
-						(c) =>
+			/* if (!data.cart_items.includes(null))
+				cart = cart.concat(data.cart_items); */
+				
+				data?.cart_items?.forEach((i) => {
+					if (
+						//algún item de cart tiene el mismo id_product y el mismo color que algún otro de la respuesta de data...
+						cart.some(
+							(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
-					)
-				) {
-					//entonces se suma la cantidad de ese item de cart al item de data
-					cart = cart.map((c) => {
-						if (
-							c.id_product === i.id_product &&
-							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
-							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
-						) {
-							c.variants[0].Stocks[
-								Object.keys(i.variants[0].Stocks)[0]
-							] +=
-								i.variants[0].Stocks[
-									Object.keys(i.variants[0].Stocks)[0]
-								];
-							return c; //y se devuelve el objeto con el item de la BD sumado
-						}
-						return c; //si no hay coincidencia, se devuelve el ítem sin sumar nada.
-					});
-				} else {
-					cart.push(i); //si no tengo coincidencias entre BD y localstorage, pusheo ítems de BD en localstorage
-				}
-			});
-
-			if (cart.length === 0) {
-				return dispatch({
-					type: 'ADD_CART',
-					payload: null,
-				});
-			}
-
-			localStorage.setItem('cart', JSON.stringify(cart));
+							Object.keys(i.variants[0].Stocks)[0]
+							)
+							) {
+								//entonces se suma la cantidad de ese item de cart al item de data
+								cart = cart.map((c) => {
+									if (
+										c.id_product === i.id_product &&
+										c.variants[0].ColorName ===
+										i.variants[0].ColorName &&
+										Object.keys(c.variants[0].Stocks)[0] ===
+										Object.keys(i.variants[0].Stocks)[0]
+										) {
+											c.variants[0].Stocks[
+												Object.keys(i.variants[0].Stocks)[0]
+											] +=
+											i.variants[0].Stocks[
+												Object.keys(i.variants[0].Stocks)[0]
+											];
+											return c; //y se devuelve el objeto con el item de la BD sumado
+										}
+										return c; //si no hay coincidencia, se devuelve el ítem sin sumar nada.
+									});
+								} else {
+									cart.push(i); //si no tengo coincidencias entre BD y localstorage, pusheo ítems de BD en localstorage
+								}
+							});
+							
+							if (cart.length === 0) {
+								return dispatch({
+									type: 'ADD_CART',
+									payload: null,
+								});
+							}
+							
+							localStorage.setItem('cart', JSON.stringify(cart));
+							//await axios.put(`/cart/${phone}`, { cart_items: cart });
 
 			return dispatch({
 				type: 'GET_CART',
@@ -628,8 +632,10 @@ export function saveSendingData(payload) {
 
 // Modified user data
 
-export async function sendModifiedData(payload, dispatch) {
-	axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+export async function sendModifiedData(payload, dispatch, lastphone) {
+	
+	//axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
+	axios.patch(`http://localhost:3001/client/${lastphone}`, payload);
 	dispatch({
 		type: 'LOG_IN_USER',
 		payload: payload,

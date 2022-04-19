@@ -272,3 +272,7 @@
 	padding: 0.5rem;
 	height: auto;
 }
+
+@media screen and (max-width: 999px) {
+  
+}

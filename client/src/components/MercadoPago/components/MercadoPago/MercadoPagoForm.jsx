@@ -42,7 +42,7 @@ export default function MercadoPagoForm() {
 	};
 
 	useEffect(() => {
-		if(resultPayment&&resultPayment.status) {
+		if(resultPayment && resultPayment.status) {
 		 	purchaseOrder(resultPayment.status); 
 			
 		}

@@ -279,36 +279,29 @@ export async function createGuestClient(/* setLoad */) {
 export async function purchaseOrder(status) {
 	const productPrepared = JSON.parse(localStorage.getItem('productPrepared'));
 	const datosDeEnvio = JSON.parse(localStorage.getItem('datosDeEnvio'));
-
 	let totalDue = 0;
 	productPrepared.forEach((item) => {
 		let price = item.price;
 		price = parseFloat(price);
 		price = price.toFixed(2);
 		price = parseFloat(price);
-
 		totalDue += price;
 	});
 
 	// const totalDue = productPrepared.reduce((total, item) => {
 	//   return total + item.price;
 	// });
-
+	let statusM
+	if (status==='rejected')  statusM='Canceled';
+	if(status==='in_process')statusM='Processing';
+	else statusM='Completed';
 	const data = {
 		orderDetails: [...productPrepared],
 		total: totalDue,
 		address: datosDeEnvio.address,
 		clientPhone: parseInt(datosDeEnvio.phone),
-		orderStatus:
-			status === 'rejected'
-				? 'Canceled'
-				: status === 'in_process'
-				? 'Processing'
-				: 'Completed',
+		orderStatus: statusM,
 	};
-
-	console.log(data, '_____________purchase');
-
 	await axios.post('/orders', data);
 
 	// Remove purchase info from localStorage

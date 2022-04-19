@@ -16,10 +16,11 @@ import {
 	getSelectorsCat,
 	getSelectorsCol,
 	clearDetail,
-	setActualPage
+	setActualPage,
+	cleanProducts
 } from '../../actions';
 
-export default function Products({filtrado, filtradoOnChange}) {
+export default function Products({ filtrado, filtradoOnChange }) {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
@@ -129,7 +130,7 @@ export default function Products({filtrado, filtradoOnChange}) {
 		} else {
 			return dispatch(getInfo()) && filtradoOnChange('All');
 		}
-		filtradoOnChange(res==='true'?'onOffer':'noOffer');
+		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
 		dispatch(getOffers(res));
 	};
 
@@ -230,11 +231,11 @@ export default function Products({filtrado, filtradoOnChange}) {
 			<div className={style.pagination}>
 				<div className={style.text}>
 					{`Showing ${results < products.length
-							? `${currentPage === 1
-								? 1
-								: results * currentPage - 1
-							} - ${results * currentPage}`
-							: products.length
+						? `${currentPage === 1
+							? 1
+							: results * currentPage - 1
+						} - ${results * currentPage}`
+						: products.length
 						} of ${products.length}`}
 				</div>
 				<div className={style.pages}>

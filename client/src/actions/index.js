@@ -656,6 +656,21 @@ export function getUserLists(id) {
 	};
 }
 
+export function getSpecificList(id, title){
+	return async function (dispatch){
+		try{
+			let lists = await axios.get(`/lists/getbyidandtitle?ClientPhone=${id}&title=${title}`)
+			return dispatch({
+				type: "GET_SPECIFIC_LIST",
+				payload: lists.data
+			})
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
+}
+
 export function createList(payload) {
 	return async function () {
 		try {
@@ -697,4 +712,34 @@ export function deleteList(id) {
 			console.log(error);
 		}
 	};
+}
+
+export function orderByPrice(params){
+	return async function(dispatch){
+		try{
+			const ordered = await axios.get(`/products/order?type=${params}`)
+			return dispatch({
+				type: "ORDER_BY_PRICE",
+				payload: ordered.data
+			})
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+
+export function orderByArrive(params){
+	return async function(dispatch){
+		try{
+			const arrive = await axios.get(`/products/getByMoreRecent?order=${params}`)
+			return dispatch({
+				type: "ORDER_BY_ARRIVE",
+				payload: arrive.data
+			})
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
 }

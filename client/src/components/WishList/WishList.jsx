@@ -106,15 +106,16 @@ export default function Wishlist({ match, history }) {
 											}}>
 											Remove
 										</button>
-										<button onClick={handleInvite}>
-											Share this list
-										</button>
+										
 									</div>
 								</div>
 							</div>
 						</div>
 					);
 				})}
+				<button onClick={handleInvite}>
+					Share this list
+				</button>
 		</div>
 	);
 }

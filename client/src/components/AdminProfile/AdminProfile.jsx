@@ -34,6 +34,9 @@ function AdminProfile() {
 				<button onClick={() => history.push('/addnewproduct')}>
 					Add products
 				</button>
+				<button onClick={() => history.push('/admindashboard/offers')}>
+					Offers
+				</button>
 			</div>
 			<div className={styles.stats}>
 				<h4>Stats</h4>

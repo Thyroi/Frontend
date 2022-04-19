@@ -97,3 +97,10 @@
 	font-size: 1.2rem;
 	font-weight: 600;
 }
+
+
+@media screen and (max-width: 999px) {
+  .container {
+
+  }
+}

@@ -27,6 +27,7 @@ import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
 import Wishlist from './components/WishList/WishList';
 import AdminProfile from './components/AdminProfile/AdminProfile';
+import Favorite from './components/Favorite/Favorite';
 
 export default function App() {
 	const location = useLocation();
@@ -131,6 +132,7 @@ export default function App() {
 
 						<Route exact path='/orders' component={Orders} />
 						<Route exact path='/lists/:id' component={Wishlist} />
+						<Route exact path='/favorites' component={Favorite} />
 					</div>
 				</div>
 			</Route>

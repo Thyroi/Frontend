@@ -51,17 +51,25 @@ function ClientProfile(params) {
     dispatch(getUserLists(client_info.phone))
   }, [dispatch])
 
-  function opt (){
-    let nuevo = []
-    for(var i = 0; i < lists?.length; i++){
-    nuevo = [...nuevo, {id: lists[i].id, name: lists[i].title}]
-  }
-    return nuevo
-  }
+  function opt() {
+		let nuevo = [];
+		for (var i = 0; i < lists?.length; i++) {
+			if(lists[i].title === "Favorite"){
+			} else {
+				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
+			}
+		}
+		return nuevo;
+	} 
 
   function handleRedirect(e){
     e.preventDefault()
     params.history.push(`/lists/${e.target.value}`)
+  }
+  
+  function handleFavorite(e){
+    e.preventDefault()
+    params.history.push('/favorites')
   }
 
   return (
@@ -264,7 +272,7 @@ function ClientProfile(params) {
         </div>
  */}
         <div className={style.generalButtons}>
-          <div className={style.generalButton}>Favorites</div>
+          <div className={style.generalButton} onClick={handleFavorite}>Favorites</div>
           <div className={style.generalButton}>
             <Link to="/orders">Orders</Link>
           </div>

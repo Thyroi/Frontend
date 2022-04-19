@@ -18,7 +18,10 @@ import {
 	clearDetail,
 	setActualPage,
 	cleanProducts,
-  nested
+  nested,
+	orderByPrice,
+	orderByArrive,
+	cleanProducts
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -170,6 +173,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
       dispatch(nested(nestedF));
 			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		} else {
+
 			filtradoOnChange(event.target.textContent);
 
       // setNested({...nested, category : event.target.value});
@@ -205,6 +209,20 @@ export default function Products({ filtrado, filtradoOnChange }) {
     // dispatch(getByColId(event.target.value));
     // filtradoOnChange(event.target.textContent);
 	};
+
+	const handlePriceFilter = (event) =>{
+		event.preventDefault();
+		event.target.value === '1'
+		? dispatch(orderByPrice("ASC"))
+		: dispatch(orderByPrice("DESC"))
+	}
+
+	const handleArrive = (event) => {
+		event.preventDefault();
+		event.target.value === "1"
+		? dispatch(orderByArrive("DESC"))
+		: dispatch(orderByArrive("ASC"))
+	}
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -246,6 +264,14 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleTypeChange}
 				/>
+				<Dropdown
+					placeHolder={'Price'}
+					options={[
+						{id: 1, name: 'ASC'},
+						{id: 2, name: 'DESC'}
+					]}
+					handler={handlePriceFilter}
+				/>
 				{/* <Dropdown
 					placeHolder={'Brand'}
 					options={[
@@ -260,6 +286,11 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					placeHolder={'Collection'}
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
+				/>
+				<Dropdown
+					placeHolder={'Arrive'}
+					options={[{ id: 1, name: "Last arrives"}, { id: 2, name: "Else"}]}
+					handler={handleArrive}
 				/>
 			</div>
 			<div className={style.cards}>

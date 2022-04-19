@@ -23,6 +23,7 @@ function LogInTop() {
 		
 		dispatch(clearCart());
 		alert('logged out');
+
 		history.push('/home');
 
 	}
@@ -47,7 +48,7 @@ function LogInTop() {
 			) : (
 				<div className={styles.dropdown}>
 					<Link to='/login'>Client Log in/Sign up</Link>
-					<Link to='/login'>Admin Log in</Link>
+					<Link to='/loginadmin'>Admin Log in</Link>
 				</div>
 			)}
 		</div>

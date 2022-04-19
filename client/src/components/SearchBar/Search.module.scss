@@ -1,10 +1,9 @@
 .container {
-  position: relative;
-  min-width: 40%;
-  max-width: 50%;
+	position: relative;
+	min-width: 60%;
+	max-width: 75%;
 }
 .searchInputs {
-
 	display: flex;
 }
 .iconSearch {
@@ -39,8 +38,6 @@
 }
 .searchResult {
 	display: inline;
-
-	padding-left: 0.8rem;
 	position: absolute;
 	margin-top: 0.5rem;
 	width: 100%;
@@ -48,32 +45,51 @@
 	max-height: 200px;
 	background-color: #ffffff;
 	border-radius: 5px;
-	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 	overflow-y: auto;
 	z-index: 1;
+	transform: scaleY(1);
+	transition: all 0.2s;
 }
+
+.searchResultNone {
+	display: inline;
+	position: absolute;
+	margin-top: 0.5rem;
+	width: 100%;
+	height: auto;
+	max-height: 200px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	overflow: hidden;
+	overflow-y: auto;
+	z-index: 1;
+	transform: scaleY(0);
+	transition: all 0.2s;
+}
+
 .searchResult::-webkit-scrollbar {
 	display: none;
 }
 .searchResult .dataItem {
-	padding: 0.5rem 0rem;
+	padding: 0.675rem 0.5rem;
 	width: 100%;
-	height: 50px;
 	flex-wrap: wrap;
 	display: flex;
-}
-.dataItem {
 	text-decoration: none;
 	color: #565656;
+	transition: 0.15s all ease;
 }
+
 .dataItem:hover {
 	background-color: #e4687c;
-	color: #000000;
+	color: white;
 }
 .dataItem:active {
 	background-color: #e4687c;
 	color: #ffffff;
+	font-weight: 600;
 }
 .dataItem:focus {
 	color: #e4687c;

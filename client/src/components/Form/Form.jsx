@@ -39,8 +39,7 @@ function Form(params) {
 		provinceDepartament: client?.address?.provinceDepartment || '',
 		particularDetails: client?.address?.particularDetails || '',
 	});
-	const [disabled, setDisabled] = useState(true);
-
+  
 	useEffect(() => {
 	
 		setValidate({
@@ -53,8 +52,7 @@ function Form(params) {
 			zc: zipCodeRegEx.test(data.zipCode),
 			pd: data.provinceDepartament ? true : false,
 		});
-		console.log(validate);
-		
+
 		setDisabled(
 			!(
 				validate.n &&
@@ -70,27 +68,39 @@ function Form(params) {
 	}, [data]);
 
 	const [validate, setValidate] = useState({
-		n: false,
-		ln: false,
-		e: false,
-		p: false,
-		sn: false,
-		c: false,
-		zc: false,
-		pd: false,
+		n: data.name ? true : false,
+		ln: data.lastName ? true : false,
+		e: emailRegEx.test(data.eMail),
+		p: data.phoneNumber ? true : false,
+		sn: data.streetNumber ? true : false,
+		c: data.city ? true : false,
+		zc: zipCodeRegEx.test(data.zipCode),
+		pd: data.provinceDepartament ? true : false,
 	});
+
+	const [disabled, setDisabled] = useState(
+		!(
+			validate.n &&
+			validate.ln &&
+			validate.e &&
+			validate.p &&
+			validate.sn &&
+			validate.c &&
+			validate.zc &&
+			validate.pd
+		)
+	);
 
 
 	function handleChange(e) {
 		e.preventDefault();
 		const { name, value } = e.target;
 		setData({ ...data, [name]: value });
-		
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		(saveSendingData(data));
+		saveSendingData(data);
 		return params.history.push('/cart/pay');
 	}
 

@@ -58,12 +58,12 @@ export default function Card({ data }) {
 	return (
 		<div className={style.container}>
 			<div className={style.background}>
-				<Link to={`/products/${stocks ? id_product : ''}`}>
+				<Link className={style.linkedImage} to={`/products/${stocks ? id_product : ''}`}>
 					{is_offer && <span className={style.offer}>{'SALE'}</span>}
 					<img
 						src={default_image}
 						alt=''
-						className={stocks === 0 ? style.noStock : undefined}
+						className={stocks === 0 ? style.noStock : style.image}
 					/>
 				</Link>
 			</div>

@@ -1,8 +1,8 @@
 .container {
-	display: grid;
-	height: 70vh;
+  display: flex;
+  flex-direction: column;
+
 	width: 23vw;
-	grid-template-rows: 7fr 3fr;
 	border: none;
 	border-radius: 0.3rem;
 	position: relative;
@@ -40,9 +40,9 @@
 	font-weight: 400;
 }
 
-.background img {
-	max-width: 23vw;
-	max-height: 50rem;
+.background {
+  width: 100%;
+	height: 400px;
 }
 
 .noStock {
@@ -51,8 +51,8 @@
 }
 
 .info {
-	grid-row: 2;
-	background-color: white;
+  height: 100%;
+  background-color: white;
 	color: #565656;
 	text-align: start;
 	display: grid;
@@ -96,4 +96,27 @@
 .price {
 	font-size: 1.2rem;
 	font-weight: 600;
+}
+
+.linkedImage {
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 999px) {
+  .container {
+
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .container {
+    width: 300px;
+  }
 }

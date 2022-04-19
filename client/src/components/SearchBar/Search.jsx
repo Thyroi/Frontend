@@ -8,16 +8,17 @@ import { Notifications } from '../../utils/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-function Search({ placeholder, data }) {
-	const [search, setSearch] = useState('');
-	const [cursor, setCursor] = useState(-1);
-	const [filteredData, setFilteredData] = useState([]);
-	const keypress = {
-		Enter: handleClick,
-		Escape: handleClear,
-		ArrowDown: handleCursor,
-		ArrowUp: handleCursor,
-	};
+function Search({ allData, data, filtrado }) {
+  const [search, setSearch] = useState('');
+  const [checked, setChecked] = useState(false);
+  const [cursor, setCursor] = useState(-1);
+  const [filteredData, setFilteredData] = useState([]);
+  const keypress = {
+    Enter: handleClick,
+    Escape: handleClear,
+    ArrowDown: handleCursor,
+    ArrowUp: handleCursor,
+  }
 
 	const resultados = useRef();
 	const busqueda = useRef();
@@ -40,83 +41,115 @@ function Search({ placeholder, data }) {
 		});
 	}
 
-	function handleClear(e) {
-		e.preventDefault();
-		setSearch('');
-		setFilteredData([]);
-		setCursor(-1);
-		busqueda.current.focus();
-	}
+  function handleClear(e) {
+     e && e.preventDefault();
+    setSearch("");
+    setFilteredData([]);
+    setCursor(-1);
+    busqueda.current.focus();
+  }
 
-	function handleClick(e) {
-		e.preventDefault();
-		resultados.current.children[cursor].click();
-		return window.location.href.includes('/home')
-			? (dispatch(getByName(search)), setSearch(''))
-			: Notifications('Go home to search');
-	}
+  function handleClick(e) {
+    e.preventDefault();
+    cursor>-1 && resultados.current.children[cursor].click();
+    handleClear();
+    dispatch(getByName(search));
+  }
 
-	function handleChange(e) {
-		e.preventDefault();
-		const searchWord = e.target.value;
-		setSearch(searchWord);
-		const filtered = data.filter((value) => {
-			return value.name.toLowerCase().includes(searchWord.toLowerCase());
-		});
-		searchWord !== '' ? setFilteredData(filtered) : setFilteredData([]);
-	}
+  function handleChange(e) {
+    e.preventDefault();
+    const searchWord = e.target.value;
+    setSearch(searchWord);
+    const source = checked ? data : allData;
+    const filtered = source.filter((value) => {
+      return value.name.toLowerCase().includes(searchWord.toLowerCase());
+    });
+    searchWord !== "" ? setFilteredData(filtered) : setFilteredData([]);
+  }
 
-	return (
-		<div className={styles.container}>
-			<div className={styles.searchInputs}>
-				<FontAwesomeIcon
-					className={styles.iconSearch}
-					icon={faMagnifyingGlass}
-				/>
+  function handleOnBlur(e) {
+    if (!e.currentTarget.contains(e.relatedTarget) && !resultados.current.contains(e.relatedTarget)) {
+      console.log(e.relatedTarget);
+      console.log(resultados.current);
+      console.log(resultados.current.contains(e.relatedTarget));
+      setSearch("");
+      setFilteredData([]);
+      setCursor(-1);
+    }
+}
 
-				<input
-					className={styles.searchInput}
-					type='text'
-					value={search}
-					ref={busqueda}
-					onChange={(e) => handleChange(e)}
-					placeholder='Search by name, brand, type, color'
-					onKeyDown={(e) => {
-						console.log(e.key);
-						keypress[e.key] && keypress[e.key](e);
-					}}
-				/>
-				<button
-					className={styles.searchButton}
-					onClick={(e) => {
-						handleClick(e);
-					}}>
-					Search
-				</button>
-			</div>
-			{
+  return (
+    <div className={styles.container}>
+      <div className={styles.searchInputs} onBlur={(e)=>handleOnBlur(e)}>
+
+        <FontAwesomeIcon
+          className={styles.iconSearch}
+          icon={faMagnifyingGlass}
+        />
+
+        <input
+          className={styles.searchInput}
+          type="text"
+          value={search}
+          ref={busqueda}
+          onChange={(e) => handleChange(e)}
+          placeholder="Search by name, brand, type, color"
+          onKeyDown={(e) => {
+            console.log(e.key);
+            keypress[e.key] && keypress[e.key](e);
+          }}
+        />
+        {
+          filtrado!=='All' && (
+            <div className={styles.searchIn}>
+              <span htmlFor='searchIn'>
+                {`Search in: ${filtrado}`}
+              </span>
+            <input
+              style={{ width: '1rem' }}
+              // defaultChecked={checked}
+              type='checkbox'
+              name='searchIn'
+              value={checked}
+              onChange={()=>setChecked(!checked)}
+            />
+            </div>
+          )
+        }
+        <button
+          className={styles.searchButton}
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
+          Search
+        </button>
+      </div>
+      {
 				<div
 					className={
 						filteredData.length !== 0
 							? styles.searchResult
 							: styles.searchResultNone
 					}
-					ref={resultados}
-					onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}>
-					{filteredData.map((value, key) => {
-						return (
-							<a
-								className={styles.dataItem}
-								key={key}
-								href={`http://localhost:3000/products/${value.id_product}`}>
-								<p>{value.name}</p>
-							</a>
-						);
-					})}
-				</div>
-			}
-		</div>
-	);
+          ref={resultados}
+          onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
+          onBlur={(e)=>handleOnBlur(e)}
+          >
+          {filteredData.map((value, key) => {
+            return (
+              <a
+                className={styles.dataItem}
+                key={key}
+                href={`http://localhost:3000/products/${value.id_product}`}>
+                <p>{value.name}</p>
+              </a>
+            );
+          })}
+        </div>
+      }
+    </div>
+  );
 }
 
 export default Search;

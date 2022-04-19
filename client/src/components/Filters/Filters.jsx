@@ -6,7 +6,6 @@ import data from '../../Assets/Products.json';
 const Dropdown = ({ label, value, options, onChange }) => {
 	return (
 		<label className={styles.dropdownBox}>
-			<div>
 				<select value={value} onChange={onChange}>
 					<option selected={true}>{label}</option>
 					{options.map((option) => (
@@ -14,7 +13,6 @@ const Dropdown = ({ label, value, options, onChange }) => {
 					))}
 					<option selected={true}>{label}</option>
 				</select>
-			</div>
 		</label>
 	);
 };

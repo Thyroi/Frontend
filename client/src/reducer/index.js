@@ -10,7 +10,7 @@ const initialState = {
 	collections: [],
 	users: [],
 	copyUsers: [],
-	wishlist: [],
+	specificlist: [],
 	google: {},
 	cart: JSON.parse(window.localStorage.getItem('cart')) || [],
 	detailEdited: {},
@@ -18,8 +18,19 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
+
 	loggedInAdmin:
 		JSON.parse(window.localStorage.getItem('loggedInAdmin')) || {},
+
+	lists: [],
+
+  nested:{
+    offer: null,
+    category: null,
+    collection: null
+  }
+
+
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -92,7 +103,6 @@ export default function rootReducer(state = initialState, action) {
 		case 'CLEAR_PRODUCTS':
 			return {
 				...state,
-
 				products: [],
 			};
 		case 'CLEAR_DETAIL':
@@ -134,27 +144,6 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				copyUsers: action.payload,
-			};
-		case 'ADD_WISH_LIST':
-			if (state.wishlist?.find((e) => e.id === action.payload.id)) {
-				alert('This item is in your wish list');
-				return {
-					...state,
-				};
-			} else {
-				alert('Item add to your wishlist succesfully');
-				return {
-					...state,
-					wishlist: [...state.wishlist, action.payload],
-				};
-			}
-		case 'REMOVE_WISH_LIST':
-			let eliminated = state.wishlist.filter(
-				(e) => e.id !== action.payload
-			);
-			return {
-				...state,
-				wishlist: eliminated,
 			};
 
 		case 'GET_CLIENTS':
@@ -225,6 +214,29 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				lists: action.payload,
 			};
+
+    case 'NESTED':
+      return {
+        ...state,
+        nested: action.payload
+      }
+		case "ORDER_BY_PRICE":
+			state.products = state.allproducts
+			return{
+				...state,
+				products: action.payload
+			};
+		case "ORDER_BY_ARRIVE":
+			state.products = state.allproducts
+			return{
+				...state,
+				products: action.payload
+			}
+		case "GET_SPECIFIC_LIST":
+			return{
+				...state,
+				specificlist: action.payload
+			}
 
 		default:
 			return state;

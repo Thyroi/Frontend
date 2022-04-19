@@ -17,16 +17,31 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
-  cleanProducts
+  nested,
+	orderByPrice,
+	orderByArrive,
+	cleanProducts
 } from '../../actions';
+// import state from 'sweetalert/typings/modules/state';
 
-export default function Products() {
+export default function Products({ filtrado, filtradoOnChange }) {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
 
+  // const [nested, setNested] = useState({
+  //   offer: null,
+  //   category: null,
+  //   collection: null
+  // });
+
 	const collection = useQuery().get('collection');
+	const collectionName = useQuery().get('name');
+
+  const nestedF = useSelector(state => state.nested);
+  console.log(nestedF);
+
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
@@ -48,13 +63,14 @@ export default function Products() {
 		dispatch(clearDetail());
 		if (!products.length) {
 			collection
-				? dispatch(getByColId(collection))
-				: dispatch(getInfo());
+				? dispatch(getByColId(collection)) && filtradoOnChange(collectionName)
+				: dispatch(getInfo(nestedF));
 		}
 		// dispatch(getByCatId());
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
 	}, []);
+
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
@@ -117,18 +133,31 @@ export default function Products() {
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	const handleOfferChange = (e) => {
+	const handleOfferChange = async (e) => {
 		e.preventDefault();
-    dispatch(cleanProducts());
 		var res = '';
 		if (e.target.value === '0') {
-			res = 'true';
+			res = true;
+      // await setNested({...nested, offer : res});
+      nestedF.offer = res;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
+
 		} else if (e.target.value === '1') {
-			res = 'false';
+			res = false;
+      // await setNested({...nested, offer : res});
+      // await dispatch(getInfo({...nested, offer : res}));
+      nestedF.offer = res;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
+
 		} else {
-			return dispatch(getInfo());
+      nestedF.offer = null;
+      dispatch(nested(nestedF));
+			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		}
-		dispatch(getOffers(res));
+		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
+		// dispatch(getOffers(res));
 	};
 
 	/* const handleStockChange = (event) => {
@@ -137,12 +166,22 @@ export default function Products() {
  */
 	const handleTypeChange = (event) => {
 		event.preventDefault();
-    dispatch(cleanProducts());
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-			return dispatch(getInfo());
+      nestedF.category = null;
+      dispatch(nested(nestedF));
+			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
 		} else {
-			dispatch(getByCatId(event.target.value));
+
+			filtradoOnChange(event.target.textContent);
+
+      // setNested({...nested, category : event.target.value});
+      // dispatch(getInfo({...nested, category : event.target.value}));
+			// dispatch(getByCatId(event.target.value));
+
+      nestedF.category = event.target.value;
+      dispatch(getInfo({...nestedF}));
+      dispatch(nested(nestedF));
 		}
 
 	};
@@ -153,12 +192,36 @@ export default function Products() {
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
-    dispatch(cleanProducts());
 		setCurrentPage(1);
-		event.target.value === '0'
-			? dispatch(getInfo())
-			: dispatch(getByColId(event.target.value));
+
+    if(event.target.value === '0'){
+      nestedF.collection = null;
+      dispatch(nested(nestedF));
+      dispatch(getInfo({...nestedF}));
+      filtradoOnChange('All');
+      return;
+    }
+		
+    nestedF.collection = event.target.value;
+    dispatch(nested(nestedF));
+    dispatch(getInfo({...nestedF}));
+    // dispatch(getByColId(event.target.value));
+    // filtradoOnChange(event.target.textContent);
 	};
+
+	const handlePriceFilter = (event) =>{
+		event.preventDefault();
+		event.target.value === '1'
+		? dispatch(orderByPrice("ASC"))
+		: dispatch(orderByPrice("DESC"))
+	}
+
+	const handleArrive = (event) => {
+		event.preventDefault();
+		event.target.value === "1"
+		? dispatch(orderByArrive("DESC"))
+		: dispatch(orderByArrive("ASC"))
+	}
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -200,6 +263,14 @@ export default function Products() {
 					]}
 					handler={handleTypeChange}
 				/>
+				<Dropdown
+					placeHolder={'Price'}
+					options={[
+						{id: 1, name: 'ASC'},
+						{id: 2, name: 'DESC'}
+					]}
+					handler={handlePriceFilter}
+				/>
 				{/* <Dropdown
 					placeHolder={'Brand'}
 					options={[
@@ -215,6 +286,11 @@ export default function Products() {
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
+				<Dropdown
+					placeHolder={'Arrive'}
+					options={[{ id: 1, name: "Last arrives"}, { id: 2, name: "Else"}]}
+					handler={handleArrive}
+				/>
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {
@@ -229,11 +305,11 @@ export default function Products() {
 			<div className={style.pagination}>
 				<div className={style.text}>
 					{`Showing ${results < products.length
-							? `${currentPage === 1
-								? 1
-								: results * currentPage - 1
-							} - ${results * currentPage}`
-							: products.length
+						? `${currentPage === 1
+							? 1
+							: results * currentPage - 1
+						} - ${results * currentPage}`
+						: products.length
 						} of ${products.length}`}
 				</div>
 				<div className={style.pages}>

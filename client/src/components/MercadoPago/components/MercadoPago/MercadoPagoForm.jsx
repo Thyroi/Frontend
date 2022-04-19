@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Card from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import useMercadoPago from '../../hooks/useMercadoPago';
-import Loader from '../../../Loader/Loader';
+//import Loader from '../../../Loader/Loader';
 
 import { createGuestClient, purchaseOrder, saveCart } from '../../../../utils/utils';
 import { clearCart } from '../../../../actions/index';
@@ -28,7 +28,7 @@ export default function MercadoPagoForm() {
 	const history = useHistory();
 	const { phone } = useSelector((state) => state?.loggedInClient);
 
-  const [load, setLoad] = useState(false);
+  //const [load, setLoad] = useState(false);
 
 	const handleInputChange = (e) => {
 		setState({
@@ -42,7 +42,7 @@ export default function MercadoPagoForm() {
 	};
 
 	useEffect(() => {
-		if(resultPayment&&resultPayment.status) {
+		if(resultPayment && resultPayment.status) {
 		 	purchaseOrder(resultPayment.status); 
 			
 		}
@@ -101,7 +101,7 @@ export default function MercadoPagoForm() {
 		}
 	}, resultPayment);
 
-  if(load === true) return <Loader />
+/*   if(load === true) return <Loader /> */
 
 	return (
 		<div className='cont'>
@@ -198,7 +198,7 @@ export default function MercadoPagoForm() {
 						id='form-checkout__submit'
 						className='pay'
 						onClick={() => {
-              setLoad(true);
+              /* setLoad(true); */
 							const button = document.querySelector(
 								'#form-checkout__submit'
 							);
@@ -206,7 +206,7 @@ export default function MercadoPagoForm() {
 								button &&
 								button.id === 'form-checkout__submit'
 							) {
-								createGuestClient(setLoad);
+								createGuestClient(/* setLoad */);
 								document.querySelector(
 									'#form-checkout__submit'
 								).textContent = 'Go back';

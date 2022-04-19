@@ -270,47 +270,46 @@ export async function prepareProduct(product, cartItems) {
 	localStorage.setItem('productPrepared', JSON.stringify(productToBuy));
 }
 
-export async function createGuestClient(setLoad) {
+export async function createGuestClient(/* setLoad */) {
 	const data = JSON.parse(localStorage.getItem('datosDeEnvio'));
+
 	await axios.post('/client', data, {
 		headers: {
 			'content-type': 'application/json',
 			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
 		},
 	});
-  setLoad(false);
+  //setLoad(false);
+
 }
 
 export async function purchaseOrder(status) {
 	const productPrepared = JSON.parse(localStorage.getItem('productPrepared'));
 	const datosDeEnvio = JSON.parse(localStorage.getItem('datosDeEnvio'));
-
 	let totalDue = 0;
 	productPrepared.forEach((item) => {
 		let price = item.price;
 		price = parseFloat(price);
 		price = price.toFixed(2);
 		price = parseFloat(price);
-
 		totalDue += price;
 	});
 
 	// const totalDue = productPrepared.reduce((total, item) => {
 	//   return total + item.price;
 	// });
-
+	let statusM
+	if (status==='rejected')  statusM='Canceled';
+	if(status==='in_process')statusM='Processing';
+	else statusM='Completed';
 	const data = {
 		orderDetails: [...productPrepared],
 		total: totalDue,
 		address: datosDeEnvio.address,
 		clientPhone: parseInt(datosDeEnvio.phone),
-		orderStatus:
-			status === 'rejected'
-				? 'Canceled'
-				: status === 'in_process'
-				? 'Processing'
-				: 'Completed',
+		orderStatus: statusM,
 	};
+
 
 	console.log(data, '_____________purchase');
 
@@ -320,6 +319,7 @@ export async function purchaseOrder(status) {
 			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
 		},
 	});
+
 
 	// Remove purchase info from localStorage
 	// localStorage.removeItem("productPrepared");

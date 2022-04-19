@@ -2,7 +2,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { saveCart } from './utils/utils';
 
 import ResetPassword from './components/ResetPassword/ResetPassword';
@@ -27,11 +27,16 @@ import OrderDetails from './components/AdminDashBoard/OrderDetails';
 import Orders from './components/Orders/Orders';
 import Wishlist from './components/WishList/WishList';
 import AdminProfile from './components/AdminProfile/AdminProfile';
+import Favorite from './components/Favorite/Favorite';
 
 export default function App() {
 	const location = useLocation();
 
 	var products = useSelector((state) => state.products);
+	var allproducts = useSelector((state) => state.allproducts);
+	var [filtrado, setFiltrado] = useState('All');
+	console.log(`products load: ${products.length}`);
+	console.log(`allproducts load: ${allproducts.length}`);
 
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);
@@ -69,7 +74,7 @@ export default function App() {
 					<div className='top'>
 						<div className='topSearch'>
 							{location.pathname === '/home' && (
-								<Search data={products} />
+								<Search data={products} allData={allproducts} filtrado={filtrado}  />
 							)}
 						</div>
 						<div className='topLogin'>
@@ -103,7 +108,7 @@ export default function App() {
 							component={OrderDetails}
 						/>
 
-						<Route exact path='/home' component={Products} />
+						<Route exact path='/home' component={()=>(<Products filtrado={filtrado} filtradoOnChange={setFiltrado} />)}/>
 
 						<Route exact path='/cart' component={Cart} />
 						<Route exact path='/cart/pay' component={Main} />
@@ -127,6 +132,7 @@ export default function App() {
 
 						<Route exact path='/orders' component={Orders} />
 						<Route exact path='/lists/:id' component={Wishlist} />
+						<Route exact path='/favorites' component={Favorite} />
 					</div>
 				</div>
 			</Route>

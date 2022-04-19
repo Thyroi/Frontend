@@ -32,6 +32,7 @@ import {
 	createList,
 	getUserLists,
 	updateList,
+	getSpecificList,
 } from '../../actions/index';
 
 import Dropdown from '../Dropdown/Dropdown';
@@ -46,6 +47,8 @@ export default function Product_detail() {
 	const cartProducts = useSelector((state) => state.cart);
 	const client = useSelector((state) => state.loggedInClient);
 	const lists = useSelector((state) => state.lists);
+	const favorite = useSelector((state) => state.specificlist)
+	
 
 	const { name, brand, price, description } = product;
 
@@ -64,17 +67,22 @@ export default function Product_detail() {
 			dispatch(selectingProduct(newProduct));
 		}
 	}, [product?.price]);
-
+	
 	useEffect(() => {}, [product && product?.variants]);
-
+	
+	
 	useEffect(() => {
 		dispatch(getUserLists(client?.phone));
+		dispatch(getSpecificList(client.phone, "Favorite"))
 	}, [dispatch]);
 
 	function opt() {
 		let nuevo = [];
 		for (var i = 0; i < lists?.length; i++) {
-			nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
+			if(lists[i].title === "Favorite"){
+			} else {
+				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
+			}
 		}
 		return nuevo;
 	}
@@ -89,7 +97,11 @@ export default function Product_detail() {
 					content: 'input',
 					button: 'OK',
 				});
-				if (listName) {
+				if(listName === "Favorite" || listName === "Favourite" || listName === "Favourites" || listName === "Favorites" || listName === "Favorito" || listName === "Favoritos"
+				|| listName === "favorite" || listName === "favourite" || listName === "favourites" || listName === "favorites" || listName === "favorito" || listName === "favoritos"
+				|| listName === "favorita" || listName === "favoritas" || listName === "Favoritas"  || listName === "Favorita"){
+					alert("This name is not allow")
+				} else if (listName) {
 					const newList = {
 						ClientPhone: client.phone,
 						rList: [parseInt(id)],
@@ -130,6 +142,41 @@ export default function Product_detail() {
 		}
 	}
 
+	function handleFavorites(e){
+	e.preventDefault();
+	if(client?.phone){
+		if(favorite.length){
+			console.log(favorite)
+			if (favorite[0]?.List?.map((p) => p.id_product).includes(parseInt(id))){
+				alert('This product already is on favorites')
+			} else {
+				const listUpdated = {
+					id: favorite[0]?.id,
+					ClientPhone: parseInt(favorite[0]?.ClientPhone),
+					rList: [
+						...favorite[0]?.List?.map((p) => p.id_product),
+						parseInt(id),
+					],
+					Colaborators: [...favorite[0].Colaborators],
+					title: favorite[0]?.title,
+				};
+				dispatch(updateList(listUpdated));
+				
+			}
+		} else {
+			const newList = {
+				ClientPhone: client.phone,
+				rList: [parseInt(id)],
+				Colaborators: [],
+				title: "Favorite",
+			};
+			dispatch(createList(newList));
+		}
+	} else {
+		alert('You have to be registered to add a product to favorites')
+	}
+	}
+	
 	if (!product?.variants) return <div>Loading</div>;
 
 	return (
@@ -238,6 +285,7 @@ export default function Product_detail() {
 								<FontAwesomeIcon
 									className={style.favoriteIcon}
 									icon={faHeart}
+									onClick={handleFavorites}
 								/>
 							</div>
 						</div>

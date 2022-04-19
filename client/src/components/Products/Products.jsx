@@ -16,6 +16,8 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
+	orderByPrice,
+	orderByArrive,
 } from '../../actions';
 
 export default function Products() {
@@ -138,7 +140,7 @@ export default function Products() {
 		if (event.target.value === '0') {
 			return dispatch(getInfo());
 		} else {
-			dispatch(getByCatId(event.target.value));
+			dispatch(getByCatId(event.target.name));
 		}
 
 	};
@@ -154,6 +156,20 @@ export default function Products() {
 			? dispatch(getInfo())
 			: dispatch(getByColId(event.target.value));
 	};
+
+	const handlePriceFilter = (event) =>{
+		event.preventDefault();
+		event.target.value === '1'
+		? dispatch(orderByPrice("ASC"))
+		: dispatch(orderByPrice("DESC"))
+	}
+
+	const handleArrive = (event) => {
+		event.preventDefault();
+		event.target.value === "1"
+		? dispatch(orderByArrive("DESC"))
+		: dispatch(orderByArrive("ASC"))
+	}
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -195,6 +211,14 @@ export default function Products() {
 					]}
 					handler={handleTypeChange}
 				/>
+				<Dropdown
+					placeHolder={'Price'}
+					options={[
+						{id: 1, name: 'ASC'},
+						{id: 2, name: 'DESC'}
+					]}
+					handler={handlePriceFilter}
+				/>
 				{/* <Dropdown
 					placeHolder={'Brand'}
 					options={[
@@ -209,6 +233,11 @@ export default function Products() {
 					placeHolder={'Collection'}
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
+				/>
+				<Dropdown
+					placeHolder={'Arrive'}
+					options={[{ id: 1, name: "Last arrives"}, { id: 2, name: "Else"}]}
+					handler={handleArrive}
 				/>
 			</div>
 			<div className={style.cards}>

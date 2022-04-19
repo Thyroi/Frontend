@@ -20,6 +20,12 @@ const initialState = {
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
 	lists: [],
 
+  nested:{
+    offer: null,
+    category: null,
+    collection: null
+  }
+
 };
 
 
@@ -198,6 +204,11 @@ export default function rootReducer(state = initialState, action) {
 				lists: action.payload,
 			};
 
+    case 'NESTED':
+      return {
+        ...state,
+        nested: action.payload
+      }
 		case "ORDER_BY_PRICE":
 			state.products = state.allproducts
 			return{

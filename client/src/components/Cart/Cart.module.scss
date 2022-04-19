@@ -63,16 +63,18 @@
           .containerDiscount {
             display: flex;
             justify-content: flex-start;
-            height: 3rem;
 
             .inputDiscount {
-              background: #F3F3F3;
+              background: #f3f3f3;
+              height: 3rem;
+
               border-radius: 5px 0 0 5px;
               padding-left: 1rem;
               font-size: 0.9rem;
             }
 
             .applyDiscount {
+              height: 3rem;
               background: #e4687c;
               border-radius: 0 5px 5px 0;
               padding: 0 1rem;
@@ -83,7 +85,7 @@
             }
 
             .applyDiscount:hover {
-              background: #F3F3F3;
+              background: #f3f3f3;
               color: #e4687c;
             }
           }
@@ -92,7 +94,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
+            height: 3rem;
             padding: 0 1rem;
             background: #e4687c;
             border-radius: 5px;
@@ -120,7 +122,7 @@
       padding: 0 1rem;
       background: #ffffff;
       border-radius: 5px;
-    
+
       .totalPrice {
         font-weight: 600;
         margin-left: 1rem;
@@ -138,13 +140,63 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-    
+
       .buyLetter {
         background-color: #e4687c;
         font-weight: 600;
         color: #ffffff;
         width: 80%;
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .containerCart {
+    .itemContainer {
+      height: auto;
+
+      .infoContainer {
+        .subInfoContainer {
+          height: 95%;
+        }
+
+        .productPrice {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .containerButtons {
+    flex-direction: column;
+
+    .containerDiscount {
+      margin-top: 1rem;
+
+      .inputDiscount {
+        width: 100%;
+      }
+    }
+
+    .removeButton {
+      margin-top: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .containerCart {
+    .itemContainer {
+      flex-direction: column;
+      .imgContainer {
+        width: 100%;
+
+        .productImage {
+          border-radius: 5px 5px 0 0;
+          height: 500px;
+        }
       }
     }
   }

@@ -9,19 +9,20 @@
 .form {
 	width: 100%;
 	height: 100%;
-	display: grid;
+  padding-left: 3rem;
+  display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 2fr 7fr 1fr;
 }
 
 .form p {
-	text-align: flex-end;
+	text-align: left;
 	color: red;
 }
 
 .form input,
 select {
-	margin: 0.3rem;
+	margin: 0.3rem 0;
 	width: 80%;
 	background: #f9f9f9;
 	border: 1px solid transparent;
@@ -32,10 +33,16 @@ select {
 	font-weight: 300;
 }
 
+.form input {
+  width: 100%;
+}
+
 .form label {
 	color: #565656;
 	font-weight: 600;
+  text-align: left;
 	margin: 0.5rem;
+  justify-self: start;
 }
 
 .form button {
@@ -66,8 +73,7 @@ select {
 	grid-column: 1;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+  padding-right: 3rem;
 }
 
 .address,
@@ -76,7 +82,6 @@ select {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
 }
 
@@ -87,8 +92,7 @@ select {
 	grid-column: 1/3;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+  padding-right: 3rem;
 }
 
 .infoGlobal {
@@ -98,24 +102,39 @@ select {
 	grid-column: 2;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+  padding-right: 3rem;
+
 }
 
 .submit {
 	width: 100%;
 	height: 100%;
 	grid-row: 3;
+  padding-right: 3rem;
 	grid-column: 1/3;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
 	justify-content: flex-end;
 }
 
 .submit button {
-	margin-bottom: 2rem;
+	margin: 0;
+  margin-bottom: 2rem;
+
 }
 .error{
 	font-size:small;
+}
+
+
+@media screen and (max-width: 850px) {
+  .form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .form > div {
+    padding-right: 0;
+  }
+  
 }

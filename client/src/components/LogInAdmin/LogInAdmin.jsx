@@ -25,7 +25,7 @@ function LogInMain(params) {
 
 	useEffect(() => {
 		if (loggedInAdmin.phone) {
-			params.history.push('/home');
+			params.history.push('/admindashboard');
 		}
 	}, [loggedInAdmin]);
 

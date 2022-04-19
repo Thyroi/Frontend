@@ -80,18 +80,16 @@ function OrderDetails() {
 		<div className={styles.orderDetailContainer}>
 			<h1>Order detail</h1>
 			<div className={styles.orderData}>
-				<div>
+				<div style={{ padding: '0.5rem' }}>
 					<span>Order Id</span>
 					<span> {orden?.orderId}</span>
 				</div>
-				<div style={{ margin: '0.5rem' }}>
+				<div style={{ padding: '0.5rem' }}>
 					<span>Order Status</span>
 					<span style={{ color: '#e4687c' }}>
 						{orden?.orderStatus}
 					</span>
 				</div>
-
-				<button onClick={seeAlert}>See Order Details</button>
 				<div className={styles.Dropdown}>
 					<Dropdown
 						placeHolder={'Order status'}
@@ -99,6 +97,7 @@ function OrderDetails() {
 						handler={changingOrder}
 					/>
 				</div>
+				<button onClick={seeAlert}>See Order Details</button>
 			</div>
 
 			<table className={styles.clientData}>
@@ -107,7 +106,7 @@ function OrderDetails() {
 						<th>Name</th>
 						<th>Last Name</th>
 						<th>Phone</th>
-						<th>Addres</th>
+						<th>Address</th>
 						<th>City</th>
 						<th>Zip</th>
 					</tr>

@@ -289,7 +289,7 @@ function AdminDashBoard() {
 											<td>$ {order?.total}</td>
 											<td>
 												<Link
-													to={`/admindashboard/${order?.orderId}`}>
+													to={`/admindashboard/orders/${order?.orderId}`}>
 													{' '}
 													View detail
 												</Link>{' '}

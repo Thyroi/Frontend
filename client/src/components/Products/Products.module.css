@@ -1,14 +1,11 @@
 .container {
-	grid-template-rows: 10vh 1fr 10vh;
 	width: 100vw;
 }
 
 .filters {
-	grid-row: 1;
+  width: 100%;
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
+  flex-wrap: wrap;
 	color: #565656;
 }
 

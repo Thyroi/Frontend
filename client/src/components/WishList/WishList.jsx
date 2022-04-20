@@ -123,9 +123,13 @@ export default function Wishlist({ match, history }) {
 						</div>
 					);
 				})}
-				<button onClick={handleInvite}>
-					Share this list
+				
+			{client.phone === list?.ClientPhone 
+			? <button onClick={handleInvite}>
+				Share this list
 				</button>
+			: null
+			}
 		</div>
 	);
 }

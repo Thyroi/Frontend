@@ -20,7 +20,7 @@ function OrderDetails() {
 		e.preventDefault();
 		swal(
 			<div>
-				<h1>Order Details</h1>
+				<h2>Order Details</h2>
 				{orden?.orderDetails?.map((d) => {
 					return (
 						<table className={styles.tableOrder}>

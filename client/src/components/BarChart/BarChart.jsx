@@ -8,9 +8,7 @@ function BarChart({ monthlyRev }) {
 				return (
 					<div className={style.bar} key={month}>
 						<span
-							className={
-								style.barRevTxt
-							}>{`$: ${revenue}k`}</span>
+							className={style.barRevTxt}>{`$${revenue}k`}</span>
 						<span
 							className={style.barRev}
 							style={{

@@ -1,10 +1,35 @@
 .container {
-  margin: 1% 1%;
-  width: 98%;
-  height: 96%;
-  display: grid;
-  grid-template-rows: 2fr 1fr;
-  grid-template-columns: 3fr 1fr;
+	margin: 1% 1%;
+	width: 98%;
+	height: 96%;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+	grid-template-columns: 3fr 1fr;
+}
+
+.revenue {
+	grid-row: 1/3;
+	grid-column: 1;
+}
+
+.products {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+.users {
+	grid-row: 2;
+	grid-column: 2;
+}
+
+.stats {
+	grid-row: 3;
+	grid-column: 1;
+}
+
+.orders {
+	grid-row: 3;
+	grid-column: 2;
 }
 
 .container button {
@@ -28,28 +53,34 @@
 
 .revenue,
 .orders,
+.users,
 .stats,
 .products {
-  background-color: white;
-  border-radius: 10px;
-  margin: 0.5rem;
-  display: grid;
-  grid-template-rows: 2rem 1fr;
+	background-color: white;
+	border-radius: 10px;
+	margin: 0.5rem;
+	display: grid;
+	grid-template-rows: 2rem 1fr;
 }
 
 .revenue h4,
+.users h4,
 .orders h4,
 .stats h4,
 .products h4 {
-  grid-row: 1;
-  margin: 0.5rem;
-  justify-self: center;
+	grid-row: 1;
+	margin: 0.5rem;
+	justify-self: center;
 }
 
+.products p,
+.users p,
 .orders p {
 	padding: 0.2rem;
 }
 
+.products .content,
+.users .content,
 .orders .content {
 	grid-row: 2;
 	display: flex;
@@ -60,15 +91,63 @@
 }
 
 .content {
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	grid-row: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.statsContent {
+	padding: 1.5rem;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.stat {
+	margin: 0.5rem;
+	padding: 0.2rem 0;
+	background-color: #f6f6f6;
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+.stat label {
+	grid-column: 1/3;
+	grid-row: 2;
+	justify-self: center;
+	align-self: center;
+	font-weight: 500;
+}
+
+.stat svg {
+	grid-column: 1;
+	grid-row: 1;
+	justify-self: center;
+	align-self: center;
+	color: #e4687c;
+	background-color: #f6f6f6;
+	border-radius: 50%;
+	font-size: 2rem;
+}
+
+.stat span {
+	grid-column: 2;
+	grid-row: 1;
+	justify-self: center;
+	align-self: center;
+	color: #e4687c;
+	font-size: 1.2rem;
+	font-weight: 600;
 }
 
 @media screen and (max-width: 999px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+	.container {
+		grid-template-columns: 1fr;
+	}
 }

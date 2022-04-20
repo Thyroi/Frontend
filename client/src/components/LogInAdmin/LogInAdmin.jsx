@@ -25,7 +25,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		if (loggedInAdmin.id_user) {
+		if (loggedInAdmin?.id_user) {
 			params.history.push('/admindashboard');
 		}
 	}, [loggedInAdmin]);

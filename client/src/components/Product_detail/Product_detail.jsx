@@ -206,9 +206,9 @@ export default function Product_detail() {
 					<img
 						className={style.mainImage}
 						src={
-							product?.variants ?
+							product?.variants &&
 							product?.variants[0]?.ProductImages[0]
-							: product?.variants[0].SwatchImage
+							
 							
 						}
 						id='default_image'

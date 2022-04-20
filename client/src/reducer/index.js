@@ -18,17 +18,16 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
-
 	loggedInAdmin:
 		JSON.parse(window.localStorage.getItem('loggedInAdmin')) || {},
-
 	lists: [],
-
-	nested: {
-		offer: null,
-		category: null,
-		collection: null,
-	},
+  nested:{
+    offer: null,
+    category: null,
+    collection: null,
+	  type: null,
+	  method: null
+  }
 };
 
 export default function rootReducer(state = initialState, action) {

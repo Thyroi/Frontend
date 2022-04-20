@@ -13,13 +13,6 @@ import { saveSendingData } from '../../actions/index';
 
 function Form(params) {
 	const client = useSelector((state) => state.loggedInClient);
-	/* useEffect(() => {
-		document
-			.querySelector('#sendDataButton')
-			.addEventListener('click', () => {
-				saveSendingData();
-			});
-	}); */
 
 	const emailRegEx = useMemo(
 		() => new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
@@ -364,14 +357,7 @@ function Form(params) {
 					</div>
 				</div>
 				<div className={style.submits}>
-					{/* <input
-						className={style.button}
-						type='submit'
-						value='Save data'
-						id='saveNewData'
-					/> */}
 
-					{/* <Link to='/cart/pay'> */}
 					<div className={style.inputCont}>
 						{disabled && (
 							<span style={{ marginRight: '1rem', color: 'red' }}>
@@ -387,7 +373,7 @@ function Form(params) {
 						/>
 					</div>
 
-					{/* </Link> */}
+
 				</div>
 			</form>
 		</div>

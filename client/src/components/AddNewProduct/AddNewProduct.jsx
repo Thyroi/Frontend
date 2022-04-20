@@ -7,6 +7,7 @@ import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import swal from '@sweetalert/with-react';
 
 export default function AddNewProduct() {
 	const [imageUpload, setImageUpload] = useState(null);
@@ -16,10 +17,11 @@ export default function AddNewProduct() {
 	const history = useHistory();
 	const categorias = useSelector((state) => state.categories);
 	const productos = useSelector((state) => state.products);
+	const nested = useSelector((state) => state.nested)
 
 	useEffect(() => {
 		dispatch(getSelectorsCat());
-		dispatch(getInfo());
+		dispatch(getInfo(nested));
 	}, [dispatch]);
 
 	let mujeres = categorias?.women;
@@ -60,8 +62,7 @@ export default function AddNewProduct() {
 			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
 			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
-		dispatch(addProduct({ product: data }));
-		//console.log({product: data})
+		dispatch(addProduct({ product: data }), swal);
 		reset();
 		setImageUrls([]);
 	};
@@ -77,7 +78,7 @@ export default function AddNewProduct() {
 			});
 		});
 	};
-	console.log(imageUrls);
+	console.log(productos);
 	console.log(copyUrls);
 	return (
 		<div className={styles.AddProductContainer}>

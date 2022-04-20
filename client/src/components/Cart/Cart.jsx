@@ -4,6 +4,8 @@ import style from './Cart.module.scss';
 import Quantity from '../Quantity/Quantity';
 import Loader from '../Loader/Loader';
 
+import swal from '@sweetalert/with-react';
+
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeCart } from '../../actions/index';
@@ -85,10 +87,12 @@ function Cart(params) {
 
 										<button
 											className={style.removeButton}
-											onClick={() =>
+											onClick={() =>{
 												dispatch(
 													removeCart(itemsCart, item)
-												)
+												);
+                      swal("Product removed from cart", "Click to continue!", "success");
+                      }
 											}>
 											<p>Remove</p>
 										</button>

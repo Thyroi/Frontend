@@ -5,6 +5,7 @@
 	align-items: flex-end;
 	margin: 5rem 0;
 }
+
 .container a {
 	display: flex;
 	align-items: center;
@@ -74,11 +75,4 @@
 .itemsNumber {
 	font-size: 0.9rem;
 	color: #ffffff;
-}
-
-
-@media screen and (max-width: 999px){
-  .container {
-    display: none;
-  }
 }

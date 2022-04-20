@@ -3,10 +3,12 @@
 }
 
 .filters {
-  width: 100%;
-  margin-left: 2rem;
+	width: 100%;
+	margin-right: 3rem;
 	display: flex;
-  flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: nowrap;
 	color: #565656;
 }
 
@@ -157,15 +159,14 @@
 }
 
 @media screen and (max-width: 999px) {
-  
-  .cards {
-    justify-content: space-between;
-  }
+	.cards {
+		justify-content: space-between;
+	}
 }
 
 @media screen and (max-width: 920px) {
-  .cards {
-    justify-content: center;
-    flex-shrink: 0;
-  }
+	.cards {
+		justify-content: center;
+		flex-shrink: 0;
+	}
 }

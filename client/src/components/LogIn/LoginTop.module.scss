@@ -74,3 +74,9 @@
 	color: #e4687c;
 	font-weight: 600;
 }
+
+@media screen and (max-width: 999px) {
+  .loginContainer {
+    display: none;
+  }
+}

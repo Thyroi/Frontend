@@ -6,12 +6,14 @@ import { getSelectorsCat, addProduct, getInfo } from '../../actions';
 import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function AddNewProduct() {
 	const [imageUpload, setImageUpload] = useState(null);
 	const [imageUrls, setImageUrls] = useState([]);
 	const [copyUrls, setCopyUrls] = useState([]);
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const categorias = useSelector((state) => state.categories);
 	const productos = useSelector((state) => state.products);
 
@@ -29,11 +31,10 @@ export default function AddNewProduct() {
 		handleSubmit,
 		formState: { errors },
 		reset,
-		
 	} = useForm({
 		defaultValues: {
 			variants: [
-				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' },  },
+				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' } },
 			],
 		},
 		mode: 'all',
@@ -65,8 +66,6 @@ export default function AddNewProduct() {
 		setImageUrls([]);
 	};
 
-
-
 	const uploadFile = (e) => {
 		e.preventDefault(e);
 		if (imageUpload == null) return;
@@ -79,42 +78,11 @@ export default function AddNewProduct() {
 		});
 	};
 	console.log(imageUrls);
-	console.log(copyUrls)
+	console.log(copyUrls);
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.left}>
-					<input
-						type='text'
-						name='name'
-						autoComplete='off'
-						placeholder='Name'
-						ref={register({
-							required: true,
-							pattern: {
-								value: /^[^0-9]+$/,
-							}
-						})}
-					/>
-					{errors.name && (
-						<span className={styles.error}>
-							This field is mandatory and can only contain letters
-						</span>
-					)}
-
-					<input
-						type='text'
-						name='brand'
-						autoComplete='off'
-						placeholder='Brand'
-						ref={register({ required: true, typeOf: 'number' })}
-					/>
-					{errors.brand && (
-						<span className={styles.error}>
-							This field is mandatory
-						</span>
-					)}
-
 					<select
 						name='categories'
 						ref={register({ required: true })}>
@@ -151,6 +119,36 @@ export default function AddNewProduct() {
 							This should select a collection
 						</span>
 					)}
+					<input
+						type='text'
+						name='name'
+						autoComplete='off'
+						placeholder='Name'
+						ref={register({
+							required: true,
+							pattern: {
+								value: /^[^0-9]+$/,
+							},
+						})}
+					/>
+					{errors.name && (
+						<span className={styles.error}>
+							This field is mandatory and can only contain letters
+						</span>
+					)}
+
+					<input
+						type='text'
+						name='brand'
+						autoComplete='off'
+						placeholder='Brand'
+						ref={register({ required: true, typeOf: 'number' })}
+					/>
+					{errors.brand && (
+						<span className={styles.error}>
+							This field is mandatory
+						</span>
+					)}
 
 					<input
 						type='text'
@@ -161,13 +159,13 @@ export default function AddNewProduct() {
 							required: true,
 							pattern: {
 								value: /^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/,
-							}
-							})}
+							},
+						})}
 						onKeyPress={(e) => {
-							if (e.key === "e" || e.key === "-") {
+							if (e.key === 'e' || e.key === '-') {
 								e.preventDefault();
 							}
-							}}
+						}}
 					/>
 					{errors.price && (
 						<span className={styles.error}>
@@ -190,11 +188,9 @@ export default function AddNewProduct() {
 						ref={register({ required: true })}
 					/>
 				</div>
-						{errors.description && (
-						<span className={styles.error}>
-							This field is required
-						</span>
-						)}
+				{errors.description && (
+					<span className={styles.error}>This field is required</span>
+				)}
 				<div className={styles.center}>
 					<ul>
 						{fields.map((item, index) => {
@@ -205,15 +201,15 @@ export default function AddNewProduct() {
 											required: true,
 											pattern: {
 												value: /^[^0-9]+$/,
-											}
+											},
 										})}
 										placeholder='Color'
 										name={`variants[${index}].ColorName`}
-
 									/>
 									{errors.variants && (
 										<span className={styles.error}>
-											This field is required and can contain only letters
+											This field is required and can
+											contain only letters
 										</span>
 									)}
 
@@ -225,12 +221,15 @@ export default function AddNewProduct() {
 										defaultValue=''
 										placeholder='Select Stock for Size S'
 										onKeyPress={(e) => {
-											if (e.key === "e" || e.key === "-") {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
 												e.preventDefault();
 											}
-											}}
+										}}
 									/>
-									
+
 									<Controller
 										as={<input />}
 										type='number'
@@ -239,10 +238,13 @@ export default function AddNewProduct() {
 										defaultValue=''
 										placeholder='Select Stocks for Size M'
 										onKeyPress={(e) => {
-											if (e.key === "e" || e.key === "-") {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
 												e.preventDefault();
 											}
-											}}
+										}}
 									/>
 									<Controller
 										as={<input />}
@@ -252,10 +254,13 @@ export default function AddNewProduct() {
 										defaultValue=''
 										placeholder='Select Stocks for Size L'
 										onKeyPress={(e) => {
-											if (e.key === "e" || e.key === "-") {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
 												e.preventDefault();
 											}
-											}}
+										}}
 									/>
 									<Controller
 										as={<input />}
@@ -265,10 +270,13 @@ export default function AddNewProduct() {
 										defaultValue=''
 										placeholder='Select Stocks for Size XL'
 										onKeyPress={(e) => {
-											if (e.key === "e" || e.key === "-") {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
 												e.preventDefault();
 											}
-											}}
+										}}
 									/>
 
 									<input
@@ -280,7 +288,7 @@ export default function AddNewProduct() {
 											);
 										}}
 									/>
-								
+
 									<button onClick={uploadFile}>
 										Upload Image
 									</button>
@@ -303,6 +311,15 @@ export default function AddNewProduct() {
 								});
 							}}>
 							Add color
+						</button>
+					</section>
+					<section>
+						<button
+							type='button'
+							onClick={() => {
+								history.push('/addnewproduct/addcategory');
+							}}>
+							Add category
 						</button>
 					</section>
 				</div>

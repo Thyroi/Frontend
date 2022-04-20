@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { saveCart } from './utils/utils';
-
+import AddCategory from './components/AddCategory/AddCategory';
 import Offers from './components/Offers/Offers';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import AddNewProduct from './components/AddNewProduct/AddNewProduct';
@@ -29,6 +29,7 @@ import Orders from './components/Orders/Orders';
 import Wishlist from './components/WishList/WishList';
 import AdminProfile from './components/AdminProfile/AdminProfile';
 import Favorite from './components/Favorite/Favorite';
+import Users from './components/Users/Users';
 
 export default function App() {
 	const location = useLocation();
@@ -88,37 +89,47 @@ export default function App() {
 					</div>
 
 					<div className='container'>
-						<Route
-							exact
-							path='/addnewproduct'
-							component={AddNewProduct}
-						/>
 						{loggedInAdmin.user_name && (
 							<>
-						<Route
-							exact
-							path='/admindashboard'
-							component={AdminProfile}
-						/>
+								<Route
+									exact
+									path='/addnewproduct'
+									component={AddNewProduct}
+								/>
+								<Route
+									exact
+									path='/addnewproduct/addcategory'
+									component={AddCategory}
+								/>
+								<Route
+									exact
+									path='/admindashboard'
+									component={AdminProfile}
+								/>
 
-						<Route
-							exact
-							path='/admindashboard/users'
-							component={AdminDashBoard}
-						/>
+								<Route
+									exact
+									path='/admindashboard/users'
+									component={Users}
+								/>
+								<Route
+									exact
+									path='/admindashboard/orders'
+									component={AdminDashBoard}
+								/>
 
-						<Route
-							exact
-							path='/admindashboard/orders/:id'
-							component={OrderDetails}
-						/>
+								<Route
+									exact
+									path='/admindashboard/orders/:id'
+									component={OrderDetails}
+								/>
 
-						<Route
-							exact
-							path='/admindashboard/offers'
-							component={Offers}
-						/>
-					 </>
+								<Route
+									exact
+									path='/admindashboard/offers'
+									component={Offers}
+								/>
+							</>
 						)}
 						<Route
 							exact

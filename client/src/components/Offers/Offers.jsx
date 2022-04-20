@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './Offers.module.css';
-import Products from '../../Assets/Products.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { setNewOffer } from '../../utils/utils';
 
 function Offers() {
-	const allproducts = Products;
+	const allproducts = useSelector((state) => state.allproducts);
 
-	/* useSelector((state) => state.allproducts);
-	 */
 	const [active, setActive] = useState({
 		Mon: false,
 		Tue: false,

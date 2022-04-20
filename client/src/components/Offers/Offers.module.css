@@ -114,8 +114,8 @@
 .itemContainer {
 	width: 45%;
 	height: 100px;
-	background: transparent;
-	border: 3px solid #e4687dbb;
+	background: #f6f6f6;
+
 	border-radius: 5px;
 	margin: 2%;
 	display: flex;
@@ -124,7 +124,6 @@
 }
 
 .itemContainer:hover {
-	border: 3px solid #e4687c;
 	transform: translateY(-5px);
 	box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.212);
 }

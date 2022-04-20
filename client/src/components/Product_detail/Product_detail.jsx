@@ -69,7 +69,7 @@ export default function Product_detail() {
 	}, [product?.price]);
 
 	useEffect(() => {}, [product && product?.variants]);
-
+//
 	useEffect(() => {
 		dispatch(getUserLists(client?.phone));
 		dispatch(getSpecificList(client.phone, 'Favorite'));
@@ -195,7 +195,7 @@ export default function Product_detail() {
 	}
 
 	if (!product?.variants) return <Loader />;
-
+	console.log(product)
 	return (
 		<div className={style.container}>
 			<div className={style.containerImages}>
@@ -206,8 +206,10 @@ export default function Product_detail() {
 					<img
 						className={style.mainImage}
 						src={
-							product?.variants &&
-							product.variants[0].ProductImages[0]
+							product?.variants ?
+							product?.variants[0]?.ProductImages[0]
+							: product?.variants[0].SwatchImage
+							
 						}
 						id='default_image'
 						alt=''

@@ -42,47 +42,35 @@ export default function Nav() {
 			</NavLink>
 			{!!products.length && (
 				<>
-					{
-						/* loggedInAdmin.phone */ true && (
-							<>
-								<NavLink
-									to='/admindashboard'
-									activeClassName={styles.active}
-									className={styles.title}>
-									<FontAwesomeIcon
-										className={styles.icons}
-										icon={faChartLine}
-									/>
-									Dashboard
-								</NavLink>
-							</>
-						)
-					}
-
-					{/* <NavLink
-						to='/addnewproduct'
-						activeClassName={styles.active}
-						className={styles.title}>
-						<FontAwesomeIcon
-							className={styles.icons}
-							icon={faCirclePlus}
-						/>
-						Add Products
-					</NavLink> */}
-
-					<NavLink
-						to='/cart'
-						activeClassName={styles.active}
-						className={styles.title}>
-						<div className={styles.containerAdvise}>
-							<p className={styles.itemsNumber}>{number}</p>
-						</div>
-						<FontAwesomeIcon
-							className={styles.icons}
-							icon={faCartShopping}
-						/>
-						Cart
-					</NavLink>
+					{loggedInAdmin.user_name && (
+						<>
+							<NavLink
+								to='/admindashboard'
+								activeClassName={styles.active}
+								className={styles.title}>
+								<FontAwesomeIcon
+									className={styles.icons}
+									icon={faChartLine}
+								/>
+								Dashboard
+							</NavLink>
+						</>
+					)}
+					{!loggedInAdmin.user_name && (
+						<NavLink
+							to='/cart'
+							activeClassName={styles.active}
+							className={styles.title}>
+							<div className={styles.containerAdvise}>
+								<p className={styles.itemsNumber}>{number}</p>
+							</div>
+							<FontAwesomeIcon
+								className={styles.icons}
+								icon={faCartShopping}
+							/>
+							Cart
+						</NavLink>
+					)}
 				</>
 			)}
 		</div>

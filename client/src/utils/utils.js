@@ -438,7 +438,13 @@ export async function sendReset(email) {
 
 export async function setNewOffer(payload) {
 	try {
-		await axios.patch('/offers/newOffer', payload);
+		const { data } = await axios.patch('/offers/newOffer', payload, {
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+			},
+		});
+		console.log(data);
 	} catch (e) {
 		console.log(e);
 	}

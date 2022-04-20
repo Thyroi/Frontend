@@ -32,7 +32,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		if (loggedInClient.phone) {
+		if (loggedInClient?.phone) {
 			dispatch(getCart(loggedInClient.phone));
 			params.history.push('/home');
 		}

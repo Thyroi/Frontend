@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { clearCart, logOutUser } from '../../actions';
 
@@ -11,21 +11,26 @@ import { saveCart } from '../../utils/utils';
 
 function LogInTop() {
 	const dispatch = useDispatch();
-	let history= useHistory();
+	let history = useHistory();
 
-	const { login_name, name, phone } = useSelector((state) => state?.loggedInClient);
+	const { login_name, name, phone } = useSelector(
+		(state) => state.loggedInClient
+	);
+	const { user_name, rol } = useSelector((state) => state.loggedInAdmin);
+
 	const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 	function handleLogOut(e) {
 		e.preventDefault();
+
 		dispatch(logOutUser());
-		saveCart(phone, cart);
-		
+
+		if (cart.length) saveCart(phone, cart);
+
+
 		dispatch(clearCart());
-		alert('logged out');
 
 		history.push('/home');
-
 	}
 
 	return (
@@ -37,12 +42,22 @@ function LogInTop() {
 						<div>{`Hola, ${name}!`}</div>
 					</div>
 				)}
+				{user_name && (
+					<div className={styles.userDisplay}>
+						<div>{rol}</div>
+						<div>{`Hola, ${user_name}!`}</div>
+					</div>
+				)}
 				<FontAwesomeIcon icon={faCircleUser} className={styles.icon} />
 			</div>
 
 			{login_name ? (
 				<div className={styles.dropdown}>
 					<Link to='/client/profile'>Profile</Link>
+					<button onClick={handleLogOut}>Log out</button>
+				</div>
+			) : user_name ? (
+				<div className={styles.dropdown}>
 					<button onClick={handleLogOut}>Log out</button>
 				</div>
 			) : (

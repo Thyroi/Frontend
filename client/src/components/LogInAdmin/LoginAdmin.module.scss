@@ -78,12 +78,11 @@
 					}
 				}
 
-				
 				.containerLoginSignUp {
 					width: 100%;
 					display: flex;
 					flex-wrap: wrap;
-					justify-content: space-between;
+					justify-content: flex-end;
 
 					.loginButton {
 						width: 45%;
@@ -102,14 +101,9 @@
 					}
 
 					.loginButton:hover {
-						background: #d3566a;
+						background: #ffffff;
+						color: #e4687c;
 					}
-
-		
-					
-			
-
-					
 				}
 			}
 		}

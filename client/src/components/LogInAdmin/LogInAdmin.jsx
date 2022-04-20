@@ -24,7 +24,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		if (loggedInAdmin.phone) {
+		if (loggedInAdmin.id_user) {
 			params.history.push('/admindashboard');
 		}
 	}, [loggedInAdmin]);
@@ -121,9 +121,6 @@ function LogInMain(params) {
 								type='submit'
 								value='Login'
 							/>
-							<Link className={style.signUpButton} to='/signup'>
-								Sign Up
-							</Link>
 						</div>
 					</div>
 				</form>

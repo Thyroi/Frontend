@@ -343,6 +343,7 @@ export default function Product_detail() {
                   id="addCartButton"
                   onClick={() => {
                     addCart(cartProducts, product, dispatch);
+                    swal("Product added to cart", "Click to continue!", "success");
                   }}
                 >
                   <FontAwesomeIcon

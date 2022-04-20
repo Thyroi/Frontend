@@ -5,7 +5,7 @@ export function getInfo(nested) {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(
-				`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}`
+				`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}&type=${nested.type}&method=${nested.method}`
 				// {
 				// 	headers: {
 				// 		'content-type': 'application/json',

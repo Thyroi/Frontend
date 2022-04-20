@@ -40,9 +40,9 @@ function LogInMain(params) {
 
 	function responseGoogle(response) {
 		const info = {
-			name: response.profileObj.givenName,
-			lastname: response.profileObj.familyName,
-			email: response.profileObj.email,
+			name: response?.profileObj?.givenName,
+			lastname: response?.profileObj?.familyName,
+			email: response?.profileObj?.email,
 		};
 		dispatch(createClientGoogle(info));
 		params.history.push('/signupgoogle');

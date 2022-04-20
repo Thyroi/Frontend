@@ -225,14 +225,32 @@ export default function Products({ filtrado, filtradoOnChange }) {
 
 	const handlerOrder = (event) => {
 		event.preventDefault();
-		if(event.target.value === "1"){
-			return dispatch(orderByPrice("ASC"))
+		if (event.target.value === "0"){
+			nestedF.type = null
+			nestedF.method = null
+			dispatch(nested(nestedF))
+			return dispatch(getInfo({ ...nestedF }))
+		}
+		else if(event.target.value === "1"){
+			nestedF.type = "ASC"
+			nestedF.method = "price"
+			dispatch(nested(nestedF))
+			return dispatch(getInfo({ ...nestedF }))
 		} else if (event.target.value === "2"){
-			return dispatch(orderByPrice("DESC"))
+			nestedF.type = "DESC"
+			nestedF.method = "price"
+			dispatch(nested(nestedF))
+			return dispatch(getInfo({ ...nestedF }))
 		} else if (event.target.value === "3"){
-			return dispatch(orderByStars("DESC"))
+			nestedF.type = "DESC"
+			nestedF.method = "rating"
+			dispatch(nested(nestedF))
+			return dispatch(getInfo({ ...nestedF }))
 		} else if (event.target.value === "4"){
-			return dispatch(orderByArrive("DESC"))
+			nestedF.type = "DESC"
+			nestedF.method = "createdAt"
+			dispatch(nested(nestedF))
+			return dispatch(getInfo({ ...nestedF }))
 		}
 	}
 
@@ -256,22 +274,22 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleOfferChange}
 				/>
-				<Dropdown
+				{/* <Dropdown
 					placeHolder={'Price'}
 					options={[
 						{ id: 1, name: 'ASC' },
 						{ id: 2, name: 'DESC' },
 					]}
 					handler={handlePriceFilter}
-				/>
-				<Dropdown
+				/> */}
+				{/* <Dropdown
 					placeHolder={'Arrival'}
 					options={[
 						{ id: 1, name: 'Latest arrivals' },
 						{ id: 2, name: 'Earliest arrivals' },
 					]}
 					handler={handleArrive}
-				/>
+				/> */}
 
 				<Dropdown
 					placeHolder={'Type'}
@@ -295,7 +313,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 
 				<Dropdown
 					placeHolder={"Order"}
-					options={[{id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
+					options={[{id: 0, name: "All"}, {id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
 					{id: 3, name: "Best rated"}, {id: 4, name: "Latest arrivals"}]}
 					handler={handlerOrder}
 				/>

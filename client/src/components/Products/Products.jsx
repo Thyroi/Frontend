@@ -209,20 +209,6 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	};
 
 
-	const handlePriceFilter = (event) => {
-		event.preventDefault();
-		event.target.value === '1'
-			? dispatch(orderByPrice('ASC'))
-			: dispatch(orderByPrice('DESC'));
-	};
-
-	const handleArrive = (event) => {
-		event.preventDefault();
-		event.target.value === '1'
-			? dispatch(orderByArrive('DESC'))
-			: dispatch(orderByArrive('ASC'));
-	};
-
 	const handlerOrder = (event) => {
 		event.preventDefault();
 		if (event.target.value === "0"){
@@ -265,16 +251,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
-				<Dropdown
-					placeHolder={'Order'}
-					options={[
-						{ id: 1, name: 'Price ascendent' },
-						{ id: 2, name: 'Price descendent' },
-						{ id: 3, name: 'Best rated' },
-						{ id: 4, name: 'Latest arrivals' },
-					]}
-					handler={handlerOrder}
-				/>
+				
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
@@ -284,22 +261,6 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleOfferChange}
 				/>
-				{/* <Dropdown
-					placeHolder={'Price'}
-					options={[
-						{ id: 1, name: 'ASC' },
-						{ id: 2, name: 'DESC' },
-					]}
-					handler={handlePriceFilter}
-				/> */}
-				{/* <Dropdown
-					placeHolder={'Arrival'}
-					options={[
-						{ id: 1, name: 'Latest arrivals' },
-						{ id: 2, name: 'Earliest arrivals' },
-					]}
-					handler={handleArrive}
-				/> */}
 
 				<Dropdown
 					placeHolder={'Type'}

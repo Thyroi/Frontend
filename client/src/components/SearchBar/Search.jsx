@@ -4,6 +4,7 @@ import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { getByName } from '../../actions';
 import { Notifications } from '../../utils/utils';
+import swal from '@sweetalert/with-react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -53,7 +54,7 @@ function Search({ allData, data, filtrado }) {
 		e.preventDefault();
 		cursor > -1 && resultados.current.children[cursor].click();
 		handleClear();
-		dispatch(getByName(search));
+		dispatch(getByName(search, swal));
 	}
 
 	function handleChange(e) {

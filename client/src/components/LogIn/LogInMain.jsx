@@ -72,7 +72,7 @@ function LogInMain(params) {
 
 	function handleResetPass(e) {
 		e.preventDefault();
-		sendReset(email);
+		sendReset(email, swal);
 
 	}
 

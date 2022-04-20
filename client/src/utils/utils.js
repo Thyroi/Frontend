@@ -388,7 +388,7 @@ export async function deleteAccount(phone) {
 	});
 }
 
-export async function resetPassword(phone, login_password) {
+export async function resetPassword(phone, login_password, swal) {
 	try {
 		const { data } = await axios.patch(
 			`/client/${phone}`,
@@ -405,10 +405,18 @@ export async function resetPassword(phone, login_password) {
 			}
 		);
 		if (data === 'Cliente actualizado') {
-			alert('password successfully set, happy shopping!');
+			swal(
+				'Success!',
+				'password successfully set, happy shopping!',
+				'success'
+			);
 			window.location.href = '/home';
 		} else {
-			alert('there has been a problem, contact support');
+			swal(
+				'Error :s',
+				'there has been a problem, contact support',
+				'error'
+			);
 			window.location.href = '/home';
 		}
 	} catch (e) {
@@ -416,7 +424,7 @@ export async function resetPassword(phone, login_password) {
 	}
 }
 
-export async function sendReset(email) {
+export async function sendReset(email, swal) {
 	try {
 		const { data } = await axios.get(`/client/resetPass?email=${email}`, {
 			headers: {
@@ -425,10 +433,18 @@ export async function sendReset(email) {
 			},
 		});
 		if (data === `Correo de reseteo enviado`) {
-			alert(`Correo de reseteo enviado a ${email}`);
+			swal(
+				'Success!',
+				`We've sent an email to ${email} with instructions`,
+				'success'
+			);
 			window.location.href = '/home';
 		} else {
-			alert('There is not such an email in our database, please sign up');
+			swal(
+				'Error :s',
+				'There is not such an email in our database, please sign up',
+				'error'
+			);
 			window.location.href = '/home';
 		}
 	} catch (e) {

@@ -15,7 +15,7 @@ export default function Favorite({ match, history }){
 
     useEffect(() => {
         dispatch(getSpecificList(client?.phone, "Favorite"))
-    })
+    },[dispatch])
 
     function handleDelete(e){
         const borrar = fav[0]?.List.filter((p) => p.id_product !== e.id_product)

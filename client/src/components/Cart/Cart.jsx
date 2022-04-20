@@ -104,6 +104,20 @@ function Cart(params) {
 				})}
 
 			<div className={style.purchaseContainer}>
+			
+			<div
+											className={style.containerDiscount}>
+											<input
+												className={style.inputDiscount}
+												type='text'
+												placeholder='Discount Code'
+											/>
+											<input
+												className={style.applyDiscount}
+												type='submit'
+												value='Apply'
+											/>
+			</div>
 				{!!itemsCart.length && (
 					<p className={style.totalInfo}>
 						Total due:{' '}

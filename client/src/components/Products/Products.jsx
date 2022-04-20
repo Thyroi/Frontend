@@ -20,7 +20,8 @@ import {
   nested,
 	orderByPrice,
 	orderByArrive,
-	cleanProducts
+	cleanProducts,
+	orderByStars
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -209,19 +210,19 @@ export default function Products({ filtrado, filtradoOnChange }) {
     // filtradoOnChange(event.target.textContent);
 	};
 
-	const handlePriceFilter = (event) =>{
+	const handlerOrder = (event) => {
 		event.preventDefault();
-		event.target.value === '1'
-		? dispatch(orderByPrice("ASC"))
-		: dispatch(orderByPrice("DESC"))
+		if(event.target.value === "1"){
+			return dispatch(orderByPrice("ASC"))
+		} else if (event.target.value === "2"){
+			return dispatch(orderByPrice("DESC"))
+		} else if (event.target.value === "3"){
+			return dispatch(orderByStars("DESC"))
+		} else if (event.target.value === "4"){
+			return dispatch(orderByArrive("DESC"))
+		}
 	}
 
-	const handleArrive = (event) => {
-		event.preventDefault();
-		event.target.value === "1"
-		? dispatch(orderByArrive("DESC"))
-		: dispatch(orderByArrive("ASC"))
-	}
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -263,14 +264,6 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleTypeChange}
 				/>
-				<Dropdown
-					placeHolder={'Price'}
-					options={[
-						{id: 1, name: 'ASC'},
-						{id: 2, name: 'DESC'}
-					]}
-					handler={handlePriceFilter}
-				/>
 				{/* <Dropdown
 					placeHolder={'Brand'}
 					options={[
@@ -281,15 +274,17 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleBrandChange}
 				/> */}
+				
 				<Dropdown
 					placeHolder={'Collection'}
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
 				<Dropdown
-					placeHolder={'Arrive'}
-					options={[{ id: 1, name: "Latest arrivals"}, { id: 2, name: "Earliest arrivals"}]}
-					handler={handleArrive}
+					placeHolder={"Order"}
+					options={[{id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
+					{id: 3, name: "Best rated"}, {id: 4, name: "Latest arrivals"}]}
+					handler={handlerOrder}
 				/>
 			</div>
 			<div className={style.cards}>

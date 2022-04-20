@@ -19,7 +19,7 @@ function LogInTop() {
 	function handleLogOut(e) {
 		e.preventDefault();
 		dispatch(logOutUser());
-		if (cart.length) saveCart(phone, cart);
+		saveCart(phone, cart);
 		
 		dispatch(clearCart());
 		alert('logged out');

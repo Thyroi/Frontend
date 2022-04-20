@@ -810,22 +810,24 @@ export function saveSendingData(payload) {
 // Modified user data
 
 export async function sendModifiedData(payload, dispatch, lastphone) {
-
-
-	axios.patch(`/client/${lastphone}`, payload, {
-
-		headers: {
-			'content-type': 'application/json',
-			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
-		},
-	});
-	dispatch({
-		type: 'LOG_IN_USER',
-		payload: payload,
-	});}
-	catch(error){
-		console.log(error)
-	}
+	return async function (dispatch) {
+		try {
+			axios.patch(`/client/${lastphone}`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			dispatch({
+				type: 'LOG_IN_USER',
+				payload: payload,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 }
 
 export function getUserLists(id) {
@@ -970,19 +972,16 @@ export function orderByArrive(params) {
 		} catch (error) {
 			console.log(error);
 		}
-
-	}
+	};
 }
 
-export function shareList(payload){
-	return async function(){
-		try{
-			await axios.patch(`/lists/share`, payload)
-			alert("Email sent succesfully")
+export function shareList(payload) {
+	return async function () {
+		try {
+			await axios.patch(`/lists/share`, payload);
+			alert('Email sent succesfully');
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			console.log(error)
-		}
-	}
+	};
 }
-

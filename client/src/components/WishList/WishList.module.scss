@@ -47,6 +47,14 @@
 		/////
 	}
 }
+
+.creatorButton {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin: 1rem;
+}
 .subInfoContainer {
 	width: 95%;
 	height: 85%;

@@ -7,6 +7,7 @@ import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import swal from '@sweetalert/with-react';
 
 export default function AddNewProduct() {
 	const [imageUpload, setImageUpload] = useState(null);
@@ -61,8 +62,7 @@ export default function AddNewProduct() {
 			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
 			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
-		dispatch(addProduct({ product: data }));
-		//console.log({product: data})
+		dispatch(addProduct({ product: data }), swal);
 		reset();
 		setImageUrls([]);
 	};

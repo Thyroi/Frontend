@@ -36,7 +36,7 @@ export default function Wishlist({ match, history }) {
 			Colaborators: list.Colaborators,
 			title: list.title,
 		};
-		dispatch(updateListDeleted(updated));
+		dispatch(updateListDeleted(updated, swal));
 		setTimeout(() => {
 			dispatch(getUserLists(client.phone));
 		}, 1000);
@@ -50,11 +50,17 @@ export default function Wishlist({ match, history }) {
 			button: 'Send invitation to your list',
 		});
 		if (clients.find((e) => e.email === invitation)) {
-			const newInvitation = {id: id, newUser: {ClientPhone: clients.find((e) => e.email === invitation).ClientPhone}}
-			dispatch(shareList(newInvitation))
+			const newInvitation = {
+				id: id,
+				newUser: {
+					ClientPhone: clients.find((e) => e.email === invitation)
+						.ClientPhone,
+				},
+			};
+			dispatch(shareList(newInvitation, swal));
 		} else {
-			const newInvitation = {id: id, newUser: {email: invitation}}
-			dispatch(shareList(newInvitation))
+			const newInvitation = { id: id, newUser: { email: invitation } };
+			dispatch(shareList(newInvitation, swal));
 		}
 	}
 
@@ -68,13 +74,16 @@ export default function Wishlist({ match, history }) {
 		<div className={style.containerList}>
 			<h1>{list?.title}</h1>
 
-			{client.phone === list?.ClientPhone 
-			? <button onClick={handleDeleteList} style={{ marginRight: '5%' }}>
-				Delete list
-			  </button>
-			: null
-			}
-			
+			{client.phone === list?.ClientPhone ? (
+				<div className={style.creatorButton}>
+					<button onClick={handleInvite}>Share this list</button>
+					<button
+						onClick={handleDeleteList}
+						style={{ marginRight: '5%' }}>
+						Delete list
+					</button>
+				</div>
+			) : null}
 
 			{list &&
 				list?.List.map((e) => {
@@ -116,20 +125,12 @@ export default function Wishlist({ match, history }) {
 											}}>
 											Remove
 										</button>
-										
 									</div>
 								</div>
 							</div>
 						</div>
 					);
 				})}
-				
-			{client.phone === list?.ClientPhone 
-			? <button onClick={handleInvite}>
-				Share this list
-				</button>
-			: null
-			}
 		</div>
 	);
 }

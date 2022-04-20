@@ -43,7 +43,6 @@ export default function rootReducer(state = initialState, action) {
 				allproducts: action.payload,
 			};
 		case 'RECOVER_PRODUCTS':
-			alert('Nothing found, showing all products');
 			return { ...state, products: state.allproducts };
 		case 'GET_BY_NAME':
 			return {

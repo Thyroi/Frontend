@@ -50,7 +50,6 @@ export default function AddNewProduct() {
 		data.categories = [data.categories];
 		data.default_image = imageUrls[0];
 		data.id_product = productos.length + 1;
-		//data.variants[0].ProductImages = [imageUrls];
 
 		for (let i = 0; i < imageUrls.length; i++) {
 			data.variants[i].SwatchImage = imageUrls[i];
@@ -60,8 +59,8 @@ export default function AddNewProduct() {
 			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
 			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
-		//dispatch(addProduct({ product: data }));
-		console.log({product: data})
+		dispatch(addProduct({ product: data }));
+		//console.log({product: data})
 		reset();
 		setImageUrls([]);
 	};

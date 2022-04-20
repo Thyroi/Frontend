@@ -266,6 +266,16 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		<div className={style.container}>
 			<div className={style.filters}>
 				<Dropdown
+					placeHolder={'Order'}
+					options={[
+						{ id: 1, name: 'Price ascendent' },
+						{ id: 2, name: 'Price descendent' },
+						{ id: 3, name: 'Best rated' },
+						{ id: 4, name: 'Latest arrivals' },
+					]}
+					handler={handlerOrder}
+				/>
+				<Dropdown
 					placeHolder={'Sale'}
 					options={[
 						{ id: 2, name: 'All' },
@@ -310,6 +320,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
+
 
 				<Dropdown
 					placeHolder={"Order"}

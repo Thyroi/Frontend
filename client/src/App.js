@@ -37,8 +37,6 @@ export default function App() {
 	var allproducts = useSelector((state) => state.allproducts);
 	var loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 	var [filtrado, setFiltrado] = useState('All');
-	console.log(`products load: ${products.length}`);
-	console.log(`allproducts load: ${allproducts.length}`);
 
 	const cart = useSelector((state) => state?.cart);
 	const client = useSelector((state) => state?.loggedInClient);
@@ -95,8 +93,8 @@ export default function App() {
 							path='/addnewproduct'
 							component={AddNewProduct}
 						/>
-						{/* {loggedInAdmin.phone && (
-							<> */}
+						{loggedInAdmin.user_name && (
+							<>
 						<Route
 							exact
 							path='/admindashboard'
@@ -120,8 +118,8 @@ export default function App() {
 							path='/admindashboard/offers'
 							component={Offers}
 						/>
-						{/* </>
-						)} */}
+					 </>
+						)}
 						<Route
 							exact
 							path='/home'

@@ -42,13 +42,13 @@ export default function Product_detail() {
 	const dispatch = useDispatch();
 
 	const templateProduct = useSelector((state) => state.details);
+	const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 	let product = useSelector((state) => state.detailEdited);
 
 	const cartProducts = useSelector((state) => state.cart);
 	const client = useSelector((state) => state.loggedInClient);
 	const lists = useSelector((state) => state.lists);
-	const favorite = useSelector((state) => state.specificlist)
-	
+	const favorite = useSelector((state) => state.specificlist);
 
 	const { name, brand, price, description } = product;
 
@@ -67,19 +67,18 @@ export default function Product_detail() {
 			dispatch(selectingProduct(newProduct));
 		}
 	}, [product?.price]);
-	
+
 	useEffect(() => {}, [product && product?.variants]);
-	
-	
+
 	useEffect(() => {
 		dispatch(getUserLists(client?.phone));
-		dispatch(getSpecificList(client.phone, "Favorite"))
+		dispatch(getSpecificList(client.phone, 'Favorite'));
 	}, [dispatch]);
 
 	function opt() {
 		let nuevo = [];
 		for (var i = 0; i < lists?.length; i++) {
-			if(lists[i].title === "Favorite"){
+			if (lists[i].title === 'Favorite') {
 			} else {
 				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
 			}
@@ -97,10 +96,25 @@ export default function Product_detail() {
 					content: 'input',
 					button: 'OK',
 				});
-				if(listName === "Favorite" || listName === "Favourite" || listName === "Favourites" || listName === "Favorites" || listName === "Favorito" || listName === "Favoritos"
-				|| listName === "favorite" || listName === "favourite" || listName === "favourites" || listName === "favorites" || listName === "favorito" || listName === "favoritos"
-				|| listName === "favorita" || listName === "favoritas" || listName === "Favoritas"  || listName === "Favorita"){
-					alert("This name is not allow")
+				if (
+					listName === 'Favorite' ||
+					listName === 'Favourite' ||
+					listName === 'Favourites' ||
+					listName === 'Favorites' ||
+					listName === 'Favorito' ||
+					listName === 'Favoritos' ||
+					listName === 'favorite' ||
+					listName === 'favourite' ||
+					listName === 'favourites' ||
+					listName === 'favorites' ||
+					listName === 'favorito' ||
+					listName === 'favoritos' ||
+					listName === 'favorita' ||
+					listName === 'favoritas' ||
+					listName === 'Favoritas' ||
+					listName === 'Favorita'
+				) {
+					alert('This name is not allow');
 				} else if (listName) {
 					const newList = {
 						ClientPhone: client.phone,
@@ -142,45 +156,45 @@ export default function Product_detail() {
 		}
 	}
 
-
-	function handleFavorites(e){
-	e.preventDefault();
-	if(client?.phone){
-		if(favorite.length){
-			console.log(favorite)
-			if (favorite[0]?.List?.map((p) => p.id_product).includes(parseInt(id))){
-				alert('This product already is on favorites')
+	function handleFavorites(e) {
+		e.preventDefault();
+		if (client?.phone) {
+			if (favorite.length) {
+				console.log(favorite);
+				if (
+					favorite[0]?.List?.map((p) => p.id_product).includes(
+						parseInt(id)
+					)
+				) {
+					alert('This product already is on favorites');
+				} else {
+					const listUpdated = {
+						id: favorite[0]?.id,
+						ClientPhone: parseInt(favorite[0]?.ClientPhone),
+						rList: [
+							...favorite[0]?.List?.map((p) => p.id_product),
+							parseInt(id),
+						],
+						Colaborators: [...favorite[0].Colaborators],
+						title: favorite[0]?.title,
+					};
+					dispatch(updateList(listUpdated));
+				}
 			} else {
-				const listUpdated = {
-					id: favorite[0]?.id,
-					ClientPhone: parseInt(favorite[0]?.ClientPhone),
-					rList: [
-						...favorite[0]?.List?.map((p) => p.id_product),
-						parseInt(id),
-					],
-					Colaborators: [...favorite[0].Colaborators],
-					title: favorite[0]?.title,
+				const newList = {
+					ClientPhone: client.phone,
+					rList: [parseInt(id)],
+					Colaborators: [],
+					title: 'Favorite',
 				};
-				dispatch(updateList(listUpdated));
-				
+				dispatch(createList(newList));
 			}
 		} else {
-			const newList = {
-				ClientPhone: client.phone,
-				rList: [parseInt(id)],
-				Colaborators: [],
-				title: "Favorite",
-			};
-			dispatch(createList(newList));
+			alert('You have to be registered to add a product to favorites');
 		}
-	} else {
-		alert('You have to be registered to add a product to favorites')
 	}
-	}
-	
 
 	if (!product?.variants) return <Loader />;
-
 
 	return (
 		<div className={style.container}>
@@ -284,34 +298,44 @@ export default function Product_detail() {
 
 						<div className={style.containerAmountFavorite}>
 							<Quantity product={product} />
-							<div className={style.favorite}>
-								<FontAwesomeIcon
-									className={style.favoriteIcon}
-									icon={faHeart}
-									onClick={handleFavorites}
-								/>
-							</div>
+							{!loggedInAdmin.user_name && (
+								<div className={style.favorite}>
+									<FontAwesomeIcon
+										className={style.favoriteIcon}
+										icon={faHeart}
+										onClick={handleFavorites}
+									/>
+								</div>
+							)}
 						</div>
 
-						<div className={style.containerBuyCart}>
-							<Link
-								className={style.buyButton}
-								to='/form'
-								onClick={() => prepareProduct(product)}>
-								<button className={style.buyLetter}>Buy</button>
-							</Link>
-							<button
-								className={style.cartButton}
-								id='addCartButton'
-								onClick={() => {
-									addCart(cartProducts, product, dispatch);
-								}}>
-								<FontAwesomeIcon
-									className={style.cartIcon}
-									icon={faCartShopping}
-								/>
-							</button>
-						</div>
+						{!loggedInAdmin.user_name && (
+							<div className={style.containerBuyCart}>
+								<Link
+									className={style.buyButton}
+									to='/form'
+									onClick={() => prepareProduct(product)}>
+									<button className={style.buyLetter}>
+										Buy
+									</button>
+								</Link>
+								<button
+									className={style.cartButton}
+									id='addCartButton'
+									onClick={() => {
+										addCart(
+											cartProducts,
+											product,
+											dispatch
+										);
+									}}>
+									<FontAwesomeIcon
+										className={style.cartIcon}
+										icon={faCartShopping}
+									/>
+								</button>
+							</div>
+						)}
 						<div className={style.containerUnits}>
 							<p className={style.infoUnits}>
 								Available Units:{' '}
@@ -320,19 +344,21 @@ export default function Product_detail() {
 								</span>
 							</p>
 						</div>
-						<div className={style.wishList}>
-							<Dropdown
-								placeHolder={'Add to your wishlist'}
-								options={[
-									...opt(),
-									{
-										id: 0,
-										name: '+ New List',
-									},
-								]}
-								handler={handleLists}
-							/>
-						</div>
+						{!loggedInAdmin.user_name && (
+							<div className={style.wishList}>
+								<Dropdown
+									placeHolder={'Add to your wishlist'}
+									options={[
+										...opt(),
+										{
+											id: 0,
+											name: '+ New List',
+										},
+									]}
+									handler={handleLists}
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 

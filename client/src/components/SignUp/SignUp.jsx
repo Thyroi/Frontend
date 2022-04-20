@@ -131,8 +131,12 @@ export default function SignUp(params) {
 				'Insert a valid city (without special caracters or numbers)';
 		}
 		if (!inputs.address.zipCode) {
-			error.zipCode = 'Zip code is required';
-		} /* if (!inputs.address.particularDetails) {
+			error.zipCode = 'Zip code is required';}
+		else if(inputs.address.zipCode.toString().length!==4){
+			error.zipCode = 'Zip code must be a 4 digits number'
+
+		}		
+		 /* if (!inputs.address.particularDetails) {
 			error.zipCode = 'a particular detail is required';
 		} */
 		return error;

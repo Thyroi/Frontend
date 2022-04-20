@@ -4,15 +4,17 @@ import axios from 'axios';
 export function getInfo(nested) {
 	return async function (dispatch) {
 		try {
-
-			var info = await axios.get(`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}`, {
-				headers: {
-					'content-type': 'application/json',
-					Authorization: `Bearer ${window.localStorage.getItem(
-						'token'
-					)}`,
-				},
-			});
+			var info = await axios.get(
+				`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}`,
+				{
+					headers: {
+						'content-type': 'application/json',
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				}
+			);
 			return dispatch({
 				type: 'GET_ALL',
 				payload: info.data,
@@ -634,9 +636,10 @@ export function logInUser(user, swal, setLoad) {
 		try {
 			const dato = { login_name: user.login_name };
 			const { data } = await axios.post('/login', dato);
+			console.log(data);
 			window.localStorage.setItem('token', data.token);
 
-			if (!data) {
+			if (data.message === 'Incorrect login name or password') {
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
 				return;
@@ -655,8 +658,14 @@ export function logInUser(user, swal, setLoad) {
 export function logInAdmin(user, swal, setLoad) {
 	return async function (dispatch) {
 		try {
-			const dato = { login_name: user.login_name };
-			const { data } = await axios.post('/login/admin', dato);
+			const dato = { user_name: user.login_name };
+			const { data } = await axios.post('/login/admin', dato, {
+				headers: {
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			window.localStorage.setItem('token', data.token);
 
 			if (!data) {
@@ -667,7 +676,7 @@ export function logInAdmin(user, swal, setLoad) {
 
 			return dispatch({
 				type: 'LOG_IN_ADMIN',
-				payload: data.client,
+				payload: data.user,
 			});
 		} catch (error) {
 			console.log(error);
@@ -801,21 +810,24 @@ export function saveSendingData(payload) {
 // Modified user data
 
 export async function sendModifiedData(payload, dispatch, lastphone) {
-	//axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
-	try{
-	await axios.patch(`http://localhost:3001/client/${lastphone}`, payload, {
-		headers: {
-			'content-type': 'application/json',
-			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
-		},
-	});
-	dispatch({
-		type: 'LOG_IN_USER',
-		payload: payload,
-	});}
-	catch(error){
-		console.log(error)
-	}
+	return async function (dispatch) {
+		try {
+			axios.patch(`/client/${lastphone}`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			dispatch({
+				type: 'LOG_IN_USER',
+				payload: payload,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 }
 
 export function getUserLists(id) {
@@ -839,19 +851,20 @@ export function getUserLists(id) {
 	};
 }
 
-export function getSpecificList(id, title){
-	return async function (dispatch){
-		try{
-			let lists = await axios.get(`/lists/getbyidandtitle?ClientPhone=${id}&title=${title}`)
+export function getSpecificList(id, title) {
+	return async function (dispatch) {
+		try {
+			let lists = await axios.get(
+				`/lists/getbyidandtitle?ClientPhone=${id}&title=${title}`
+			);
 			return dispatch({
-				type: "GET_SPECIFIC_LIST",
-				payload: lists.data
-			})
-		}
-		catch (error) {
+				type: 'GET_SPECIFIC_LIST',
+				payload: lists.data,
+			});
+		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 }
 
 export function createList(payload) {
@@ -925,51 +938,50 @@ export function deleteList(id) {
 	};
 }
 
-export function nested(payload){
-  return {
-    type: 'NESTED',
-    payload: payload
-  }
+export function nested(payload) {
+	return {
+		type: 'NESTED',
+		payload: payload,
+	};
 }
 
-export function orderByPrice(params){
-	return async function(dispatch){
-		try{
-			const ordered = await axios.get(`/products/order?type=${params}`)
+export function orderByPrice(params) {
+	return async function (dispatch) {
+		try {
+			const ordered = await axios.get(`/products/order?type=${params}`);
 			return dispatch({
-				type: "ORDER_BY_PRICE",
-				payload: ordered.data
-			})
+				type: 'ORDER_BY_PRICE',
+				payload: ordered.data,
+			});
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			console.log(error)
-		}
-	}
+	};
 }
 
-export function orderByArrive(params){
-	return async function(dispatch){
-		try{
-			const arrive = await axios.get(`/products/getByMoreRecent?order=${params}`)
+export function orderByArrive(params) {
+	return async function (dispatch) {
+		try {
+			const arrive = await axios.get(
+				`/products/getByMoreRecent?order=${params}`
+			);
 			return dispatch({
-				type: "ORDER_BY_ARRIVE",
-				payload: arrive.data
-			})
+				type: 'ORDER_BY_ARRIVE',
+				payload: arrive.data,
+			});
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			console.log(error)
-		}
-	}
+	};
 }
 
-export function shareList(payload){
-	return async function(){
-		try{
-			await axios.patch(`/lists/share`, payload)
-			alert("Email sent succesfully")
-		}
-		catch(error){
-			console.log(error)
+export function shareList(payload) {
+	return async function () {
+		try {
+			await axios.patch(`/lists/share`, payload);
+			alert('Email sent succesfully');
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }
@@ -988,3 +1000,4 @@ export function orderByStars(params){
 		}
 	}
 }
+

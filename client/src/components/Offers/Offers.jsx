@@ -34,7 +34,10 @@ function Offers() {
 
 	function handleSend(e) {
 		e.preventDefault();
-		setNewOffer({ discount: discount, ids: itemsOnOffer });
+		setNewOffer({
+			discount: discount,
+			ids: itemsOnOffer.map((id) => parseInt(id)),
+		});
 		setDiscount(0);
 
 		setActive({

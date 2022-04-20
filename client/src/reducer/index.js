@@ -237,6 +237,12 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				specificlist: action.payload
 			}
+		case "ORDER_BY_STARS":
+			state.products = state.allproducts
+			return{
+				...state,
+				products: action.payload
+			}
 
 		default:
 			return state;

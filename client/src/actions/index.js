@@ -803,10 +803,10 @@ export function saveSendingData(payload) {
 
 // Modified user data
 
-export async function sendModifiedData(payload, dispatch, lastphone) {
+export function sendModifiedData(payload, lastphone) {
 	return async function (dispatch) {
 		try {
-			axios.patch(`/client/${lastphone}`, payload, {
+			await axios.patch(`/client/${lastphone}`, payload, {
 				headers: {
 					'content-type': 'application/json',
 					Authorization: `Bearer ${window.localStorage.getItem(

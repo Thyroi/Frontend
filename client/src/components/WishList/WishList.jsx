@@ -7,6 +7,7 @@ import {
 	getUserLists,
 	shareList,
 	updateListDeleted,
+	clearDetail
 } from '../../actions';
 import style from './WishList.module.scss';
 import swal from '@sweetalert/with-react';
@@ -21,6 +22,7 @@ export default function Wishlist({ match, history }) {
 	useEffect(() => {
 		dispatch(getUserLists(client.phone));
 		dispatch(getClients());
+		dispatch(clearDetail())
 	}, [dispatch]);
 
 	const id = match.params.id;

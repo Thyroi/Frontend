@@ -23,9 +23,9 @@ function LogInTop() {
 	function handleLogOut(e) {
 		e.preventDefault();
 
+		saveCart(phone, cart);
 		dispatch(logOutUser());
 
-		if (cart.length) saveCart(phone, cart);
 
 
 		dispatch(clearCart());

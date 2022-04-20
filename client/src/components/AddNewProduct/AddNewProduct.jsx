@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function AddNewProduct() {
 	const [imageUpload, setImageUpload] = useState(null);
 	const [imageUrls, setImageUrls] = useState([]);
+	const [copyUrls, setCopyUrls] = useState([]);
 	const dispatch = useDispatch();
 	const categorias = useSelector((state) => state.categories);
 	const productos = useSelector((state) => state.products);
@@ -32,34 +33,39 @@ export default function AddNewProduct() {
 	} = useForm({
 		defaultValues: {
 			variants: [
-				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' } },
+				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' },  },
 			],
 		},
 		mode: 'all',
 	});
+
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'variants',
 	});
+
 	const onSubmit = (data) => {
 		data.collection = parseInt(data.collection);
 		data.price = parseFloat(data.price);
 		data.categories = [data.categories];
 		data.default_image = imageUrls[0];
 		data.id_product = productos.length + 1;
-		data.variants[0].ProductImages = [imageUrls[0]];
-		data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
-		data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
-		data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
-		data.variants[0].Stocks.XL = parseInt(data.variants[0].Stocks.XL);
 
 		for (let i = 0; i < imageUrls.length; i++) {
 			data.variants[i].SwatchImage = imageUrls[i];
+			data.variants[i].ProductImages = [imageUrls[i]];
+			data.variants[i].Stocks.L = parseInt(data.variants[i].Stocks.L);
+			data.variants[i].Stocks.M = parseInt(data.variants[i].Stocks.M);
+			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
+			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
 		dispatch(addProduct({ product: data }));
 		//console.log({product: data})
 		reset();
+		setImageUrls([]);
 	};
+
+
 
 	const uploadFile = (e) => {
 		e.preventDefault(e);
@@ -68,10 +74,12 @@ export default function AddNewProduct() {
 		uploadBytes(imageRef, imageUpload).then((snapshot) => {
 			getDownloadURL(snapshot.ref).then((url) => {
 				setImageUrls((prev) => [...prev, url]);
+				setCopyUrls((prev) => [...prev, url]);
 			});
 		});
 	};
-	//console.log(errors)
+	console.log(imageUrls);
+	console.log(copyUrls)
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -86,7 +94,7 @@ export default function AddNewProduct() {
 							pattern: {
 								value: /^[^0-9]+$/,
 							}
-						  })}
+						})}
 					/>
 					{errors.name && (
 						<span className={styles.error}>
@@ -154,12 +162,12 @@ export default function AddNewProduct() {
 							pattern: {
 								value: /^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/,
 							}
-						  })}
+							})}
 						onKeyPress={(e) => {
 							if (e.key === "e" || e.key === "-") {
-							  e.preventDefault();
+								e.preventDefault();
 							}
-						  }}
+							}}
 					/>
 					{errors.price && (
 						<span className={styles.error}>
@@ -198,7 +206,7 @@ export default function AddNewProduct() {
 											pattern: {
 												value: /^[^0-9]+$/,
 											}
-										  })}
+										})}
 										placeholder='Color'
 										name={`variants[${index}].ColorName`}
 
@@ -216,9 +224,13 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stock for Size S'
-										
+										onKeyPress={(e) => {
+											if (e.key === "e" || e.key === "-") {
+												e.preventDefault();
+											}
+											}}
 									/>
-										
+									
 									<Controller
 										as={<input />}
 										type='number'
@@ -226,6 +238,11 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size M'
+										onKeyPress={(e) => {
+											if (e.key === "e" || e.key === "-") {
+												e.preventDefault();
+											}
+											}}
 									/>
 									<Controller
 										as={<input />}
@@ -234,6 +251,11 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size L'
+										onKeyPress={(e) => {
+											if (e.key === "e" || e.key === "-") {
+												e.preventDefault();
+											}
+											}}
 									/>
 									<Controller
 										as={<input />}
@@ -242,6 +264,11 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size XL'
+										onKeyPress={(e) => {
+											if (e.key === "e" || e.key === "-") {
+												e.preventDefault();
+											}
+											}}
 									/>
 
 									<input
@@ -253,6 +280,7 @@ export default function AddNewProduct() {
 											);
 										}}
 									/>
+								
 									<button onClick={uploadFile}>
 										Upload Image
 									</button>

@@ -24,7 +24,9 @@ function LogInTop() {
 		e.preventDefault();
 
 		dispatch(logOutUser());
+
 		if (cart.length) saveCart(phone, cart);
+
 
 		dispatch(clearCart());
 

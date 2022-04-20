@@ -105,12 +105,11 @@ function Search({ allData, data, filtrado }) {
 				/>
 				{filtrado !== 'All' && (
 					<div className={styles.searchIn}>
-						<span htmlFor='searchIn'>
-							{`Search in: ${filtrado}`}
-						</span>
+						<span htmlFor='searchIn'>{`In: ${
+							filtrado.split(' ')[0]
+						}...`}</span>
 						<input
-							style={{ width: '1rem' }}
-							// defaultChecked={checked}
+							className={styles.check}
 							type='checkbox'
 							name='searchIn'
 							value={checked}

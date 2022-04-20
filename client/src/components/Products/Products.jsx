@@ -21,6 +21,9 @@ import {
 	orderByPrice,
 	orderByArrive,
 	cleanProducts,
+
+	orderByStars
+
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -205,6 +208,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		// filtradoOnChange(event.target.textContent);
 	};
 
+
 	const handlePriceFilter = (event) => {
 		event.preventDefault();
 		event.target.value === '1'
@@ -218,6 +222,21 @@ export default function Products({ filtrado, filtradoOnChange }) {
 			? dispatch(orderByArrive('DESC'))
 			: dispatch(orderByArrive('ASC'));
 	};
+
+	const handlerOrder = (event) => {
+		event.preventDefault();
+		if(event.target.value === "1"){
+			return dispatch(orderByPrice("ASC"))
+		} else if (event.target.value === "2"){
+			return dispatch(orderByPrice("DESC"))
+		} else if (event.target.value === "3"){
+			return dispatch(orderByStars("DESC"))
+		} else if (event.target.value === "4"){
+			return dispatch(orderByArrive("DESC"))
+		}
+	}
+
+
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -273,6 +292,14 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
+
+				<Dropdown
+					placeHolder={"Order"}
+					options={[{id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
+					{id: 3, name: "Best rated"}, {id: 4, name: "Latest arrivals"}]}
+					handler={handlerOrder}
+				/>
+
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {

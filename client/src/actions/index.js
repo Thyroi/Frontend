@@ -983,5 +983,21 @@ export function shareList(payload) {
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}
 }
+
+export function orderByStars(params){
+	return async function(dispatch){
+		try{
+			const stars = await axios.get(`/reviews/get/?orderField=stars&order=${params}`)
+			return dispatch({
+				type: "ORDER_BY_STARS",
+				payload: stars.data
+			})
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}
+

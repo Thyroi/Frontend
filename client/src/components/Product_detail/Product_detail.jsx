@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 
 import Quantity from "../Quantity/Quantity";
 import Loader from "../Loader/Loader";
@@ -37,9 +37,10 @@ import {
 
 import Dropdown from "../Dropdown/Dropdown";
 
-export default function Product_detail(params) {
+export default function Product_detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const params = useHistory();
 
   const templateProduct = useSelector((state) => state.details);
   const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
@@ -114,7 +115,7 @@ export default function Product_detail(params) {
           listName === "Favoritas" ||
           listName === "Favorita"
         ) {
-          alert("This name is not allow");
+          swal("Product added to your list", "Click to continue!", "warning");
         } else if (listName) {
           const newList = {
             ClientPhone: client.phone,
@@ -130,7 +131,8 @@ export default function Product_detail(params) {
       } else {
         const updated = lists.find((l) => l.id == e.target.value);
         if (updated?.List.map((p) => p.id_product).includes(parseInt(id))) {
-          return alert("This product already is on this list");
+          swal("This product already is on favorites", "Click to continue!", "warning");
+          return 
         } else {
           if (updated) {
             const listUpdated = {
@@ -141,11 +143,26 @@ export default function Product_detail(params) {
               title: updated?.title,
             };
             dispatch(updateList(listUpdated));
+            swal("List created", "Click to continue!", "success");
           }
         }
       }
     } else {
-      alert("You have to be registered to create a wishlist");
+      swal({
+        title: "You have to be logged in to add lists",
+        text: "Would you like to login?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willAccept) => {
+        if (willAccept) {
+          prepareProduct(product);
+          params.push("/login");
+        } else {
+          
+        }
+      });
     }
   }
 
@@ -157,7 +174,7 @@ export default function Product_detail(params) {
         if (
           favorite[0]?.List?.map((p) => p.id_product).includes(parseInt(id))
         ) {
-          alert("This product already is on favorites");
+          swal("This product already is on favorites", "Click to continue!", "warning");
         } else {
           const listUpdated = {
             id: favorite[0]?.id,
@@ -170,6 +187,7 @@ export default function Product_detail(params) {
             title: favorite[0]?.title,
           };
           dispatch(updateList(listUpdated));
+          swal("Product added to your list", "Click to continue!", "success");
         }
       } else {
         const newList = {
@@ -181,7 +199,21 @@ export default function Product_detail(params) {
         dispatch(createList(newList));
       }
     } else {
-      alert("You have to be registered to add a product to favorites");
+      swal({
+        title: "You have to be logged in to add products",
+        text: "Would you like to login?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willAccept) => {
+        if (willAccept) {
+          prepareProduct(product);
+          params.push("/login");
+        } else {
+          
+        }
+      });
     }
   }
 
@@ -297,7 +329,7 @@ export default function Product_detail(params) {
                     .then((willAccept) => {
                       if (willAccept) {
                         prepareProduct(product);
-                        params.history.push("/login");
+                        params.push("/login");
                       } else {
                         
                       }

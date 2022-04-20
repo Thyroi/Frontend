@@ -17,11 +17,13 @@ import {
 	getSelectorsCol,
 	clearDetail,
 	setActualPage,
-  nested,
+	nested,
 	orderByPrice,
 	orderByArrive,
 	cleanProducts,
+
 	orderByStars
+
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -31,17 +33,17 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
 
-  // const [nested, setNested] = useState({
-  //   offer: null,
-  //   category: null,
-  //   collection: null
-  // });
+	// const [nested, setNested] = useState({
+	//   offer: null,
+	//   category: null,
+	//   collection: null
+	// });
 
 	const collection = useQuery().get('collection');
 	const collectionName = useQuery().get('name');
 
-  const nestedF = useSelector(state => state.nested);
-  console.log(nestedF);
+	const nestedF = useSelector((state) => state.nested);
+	console.log(nestedF);
 
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
@@ -64,14 +66,14 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		dispatch(clearDetail());
 		if (!products.length) {
 			collection
-				? dispatch(getByColId(collection)) && filtradoOnChange(collectionName)
+				? dispatch(getByColId(collection)) &&
+				  filtradoOnChange(collectionName)
 				: dispatch(getInfo(nestedF));
 		}
 		// dispatch(getByCatId());
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
 	}, []);
-
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
@@ -139,23 +141,21 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		var res = '';
 		if (e.target.value === '0') {
 			res = true;
-      // await setNested({...nested, offer : res});
-      nestedF.offer = res;
-      dispatch(getInfo({...nestedF}));
-      dispatch(nested(nestedF));
-
+			// await setNested({...nested, offer : res});
+			nestedF.offer = res;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		} else if (e.target.value === '1') {
 			res = false;
-      // await setNested({...nested, offer : res});
-      // await dispatch(getInfo({...nested, offer : res}));
-      nestedF.offer = res;
-      dispatch(getInfo({...nestedF}));
-      dispatch(nested(nestedF));
-
+			// await setNested({...nested, offer : res});
+			// await dispatch(getInfo({...nested, offer : res}));
+			nestedF.offer = res;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		} else {
-      nestedF.offer = null;
-      dispatch(nested(nestedF));
-			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
+			nestedF.offer = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF })) && filtradoOnChange('All');
 		}
 		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
 		// dispatch(getOffers(res));
@@ -169,22 +169,20 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		event.preventDefault();
 		setCurrentPage(1);
 		if (event.target.value === '0') {
-      nestedF.category = null;
-      dispatch(nested(nestedF));
-			return dispatch(getInfo({...nestedF})) && filtradoOnChange('All');
+			nestedF.category = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF })) && filtradoOnChange('All');
 		} else {
-
 			filtradoOnChange(event.target.textContent);
 
-      // setNested({...nested, category : event.target.value});
-      // dispatch(getInfo({...nested, category : event.target.value}));
+			// setNested({...nested, category : event.target.value});
+			// dispatch(getInfo({...nested, category : event.target.value}));
 			// dispatch(getByCatId(event.target.value));
 
-      nestedF.category = event.target.value;
-      dispatch(getInfo({...nestedF}));
-      dispatch(nested(nestedF));
+			nestedF.category = event.target.value;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		}
-
 	};
 
 	/* const handleBrandChange = (event) => {
@@ -195,19 +193,34 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		event.preventDefault();
 		setCurrentPage(1);
 
-    if(event.target.value === '0'){
-      nestedF.collection = null;
-      dispatch(nested(nestedF));
-      dispatch(getInfo({...nestedF}));
-      filtradoOnChange('All');
-      return;
-    }
-		
-    nestedF.collection = event.target.value;
-    dispatch(nested(nestedF));
-    dispatch(getInfo({...nestedF}));
-    // dispatch(getByColId(event.target.value));
-    // filtradoOnChange(event.target.textContent);
+		if (event.target.value === '0') {
+			nestedF.collection = null;
+			dispatch(nested(nestedF));
+			dispatch(getInfo({ ...nestedF }));
+			filtradoOnChange('All');
+			return;
+		}
+
+		nestedF.collection = event.target.value;
+		dispatch(nested(nestedF));
+		dispatch(getInfo({ ...nestedF }));
+		// dispatch(getByColId(event.target.value));
+		// filtradoOnChange(event.target.textContent);
+	};
+
+
+	const handlePriceFilter = (event) => {
+		event.preventDefault();
+		event.target.value === '1'
+			? dispatch(orderByPrice('ASC'))
+			: dispatch(orderByPrice('DESC'));
+	};
+
+	const handleArrive = (event) => {
+		event.preventDefault();
+		event.target.value === '1'
+			? dispatch(orderByArrive('DESC'))
+			: dispatch(orderByArrive('ASC'));
 	};
 
 	const handlerOrder = (event) => {
@@ -224,14 +237,16 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	}
 
 
+
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	return !products.length || !categories.women?.length || !collections.length ? (
+	return !products.length ||
+		!categories.women?.length ||
+		!collections.length ? (
 		<Loader />
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
-				{/* options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...] */}
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
@@ -241,16 +256,23 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleOfferChange}
 				/>
-				{/* <Dropdown
-					placeHolder={'Stock'}
+				<Dropdown
+					placeHolder={'Price'}
 					options={[
-						{ id: 0, name: 'More than 100' },
-						{ id: 1, name: 'Less than 100' },
-						{ id: 2, name: 'No stock' },
-						{ id: 3, name: 'All' },
+						{ id: 1, name: 'ASC' },
+						{ id: 2, name: 'DESC' },
 					]}
-					handler={handleStockChange}
-				/> */}
+					handler={handlePriceFilter}
+				/>
+				<Dropdown
+					placeHolder={'Arrival'}
+					options={[
+						{ id: 1, name: 'Latest arrivals' },
+						{ id: 2, name: 'Earliest arrivals' },
+					]}
+					handler={handleArrive}
+				/>
+
 				<Dropdown
 					placeHolder={'Type'}
 					options={[
@@ -264,46 +286,38 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					]}
 					handler={handleTypeChange}
 				/>
-				{/* <Dropdown
-					placeHolder={'Brand'}
-					options={[
-						{ id: 0, name: 'Forever21' },
-						{ id: 1, name: 'H&M' },
-						{ id: 2, name: 'Zara' },
-						{ id: 3, name: 'All' },
-					]}
-					handler={handleBrandChange}
-				/> */}
-				
+
 				<Dropdown
 					placeHolder={'Collection'}
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
+
 				<Dropdown
 					placeHolder={"Order"}
 					options={[{id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
 					{id: 3, name: "Best rated"}, {id: 4, name: "Latest arrivals"}]}
 					handler={handlerOrder}
 				/>
+
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {
-					return (						
-							<Card key={d.id_product} data={d} />
-					);
+					return <Card key={d.id_product} data={d} />;
 				})}
 			</div>
 
 			<div className={style.pagination}>
 				<div className={style.text}>
-					{`Showing ${results < products.length
-						? `${currentPage === 1
-							? 1
-							: results * currentPage - 1
-						} - ${results * currentPage}`
-						: products.length
-						} of ${products.length}`}
+					{`Showing ${
+						results < products.length
+							? `${
+									currentPage === 1
+										? 1
+										: results * currentPage - 1
+							  } - ${results * currentPage}`
+							: products.length
+					} of ${products.length}`}
 				</div>
 				<div className={style.pages}>
 					<button

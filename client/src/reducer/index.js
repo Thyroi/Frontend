@@ -27,7 +27,9 @@ const initialState = {
   nested:{
     offer: null,
     category: null,
-    collection: null
+    collection: null,
+	type: null,
+	method: null
   }
 
 

@@ -288,7 +288,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 				/>
 				<Dropdown
 					placeHolder={'Arrive'}
-					options={[{ id: 1, name: "Last arrives"}, { id: 2, name: "Else"}]}
+					options={[{ id: 1, name: "Latest arrivals"}, { id: 2, name: "Earliest arrivals"}]}
 					handler={handleArrive}
 				/>
 			</div>

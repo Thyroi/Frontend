@@ -802,8 +802,8 @@ export function saveSendingData(payload) {
 
 export async function sendModifiedData(payload, dispatch, lastphone) {
 	//axios.patch(`http://localhost:3001/client/${payload.phone}`, payload);
-
-	axios.patch(`http://localhost:3001/client/${lastphone}`, payload, {
+	try{
+	await axios.patch(`http://localhost:3001/client/${lastphone}`, payload, {
 		headers: {
 			'content-type': 'application/json',
 			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
@@ -812,7 +812,10 @@ export async function sendModifiedData(payload, dispatch, lastphone) {
 	dispatch({
 		type: 'LOG_IN_USER',
 		payload: payload,
-	});
+	});}
+	catch(error){
+		console.log(error)
+	}
 }
 
 export function getUserLists(id) {

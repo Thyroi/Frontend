@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Nav from "./Nav";
+import LogInTop from "./LogInTop";
 import Popup from "reactjs-popup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,11 +12,16 @@ import "reactjs-popup/dist/index.css";
 import "./stylesPop.css";
 
 const BurgerMenu = () => {
-
   return (
     <div className={style.container}>
       <Popup
-        trigger={<FontAwesomeIcon icon={faBars} className={style.burgerMenu} id="menuBar" />}
+        trigger={
+          <FontAwesomeIcon
+            icon={faBars}
+            className={style.burgerMenu}
+            id="menuBar"
+          />
+        }
         nested
         position="right top"
         on="click"
@@ -26,14 +32,17 @@ const BurgerMenu = () => {
         arrow={false}
       >
         {(close) => (
-          <div
-            className="button"
-            onClick={() => {
-              console.log("modal closed ");
-              close();
-            }}
-          >
-            <Nav />
+          <div>
+            <LogInTop />
+            <div
+              className="button"
+              onClick={() => {
+                console.log("modal closed ");
+                close();
+              }}
+            >
+              <Nav />
+            </div>
           </div>
         )}
       </Popup>

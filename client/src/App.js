@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Route, Switch, useLocation  } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import AddCategory from './components/AddCategory/AddCategory';
@@ -77,7 +77,7 @@ export default function App() {
 			<Route path='/'>
 				<div className='app'>
 					<div className='left'>
-						<Nav/>
+						<Nav />
 					</div>
 
 					<div className='top'>
@@ -92,12 +92,12 @@ export default function App() {
 						</div>
 						<div className='topLogin'>
 							<LogInTop />
-              <BurgerMenu />
+							<BurgerMenu />
 						</div>
 					</div>
 
 					<div className='container'>
-						{loggedInAdmin.user_name && (
+						{loggedInAdmin?.user_name && (
 							<>
 								<Route
 									exact

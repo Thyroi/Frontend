@@ -215,7 +215,7 @@ export default function Product_detail() {
 					Colaborators: [],
 					title: 'Favorite',
 				};
-				dispatch(createList(newList, swal));
+				dispatch(createList(newList));
 			}
 		} else {
 			swal({
@@ -354,19 +354,19 @@ export default function Product_detail() {
 								<Link
 									className={style.buyButton}
 									onClick={() => {
-										swal({
+										/* swal({
 											title: 'You have to be logged in to buy',
 											text: 'Would you like to login?',
 											icon: 'warning',
 											buttons: true,
 											dangerMode: true,
 										}).then((willAccept) => {
-											if (willAccept) {
-												prepareProduct(product);
-												params.push('/login');
-											} else {
+											if (willAccept) { */
+										prepareProduct(product);
+										params.push('/form');
+										/* } else {
 											}
-										});
+										}); */
 									}}>
 									<button className={style.buyLetter}>
 										Buy

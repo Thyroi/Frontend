@@ -69,12 +69,13 @@ export default function Product_detail() {
     }
   }, [product?.price]);
 
-  useEffect(() => {}, [product && product?.variants]);
+	useEffect(() => {}, [product && product?.variants]);
+//
+	useEffect(() => {
+		dispatch(getUserLists(client?.phone));
+		dispatch(getSpecificList(client.phone, 'Favorite'));
+	}, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getUserLists(client?.phone));
-    dispatch(getSpecificList(client.phone, "Favorite"));
-  }, [dispatch]);
 
   function opt() {
     let nuevo = [];
@@ -217,35 +218,42 @@ export default function Product_detail() {
     }
   }
 
-  if (!product?.variants) return <Loader />;
-
-  return (
-    <div className={style.container}>
-      <div className={style.containerImages}>
-        <div className={style.containerMainImage}>
-          {product?.is_offer && <span className={style.offer}>{"Oferta"}</span>}
-          <img
-            className={style.mainImage}
-            src={product?.variants && product.variants[0].ProductImages[0]}
-            id="default_image"
-            alt=""
-          />
-        </div>
-        <div className={style.containerSecondImages}>
-          {product?.variants &&
-            product?.variants[0]?.ProductImages.map((image) => (
-              <img
-                key={image}
-                className={style.secondImages}
-                src={image}
-                alt=""
-                onClick={() => {
-                  selectImage(image);
-                }}
-              />
-            ))}
-        </div>
-      </div>
+	if (!product?.variants) return <Loader />;
+	console.log(product)
+	return (
+		<div className={style.container}>
+			<div className={style.containerImages}>
+				<div className={style.containerMainImage}>
+					{product?.is_offer && (
+						<span className={style.offer}>{'Oferta'}</span>
+					)}
+					<img
+						className={style.mainImage}
+						src={
+							product?.variants &&
+							product?.variants[0]?.ProductImages[0]
+							
+							
+						}
+						id='default_image'
+						alt=''
+					/>
+				</div>
+				<div className={style.containerSecondImages}>
+					{product?.variants &&
+						product?.variants[0]?.ProductImages.map((image) => (
+							<img
+								key={image}
+								className={style.secondImages}
+								src={image}
+								alt=''
+								onClick={() => {
+									selectImage(image);
+								}}
+							/>
+						))}
+				</div>
+			</div>
 
       <div className={style.containerInf}>
         <div className={style.specificInf}>

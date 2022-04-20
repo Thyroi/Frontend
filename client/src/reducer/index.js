@@ -1,7 +1,7 @@
 const initialState = {
 	actualPage: 1,
 	products: [],
-	allproducts: [],
+	allproducts: JSON.parse(window.localStorage.getItem('allproducts')) || [],
 	details: {},
 	categories: [],
 	orders: [],
@@ -18,24 +18,25 @@ const initialState = {
 	rememberMe: !!window.localStorage.getItem('loggedInClient'),
 	loggedInClient:
 		JSON.parse(window.localStorage.getItem('loggedInClient')) || {},
-
 	loggedInAdmin:
 		JSON.parse(window.localStorage.getItem('loggedInAdmin')) || {},
-
 	lists: [],
-
   nested:{
     offer: null,
     category: null,
-    collection: null
+    collection: null,
+	  type: null,
+	  method: null
   }
-
-
 };
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
 		case 'GET_ALL':
+			window.localStorage.setItem(
+				'allproducts',
+				JSON.stringify(action.payload)
+			);
 			return {
 				...state,
 				products: action.payload,
@@ -215,34 +216,34 @@ export default function rootReducer(state = initialState, action) {
 				lists: action.payload,
 			};
 
-    case 'NESTED':
-      return {
-        ...state,
-        nested: action.payload
-      }
-		case "ORDER_BY_PRICE":
-			state.products = state.allproducts
-			return{
+		case 'NESTED':
+			return {
 				...state,
-				products: action.payload
+				nested: action.payload,
 			};
-		case "ORDER_BY_ARRIVE":
-			state.products = state.allproducts
-			return{
+		case 'ORDER_BY_PRICE':
+			state.products = state.allproducts;
+			return {
 				...state,
-				products: action.payload
-			}
-		case "GET_SPECIFIC_LIST":
-			return{
+				products: action.payload,
+			};
+		case 'ORDER_BY_ARRIVE':
+			state.products = state.allproducts;
+			return {
 				...state,
-				specificlist: action.payload
-			}
-		case "ORDER_BY_STARS":
-			state.products = state.allproducts
-			return{
+				products: action.payload,
+			};
+		case 'GET_SPECIFIC_LIST':
+			return {
 				...state,
-				products: action.payload
-			}
+				specificlist: action.payload,
+			};
+		case 'ORDER_BY_STARS':
+			state.products = state.allproducts;
+			return {
+				...state,
+				products: action.payload,
+			};
 
 		default:
 			return state;

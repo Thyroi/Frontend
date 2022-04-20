@@ -209,7 +209,6 @@ export default function Product_detail() {
 							product?.variants &&
 							product?.variants[0]?.ProductImages[0]
 							
-							
 						}
 						id='default_image'
 						alt=''
@@ -370,6 +369,7 @@ export default function Product_detail() {
 					<p className={style.description}>{description}</p>
 				</div>
 			</div>
+			<Link to={`/updateProducto/${id}`}><button>Update product</button></Link>
 		</div>
 	);
 }

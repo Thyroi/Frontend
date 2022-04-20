@@ -636,7 +636,6 @@ export function logInUser(user, swal, setLoad) {
 		try {
 			const dato = { login_name: user.login_name };
 			const { data } = await axios.post('/login', dato);
-			console.log(data);
 			window.localStorage.setItem('token', data.token);
 
 			if (data.message === 'Incorrect login name or password') {

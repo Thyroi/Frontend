@@ -43,7 +43,6 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	const collectionName = useQuery().get('name');
 
 	const nestedF = useSelector((state) => state.nested);
-	console.log(nestedF);
 
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);

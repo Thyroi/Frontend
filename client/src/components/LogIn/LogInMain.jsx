@@ -39,6 +39,7 @@ function LogInMain(params) {
 	}, [loggedInClient]);
 
 	function responseGoogle(response) {
+		console.log(response);
 		const info = {
 			name: response.profileObj.givenName,
 			lastname: response.profileObj.familyName,

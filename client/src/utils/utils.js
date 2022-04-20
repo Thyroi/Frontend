@@ -279,8 +279,7 @@ export async function createGuestClient(/* setLoad */) {
 			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
 		},
 	});
-  //setLoad(false);
-
+	//setLoad(false);
 }
 
 export async function purchaseOrder(status) {
@@ -298,10 +297,10 @@ export async function purchaseOrder(status) {
 	// const totalDue = productPrepared.reduce((total, item) => {
 	//   return total + item.price;
 	// });
-	let statusM
-	if (status==='rejected')  statusM='Canceled';
-	if(status==='in_process')statusM='Processing';
-	else statusM='Completed';
+	let statusM;
+	if (status === 'rejected') statusM = 'Canceled';
+	if (status === 'in_process') statusM = 'Processing';
+	else statusM = 'Completed';
 	const data = {
 		orderDetails: [...productPrepared],
 		total: totalDue,
@@ -309,7 +308,6 @@ export async function purchaseOrder(status) {
 		clientPhone: parseInt(datosDeEnvio.phone),
 		orderStatus: statusM,
 	};
-
 
 	console.log(data, '_____________purchase');
 
@@ -319,7 +317,6 @@ export async function purchaseOrder(status) {
 			Authorization: `Bearer ${window.localStorage.getItem('token')}`,
 		},
 	});
-
 
 	// Remove purchase info from localStorage
 	// localStorage.removeItem("productPrepared");
@@ -434,6 +431,14 @@ export async function sendReset(email) {
 			alert('There is not such an email in our database, please sign up');
 			window.location.href = '/home';
 		}
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+export async function setNewOffer(payload) {
+	try {
+		await axios.patch('/offers/newOffer', payload);
 	} catch (e) {
 		console.log(e);
 	}

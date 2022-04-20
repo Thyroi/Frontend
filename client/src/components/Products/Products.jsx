@@ -294,10 +294,8 @@ export default function Products({ filtrado, filtradoOnChange }) {
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {
-					return (
-						<div key={d.id_product}>
-							<Card data={d} />
-						</div>
+					return (						
+							<Card key={d.id_product} data={d} />
 					);
 				})}
 			</div>

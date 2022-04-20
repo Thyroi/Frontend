@@ -27,6 +27,7 @@ export default function Nav() {
 	}
 
 	const products = useSelector((state) => state.products);
+	const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 	return (
 		<div className={styles.container}>
 			<button onClick={(e) => handleGoBack(e)}>
@@ -41,17 +42,23 @@ export default function Nav() {
 			</NavLink>
 			{!!products.length && (
 				<>
-					<NavLink
-						to='/admindashboard'
-						activeClassName={styles.active}
-						className={styles.title}>
-						<FontAwesomeIcon
-							className={styles.icons}
-							icon={faChartLine}
-						/>
-						Dashboard
-					</NavLink>
-					
+					{
+						/* loggedInAdmin.phone */ true && (
+							<>
+								<NavLink
+									to='/admindashboard'
+									activeClassName={styles.active}
+									className={styles.title}>
+									<FontAwesomeIcon
+										className={styles.icons}
+										icon={faChartLine}
+									/>
+									Dashboard
+								</NavLink>
+							</>
+						)
+					}
+
 					{/* <NavLink
 						to='/addnewproduct'
 						activeClassName={styles.active}

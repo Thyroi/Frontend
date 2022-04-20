@@ -958,3 +958,15 @@ export function orderByArrive(params){
 		}
 	}
 }
+
+export function shareList(payload){
+	return async function(){
+		try{
+			await axios.patch(`/lists/share`, payload)
+			alert("Email sent succesfully")
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}

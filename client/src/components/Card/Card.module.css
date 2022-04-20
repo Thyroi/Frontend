@@ -111,12 +111,21 @@
 
 @media screen and (max-width: 999px) {
   .container {
-
   }
 }
 
 @media screen and (max-width: 920px) {
   .container {
     width: 300px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .container {
+    width: 100%;
+  }
+
+  .background {
+    height: 600px;
   }
 }

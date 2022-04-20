@@ -23,7 +23,12 @@ function Cart(params) {
 		params.history.push('/cart/pay');
 	}
 
-	if (!itemsCart) return <Loader />;
+	if (itemsCart.length === 0)
+		return (
+			<div style={{ width: '100%', textAlign: 'center' }}>
+				<h1>This cart is empty!</h1>
+			</div>
+		);
 
 	return (
 		<div className={style.containerCart}>
@@ -37,7 +42,7 @@ function Cart(params) {
 							<div className={style.imgContainer}>
 								{item.is_offer && (
 									<span className={style.offer}>
-										{'Oferta'}
+										{'Offer'}
 									</span>
 								)}
 
@@ -87,13 +92,16 @@ function Cart(params) {
 
 										<button
 											className={style.removeButton}
-											onClick={() =>{
+											onClick={() => {
 												dispatch(
 													removeCart(itemsCart, item)
 												);
-                      swal("Product removed from cart", "Click to continue!", "success");
-                      }
-											}>
+												swal(
+													'Product removed from cart',
+													'Click to continue!',
+													'success'
+												);
+											}}>
 											<p>Remove</p>
 										</button>
 									</div>
@@ -104,20 +112,18 @@ function Cart(params) {
 				})}
 
 			<div className={style.purchaseContainer}>
-			
-			<div
-											className={style.containerDiscount}>
-											<input
-												className={style.inputDiscount}
-												type='text'
-												placeholder='Discount Code'
-											/>
-											<input
-												className={style.applyDiscount}
-												type='submit'
-												value='Apply'
-											/>
-			</div>
+				<div className={style.containerDiscount}>
+					<input
+						className={style.inputDiscount}
+						type='text'
+						placeholder='Discount Code'
+					/>
+					<input
+						className={style.applyDiscount}
+						type='submit'
+						value='Apply'
+					/>
+				</div>
 				{!!itemsCart.length && (
 					<p className={style.totalInfo}>
 						Total due:{' '}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './Cart.module.scss';
 
 import Quantity from '../Quantity/Quantity';
@@ -8,7 +8,7 @@ import swal from '@sweetalert/with-react';
 
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeCart } from '../../actions/index';
+import { removeCart, clearDetail } from '../../actions/index';
 import { totalDue, prepareProduct } from '../../utils/utils';
 
 // Add the context for showing the items
@@ -22,6 +22,10 @@ function Cart(params) {
 		e.preventDefault();
 		params.history.push('/cart/pay');
 	}
+
+	useEffect(() => {
+		dispatch(clearDetail())
+	}, [dispatch])
 
 	if (itemsCart.length === 0)
 		return (

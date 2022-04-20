@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Dropdown from '../Dropdown/Dropdown';
 
-import { sendModifiedData, logOutUser, getUserLists } from '../../actions';
+import { sendModifiedData, logOutUser, getUserLists, clearDetail } from '../../actions';
 import { deleteAccount } from '../../utils/utils';
 
 import style from './Client_profile.module.scss';
@@ -54,6 +54,7 @@ function ClientProfile(params) {
 
 	useEffect(() => {
 		dispatch(getUserLists(client_info.phone));
+		dispatch(clearDetail())
 	}, [dispatch]);
 
 	function opt() {

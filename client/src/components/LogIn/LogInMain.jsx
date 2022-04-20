@@ -167,7 +167,7 @@ function LogInMain(params) {
 							<GoogleLogin
 								className={style.googleButton}
 								clientId='969216311730-erq289787jpgirnsaro1cnd34vcikq20.apps.googleusercontent.com'
-								buttonText='Login'
+								buttonText='Sing Up'
 								onSuccess={responseGoogle}
 								onFailure={responseGoogle}
 								cookiePolicy={'single_host_origin'}

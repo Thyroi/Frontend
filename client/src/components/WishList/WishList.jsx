@@ -5,6 +5,7 @@ import {
 	deleteList,
 	getClients,
 	getUserLists,
+	shareList,
 	updateListDeleted,
 } from '../../actions';
 import style from './WishList.module.scss';
@@ -49,7 +50,11 @@ export default function Wishlist({ match, history }) {
 			button: 'Send invitation to your list',
 		});
 		if (clients.find((e) => e.email === invitation)) {
-			console.log('VEVOVE');
+			const newInvitation = {id: id, newUser: {ClientPhone: clients.find((e) => e.email === invitation).ClientPhone}}
+			dispatch(shareList(newInvitation))
+		} else {
+			const newInvitation = {id: id, newUser: {email: invitation}}
+			dispatch(shareList(newInvitation))
 		}
 	}
 
@@ -62,9 +67,14 @@ export default function Wishlist({ match, history }) {
 	return (
 		<div className={style.containerList}>
 			<h1>{list?.title}</h1>
-			<button onClick={handleDeleteList} style={{ marginRight: '5%' }}>
+
+			{client.phone === list?.ClientPhone 
+			? <button onClick={handleDeleteList} style={{ marginRight: '5%' }}>
 				Delete list
-			</button>
+			  </button>
+			: null
+			}
+			
 
 			{list &&
 				list?.List.map((e) => {

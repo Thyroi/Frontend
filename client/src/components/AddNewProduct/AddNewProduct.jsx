@@ -16,10 +16,11 @@ export default function AddNewProduct() {
 	const history = useHistory();
 	const categorias = useSelector((state) => state.categories);
 	const productos = useSelector((state) => state.products);
+	const nested = useSelector((state) => state.nested)
 
 	useEffect(() => {
 		dispatch(getSelectorsCat());
-		dispatch(getInfo());
+		dispatch(getInfo(nested));
 	}, [dispatch]);
 
 	let mujeres = categorias?.women;
@@ -77,7 +78,7 @@ export default function AddNewProduct() {
 			});
 		});
 	};
-	console.log(imageUrls);
+	console.log(productos);
 	console.log(copyUrls);
 	return (
 		<div className={styles.AddProductContainer}>

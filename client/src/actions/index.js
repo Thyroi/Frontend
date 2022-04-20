@@ -88,9 +88,9 @@ export function getById(params) {
 				},
 			});
 
-			id.data.variants.forEach((variant) => {
-				variant.ProductImages.shift();
-			});
+			// id.data.variants.forEach((variant) => {
+			// 	variant.ProductImages.shift();
+			// });
 
 			return dispatch({
 				type: 'GET_BY_ID',

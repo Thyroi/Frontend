@@ -52,11 +52,11 @@ export default function Wishlist({ match, history }) {
 			button: 'Send invitation to your list',
 		});
 		if (clients.find((e) => e.email === invitation)) {
+			let cli = clients.find((e) => e.email === invitation)
 			const newInvitation = {
-				id: id,
+				id: parseInt(id),
 				newUser: {
-					ClientPhone: clients.find((e) => e.email === invitation)
-						.ClientPhone,
+					ClientPhone: clients?.find((e) => e.email == invitation).phone,
 				},
 			};
 			dispatch(shareList(newInvitation, swal));

@@ -7,8 +7,10 @@ import {
 	clearDetail
 } from '../../actions';
 import style from './Favorites.module.scss'
+import swalImport from 'sweetalert';
+var swal = swalImport
 
-export default function Favorite({ match, history }){
+export default function Favorite(params){
     const client = useSelector((state) => state.loggedInClient);
     const fav = useSelector((state) => state.specificlist)
     
@@ -34,6 +36,14 @@ export default function Favorite({ match, history }){
 		}, 1000);
     }
 
+	if(!fav[0]){
+	swal('Oh, oh!', 'First you have to mark one product in favorites to see the favorites list', 'warning')
+	setTimeout(() => {
+		window.location.href = "/client/profile"
+	}, 6000);
+	/* params.history.push('/client/profile') */
+			
+	} else{
     return(
         <div className={style.containerList}>
             <h1>{fav[0]?.title}</h1>
@@ -86,5 +96,5 @@ export default function Favorite({ match, history }){
                 })
             }
         </div>
-    )
+    )}
 }

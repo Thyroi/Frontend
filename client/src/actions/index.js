@@ -1040,7 +1040,15 @@ export function orderByArrive(params) {
 export function shareList(payload) {
 	return async function () {
 		try {
-			await axios.patch(`/lists/share`, payload);
+			await axios.patch(`/lists/share`, payload,  {
+					headers: {
+						'content-type': 'application/json',
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				});
+
 			swal('Success!', 'Email sent succesfully', 'success');
 		} catch (error) {
 			console.log(error);

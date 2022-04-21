@@ -803,8 +803,9 @@ export function saveSendingData(payload) {
 
 // Modified user data
 
-export function sendModifiedData(payload, lastphone) {
-	return async function (dispatch) {
+export  function sendModifiedData(payload, lastphone) {
+	console.log(payload);
+	 return async function (dispatch) { 
 		try {
 			await axios.patch(`/client/${lastphone}`, payload, {
 				headers: {
@@ -813,8 +814,8 @@ export function sendModifiedData(payload, lastphone) {
 						'token'
 					)}`,
 				},
-			});
-			dispatch({
+			} );
+			 return dispatch({
 				type: 'LOG_IN_USER',
 				payload: payload,
 			});

@@ -87,7 +87,7 @@ function ClientProfile(params) {
 						id='form'
 						onSubmit={(e) => {
 							e.preventDefault();
-							sendModifiedData(dataToChange, dispatch, lastPhone);
+							dispatch(sendModifiedData(dataToChange, lastPhone));
 							swal('Success!', 'Datos actualizados', 'success');
 						}}>
 						<div className={style.formGroups}>

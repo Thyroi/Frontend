@@ -181,7 +181,7 @@ export default function Product_detail() {
 			if (favorite.length) {
 				console.log(favorite);
 				if (
-					favorite[0]?.List?.map((p) => p.id_product).includes(
+					favorite[0]?.List?.map((p) => parseInt(p.id_product)).includes(
 						parseInt(id)
 					)
 				) {

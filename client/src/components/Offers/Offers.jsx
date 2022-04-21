@@ -200,7 +200,9 @@ function Offers() {
 										</button>
 										<div className={styles.infoFooter}>
 											<span>{`Stocks: ${stocks}`}</span>
-											<span>{`$${price}`}</span>
+											<span>{`$${price.toFixed(
+												2
+											)}`}</span>
 										</div>
 									</div>
 								</div>

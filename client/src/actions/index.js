@@ -998,3 +998,21 @@ export function orderByStars(params) {
 		}
 	};
 }
+
+export function verifyDiscount(params, swal){
+	return async function(){
+		try{
+			const newPrice = await axios.patch("/cart/verifyDiscount", params)
+			if(newPrice.data !== params.total){
+				/* swal('Success!', 'Discount applied successfully', 'success'); */
+				return console.log(newPrice.data)
+			} else {
+				/* swal('Oh, oh!', 'Discount code invalid', 'warning'); */
+				return console.log("NO")
+			}
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}

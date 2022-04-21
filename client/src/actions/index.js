@@ -730,9 +730,7 @@ export function logInAdmin(user, setUser) {
 				},
 			})
 				.then(response => {
-					if (response.data.message && response.data.message === 'Incorrect user or password') {
-						console.log("response.....1")
-						console.log(response.data.message)
+					if (response.data.message && response.data.message === 'Incorrect login name or password') {
 						swal('Oh, oh!', 'User or password not found', 'warning');
 						setUser({
 							login_name: '',
@@ -740,9 +738,6 @@ export function logInAdmin(user, setUser) {
 						});
 						return;
 					} else {
-						console.log("response.....2")
-						console.log(response.data)
-						console.log(response.data.token)
 						window.localStorage.setItem('token', response.data.token);
 						return dispatch({
 							type: 'LOG_IN_ADMIN',
@@ -751,8 +746,6 @@ export function logInAdmin(user, setUser) {
 					}
 				})
 				.catch(error => {
-					console.log("response.....3")
-					console.log(error)
 					swal('Ups!', 'Something go wrong 😬', 'warning');
 					setUser({
 						login_name: '',

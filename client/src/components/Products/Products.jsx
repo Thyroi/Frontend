@@ -143,6 +143,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
   const handleOfferChange = async (e) => {
     e.preventDefault();
     var res = "";
+    setCurrentPage(1);
     if (e.target.value === "0") {
       res = true;
       // await setNested({...nested, offer : res});
@@ -162,6 +163,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
       return dispatch(getInfo({ ...nestedF })) && filtradoOnChange("All");
     }
     filtradoOnChange(res === "true" ? "onOffer" : "noOffer");
+
     // dispatch(getOffers(res));
   };
 
@@ -191,12 +193,13 @@ export default function Products({ filtrado, filtradoOnChange }) {
 
   function handleReset(e) {
     e.preventDefault();
+    setCurrentPage(1);
     nestedF.category = null;
     nestedF.collection = null;
     nestedF.offer = null;
     nestedF.type = null;
     nestedF.method = null;
-    dispatch(getInfo({ ...nestedF }, swal));
+    dispatch(getInfo({ ...nestedF }, swal)) && filtradoOnChange("All");
   }
   /* const handleBrandChange = (event) => {
 		setBrand(event.target.value);
@@ -222,11 +225,12 @@ export default function Products({ filtrado, filtradoOnChange }) {
   };
 
   const handlerOrder = (event) => {
+    setCurrentPage(1);
     event.preventDefault();
     if (event.target.value === "0") {
       nestedF.type = null;
       nestedF.method = null;
-      dispatch(nested(nestedF));
+      dispatch(nested(nestedF)) && filtradoOnChange("All");
       return dispatch(getInfo({ ...nestedF }));
     } else if (event.target.value === "1") {
       nestedF.type = "ASC";

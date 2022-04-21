@@ -169,4 +169,13 @@
 		justify-content: center;
 		flex-shrink: 0;
 	}
+
+  .filters {
+    display: none;
+  }
+}
+
+.menuFilter {
+  width: 30px;
+  height: 30px;
 }

@@ -405,6 +405,7 @@ export function updateProduct(payload) {
 				type: 'UPDATE_PRODUCT',
 				payload: update.data,
 			});
+
 		} catch (error) {
 			alert(error);
 		}
@@ -681,7 +682,7 @@ export function getClients() {
 	};
 }
 
-export function logInUser(user, setLoad) {
+export function logInUser(user, setUser, setLoad) {
 	return async function (dispatch) {
 		try {
 			const dato = { login_name: user.login_name };
@@ -689,8 +690,14 @@ export function logInUser(user, setLoad) {
 			window.localStorage.setItem('token', data.token);
 
 			if (data.message === 'Incorrect login name or password') {
+				console.log('ERROR_________________________\n');
+				console.log(data.message);
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
+				setUser({
+					login_name: '',
+					login_password: '',
+				})
 				return;
 			}
 
@@ -1051,14 +1058,15 @@ export function orderByArrive(params) {
 export function shareList(payload) {
 	return async function () {
 		try {
-			await axios.patch(`/lists/share`, payload, {
-				headers: {
-					'content-type': 'application/json',
-					Authorization: `Bearer ${window.localStorage.getItem(
-						'token'
-					)}`,
-				},
-			});
+
+			await axios.patch(`/lists/share`, payload,  {
+					headers: {
+						'content-type': 'application/json',
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				});
 			swal('Success!', 'Email sent succesfully', 'success');
 		} catch (error) {
 			console.log(error);

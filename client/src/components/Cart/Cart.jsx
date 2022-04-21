@@ -26,8 +26,8 @@ function Cart(params) {
 	}
 
 	useEffect(() => {
-		dispatch(clearDetail())
-	}, [dispatch])
+		dispatch(clearDetail());
+	}, [dispatch]);
 
 	if (itemsCart.length === 0)
 		return (
@@ -60,7 +60,7 @@ function Cart(params) {
 									<span className={style.offer}>
 										{`-%${
 											(100 *
-												(item.price -
+												(-item.price +
 													item.price_offer)) /
 											item.price
 										}`}
@@ -97,7 +97,7 @@ function Cart(params) {
 									<Quantity product={item} />
 
 									<div className={style.containerButtons}>
-										<div
+										{/* <div
 											className={style.containerDiscount}>
 											<input
 												className={style.inputDiscount}
@@ -109,7 +109,7 @@ function Cart(params) {
 												type='submit'
 												value='Apply'
 											/>
-										</div>
+										</div> */}
 
 										<button
 											className={style.removeButton}

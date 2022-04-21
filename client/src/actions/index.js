@@ -685,11 +685,14 @@ export function getClients() {
 export function logInUser(user, setUser, setLoad) {
 	return async function (dispatch) {
 		try {
-			const dato = { login_name: user.login_name };
+			const dato = { login_name: user.login_name, login_password: user.login_password};
 			const { data } = await axios.post('/login', dato);
 			window.localStorage.setItem('token', data.token);
 
-			if (data.message === 'Incorrect User or Password') {
+			console.log("1errorcito_____\n");
+			console.log(data);
+			if (data.message === 'Incorrect login name or password') {
+				console.log("2errorcito_____\n");
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
 				setUser({
@@ -712,7 +715,7 @@ export function logInUser(user, setUser, setLoad) {
 export function logInAdmin(user, setUser) {
 	return async function (dispatch) {
 		try {
-			const dato = { user_name: user.login_name };
+			const dato = { user_name: user.login_name, user_password: user.login_password};
 			const { data } = await axios.post('/login/admin', dato, {
 				headers: {
 					Authorization: `Bearer ${window.localStorage.getItem(
@@ -720,6 +723,8 @@ export function logInAdmin(user, setUser) {
 					)}`,
 				},
 			});
+			console.log("erooorrorororo\n")
+			console.log(data)
 			window.localStorage.setItem('token', data.token);
 			if (data.message === 'Incorrect user or password') {
 				swal('Oh, oh!', 'User or password not found', 'warning');

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import style from './LoginMain.module.scss';
 import { GoogleLogin } from 'react-google-login';
 import {
@@ -13,8 +13,13 @@ import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
 import swal from 'sweetalert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faRotateLeft
+} from '@fortawesome/free-solid-svg-icons';
 
 function LogInMain(params) {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [load, setLoad] = useState('false');
 
@@ -39,6 +44,11 @@ function LogInMain(params) {
 			params.history.push('/home');
 		}
 	}, [loggedInClient]);
+
+	function handleGoBack(e) {
+		e.preventDefault();
+		history.goBack();
+	}
 
 	function responseGoogle(response) {
 		console.log(response);
@@ -178,6 +188,11 @@ function LogInMain(params) {
 						</div>
 					</div>
 				</form>
+			</div>
+			<div className={style.backbutton}>
+				<button onClick={(e) => handleGoBack(e)}>
+					<FontAwesomeIcon icon={faRotateLeft} />
+				</button>
 			</div>
 		</div>
 	);

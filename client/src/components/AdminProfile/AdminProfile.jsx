@@ -129,7 +129,7 @@ function AdminProfile() {
 					<div className={styles.stat}>
 						<FontAwesomeIcon icon={faSackDollar} />
 						<label>Total income</label>
-						<span>{`$${totIncome.toFixed(0)}k`}</span>
+						<span>{`$${parseFloat(totIncome).toFixed(0)}k`}</span>
 					</div>
 
 					<div className={styles.stat}>

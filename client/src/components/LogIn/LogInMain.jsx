@@ -7,6 +7,7 @@ import {
 	logInUser,
 	getCart,
 	setRememberMe,
+	clearDiscount,
 } from '../../actions';
 import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +33,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
+		dispatch(clearDiscount())
 		if (loggedInClient?.phone) {
 			dispatch(getCart(loggedInClient.phone));
 			params.history.push('/home');

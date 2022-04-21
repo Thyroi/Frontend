@@ -352,7 +352,7 @@ export default function UpdateProduct() {
 				</div>
 				<div className={styles.bottom}>
 					<input type='submit' value='Update' />
-					<button className={styles.deletB}>Delete</button>
+				
 				</div>
 				
 			</form>

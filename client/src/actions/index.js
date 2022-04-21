@@ -738,7 +738,7 @@ export function logInAdmin(user, setUser) {
 						});
 						return;
 					} else {
-						window.localStorage.setItem('token', data.token);
+						window.localStorage.setItem('token', response.data.token);
 						return dispatch({
 							type: 'LOG_IN_ADMIN',
 							payload: data.user,

@@ -7,7 +7,7 @@ import style from "./Product_detail.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import swal from "@sweetalert/with-react";
 
 import {
@@ -399,16 +399,24 @@ export default function Product_detail() {
         <div className={style.containerReviews}>
           {product.reviewsText &&
             product?.reviewsText.map((review) => {
-              let { description, stars } = review;
+              let { description } = review;
               let { login_name } = review.Client;
-              stars = parseInt(stars);
+              let stars = Array.from(Array(review.stars).keys());
+
+              // stars = parseInt(stars);
 
               return (
                 <div className={style.containerReview}>
                   <img className={style.profile} src="https://prephoopsnext.com/wp-content/themes/prepsports/resources/assets/images/default-user.png"/>
                   <div className={style.contentReview}>
-                    <div className={style.containerStars}></div>
                     <h3 className={style.login_nameReviewer}>{login_name}</h3>
+                    <div className={style.containerStars}>
+                      {
+                        stars.map((star) => {
+                          return <FontAwesomeIcon className={style.star} icon={faStar}/>
+                        })
+                      }
+                    </div>
                     <p className={style.textReview}>{description}</p>
                   </div>
                 </div>

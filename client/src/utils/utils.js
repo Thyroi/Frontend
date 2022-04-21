@@ -389,38 +389,32 @@ export async function deleteAccount(phone) {
 }
 
 export async function resetPassword(phone, login_password, swal) {
+	const reset = { ogin_password: login_password };
 	try {
 		const { data } = await axios.patch(
 			`/client/${phone}`,
-			{
-				login_password: login_password,
+			reset /* , {
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${window.localStorage.getItem('token')}`,
 			},
-			{
-				headers: {
-					'content-type': 'application/json',
-					Authorization: `Bearer ${window.localStorage.getItem(
-						'token'
-					)}`,
-				},
-			}
+		} */
 		);
-		if (data === 'Cliente actualizado') {
-			swal(
-				'Success!',
-				'password successfully set, happy shopping!',
-				'success'
-			);
+		if (data === "Cliente actualizado con Exito!!" ) {
+			swal({  title: "Congratulations!",
+			text: "Your account has been verified correctly!",
+			icon: "success",
+			buttons: false, closeOnClickOutside: false, closeOnEsc: false, timer: 4000 });
 			window.location.href = '/home';
-		} else {
-			swal(
-				'Error :s',
-				'there has been a problem, contact support',
-				'error'
-			);
-			window.location.href = '/home';
-		}
+		} 	
 	} catch (e) {
 		console.log(e);
+		swal(
+			'Error :s',
+			'there has been a problem, contact support',
+			'error'
+		);
+		window.location.href = '/home';
 	}
 }
 

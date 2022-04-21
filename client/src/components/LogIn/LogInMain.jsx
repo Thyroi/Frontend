@@ -16,7 +16,7 @@ import swal from 'sweetalert';
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
-  const [load, setLoad] = useState("false");
+	const [load, setLoad] = useState('false');
 
 	const loggedInClient = useSelector((state) => state.loggedInClient);
 
@@ -33,7 +33,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		dispatch(clearDiscount())
+		dispatch(clearDiscount());
 		if (loggedInClient?.phone) {
 			dispatch(getCart(loggedInClient.phone));
 			params.history.push('/home');
@@ -60,10 +60,10 @@ function LogInMain(params) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		if (!user?.login_name || !user?.login_password) {
-			swal("Please!", "Complete the fields", "warning");
-      return;
+			swal('Please!', 'Complete the fields', 'warning');
+			return;
 		}
-    setLoad("true");
+		setLoad('true');
 		dispatch(logInUser(user, setUser, setLoad));
 	}
 
@@ -76,12 +76,11 @@ function LogInMain(params) {
 	function handleResetPass(e) {
 		e.preventDefault();
 		sendReset(email, swal);
-
 	}
 
-  if(load === "true") {
-    return <Loader />
-  }
+	if (load === 'true') {
+		return <Loader />;
+	}
 
 	return (
 		<div className={style.background}>
@@ -132,6 +131,7 @@ function LogInMain(params) {
 									className={style.buttonRemember}
 									type='checkbox'
 									name='rememberMe'
+									checked
 									onClick={() => dispatch(setRememberMe())}
 								/>
 								<label className={style.textRemember}>

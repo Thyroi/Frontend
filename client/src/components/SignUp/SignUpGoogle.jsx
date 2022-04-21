@@ -18,10 +18,11 @@ export default function SignUpGoogle(params) {
 		login_name: '',
 		login_password: '',
 		address: {
-		calle: '',
-		numero: '',
-		city: '',
-		zip_code: ''},
+			streetNumber: '',
+			numero: '',
+			city: '',
+			zipCode: ''
+		},
 	});
 
 	useEffect(() => {
@@ -45,7 +46,7 @@ export default function SignUpGoogle(params) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
-			address: {...inputs.address, [e.target.name]: e.target.value}
+			address: { ...inputs.address, [e.target.name]: e.target.value }
 		});
 
 		setError({
@@ -62,7 +63,7 @@ export default function SignUpGoogle(params) {
 			error.login_name = 'Login name is required';
 		} else if (!inputs.login_password) {
 			error.login_password = 'Password is required';
-		} else if (!inputs.address.calle) {
+		} else if (!inputs.address.streetNumber) {
 			error.calle = 'Street is required';
 		} else if (!inputs.address.numero) {
 			error.numero = 'Street number is required';
@@ -71,7 +72,7 @@ export default function SignUpGoogle(params) {
 		} else if (typeof inputs.address.city !== 'string') {
 			error.city =
 				'Insert a valid city (without special caracters or numbers)';
-		} else if (!inputs.address.zip_code) {
+		} else if (!inputs.address.zipCode) {
 			error.zip_code = 'Zip code is required';
 		}
 		return error;
@@ -108,10 +109,11 @@ export default function SignUpGoogle(params) {
 			login_name: '',
 			login_password: '',
 			address: {
-			calle: '',
-			numero: '',
-			city: '',
-			zip_code: ''},
+				streetNumber: '',
+				numero: '',
+				city: '',
+				zipCode: ''
+			},
 		});
 		params.history.push('/LogIn');
 	}
@@ -129,8 +131,8 @@ export default function SignUpGoogle(params) {
 						<input
 							type='text'
 							placeholder='Street'
-							name='calle'
-							value={inputs.address.calle}
+							name='streetNumber'
+							value={inputs.address.streetNumber}
 							onChange={(e) => {
 								handleAddress(e);
 							}}
@@ -162,8 +164,8 @@ export default function SignUpGoogle(params) {
 						<input
 							type='text'
 							placeholder='Zip Code'
-							name='zip_code'
-							value={inputs.address.zip_code}
+							name='zipCode'
+							value={inputs.address.zipCode}
 							onChange={(e) => {
 								handleAddress(e);
 							}}

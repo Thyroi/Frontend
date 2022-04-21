@@ -112,11 +112,11 @@ export function getById(params) {
 					)}`,
 				},
 			});
-      console.log(params)
-      const reviews = await axios.get(`http://localhost:3001/reviews/get?product=${params}&rating=3&orderField=stars&order=DESC&limit=3`);
+			console.log(params)
+			const reviews = await axios.get(`http://localhost:3001/reviews/get?product=${params}&rating=3&orderField=stars&order=DESC&limit=3`);
 
-      id.data.reviewsText = reviews.data;
-      console.log(id.data);
+			id.data.reviewsText = reviews.data;
+			console.log(id.data);
 			// id.data.variants.forEach((variant) => {
 			// 	variant.ProductImages.shift();
 			// });
@@ -290,9 +290,9 @@ export function addProduct(payload) {
 					)}`,
 				},
 			})
-			.then(response=>
-				swal('Success', 'Product successfully created!', 'success')
-			)
+				.then(response =>
+					swal('Success', 'Product successfully created!', 'success')
+				)
 		} catch (error) {
 			console.log(error);
 		}
@@ -388,7 +388,7 @@ export function UpdateOrder(id, payload) {
 export function updateProduct(payload) {
 	return async function (dispatch) {
 		try {
-			const update = await axios.patch(`/products/update`, payload,  {
+			const update = await axios.patch(`/products/update`, payload, {
 				headers: {
 					'content-type': 'application/json',
 					Authorization: `Bearer ${window.localStorage.getItem(
@@ -401,7 +401,7 @@ export function updateProduct(payload) {
 				type: 'UPDATE_PRODUCT',
 				payload: update.data,
 			});
-			
+
 		} catch (error) {
 			alert(error);
 		}
@@ -678,7 +678,7 @@ export function getClients() {
 	};
 }
 
-export function logInUser(user, setLoad) {
+export function logInUser(user, setUser, setLoad) {
 	return async function (dispatch) {
 		try {
 			const dato = { login_name: user.login_name };
@@ -686,8 +686,14 @@ export function logInUser(user, setLoad) {
 			window.localStorage.setItem('token', data.token);
 
 			if (data.message === 'Incorrect login name or password') {
+				console.log('ERROR_________________________\n');
+				console.log(data.message);
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
+				setUser({
+					login_name: '',
+					login_password: '',
+				})
 				return;
 			}
 
@@ -855,9 +861,9 @@ export function saveSendingData(payload) {
 
 // Modified user data
 
-export  function sendModifiedData(payload, lastphone) {
+export function sendModifiedData(payload, lastphone) {
 	console.log(payload);
-	 return async function (dispatch) { 
+	return async function (dispatch) {
 		try {
 			await axios.patch(`/client/${lastphone}`, payload, {
 				headers: {
@@ -866,8 +872,8 @@ export  function sendModifiedData(payload, lastphone) {
 						'token'
 					)}`,
 				},
-			} );
-			 return dispatch({
+			});
+			return dispatch({
 				type: 'LOG_IN_USER',
 				payload: payload,
 			});
@@ -1064,11 +1070,11 @@ export function orderByStars(params) {
 	};
 }
 
-export function verifyDiscount(params){
-	return async function(dispatch){
-		try{
+export function verifyDiscount(params) {
+	return async function (dispatch) {
+		try {
 			const newPrice = await axios.patch("/cart/verifyDiscount", params)
-			if(newPrice.data !== params.total){
+			if (newPrice.data !== params.total) {
 				swal('Success!', 'Discount applied successfully', 'success');
 				return dispatch({
 					type: 'VERIFY_DISCOUNT',
@@ -1076,7 +1082,7 @@ export function verifyDiscount(params){
 				})
 			} else {
 				swal('Oh, oh!', 'Discount code invalid', 'warning');
-				return 
+				return
 			}
 		}
 		catch (error) {
@@ -1096,18 +1102,18 @@ export function clearDiscount() {
 		}
 	};
 };
-export function verifyAccount(token){
-	token = {token:token}
-	return async function(){
-		try{
+export function verifyAccount(token) {
+	token = { token: token }
+	return async function () {
+		try {
 			const newPrice = await axios.patch("/client/verify", token)
-			if(newPrice.data === "Cliente verificado de manera exitosa!!"){
+			if (newPrice.data === "Cliente verificado de manera exitosa!!") {
 				return console.log("success")
 			} else {
 				return console.log("fail")
 			}
 		}
-		catch(error){
+		catch (error) {
 			console.log(error)
 		}
 	}

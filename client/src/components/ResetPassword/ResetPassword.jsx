@@ -44,10 +44,7 @@ function ResetPassword({ match }) {
 							<h1 className={style.header}>
 								Need to change your password?
 							</h1>
-							<p className={style.subHeader}>
-								If you forgot it, it looks like you are quite an
-								imbecile. Hope you die, you whale abortion.
-							</p>
+							<p className={style.subHeader}>We got you</p>
 						</div>
 
 						<div className={style.containerInput}>

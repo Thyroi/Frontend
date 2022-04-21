@@ -66,8 +66,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-						return { id: p?.id_collection, name: p?.name };
-					});
+							return { id: p?.id_collection, name: p?.name };
+					  });
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -405,7 +405,6 @@ export function updateProduct(payload) {
 				type: 'UPDATE_PRODUCT',
 				payload: update.data,
 			});
-
 		} catch (error) {
 			alert(error);
 		}
@@ -437,7 +436,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -445,13 +444,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -572,7 +571,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -581,7 +580,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -685,20 +684,24 @@ export function getClients() {
 export function logInUser(user, setUser, setLoad) {
 	return async function (dispatch) {
 		try {
-			const dato = { login_name: user.login_name, login_password: user.login_password};
+			const dato = {
+				login_name: user.login_name,
+				login_password: user.login_password,
+			};
+
 			const { data } = await axios.post('/login', dato);
 			window.localStorage.setItem('token', data.token);
 
-			console.log("1errorcito_____\n");
+			console.log('1errorcito_____\n');
 			console.log(data);
 			if (data.message === 'Incorrect login name or password') {
-				console.log("2errorcito_____\n");
+				console.log('2errorcito_____\n');
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
 				setUser({
 					login_name: '',
 					login_password: '',
-				})
+				});
 				return;
 			}
 
@@ -715,7 +718,10 @@ export function logInUser(user, setUser, setLoad) {
 export function logInAdmin(user, setUser) {
 	return async function (dispatch) {
 		try {
-			const dato = { user_name: user.login_name, user_password: user.login_password};
+			const dato = {
+				user_name: user.login_name,
+				user_password: user.login_password,
+			};
 			const { data } = await axios.post('/login/admin', dato, {
 				headers: {
 					Authorization: `Bearer ${window.localStorage.getItem(
@@ -723,15 +729,15 @@ export function logInAdmin(user, setUser) {
 					)}`,
 				},
 			});
-			console.log("erooorrorororo\n")
-			console.log(data)
+			console.log('erooorrorororo\n');
+			console.log(data);
 			window.localStorage.setItem('token', data.token);
 			if (data.message === 'Incorrect user or password') {
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setUser({
 					login_name: '',
 					login_password: '',
-				})
+				});
 				return;
 			}
 
@@ -775,9 +781,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -785,15 +791,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-								Object.keys(i.variants[0].Stocks)[0]
+									Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}
@@ -1063,7 +1069,6 @@ export function orderByArrive(params) {
 export function shareList(payload) {
 	return async function () {
 		try {
-
 			await axios.patch(`/lists/share`, payload, {
 				headers: {
 					'content-type': 'application/json',

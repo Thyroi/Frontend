@@ -6,6 +6,7 @@ import Loader from '../Loader/Loader';
 import Dropdown from '../Dropdown/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import swal from 'sweetalert';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,9 +22,7 @@ import {
 	orderByPrice,
 	orderByArrive,
 	cleanProducts,
-
-	orderByStars
-
+	orderByStars,
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -43,7 +42,6 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	const collectionName = useQuery().get('name');
 
 	const nestedF = useSelector((state) => state.nested);
-	console.log(nestedF);
 
 	const dispatch = useDispatch();
 	var products = useSelector((state) => state.products);
@@ -185,6 +183,15 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		}
 	};
 
+	function handleReset(e) {
+		e.preventDefault();
+		nestedF.category = null;
+		nestedF.collection = null;
+		nestedF.offer = null;
+		nestedF.type = null;
+		nestedF.method = null;
+		dispatch(getInfo({ ...nestedF }, swal));
+	}
 	/* const handleBrandChange = (event) => {
 		setBrand(event.target.value);
 	}; */
@@ -208,39 +215,35 @@ export default function Products({ filtrado, filtradoOnChange }) {
 		// filtradoOnChange(event.target.textContent);
 	};
 
-
 	const handlerOrder = (event) => {
 		event.preventDefault();
-		if (event.target.value === "0"){
-			nestedF.type = null
-			nestedF.method = null
-			dispatch(nested(nestedF))
-			return dispatch(getInfo({ ...nestedF }))
+		if (event.target.value === '0') {
+			nestedF.type = null;
+			nestedF.method = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '1') {
+			nestedF.type = 'ASC';
+			nestedF.method = 'price';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '2') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'price';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '3') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'rating';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '4') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'createdAt';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
 		}
-		else if(event.target.value === "1"){
-			nestedF.type = "ASC"
-			nestedF.method = "price"
-			dispatch(nested(nestedF))
-			return dispatch(getInfo({ ...nestedF }))
-		} else if (event.target.value === "2"){
-			nestedF.type = "DESC"
-			nestedF.method = "price"
-			dispatch(nested(nestedF))
-			return dispatch(getInfo({ ...nestedF }))
-		} else if (event.target.value === "3"){
-			nestedF.type = "DESC"
-			nestedF.method = "rating"
-			dispatch(nested(nestedF))
-			return dispatch(getInfo({ ...nestedF }))
-		} else if (event.target.value === "4"){
-			nestedF.type = "DESC"
-			nestedF.method = "createdAt"
-			dispatch(nested(nestedF))
-			return dispatch(getInfo({ ...nestedF }))
-		}
-	}
-
-
+	};
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
@@ -251,7 +254,9 @@ export default function Products({ filtrado, filtradoOnChange }) {
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
-				
+				<button className={style.reset} onClick={(e) => handleReset(e)}>
+					Reset filters
+				</button>
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
@@ -282,14 +287,17 @@ export default function Products({ filtrado, filtradoOnChange }) {
 					handler={handleCollectionChange}
 				/>
 
-
 				<Dropdown
-					placeHolder={"Order"}
-					options={[{id: 0, name: "All"}, {id: 1, name: "Price ascendent"}, {id: 2, name: "Price descendent"}, 
-					{id: 3, name: "Best rated"}, {id: 4, name: "Latest arrivals"}]}
+					placeHolder={'Order'}
+					options={[
+						{ id: 0, name: 'All' },
+						{ id: 1, name: 'Price ascendent' },
+						{ id: 2, name: 'Price descendent' },
+						{ id: 3, name: 'Best rated' },
+						{ id: 4, name: 'Latest arrivals' },
+					]}
 					handler={handlerOrder}
 				/>
-
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {

@@ -1,7 +1,7 @@
 import { async } from '@firebase/util';
 import axios from 'axios';
 
-export function getInfo(nested) {
+export function getInfo(nested, swal) {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(
@@ -14,10 +14,27 @@ export function getInfo(nested) {
 				// 		)}`,
 				// 	},
 				// }
-			);
+			); //{message:"not found"}
+
+			return info?.data?.message === 'not found'
+				? swal('Oops!', 'Nothing found, please reset filters', 'info')
+				: dispatch({
+						type: 'GET_ALL',
+						payload: info.data,
+				  });
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
+export function getStats() {
+	return async function (dispatch) {
+		try {
+			var { data } = await axios.get(`/statistics/get`);
 			return dispatch({
-				type: 'GET_ALL',
-				payload: info.data,
+				type: 'GET_STATS',
+				payload: data,
 			});
 		} catch (error) {
 			console.log(error);
@@ -630,7 +647,6 @@ export function logInUser(user, swal, setLoad) {
 		try {
 			const dato = { login_name: user.login_name };
 			const { data } = await axios.post('/login', dato);
-			console.log(data);
 			window.localStorage.setItem('token', data.token);
 
 			if (data.message === 'Incorrect login name or password') {
@@ -740,7 +756,7 @@ export function getCart(phone) {
 			if (cart.length === 0) {
 				return dispatch({
 					type: 'ADD_CART',
-					payload: null,
+					payload: [],
 				});
 			}
 
@@ -873,7 +889,19 @@ export function createList(payload, swal) {
 					)}`,
 				},
 			});
-			return swal('Success!', 'List created!', 'success');
+			console.log(payload);
+			if (payload.title === 'Favorite') {
+				return swal(
+					'Success!',
+					'Product added to favourites!',
+					'success'
+				);
+			}
+			return swal(
+				'Success!',
+				'List created and product added!',
+				'success'
+			);
 		} catch (error) {
 			console.log(error);
 		}
@@ -998,4 +1026,22 @@ export function orderByStars(params) {
 			console.log(error);
 		}
 	};
+}
+
+export function verifyDiscount(params, swal){
+	return async function(){
+		try{
+			const newPrice = await axios.patch("/cart/verifyDiscount", params)
+			if(newPrice.data !== params.total){
+				/* swal('Success!', 'Discount applied successfully', 'success'); */
+				return console.log(newPrice.data)
+			} else {
+				/* swal('Oh, oh!', 'Discount code invalid', 'warning'); */
+				return console.log("NO")
+			}
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
 }

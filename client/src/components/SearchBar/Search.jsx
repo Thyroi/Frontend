@@ -133,23 +133,24 @@ function Search({ allData, data, filtrado }) {
 							? styles.searchResult
 							: styles.searchResultNone
 					}
-					ref={resultados}
-					onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
-					onBlur={(e) => handleOnBlur(e)}>
-					{filteredData.map((value, key) => {
-						return (
-							<a
-								className={styles.dataItem}
-								key={key}
-								href={`/products/${value.id_product}`}>
-								<p>{value.name}</p>
-							</a>
-						);
-					})}
-				</div>
-			}
-		</div>
-	);
+          ref={resultados}
+          onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
+          onBlur={(e)=>handleOnBlur(e)}
+          >
+          {filteredData.map((value, key) => {
+            return (
+              <a
+                className={styles.dataItem}
+                key={key}
+                href={`/products/${value.id_product}`}>
+                <p>{value.name}</p>
+              </a>
+            );
+          })}
+        </div>
+      }
+    </div>
+  );
 }
 
 export default Search;

@@ -136,7 +136,7 @@ export default function Product_detail() {
 					)
 				) {
 					swal(
-						'This product already is on favorites',
+						'This product already is on this list!',
 						'Click to continue!',
 						'warning'
 					);
@@ -154,7 +154,7 @@ export default function Product_detail() {
 							title: updated?.title,
 						};
 						dispatch(updateList(listUpdated));
-						swal('List created', 'Click to continue!', 'success');
+						swal('Product added!', 'Click to continue!', 'success');
 					}
 				}
 			}
@@ -181,7 +181,7 @@ export default function Product_detail() {
 			if (favorite.length) {
 				console.log(favorite);
 				if (
-					favorite[0]?.List?.map((p) => p.id_product).includes(
+					favorite[0]?.List?.map((p) => parseInt(p.id_product)).includes(
 						parseInt(id)
 					)
 				) {
@@ -215,7 +215,7 @@ export default function Product_detail() {
 					Colaborators: [],
 					title: 'Favorite',
 				};
-				dispatch(createList(newList));
+				dispatch(createList(newList, swal));
 			}
 		} else {
 			swal({
@@ -241,7 +241,10 @@ export default function Product_detail() {
 			<div className={style.containerImages}>
 				<div className={style.containerMainImage}>
 					{product?.is_offer && (
-						<span className={style.offer}>{'Oferta'}</span>
+						<span className={style.offer}>{`-%${
+							(100 * (-product.price + product.price_offer)) /
+							product.price
+						}`}</span>
 					)}
 					<img
 						className={style.mainImage}

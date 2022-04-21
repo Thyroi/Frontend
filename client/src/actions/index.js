@@ -66,8 +66,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-							return { id: p?.id_collection, name: p?.name };
-					  });
+						return { id: p?.id_collection, name: p?.name };
+					});
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -436,7 +436,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -444,13 +444,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -571,7 +571,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -580,7 +580,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -728,23 +728,31 @@ export function logInAdmin(user, setUser) {
 						'token'
 					)}`,
 				},
-			});
-			console.log('erooorrorororo\n');
-			console.log(data);
-			window.localStorage.setItem('token', data.token);
-			if (data.message === 'Incorrect user or password') {
-				swal('Oh, oh!', 'User or password not found', 'warning');
-				setUser({
-					login_name: '',
-					login_password: '',
+			})
+				.then(response => {
+					if (response.data.message === 'Incorrect user or password') {
+						swal('Oh, oh!', 'User or password not found', 'warning');
+						setUser({
+							login_name: '',
+							login_password: '',
+						});
+						return;
+					} else {
+						window.localStorage.setItem('token', data.token);
+						return dispatch({
+							type: 'LOG_IN_ADMIN',
+							payload: data.user,
+						});
+					}
+				})
+				.catch(error => {
+					swal('Ups!', 'Something go wrong 😬', 'warning');
+					setUser({
+						login_name: '',
+						login_password: '',
+					});
+					return;
 				});
-				return;
-			}
-
-			return dispatch({
-				type: 'LOG_IN_ADMIN',
-				payload: data.user,
-			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -781,9 +789,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -791,15 +799,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-									Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}

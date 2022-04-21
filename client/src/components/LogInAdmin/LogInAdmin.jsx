@@ -23,7 +23,7 @@ function LogInMain(params) {
 	});
 
 	const emailRegEx = useMemo(
-		() => new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+		() => new RegExp(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/),
 		[]
 	);
 
@@ -33,7 +33,7 @@ function LogInMain(params) {
 		if (loggedInAdmin?.id_user) {
 			params.history.push('/admindashboard');
 		}
-	}, [loggedInAdmin]);
+	}, [loggedInAdmin, params]);
 
 	const history = useHistory();
 	function handleGoHome(e) {

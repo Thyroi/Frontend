@@ -1,4 +1,3 @@
-import { async } from '@firebase/util';
 import swalImport from 'sweetalert';
 import axios from 'axios';
 
@@ -9,14 +8,6 @@ export function getInfo(nested) {
 			var info = await axios
 				.get(
 					`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}&type=${nested.type}&method=${nested.method}`
-					// {
-					// 	headers: {
-					// 		'content-type': 'application/json',
-					// 		Authorization: `Bearer ${window.localStorage.getItem(
-					// 			'token'
-					// 		)}`,
-					// 	},
-					// }
 				)
 				.then((response) => {
 					dispatch({
@@ -66,8 +57,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-						return { id: p?.id_collection, name: p?.name };
-					});
+							return { id: p?.id_collection, name: p?.name };
+					  });
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -436,7 +427,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -444,13 +435,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -571,7 +562,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -580,7 +571,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -722,30 +713,42 @@ export function logInAdmin(user, setUser) {
 				user_name: user.login_name,
 				user_password: user.login_password,
 			};
-			const {data} = await axios.post('/login/admin', dato, {
-				headers: {
-					Authorization: `Bearer ${window.localStorage.getItem(
-						'token'
-					)}`,
-				},
-			})
-				.then(response => {
-					if (response.data.message && response.data.message === 'Incorrect login name or password') {
-						swal('Oh, oh!', 'User or password not found', 'warning');
+			await axios
+				.post('/login/admin', dato, {
+					headers: {
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				})
+				.then((response) => {
+					if (
+						response.data.message &&
+						response.data.message ===
+							'Incorrect login name or password'
+					) {
+						swal(
+							'Oh, oh!',
+							'User or password not found',
+							'warning'
+						);
 						setUser({
 							login_name: '',
 							login_password: '',
 						});
 						return;
 					} else {
-						window.localStorage.setItem('token', response.data.token);
+						window.localStorage.setItem(
+							'token',
+							response.data.token
+						);
 						return dispatch({
 							type: 'LOG_IN_ADMIN',
 							payload: response.data.user,
 						});
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					swal('Ups!', 'Something go wrong 😬', 'warning');
 					setUser({
 						login_name: '',
@@ -789,9 +792,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -799,15 +802,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-								Object.keys(i.variants[0].Stocks)[0]
+									Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}

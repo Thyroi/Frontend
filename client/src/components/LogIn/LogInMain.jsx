@@ -29,7 +29,7 @@ function LogInMain(params) {
 	});
 
 	const emailRegEx = useMemo(
-		() => new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+		() => new RegExp(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/),
 		[]
 	);
 
@@ -41,7 +41,7 @@ function LogInMain(params) {
 			dispatch(getCart(loggedInClient.phone));
 			params.history.push('/home');
 		}
-	}, [loggedInClient]);
+	}, [loggedInClient, dispatch, params]);
 
 	function handleGoHome(e) {
 		e.preventDefault();

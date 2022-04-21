@@ -69,6 +69,11 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				orderDetail: action.payload,
 			};
+			case 'UPDATE_PRODUCT':
+				return {
+					...state,
+					details: action.payload,
+				};
 		case 'ORDER_FILTER':
 			state.orders = state.copyOrders;
 			return {

@@ -35,9 +35,13 @@ import Wishlist from './components/WishList/WishList';
 import AdminProfile from './components/AdminProfile/AdminProfile';
 import Favorite from './components/Favorite/Favorite';
 import Users from './components/Users/Users';
+
+import UpdateProduct from './components/AddNewProduct/UpdateProduct';
+
 import BurgerMenu from './components/BurgerMenu/BurgerMenu';
 
 import { saveCart } from './utils/utils';
+
 
 export default function App() {
 	const location = useLocation();
@@ -109,6 +113,12 @@ export default function App() {
 									path='/addnewproduct/addcategory'
 									component={AddCategory}
 								/>
+								<Route
+									exact
+									path='/updateProducto/:id'
+									component={UpdateProduct}
+								/>
+								
 								<Route
 									exact
 									path='/admindashboard'

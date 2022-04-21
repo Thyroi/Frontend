@@ -398,6 +398,7 @@ export default function Product_detail() {
             </div>
           </div>
 
+
           <div className={style.generalInformation}>
             <h4 className={style.headerDescription}>Description</h4>
             <hr className={style.line} />
@@ -428,4 +429,5 @@ export default function Product_detail() {
     </div>
 
   );
+
 }

@@ -106,6 +106,10 @@ export function getById(params) {
 				},
 			});
 
+      const reviews = await axios.get(`http://localhost:3001/reviews/get?rating=3&orderField=stars&order=DESC&limit=3`);
+
+      id.data.reviewsText = reviews.data;
+      console.log(id.data);
 			// id.data.variants.forEach((variant) => {
 			// 	variant.ProductImages.shift();
 			// });

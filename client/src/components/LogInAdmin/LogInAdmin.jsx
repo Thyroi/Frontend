@@ -6,9 +6,13 @@ import { logInAdmin } from '../../actions';
 import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from '@sweetalert/with-react';
+import {
+	getInfo
+  } from "../../actions";
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
+	const nestedF = useSelector((state) => state.nested);
 
 	const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
 
@@ -41,6 +45,7 @@ function LogInMain(params) {
 		if (!user?.login_name || !user?.login_password) {
 			swal('Alert!', 'Please fill all fields', 'warning');
 		}
+		handleReset()
 		dispatch(logInAdmin(user, setUser));
 	}
 
@@ -54,6 +59,15 @@ function LogInMain(params) {
 		e.preventDefault();
 		sendReset(email, swal);
 	}
+
+	function handleReset() {
+		nestedF.category = null;
+		nestedF.collection = null;
+		nestedF.offer = null;
+		nestedF.type = null;
+		nestedF.method = null;
+		dispatch(getInfo({ ...nestedF }));
+	  }
 
 	return (
 		<div className={style.background}>

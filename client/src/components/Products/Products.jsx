@@ -199,7 +199,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
     nestedF.offer = null;
     nestedF.type = null;
     nestedF.method = null;
-    dispatch(getInfo({ ...nestedF }, swal)) && filtradoOnChange("All");
+    dispatch(getInfo({ ...nestedF })) && filtradoOnChange("All");
   }
   /* const handleBrandChange = (event) => {
 		setBrand(event.target.value);

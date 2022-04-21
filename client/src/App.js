@@ -35,9 +35,14 @@ import Wishlist from './components/WishList/WishList';
 import AdminProfile from './components/AdminProfile/AdminProfile';
 import Favorite from './components/Favorite/Favorite';
 import Users from './components/Users/Users';
+
+import UpdateProduct from './components/AddNewProduct/UpdateProduct';
+
 import BurgerMenu from './components/BurgerMenu/BurgerMenu';
 
+import Verification from './components/Verification/Verification';
 import { saveCart } from './utils/utils';
+
 
 export default function App() {
 	const location = useLocation();
@@ -67,6 +72,7 @@ export default function App() {
 	return (
 		<Switch>
 			<Route exact path='/login' component={LogIn} />
+			<Route exact path='/verification/:token' component={Verification}/>
 			<Route exact path='/loginadmin' component={LogInAdmin} />
 			<Route
 				exact
@@ -109,6 +115,12 @@ export default function App() {
 									path='/addnewproduct/addcategory'
 									component={AddCategory}
 								/>
+								<Route
+									exact
+									path='/updateProducto/:id'
+									component={UpdateProduct}
+								/>
+								
 								<Route
 									exact
 									path='/admindashboard'
@@ -173,6 +185,7 @@ export default function App() {
 						<Route exact path='/orders' component={Orders} />
 						<Route exact path='/lists/:id' component={Wishlist} />
 						<Route exact path='/favorites' component={Favorite} />
+						
 					</div>
 				</div>
 			</Route>

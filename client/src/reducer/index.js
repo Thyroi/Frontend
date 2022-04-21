@@ -29,6 +29,7 @@ const initialState = {
 		type: null,
 		method: null,
 	},
+	discount: ""
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -69,6 +70,11 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				orderDetail: action.payload,
 			};
+			case 'UPDATE_PRODUCT':
+				return {
+					...state,
+					details: action.payload,
+				};
 		case 'ORDER_FILTER':
 			state.orders = state.copyOrders;
 			return {
@@ -246,6 +252,16 @@ export default function rootReducer(state = initialState, action) {
 				...state,
 				products: action.payload,
 			};
+		case "VERIFY_DISCOUNT":
+			return{
+				...state,
+				discount: action.payload
+			}
+		case "CLEAR_DISCOUNT":
+			return{
+				...state,
+				discount: ""
+			}
 
 		default:
 			return state;

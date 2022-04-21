@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Dropdown from '../Dropdown/Dropdown';
 
-import { sendModifiedData, logOutUser, getUserLists, clearDetail } from '../../actions';
+import { sendModifiedData, logOutUser, getUserLists, clearDetail, clearDiscount } from '../../actions';
 import { deleteAccount } from '../../utils/utils';
 
 import style from './Client_profile.module.scss';
@@ -15,6 +15,7 @@ import {
 	faBagShopping,
 	faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
+
 
 function ClientProfile(params) {
 	const client_info = useSelector((state) => state.loggedInClient);
@@ -55,22 +56,33 @@ function ClientProfile(params) {
 	useEffect(() => {
 		dispatch(getUserLists(client_info.phone));
 		dispatch(clearDetail())
+		dispatch(clearDiscount())
 	}, [dispatch]);
 
 	function opt() {
 		let nuevo = [];
-		for (var i = 0; i < lists?.length; i++) {
+		if(lists?.length){
+			for (var i = 0; i < lists?.length; i++) {
 			if (lists[i].title === 'Favorite') {
 			} else {
 				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
 			}
 		}
 		return nuevo;
+		} else {
+			const empty = [{id: 0, name: "NO LIST CREATED YET"}]
+			return empty
+		}
+		
 	}
 
 	function handleRedirect(e) {
 		e.preventDefault();
-		params.history.push(`/lists/${e.target.value}`);
+		if(parseInt(e.target.value) === 0){
+			
+		} else {
+			params.history.push(`/lists/${e.target.value}`);
+		}
 	}
 
 	function handleFavorite(e) {

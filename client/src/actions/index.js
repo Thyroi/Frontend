@@ -1,7 +1,9 @@
 import { async } from '@firebase/util';
+import swalImport from 'sweetalert';
 import axios from 'axios';
 
-export function getInfo(nested, swal) {
+var swal = swalImport
+export function getInfo(nested) {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(
@@ -14,14 +16,19 @@ export function getInfo(nested, swal) {
 				// 		)}`,
 				// 	},
 				// }
-			); //{message:"not found"}
+			)
+				.then(
+					response => {
+						dispatch({
+							type: 'GET_ALL',
+							payload: response.data,
+						})
+					}
+				)
+				.catch(
+					error => { swal('Oops!', 'Nothing found, please reset filters', 'info') }
+				)
 
-			return info?.data?.message === 'not found'
-				? swal('Oops!', 'Nothing found, please reset filters', 'info')
-				: dispatch({
-						type: 'GET_ALL',
-						payload: info.data,
-				  });
 		} catch (error) {
 			console.log(error);
 		}
@@ -57,8 +64,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-							return { id: p?.id_collection, name: p?.name };
-					  });
+						return { id: p?.id_collection, name: p?.name };
+					});
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -70,7 +77,7 @@ export function getSelectorsCol() {
 	};
 }
 
-export function getByName(obj, swal) {
+export function getByName(obj) {
 	return async function (dispatch) {
 		try {
 			var name = await axios.get(`/products/?filters=${obj}`, {
@@ -272,7 +279,7 @@ export function getOffers(pay) {
 	};
 }
 
-export function addProduct(payload, swal) {
+export function addProduct(payload) {
 	return async function () {
 		try {
 			await axios.post('/products/add', payload, {
@@ -282,8 +289,10 @@ export function addProduct(payload, swal) {
 						'token'
 					)}`,
 				},
-			});
-			return swal('Success', 'Product successfully created!', 'success');
+			})
+			.then(response=>
+				swal('Success', 'Product successfully created!', 'success')
+			)
 		} catch (error) {
 			console.log(error);
 		}
@@ -376,6 +385,29 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
+export function updateProduct(payload) {
+	return async function (dispatch) {
+		try {
+			const update = await axios.patch(`/products/update`, payload,  {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			console.log(update + 'ok');
+			return dispatch({
+				type: 'UPDATE_PRODUCT',
+				payload: update.data,
+			});
+			
+		} catch (error) {
+			alert(error);
+		}
+	};
+}
+
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 export function addCart(cartProducts, payload, dispatch) {
@@ -401,7 +433,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -409,13 +441,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -536,7 +568,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -545,7 +577,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -646,7 +678,7 @@ export function getClients() {
 	};
 }
 
-export function logInUser(user, swal, setLoad) {
+export function logInUser(user, setLoad) {
 	return async function (dispatch) {
 		try {
 			const dato = { login_name: user.login_name };
@@ -669,7 +701,7 @@ export function logInUser(user, swal, setLoad) {
 	};
 }
 
-export function logInAdmin(user, swal, setLoad) {
+export function logInAdmin(user, setLoad) {
 	return async function (dispatch) {
 		try {
 			const dato = { user_name: user.login_name };
@@ -728,9 +760,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -738,15 +770,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-									Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}
@@ -882,7 +914,7 @@ export function getSpecificList(id, title) {
 	};
 }
 
-export function createList(payload, swal) {
+export function createList(payload) {
 	return async function () {
 		try {
 			await axios.post('/lists/create', payload, {
@@ -929,7 +961,7 @@ export function updateList(payload) {
 	};
 }
 
-export function updateListDeleted(payload, swal) {
+export function updateListDeleted(payload) {
 	return async function () {
 		try {
 			await axios.patch('/lists/update', payload, {
@@ -1005,7 +1037,7 @@ export function orderByArrive(params) {
 	};
 }
 
-export function shareList(payload, swal) {
+export function shareList(payload) {
 	return async function () {
 		try {
 			await axios.patch(`/lists/share`, payload);
@@ -1032,20 +1064,51 @@ export function orderByStars(params) {
 	};
 }
 
-export function verifyDiscount(params, swal){
-	return async function(){
+export function verifyDiscount(params){
+	return async function(dispatch){
 		try{
 			const newPrice = await axios.patch("/cart/verifyDiscount", params)
 			if(newPrice.data !== params.total){
-				/* swal('Success!', 'Discount applied successfully', 'success'); */
-				return console.log(newPrice.data)
+				swal('Success!', 'Discount applied successfully', 'success');
+				return dispatch({
+					type: 'VERIFY_DISCOUNT',
+					payload: newPrice.data,
+				})
 			} else {
-				/* swal('Oh, oh!', 'Discount code invalid', 'warning'); */
-				return console.log("NO")
+				swal('Oh, oh!', 'Discount code invalid', 'warning');
+				return 
+			}
+		}
+		catch (error) {
+			console.log(error)
+		}
+	}
+}
+
+export function clearDiscount() {
+	return async function (dispatch) {
+		try {
+			return dispatch({
+				type: 'CLEAR_DISCOUNT',
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
+export function verifyAccount(token){
+	token = {token:token}
+	return async function(){
+		try{
+			const newPrice = await axios.patch("/client/verify", token)
+			if(newPrice.data === "Cliente verificado de manera exitosa!!"){
+				return console.log("success")
+			} else {
+				return console.log("fail")
 			}
 		}
 		catch(error){
 			console.log(error)
 		}
 	}
-}
+};

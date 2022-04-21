@@ -6,10 +6,13 @@ import Loader from '../Loader/Loader';
 import style from './Product_detail.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
-import swal from "@sweetalert/with-react";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faCartShopping,
+	faHeart,
+	faStar,
+} from '@fortawesome/free-solid-svg-icons';
+import swal from '@sweetalert/with-react';
 
 import {
 	selectImage,
@@ -55,7 +58,7 @@ export default function Product_detail() {
 
 	useEffect(() => {
 		dispatch(getById(id));
-		dispatch(clearDiscount())
+		dispatch(clearDiscount());
 	}, []);
 
 	useEffect(() => {
@@ -178,180 +181,197 @@ export default function Product_detail() {
 		}
 	}
 
-  function handleFavorites(e) {
-    e.preventDefault();
-    if (client?.phone) {
-      if (favorite.length) {
-        console.log(favorite);
-        if (
-          favorite[0]?.List?.map((p) => parseInt(p.id_product)).includes(
-            parseInt(id)
-          )
-        ) {
-          swal(
-            "This product already is on favorites",
-            "Click to continue!",
-            "warning"
-          );
-        } else {
-          const listUpdated = {
-            id: favorite[0]?.id,
-            ClientPhone: parseInt(favorite[0]?.ClientPhone),
-            rList: [
-              ...favorite[0]?.List?.map((p) => p.id_product),
-              parseInt(id),
-            ],
-            Colaborators: [...favorite[0].Colaborators],
-            title: favorite[0]?.title,
-          };
-          dispatch(updateList(listUpdated));
-          swal("Product added to your list", "Click to continue!", "success");
-        }
-      } else {
-        const newList = {
-          ClientPhone: client.phone,
-          rList: [parseInt(id)],
-          Colaborators: [],
-          title: "Favorite",
-        };
-        dispatch(createList(newList, swal));
-      }
-    } else {
-      swal({
-        title: "You have to be logged in to add products",
-        text: "Would you like to login?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willAccept) => {
-        if (willAccept) {
-          prepareProduct(product);
-          params.push("/login");
-        } else {
-        }
-      });
-    }
-  }
+	function handleFavorites(e) {
+		e.preventDefault();
+		if (client?.phone) {
+			if (favorite.length) {
+				console.log(favorite);
+				if (
+					favorite[0]?.List?.map((p) =>
+						parseInt(p.id_product)
+					).includes(parseInt(id))
+				) {
+					swal(
+						'This product already is on favorites',
+						'Click to continue!',
+						'warning'
+					);
+				} else {
+					const listUpdated = {
+						id: favorite[0]?.id,
+						ClientPhone: parseInt(favorite[0]?.ClientPhone),
+						rList: [
+							...favorite[0]?.List?.map((p) => p.id_product),
+							parseInt(id),
+						],
+						Colaborators: [...favorite[0].Colaborators],
+						title: favorite[0]?.title,
+					};
+					dispatch(updateList(listUpdated));
+					swal(
+						'Product added to your list',
+						'Click to continue!',
+						'success'
+					);
+				}
+			} else {
+				const newList = {
+					ClientPhone: client.phone,
+					rList: [parseInt(id)],
+					Colaborators: [],
+					title: 'Favorite',
+				};
+				dispatch(createList(newList, swal));
+			}
+		} else {
+			swal({
+				title: 'You have to be logged in to add products',
+				text: 'Would you like to login?',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willAccept) => {
+				if (willAccept) {
+					prepareProduct(product);
+					params.push('/login');
+				} else {
+				}
+			});
+		}
+	}
 
-  if (!product?.variants) return <Loader />;
-  console.log(product);
-  return (
-    <div className={style.newContainer}>
-      <div className={style.container}>
-        <div className={style.containerImages}>
-          <div className={style.containerMainImage}>
-            {product?.is_offer && (
-              <span className={style.offer}>{`-%${
-                (100 * (-product.price + product.price_offer)) / product.price
-              }`}</span>
-            )}
-            <img
-              className={style.mainImage}
-              src={product?.variants && product?.variants[0]?.ProductImages[0]}
-              id="default_image"
-              alt=""
-            />
-          </div>
-          <div className={style.containerSecondImages}>
-            {product?.variants &&
-              product?.variants[0]?.ProductImages.map((image) => (
-                <img
-                  key={image}
-                  className={style.secondImages}
-                  src={image}
-                  alt=""
-                  onClick={() => {
-                    selectImage(image);
-                  }}
-                />
-              ))}
-          </div>
-        </div>
+	if (!product?.variants) return <Loader />;
+	console.log(product);
+	return (
+		<div className={style.newContainer}>
+			<div className={style.container}>
+				<div className={style.containerImages}>
+					<div className={style.containerMainImage}>
+						{product?.is_offer && (
+							<span className={style.offer}>{`-${parseFloat(
+								(100 * (-product.price + product.price_offer)) /
+									product.price
+							).toFixed(0)}%`}</span>
+						)}
+						<img
+							className={style.mainImage}
+							src={
+								product?.variants &&
+								product?.variants[0]?.ProductImages[0]
+							}
+							id='default_image'
+							alt=''
+						/>
+					</div>
+					<div className={style.containerSecondImages}>
+						{product?.variants &&
+							product?.variants[0]?.ProductImages.map((image) => (
+								<img
+									key={image}
+									className={style.secondImages}
+									src={image}
+									alt=''
+									onClick={() => {
+										selectImage(image);
+									}}
+								/>
+							))}
+					</div>
+				</div>
 
-        <div className={style.containerInf}>
-          <div className={style.specificInf}>
-            <h2 className={style.productName}>{name}</h2>
-            <p className={style.collectionName}>{brand}</p>
-            <p className={style.productPrice} id="individualProductPrice">{`$${
-              product?.totalPrice || product?.price
-            }`}</p>
+				<div className={style.containerInf}>
+					<div className={style.specificInf}>
+						<h2 className={style.productName}>{name}</h2>
+						<p className={style.collectionName}>{brand}</p>
+						<p
+							className={style.productPrice}
+							id='individualProductPrice'>{`$${
+							(product?.totalPrice) || product?.price
+						}`}</p>
 
-					<div className={style.containerPreferences}>
-						<div className={style.containerSizePreference}>
-							<h3 className={style.sizeHeader}>Size</h3>
-							<div className={style.sizes} id='sizes'>
-								{product?.variants &&
-									productSizes(templateProduct).map(
-										(size) => (
+						<div className={style.containerPreferences}>
+							<div className={style.containerSizePreference}>
+								<h3 className={style.sizeHeader}>Size</h3>
+								<div className={style.sizes} id='sizes'>
+									{product?.variants &&
+										productSizes(templateProduct).map(
+											(size) => (
+												<div
+													id={size}
+													key={size}
+													className={style.size}
+													onClick={() => {
+														const result =
+															Object.assign(
+																{},
+																selectSize(
+																	templateProduct,
+																	product,
+																	size
+																)
+															);
+														dispatch(
+															selectingProduct(
+																result
+															)
+														);
+													}}>
+													{size}
+												</div>
+											)
+										)}
+								</div>
+							</div>
+
+							<div className={style.containerColorPreference}>
+								<h3 className={style.colorHeader}>Color</h3>
+								<div className={style.colors} id='colors'>
+									{productColor(templateProduct).map(
+										(color) => (
 											<div
-												id={size}
-												key={size}
-												className={style.size}
+												id={color}
+												key={color}
+												className={style.color}
 												onClick={() => {
 													const result =
 														Object.assign(
 															{},
-															selectSize(
+															selectVariant(
 																templateProduct,
 																product,
-																size
+																color
 															)
 														);
 													dispatch(
 														selectingProduct(result)
 													);
 												}}>
-												{size}
+												{color}
 											</div>
 										)
 									)}
-							</div>
-						</div>
-
-						<div className={style.containerColorPreference}>
-							<h3 className={style.colorHeader}>Color</h3>
-							<div className={style.colors} id='colors'>
-								{productColor(templateProduct).map((color) => (
-									<div
-										id={color}
-										key={color}
-										className={style.color}
-										onClick={() => {
-											const result = Object.assign(
-												{},
-												selectVariant(
-													templateProduct,
-													product,
-													color
-												)
-											);
-											dispatch(selectingProduct(result));
-										}}>
-										{color}
-									</div>
-								))}
-							</div>
-						</div>
-
-						<div className={style.containerAmountFavorite}>
-							<Quantity product={product} />
-							{!loggedInAdmin.user_name && (
-								<div className={style.favorite}>
-									<FontAwesomeIcon
-										className={style.favoriteIcon}
-										icon={faHeart}
-										onClick={handleFavorites}
-									/>
 								</div>
-							)}
-						</div>
+							</div>
 
-						{!loggedInAdmin.user_name && (
-							<div className={style.containerBuyCart}>
-								<Link
-									className={style.buyButton}
-									onClick={() => {
-										/* swal({
+							<div className={style.containerAmountFavorite}>
+								<Quantity product={product} />
+								{!loggedInAdmin.user_name && (
+									<div className={style.favorite}>
+										<FontAwesomeIcon
+											className={style.favoriteIcon}
+											icon={faHeart}
+											onClick={handleFavorites}
+										/>
+									</div>
+								)}
+							</div>
+
+							{!loggedInAdmin.user_name && (
+								<div className={style.containerBuyCart}>
+									<Link
+										className={style.buyButton}
+										onClick={() => {
+											/* swal({
 											title: 'You have to be logged in to buy',
 											text: 'Would you like to login?',
 											icon: 'warning',
@@ -359,107 +379,116 @@ export default function Product_detail() {
 											dangerMode: true,
 										}).then((willAccept) => {
 											if (willAccept) { */
-										prepareProduct(product);
-										params.push('/form');
-										/* } else {
+											prepareProduct(product);
+											params.push('/form');
+											/* } else {
 											}
 										}); */
-									}}>
-									<button className={style.buyLetter}>
-										Buy
+										}}>
+										<button className={style.buyLetter}>
+											Buy
+										</button>
+									</Link>
+									<button
+										className={style.cartButton}
+										id='addCartButton'
+										onClick={() => {
+											addCart(
+												cartProducts,
+												product,
+												dispatch
+											);
+											swal(
+												'Product added to cart',
+												'Click to continue!',
+												'success'
+											);
+										}}>
+										<FontAwesomeIcon
+											className={style.cartIcon}
+											icon={faCartShopping}
+										/>
 									</button>
-								</Link>
-								<button
-									className={style.cartButton}
-									id='addCartButton'
-									onClick={() => {
-										addCart(
-											cartProducts,
-											product,
-											dispatch
-										);
-										swal(
-											'Product added to cart',
-											'Click to continue!',
-											'success'
-										);
-									}}>
-									<FontAwesomeIcon
-										className={style.cartIcon}
-										icon={faCartShopping}
+								</div>
+							)}
+							{loggedInAdmin.user_name && (
+								<div className={style.containerBuyCart}>
+									<Link to={`/updateProducto/${id}`}>
+										<button className={style.buyButton}>
+											Update product
+										</button>
+									</Link>
+								</div>
+							)}
+							<div className={style.containerUnits}>
+								<p className={style.infoUnits}>
+									Available Units:{' '}
+									<span className={style.units}>
+										{product?.variants[0]?.leftUnits}
+									</span>
+								</p>
+							</div>
+							{!loggedInAdmin.user_name && (
+								<div className={style.wishList}>
+									<Dropdown
+										placeHolder={'Add to your wishlist'}
+										options={[
+											...opt(),
+											{
+												id: 0,
+												name: '+ New List',
+											},
+										]}
+										handler={handleLists}
 									/>
-								</button>
-							</div>
-						)}
-						{loggedInAdmin.user_name && (
-							<div className={style.containerBuyCart}>
-								<Link to={`/updateProducto/${id}`}>
-									<button className={style.buyButton}>
-										Update product
-									</button>
-								</Link>
-							</div>
-						)}
-						<div className={style.containerUnits}>
-							<p className={style.infoUnits}>
-								Available Units:{' '}
-								<span className={style.units}>
-									{product?.variants[0]?.leftUnits}
-								</span>
-							</p>
+								</div>
+							)}
 						</div>
-						{!loggedInAdmin.user_name && (
-							<div className={style.wishList}>
-								<Dropdown
-									placeHolder={'Add to your wishlist'}
-									options={[
-										...opt(),
-										{
-											id: 0,
-											name: '+ New List',
-										},
-									]}
-									handler={handleLists}
-								/>
-							</div>
-						)}
+					</div>
+
+					<div className={style.generalInformation}>
+						<h4 className={style.headerDescription}>Description</h4>
+						<hr className={style.line} />
+						<p className={style.description}>{description}</p>
 					</div>
 				</div>
-
-				<div className={style.generalInformation}>
-					<h4 className={style.headerDescription}>Description</h4>
-					<hr className={style.line} />
-					<p className={style.description}>{description}</p>
-				</div>
 			</div>
-     </div>
-      
-      <div className={style.containerReviews}>
-          {product.reviewsText &&
-            product?.reviewsText.map((review) => {
-              let { description } = review;
-              let { login_name } = review.Client;
-              let stars = Array.from(Array(review.stars).keys());
 
-              return (
-                <div className={style.containerReview}>
-                  <img className={style.profile} src="https://prephoopsnext.com/wp-content/themes/prepsports/resources/assets/images/default-user.png"/>
-                  <div className={style.contentReview}>
-                    <div className={style.containerStars}>
-                      {
-                        stars.map((star) => {
-                          return <FontAwesomeIcon className={style.star} icon={faStar}/>
-                        })
-                      }
-                    </div>
-                    <h3 className={style.login_nameReviewer}>{login_name}</h3>
-                    <p className={style.textReview}>{description}</p>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      
+			<div className={style.containerReviews}>
+				{product.reviewsText &&
+					product?.reviewsText.map((review) => {
+						let { description } = review;
+						let { login_name } = review.Client;
+						let stars = Array.from(Array(review.stars).keys());
+
+						return (
+							<div className={style.containerReview}>
+								<img
+									className={style.profile}
+									src='https://prephoopsnext.com/wp-content/themes/prepsports/resources/assets/images/default-user.png'
+								/>
+								<div className={style.contentReview}>
+									<div className={style.containerStars}>
+										{stars.map((star) => {
+											return (
+												<FontAwesomeIcon
+													className={style.star}
+													icon={faStar}
+												/>
+											);
+										})}
+									</div>
+									<h3 className={style.login_nameReviewer}>
+										{login_name}
+									</h3>
+									<p className={style.textReview}>
+										{description}
+									</p>
+								</div>
+							</div>
+						);
+					})}
+			</div>
 		</div>
 	);
 }

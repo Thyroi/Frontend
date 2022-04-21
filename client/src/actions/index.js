@@ -2,33 +2,35 @@ import { async } from '@firebase/util';
 import swalImport from 'sweetalert';
 import axios from 'axios';
 
-var swal = swalImport
+var swal = swalImport;
 export function getInfo(nested) {
 	return async function (dispatch) {
 		try {
-			var info = await axios.get(
-				`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}&type=${nested.type}&method=${nested.method}`
-				// {
-				// 	headers: {
-				// 		'content-type': 'application/json',
-				// 		Authorization: `Bearer ${window.localStorage.getItem(
-				// 			'token'
-				// 		)}`,
-				// 	},
-				// }
-			)
-				.then(
-					response => {
-						dispatch({
-							type: 'GET_ALL',
-							payload: response.data,
-						})
-					}
+			var info = await axios
+				.get(
+					`/products?offer=${nested.offer}&collection=${nested.collection}&category=${nested.category}&type=${nested.type}&method=${nested.method}`
+					// {
+					// 	headers: {
+					// 		'content-type': 'application/json',
+					// 		Authorization: `Bearer ${window.localStorage.getItem(
+					// 			'token'
+					// 		)}`,
+					// 	},
+					// }
 				)
-				.catch(
-					error => { swal('Oops!', 'Nothing found, please reset filters', 'info') }
-				)
-
+				.then((response) => {
+					dispatch({
+						type: 'GET_ALL',
+						payload: response.data,
+					});
+				})
+				.catch((error) => {
+					swal(
+						'Oops!',
+						'Nothing found, please reset filters',
+						'info'
+					);
+				});
 		} catch (error) {
 			console.log(error);
 		}
@@ -64,8 +66,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-						return { id: p?.id_collection, name: p?.name };
-					});
+							return { id: p?.id_collection, name: p?.name };
+					  });
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -112,11 +114,12 @@ export function getById(params) {
 					)}`,
 				},
 			});
-      console.log(params)
-      const reviews = await axios.get(`http://localhost:3001/reviews/get?product=${params}&rating=3&orderField=stars&order=DESC&limit=3`);
+			const reviews = await axios.get(
+				`/reviews/get?product=${params}&rating=3&orderField=stars&order=DESC&limit=3`
+			);
 
-      id.data.reviewsText = reviews.data;
-      console.log(id.data);
+			id.data.reviewsText = reviews.data;
+			console.log(id.data);
 			// id.data.variants.forEach((variant) => {
 			// 	variant.ProductImages.shift();
 			// });
@@ -282,17 +285,18 @@ export function getOffers(pay) {
 export function addProduct(payload) {
 	return async function () {
 		try {
-			await axios.post('/products/add', payload, {
-				headers: {
-					'content-type': 'application/json',
-					Authorization: `Bearer ${window.localStorage.getItem(
-						'token'
-					)}`,
-				},
-			})
-			.then(response=>
-				swal('Success', 'Product successfully created!', 'success')
-			)
+			await axios
+				.post('/products/add', payload, {
+					headers: {
+						'content-type': 'application/json',
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				})
+				.then((response) =>
+					swal('Success', 'Product successfully created!', 'success')
+				);
 		} catch (error) {
 			console.log(error);
 		}
@@ -388,7 +392,7 @@ export function UpdateOrder(id, payload) {
 export function updateProduct(payload) {
 	return async function (dispatch) {
 		try {
-			const update = await axios.patch(`/products/update`, payload,  {
+			const update = await axios.patch(`/products/update`, payload, {
 				headers: {
 					'content-type': 'application/json',
 					Authorization: `Bearer ${window.localStorage.getItem(
@@ -401,7 +405,6 @@ export function updateProduct(payload) {
 				type: 'UPDATE_PRODUCT',
 				payload: update.data,
 			});
-			
 		} catch (error) {
 			alert(error);
 		}
@@ -433,7 +436,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -441,13 +444,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -568,7 +571,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-				Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -577,7 +580,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+						Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -760,9 +763,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -770,15 +773,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-							i.variants[0].ColorName &&
+								i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-							Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-								Object.keys(i.variants[0].Stocks)[0]
+									Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}
@@ -855,9 +858,9 @@ export function saveSendingData(payload) {
 
 // Modified user data
 
-export  function sendModifiedData(payload, lastphone) {
+export function sendModifiedData(payload, lastphone) {
 	console.log(payload);
-	 return async function (dispatch) { 
+	return async function (dispatch) {
 		try {
 			await axios.patch(`/client/${lastphone}`, payload, {
 				headers: {
@@ -866,8 +869,8 @@ export  function sendModifiedData(payload, lastphone) {
 						'token'
 					)}`,
 				},
-			} );
-			 return dispatch({
+			});
+			return dispatch({
 				type: 'LOG_IN_USER',
 				payload: payload,
 			});
@@ -902,7 +905,15 @@ export function getSpecificList(id, title) {
 	return async function (dispatch) {
 		try {
 			let lists = await axios.get(
-				`/lists/getbyidandtitle?ClientPhone=${id}&title=${title}`
+				`/lists/getbyidandtitle?ClientPhone=${id}&title=${title}`,
+				{
+					headers: {
+						'content-type': 'application/json',
+						Authorization: `Bearer ${window.localStorage.getItem(
+							'token'
+						)}`,
+					},
+				}
 			);
 			return dispatch({
 				type: 'GET_SPECIFIC_LIST',
@@ -1040,7 +1051,14 @@ export function orderByArrive(params) {
 export function shareList(payload) {
 	return async function () {
 		try {
-			await axios.patch(`/lists/share`, payload);
+			await axios.patch(`/lists/share`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			swal('Success!', 'Email sent succesfully', 'success');
 		} catch (error) {
 			console.log(error);
@@ -1064,25 +1082,31 @@ export function orderByStars(params) {
 	};
 }
 
-export function verifyDiscount(params){
-	return async function(dispatch){
-		try{
-			const newPrice = await axios.patch("/cart/verifyDiscount", params)
-			if(newPrice.data !== params.total){
+export function verifyDiscount(params) {
+	return async function (dispatch) {
+		try {
+			const newPrice = await axios.patch('/cart/verifyDiscount', params, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			if (newPrice.data !== params.total) {
 				swal('Success!', 'Discount applied successfully', 'success');
 				return dispatch({
 					type: 'VERIFY_DISCOUNT',
 					payload: newPrice.data,
-				})
+				});
 			} else {
 				swal('Oh, oh!', 'Discount code invalid', 'warning');
-				return 
+				return;
 			}
+		} catch (error) {
+			console.log(error);
 		}
-		catch (error) {
-			console.log(error)
-		}
-	}
+	};
 }
 
 export function clearDiscount() {
@@ -1095,20 +1119,26 @@ export function clearDiscount() {
 			console.log(error);
 		}
 	};
-};
-export function verifyAccount(token){
-	token = {token:token}
-	return async function(){
-		try{
-			const newPrice = await axios.patch("/client/verify", token)
-			if(newPrice.data === "Cliente verificado de manera exitosa!!"){
-				return console.log("success")
+}
+export function verifyAccount(token) {
+	token = { token: token };
+	return async function () {
+		try {
+			const newPrice = await axios.patch('/client/verify', token, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			if (newPrice.data === 'Cliente verificado de manera exitosa!!') {
+				return console.log('success');
 			} else {
-				return console.log("fail")
+				return console.log('fail');
 			}
+		} catch (error) {
+			console.log(error);
 		}
-		catch(error){
-			console.log(error)
-		}
-	}
-};
+	};
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import styles from './AddNewProduct.module.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getSelectorsCat, addProduct, getInfo, getById } from '../../actions';
+import { getSelectorsCat, updateProduct, getInfo, getById } from '../../actions';
 import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 export default function UpdateProduct() {
     const {id} = useParams()
-    console.log(id)
+    
     const [imageUpload, setImageUpload] = useState(null);
 	const [imageUrls, setImageUrls] = useState([]);
 	const [copyUrls, setCopyUrls] = useState([]);
@@ -26,8 +26,8 @@ export default function UpdateProduct() {
 		dispatch(getInfo(nested));
         dispatch(getById(product))
 	}, [dispatch]);
-    console.log(product)
 
+   
 	// let mujeres = categorias?.women;
 	// let hombres = categorias?.men;
 
@@ -50,26 +50,32 @@ export default function UpdateProduct() {
 		control,
 		name: 'variants',
 	});
-    console.log(product?.variants[0]?.Stocks)
+    
 	const onSubmit = (data) => {
-		data.collection = parseInt(data.collection);
-		data.price = parseFloat(data.price);
-		data.categories = [data.categories];
-		data.default_image = imageUrls[0];
-		data.id_product = productos.length + 1;
-
+        data.id_product = parseInt(product?.id_product)
+		data.price = parseFloat(data?.price);
+		//data.variants[0].ProductImages = product?.variants[0]?.ProductImages
+		data.variants[0].SwatchImage  = product?.variants[0]?.SwatchImage
+		data.default_image = product?.default_image
+		if(imageUrls.length > 0){
+			data.variants[0].ProductImages = imageUrls
+		}
 		for (let i = 0; i < imageUrls.length; i++) {
-			data.variants[i].SwatchImage = imageUrls[i];
-			data.variants[i].ProductImages = [imageUrls[i]];
+			//data.variants[i].SwatchImage = imageUrls[i];
+
+			//data.variants[i].ProductImages = product?.variants[i].ProductImages
+			//data.variants[i].SwatchImage  = product?.variants[i].SwatchImage
 			data.variants[i].Stocks.L = parseInt(data.variants[i].Stocks.L);
 			data.variants[i].Stocks.M = parseInt(data.variants[i].Stocks.M);
 			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
 			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
-		//dispatch(addProduct({ product: data }));
-		console.log({product: data})
-		reset();
+		dispatch(updateProduct({ updatedProduct: data }));
+		console.log({updatedProduct: data})
+		//reset();
 		setImageUrls([]);
+		history.push('/admindashboard');
+		//dispatch(getById(id))
 	};
 
 	const uploadFile = (e) => {
@@ -83,12 +89,12 @@ export default function UpdateProduct() {
 			});
 		});
 	};
-	console.log(productos);
-	console.log(copyUrls);
+
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.left}>
+             
 					{/* <select
 
 						name='categories'
@@ -216,7 +222,7 @@ export default function UpdateProduct() {
 											},
 										})}
 										placeholder='Color'
-                                        defaultValue={product?.variants[index]?.ColorName}
+                                        defaultValue={product?.variants[index]?.ColorName }
 										name={`variants[${index}].ColorName`}
 									/>
 									{errors.variants && (
@@ -231,7 +237,7 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.S`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.S}
+										defaultValue={product?.variants[index]?.Stocks.S  || 0}
 										placeholder='Select Stock for Size S'
 										onKeyPress={(e) => {
 											if (
@@ -248,7 +254,7 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.M`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.M}
+										defaultValue={product?.variants[index]?.Stocks.M  || 0}
 										placeholder='Select Stocks for Size M'
 										onKeyPress={(e) => {
 											if (
@@ -263,7 +269,7 @@ export default function UpdateProduct() {
 										as={<input />}
 										type='number'
 										name={`variants[${index}].Stocks.L`}
-                                        defaultValue={product?.variants[index]?.Stocks.M}
+                                        defaultValue={product?.variants[index]?.Stocks.M || 0}
 										control={control}
 										placeholder='Select Stocks for Size L'
 										onKeyPress={(e) => {
@@ -280,7 +286,7 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.XL`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.XL}
+										defaultValue={product?.variants[index]?.Stocks.XL || 0}
 										placeholder='Select Stocks for Size XL'
 										onKeyPress={(e) => {
 											if (
@@ -339,14 +345,16 @@ export default function UpdateProduct() {
 
 				<div className={styles.right}>
 					<img src={product?.default_image} alt={product?.name} />;
-                    {imageUrls.map((url) => {
+                    {imageUrls?.map((url) => {
 						return <img key={url} src={url} alt={url} />;
 					})}
 					
 				</div>
 				<div className={styles.bottom}>
-					<input type='submit' />
+					<input type='submit' value='Update' />
+					<button className={styles.deletB}>Delete</button>
 				</div>
+				
 			</form>
 		</div>
 	);

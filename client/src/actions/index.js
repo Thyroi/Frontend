@@ -354,6 +354,29 @@ export function UpdateOrder(id, payload) {
 	};
 }
 
+export function updateProduct(payload) {
+	return async function (dispatch) {
+		try {
+			const update = await axios.patch(`/products/update`, payload,  {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
+			console.log(update + 'ok');
+			return dispatch({
+				type: 'UPDATE_PRODUCT',
+				payload: update.data,
+			});
+			
+		} catch (error) {
+			alert(error);
+		}
+	};
+}
+
 // Actions for Cart guest ************************************QUE HAGO CON LA DE ABAJO
 
 // export function addProduct(payload){

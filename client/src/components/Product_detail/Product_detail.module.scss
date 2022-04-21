@@ -345,3 +345,28 @@
     }
   }
 }
+
+.containerReviews {
+  padding: 0 3rem;
+
+  .containerReview {
+    margin-bottom: 3rem;
+    border-radius: 5px;
+    background-color: #ffffff;
+
+    display: flex;
+
+    .profile {
+      padding: 1rem;
+      width: 100px;
+    }
+
+    .contentReview {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      .textReview {
+        padding-top: 0.3rem;
+      }
+    }
+  }
+}

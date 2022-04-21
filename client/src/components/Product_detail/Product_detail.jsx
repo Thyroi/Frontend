@@ -164,103 +164,113 @@ export default function Product_detail() {
     }
   }
 
-  function handleFavorites(e) {
-    e.preventDefault();
-    if (client?.phone) {
-      if (favorite.length) {
-        console.log(favorite);
-        if (
-          favorite[0]?.List?.map((p) => parseInt(p.id_product)).includes(
-            parseInt(id)
-          )
-        ) {
-          swal(
-            "This product already is on favorites",
-            "Click to continue!",
-            "warning"
-          );
-        } else {
-          const listUpdated = {
-            id: favorite[0]?.id,
-            ClientPhone: parseInt(favorite[0]?.ClientPhone),
-            rList: [
-              ...favorite[0]?.List?.map((p) => p.id_product),
-              parseInt(id),
-            ],
-            Colaborators: [...favorite[0].Colaborators],
-            title: favorite[0]?.title,
-          };
-          dispatch(updateList(listUpdated));
-          swal("Product added to your list", "Click to continue!", "success");
-        }
-      } else {
-        const newList = {
-          ClientPhone: client.phone,
-          rList: [parseInt(id)],
-          Colaborators: [],
-          title: "Favorite",
-        };
-        dispatch(createList(newList, swal));
-      }
-    } else {
-      swal({
-        title: "You have to be logged in to add products",
-        text: "Would you like to login?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willAccept) => {
-        if (willAccept) {
-          prepareProduct(product);
-          params.push("/login");
-        } else {
-        }
-      });
-    }
-  }
+	function handleFavorites(e) {
+		e.preventDefault();
+		if (client?.phone) {
+			if (favorite.length) {
+				console.log(favorite);
+				if (
+					favorite[0]?.List?.map((p) =>
+						parseInt(p.id_product)
+					).includes(parseInt(id))
+				) {
+					swal(
+						'This product already is on favorites',
+						'Click to continue!',
+						'warning'
+					);
+				} else {
+					const listUpdated = {
+						id: favorite[0]?.id,
+						ClientPhone: parseInt(favorite[0]?.ClientPhone),
+						rList: [
+							...favorite[0]?.List?.map((p) => p.id_product),
+							parseInt(id),
+						],
+						Colaborators: [...favorite[0].Colaborators],
+						title: favorite[0]?.title,
+					};
+					dispatch(updateList(listUpdated));
+					swal(
+						'Product added to your list',
+						'Click to continue!',
+						'success'
+					);
+				}
+			} else {
+				const newList = {
+					ClientPhone: client.phone,
+					rList: [parseInt(id)],
+					Colaborators: [],
+					title: 'Favorite',
+				};
+				dispatch(createList(newList, swal));
+			}
+		} else {
+			swal({
+				title: 'You have to be logged in to add products',
+				text: 'Would you like to login?',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willAccept) => {
+				if (willAccept) {
+					prepareProduct(product);
+					params.push('/login');
+				} else {
+				}
+			});
+		}
+	}
 
-  if (!product?.variants) return <Loader />;
-  console.log(product);
-  return (
-    <div className={style.newContainer}>
-      <div className={style.container}>
-        <div className={style.containerImages}>
-          <div className={style.containerMainImage}>
-            {product?.is_offer && (
-              <span className={style.offer}>{`-%${
-                (100 * (-product.price + product.price_offer)) / product.price
-              }`}</span>
-            )}
-            <img
-              className={style.mainImage}
-              src={product?.variants && product?.variants[0]?.ProductImages[0]}
-              id="default_image"
-              alt=""
-            />
-          </div>
-          <div className={style.containerSecondImages}>
-            {product?.variants &&
-              product?.variants[0]?.ProductImages.map((image) => (
-                <img
-                  key={image}
-                  className={style.secondImages}
-                  src={image}
-                  alt=""
-                  onClick={() => {
-                    selectImage(image);
-                  }}
-                />
-              ))}
-          </div>
-        </div>
+	if (!product?.variants) return <Loader />;
+	console.log(product);
+	return (
+		<div className={style.container}>
+			<div className={style.containerImages}>
+				<div className={style.containerMainImage}>
+					{product?.is_offer && (
+						<span className={style.offer}>{`-${(
+							(100 * (-product.price + product.price_offer)) /
+							product.price
+						).toFixed(0)}%`}</span>
+					)}
+					<img
+						className={style.mainImage}
+						src={
+							product?.variants &&
+							product?.variants[0]?.ProductImages[0]
+						}
+						id='default_image'
+						alt=''
+					/>
+				</div>
+				<div className={style.containerSecondImages}>
+					{product?.variants &&
+						product?.variants[0]?.ProductImages.map((image) => (
+							<img
+								key={image}
+								className={style.secondImages}
+								src={image}
+								alt=''
+								onClick={() => {
+									selectImage(image);
+								}}
+							/>
+						))}
+				</div>
+			</div>
 
-        <div className={style.containerInf}>
-          <div className={style.specificInf}>
-            <h2 className={style.productName}>{name}</h2>
-            <p className={style.collectionName}>{brand}</p>
-            <p className={style.productPrice} id="individualProductPrice">{`$${
-              product?.totalPrice || product?.price
-            }`}</p>
+			<div className={style.containerInf}>
+				<div className={style.specificInf}>
+					<h2 className={style.productName}>{name}</h2>
+					<p className={style.collectionName}>{brand}</p>
+					<p
+						className={style.productPrice}
+						id='individualProductPrice'>{`$${
+						parseFloat(product?.totalPrice).toFixed(2) ||
+						product?.price?.toFixed(2)
+					}`}</p>
 
             <div className={style.containerPreferences}>
               <div className={style.containerSizePreference}>

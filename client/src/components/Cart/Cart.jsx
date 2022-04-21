@@ -18,7 +18,7 @@ function Cart(params) {
 	const itemsCart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
-	const [discount, setDiscount] = useState("")
+	const [discount, setDiscount] = useState('');
 
 	function handleNavigate(e) {
 		e.preventDefault();
@@ -36,14 +36,14 @@ function Cart(params) {
 			</div>
 		);
 
-	function handlePriceChange(e){
+	function handlePriceChange(e) {
 		e.preventDefault();
-		setDiscount(e.target.value)
+		setDiscount(e.target.value);
 	}
 
-	function handleVerify(e){
-		e.preventDefault()
-		dispatch(verifyDiscount({code: discount, total: 100}))
+	function handleVerify(e) {
+		e.preventDefault();
+		dispatch(verifyDiscount({ code: discount, total: 100 }));
 	}
 
 	return (
@@ -58,12 +58,12 @@ function Cart(params) {
 							<div className={style.imgContainer}>
 								{item.is_offer && (
 									<span className={style.offer}>
-										{`-%${
+										{`-${(
 											(100 *
 												(-item.price +
 													item.price_offer)) /
 											item.price
-										}`}
+										).toFixed(0)}%`}
 									</span>
 								)}
 
@@ -84,7 +84,9 @@ function Cart(params) {
 									</h3>
 									<p
 										className={style.productPrice}
-										id='individualProductPrice'>{`$${totalPrice}`}</p>
+										id='individualProductPrice'>{`$${parseFloat(
+										totalPrice
+									).toFixed(2)}`}</p>
 									<p
 										className={style.productPrice}
 										id='individualProductPrice'>{`Color: ${item.variants[0].ColorName}`}</p>
@@ -138,7 +140,7 @@ function Cart(params) {
 						className={style.inputDiscount}
 						type='text'
 						placeholder='Discount Code'
-						name="discount"
+						name='discount'
 						value={discount}
 						onChange={handlePriceChange}
 					/>

@@ -179,7 +179,7 @@ function Offers() {
 										className={styles.unselected}
 									/>
 									<div className={styles.imgContainer}>
-										<Link to={`/detail/${id_product}`}>
+										<Link to={`/products/${id_product}`}>
 											<img
 												className={styles.productImage}
 												src={

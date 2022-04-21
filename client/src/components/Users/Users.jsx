@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import swal from '@sweetalert/with-react';
 import {
 	getAllUsers,
 	deleteUser,
@@ -24,8 +25,12 @@ function Users() {
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
-
+	const algo = document.getElementsByClassName('swal-button swal-button--cancel')
+	console.log(algo)
+	
 	const removeFunction = (e) => {
+
+		swal("It's done", "You deleted the user!", "success");
 		dispatch(
 			deleteUser({
 				id_user: parseInt(e.target.value),

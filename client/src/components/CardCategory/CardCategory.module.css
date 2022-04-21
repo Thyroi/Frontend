@@ -3,7 +3,7 @@
 	flex-wrap: wrap;
 	height: 50vh;
 	width: 250px;
-	margin: 1rem 0;
+	margin: 1rem;
 	justify-content: center;
 	align-items: flex-start;
 	border: none;
@@ -19,14 +19,13 @@
 }
 
 .background {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 	/* max-height: 40vh;
 	max-width: 15vw; */
 	border-radius: 5px;
 	overflow: hidden;
 	transition: all 0.3s;
-
 }
 
 .background img {
@@ -35,10 +34,9 @@
 }
 
 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .title {
@@ -46,8 +44,8 @@ img {
 	justify-content: center;
 	align-items: flex-end;
 	padding: 0.5rem;
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 	/* min-height: 40vh;
 	min-width: 15vw; */
 	border-radius: 5px;
@@ -57,11 +55,12 @@ img {
 	font-size: 1.5rem;
 	transition: all ease 0.15s;
 
-  position: absolute;
-  top: 0;
+	position: absolute;
+	top: 0;
 }
 
-.container:hover img, .container:hover .title {
+.container:hover img,
+.container:hover .title {
 	color: #ffffff;
 	filter: saturate(1);
 	/* background: linear-gradient(to top, #e4687d60, transparent); */

@@ -8,8 +8,7 @@ export default function Landing() {
 	const nested = useSelector((state) => state.nested);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getInfo(nested))
-		.then(() => dispatch(cleanProducts()))
+		dispatch(getInfo(nested)).then(() => dispatch(cleanProducts()));
 	}, [dispatch]);
 
 	let collections = [
@@ -42,9 +41,18 @@ export default function Landing() {
 
 	return (
 		<div className={styles.container}>
-			{collections.map(({ id, img, name }) => {
-				return <CardCategory key={id} id={id} name={name} img={img} />;
-			})}
+			{
+				<div className={styles.top}>
+					<img src={require('../../Assets/logo_home.png')} alt='' />
+				</div>
+			}
+			<div className={styles.cards}>
+				{collections.map(({ id, img, name }) => {
+					return (
+						<CardCategory key={id} id={id} name={name} img={img} />
+					);
+				})}
+			</div>
 		</div>
 	);
 }

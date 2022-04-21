@@ -54,22 +54,15 @@ export default function UpdateProduct() {
 	const onSubmit = (data) => {
         data.id_product = parseInt(product?.id_product)
 		data.price = parseFloat(data?.price);
-		//data.variants[0].ProductImages = product?.variants[0]?.ProductImages
+		data.variants[0].ProductImages = product?.variants[0]?.ProductImages
 		data.variants[0].SwatchImage  = product?.variants[0]?.SwatchImage
 		data.default_image = product?.default_image
-		if(imageUrls.length > 0){
-			data.variants[0].ProductImages = imageUrls
-		}
-		for (let i = 0; i < imageUrls.length; i++) {
-			//data.variants[i].SwatchImage = imageUrls[i];
+		data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
+		data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
+		data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
+		data.variants[0].Stocks.XL = parseInt(data.variants[0].Stocks.XL);
 
-			//data.variants[i].ProductImages = product?.variants[i].ProductImages
-			//data.variants[i].SwatchImage  = product?.variants[i].SwatchImage
-			data.variants[i].Stocks.L = parseInt(data.variants[i].Stocks.L);
-			data.variants[i].Stocks.M = parseInt(data.variants[i].Stocks.M);
-			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
-			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
-		}
+	
 		dispatch(updateProduct({ updatedProduct: data }));
 		console.log({updatedProduct: data})
 		//reset();
@@ -78,17 +71,7 @@ export default function UpdateProduct() {
 		//dispatch(getById(id))
 	};
 
-	const uploadFile = (e) => {
-		e.preventDefault(e);
-		if (imageUpload == null) return;
-		const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-		uploadBytes(imageRef, imageUpload).then((snapshot) => {
-			getDownloadURL(snapshot.ref).then((url) => {
-				setImageUrls((prev) => [...prev, url]);
-				setCopyUrls((prev) => [...prev, url]);
-			});
-		});
-	};
+
 
 	return (
 		<div className={styles.AddProductContainer}>
@@ -298,7 +281,7 @@ export default function UpdateProduct() {
 										}}
 									/>
 
-									<input
+									{/* <input
 										type='file'
 										name={`variants[${index}].SwatchImage`}
 										onChange={(event) => {
@@ -310,7 +293,7 @@ export default function UpdateProduct() {
 
 									<button onClick={uploadFile}>
 										Upload Image
-									</button>
+									</button> */}
 									<button
 										type='button'
 										onClick={() => remove(index)}>

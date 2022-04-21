@@ -1,5 +1,6 @@
 const initialState = {
 	actualPage: 1,
+	stats: {},
 	products: [],
 	allproducts: JSON.parse(window.localStorage.getItem('allproducts')) || [],
 	details: {},
@@ -21,17 +22,19 @@ const initialState = {
 	loggedInAdmin:
 		JSON.parse(window.localStorage.getItem('loggedInAdmin')) || {},
 	lists: [],
-  nested:{
-    offer: null,
-    category: null,
-    collection: null,
-	  type: null,
-	  method: null
-  }
+	nested: {
+		offer: null,
+		category: null,
+		collection: null,
+		type: null,
+		method: null,
+	},
 };
 
 export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
+		case 'GET_STATS':
+			return { ...state, stats: action.payload };
 		case 'GET_ALL':
 			window.localStorage.setItem(
 				'allproducts',

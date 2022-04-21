@@ -46,7 +46,12 @@ function Cart(params) {
 							<div className={style.imgContainer}>
 								{item.is_offer && (
 									<span className={style.offer}>
-										{'Offer'}
+										{`-%${
+											(100 *
+												(item.price -
+													item.price_offer)) /
+											item.price
+										}`}
 									</span>
 								)}
 

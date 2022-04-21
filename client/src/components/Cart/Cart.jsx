@@ -17,8 +17,10 @@ function Cart(params) {
 	// Provisional remove this when context is implemented
 	const itemsCart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
+	let [newPrice, setNewPrice] = useState(totalDue(null, itemsCart))
 
 	const [discount, setDiscount] = useState('');
+	let discount2 = useSelector((state) => state.discount)
 
 	function handleNavigate(e) {
 		e.preventDefault();
@@ -43,7 +45,8 @@ function Cart(params) {
 
 	function handleVerify(e) {
 		e.preventDefault();
-		dispatch(verifyDiscount({ code: discount, total: 100 }));
+		dispatch(verifyDiscount({ code: discount, total: totalDue(null, itemsCart)})).then(setNewPrice(discount2))
+		
 	}
 
 	return (
@@ -156,7 +159,7 @@ function Cart(params) {
 						Total due:{' '}
 						<span
 							className={style.totalPrice}
-							id='total'>{`$${totalDue(null, itemsCart)}`}</span>
+							id='total'>{`$${newPrice}`}</span>
 					</p>
 				)}
 

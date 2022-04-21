@@ -1064,20 +1064,35 @@ export function orderByStars(params) {
 	};
 }
 
-export function verifyDiscount(params) {
-	return async function () {
-		try {
+export function verifyDiscount(params){
+	return async function(dispatch){
+		try{
 			const newPrice = await axios.patch("/cart/verifyDiscount", params)
-			if (newPrice.data !== params.total) {
-				/* swal('Success!', 'Discount applied successfully', 'success'); */
-				return console.log(newPrice.data)
+			if(newPrice.data !== params.total){
+				swal('Success!', 'Discount applied successfully', 'success');
+				return dispatch({
+					type: 'VERIFY_DISCOUNT',
+					payload: newPrice.data,
+				})
 			} else {
-				/* swal('Oh, oh!', 'Discount code invalid', 'warning'); */
-				return console.log("NO")
+				swal('Oh, oh!', 'Discount code invalid', 'warning');
+				return 
 			}
 		}
 		catch (error) {
 			console.log(error)
 		}
 	}
+}
+
+export function clearDiscount() {
+	return async function (dispatch) {
+		try {
+			return dispatch({
+				type: 'CLEAR_DISCOUNT',
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 }

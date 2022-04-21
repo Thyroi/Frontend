@@ -61,7 +61,7 @@ function OrderDetails() {
 		console.log(e.target.value);
 		dispatch(
 			UpdateOrder(id, {
-				orderStatus: e.target.value,
+				orderStatus: e.target.textContent,
 			})
 		);
 		swal('Done!', 'You changed the status', 'success');

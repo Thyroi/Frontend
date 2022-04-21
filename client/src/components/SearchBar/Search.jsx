@@ -73,9 +73,6 @@ function Search({ allData, data, filtrado }) {
 			!e.currentTarget.contains(e.relatedTarget) &&
 			!resultados.current.contains(e.relatedTarget)
 		) {
-			console.log(e.relatedTarget);
-			console.log(resultados.current);
-			console.log(resultados.current.contains(e.relatedTarget));
 			setSearch('');
 			setFilteredData([]);
 			setCursor(-1);

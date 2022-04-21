@@ -745,7 +745,7 @@ export function getCart(phone) {
 			if (cart.length === 0) {
 				return dispatch({
 					type: 'ADD_CART',
-					payload: null,
+					payload: [],
 				});
 			}
 

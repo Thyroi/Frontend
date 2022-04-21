@@ -16,6 +16,7 @@ import {
 	faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 
+
 function ClientProfile(params) {
 	const client_info = useSelector((state) => state.loggedInClient);
 	const [dataToChange, setDataToChange] = useState(
@@ -60,18 +61,28 @@ function ClientProfile(params) {
 
 	function opt() {
 		let nuevo = [];
-		for (var i = 0; i < lists?.length; i++) {
+		if(lists?.length){
+			for (var i = 0; i < lists?.length; i++) {
 			if (lists[i].title === 'Favorite') {
 			} else {
 				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
 			}
 		}
 		return nuevo;
+		} else {
+			const empty = [{id: 0, name: "NO LIST CREATED YET"}]
+			return empty
+		}
+		
 	}
 
 	function handleRedirect(e) {
 		e.preventDefault();
-		params.history.push(`/lists/${e.target.value}`);
+		if(parseInt(e.target.value) === 0){
+			
+		} else {
+			params.history.push(`/lists/${e.target.value}`);
+		}
 	}
 
 	function handleFavorite(e) {

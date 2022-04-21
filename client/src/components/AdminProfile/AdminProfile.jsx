@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './AdminProfile.module.css';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BarChart from '../BarChart/BarChart';
+
+import { getStats } from '../../actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -16,15 +18,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function AdminProfile() {
+	const dispatch = useDispatch();
+	useEffect(() => dispatch(getStats()), [dispatch]);
+
 	let history = useHistory();
 	const allproducts = useSelector((state) => state.allproducts);
+	const {
+		totalOrdersInProcess,
+		totalOrdersSubmited,
+		totalOrdersCancelled,
+		totalVentas,
+		totalIngresos,
+		totalClients,
+		totalClientsRegistered,
+		totalClientsVerified,
+		totalClientsAnonymous,
+	} = useSelector((state) => state.stats);
 
-	const users = 4;
+	const users = totalClientsVerified;
 
-	const compOrd = 2750;
-	const penOrd = 125;
-	const submOrd = 7543;
-	const cancOrd = 521;
+	const compOrd = totalOrdersSubmited;
+	const penOrd = totalOrdersInProcess;
+	const submOrd = totalOrdersSubmited;
+	const cancOrd = totalOrdersCancelled;
 
 	const monthlyRev = [
 		{ month: 'Jan', revenue: 10 },
@@ -41,15 +57,15 @@ function AdminProfile() {
 		{ month: 'Dec', revenue: 220 },
 	];
 
-	let sum = 0;
-	monthlyRev.forEach((rev) => {
+	//let sum =0;
+	/* monthlyRev.forEach((rev) => {
 		return (sum += rev.revenue);
-	});
+	}); */
 	const [visits, clients, totIncome, itemsSold, avgRating] = [
 		50873,
-		5320,
-		sum,
-		12350,
+		totalClients,
+		totalIngresos,
+		totalVentas,
 		3.82,
 	];
 
@@ -113,7 +129,7 @@ function AdminProfile() {
 					<div className={styles.stat}>
 						<FontAwesomeIcon icon={faSackDollar} />
 						<label>Total income</label>
-						<span>{`$${totIncome}k`}</span>
+						<span>{`$${parseFloat(totIncome).toFixed(0)}k`}</span>
 					</div>
 
 					<div className={styles.stat}>

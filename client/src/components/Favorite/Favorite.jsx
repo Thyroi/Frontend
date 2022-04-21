@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import {
 	getSpecificList,
 	updateListDeleted,
+	clearDetail
 } from '../../actions';
 import style from './Favorites.module.scss'
 
@@ -15,7 +16,8 @@ export default function Favorite({ match, history }){
 
     useEffect(() => {
         dispatch(getSpecificList(client?.phone, "Favorite"))
-    })
+		dispatch(clearDetail())
+    },[dispatch])
 
     function handleDelete(e){
         const borrar = fav[0]?.List.filter((p) => p.id_product !== e.id_product)

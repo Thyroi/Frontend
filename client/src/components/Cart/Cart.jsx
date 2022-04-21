@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Cart.module.scss';
 
 import Quantity from '../Quantity/Quantity';
 import Loader from '../Loader/Loader';
 
+import swal from '@sweetalert/with-react';
+
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeCart } from '../../actions/index';
+import { removeCart, clearDetail, verifyDiscount } from '../../actions/index';
 import { totalDue, prepareProduct } from '../../utils/utils';
 
 // Add the context for showing the items
@@ -16,12 +18,33 @@ function Cart(params) {
 	const itemsCart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
+	const [discount, setDiscount] = useState('');
+
 	function handleNavigate(e) {
 		e.preventDefault();
 		params.history.push('/cart/pay');
 	}
 
-	if (!itemsCart) return <Loader />;
+	useEffect(() => {
+		dispatch(clearDetail());
+	}, [dispatch]);
+
+	if (itemsCart.length === 0)
+		return (
+			<div style={{ width: '100%', textAlign: 'center' }}>
+				<h1>This cart is empty!</h1>
+			</div>
+		);
+
+	function handlePriceChange(e) {
+		e.preventDefault();
+		setDiscount(e.target.value);
+	}
+
+	function handleVerify(e) {
+		e.preventDefault();
+		dispatch(verifyDiscount({ code: discount, total: 100 }));
+	}
 
 	return (
 		<div className={style.containerCart}>
@@ -35,11 +58,16 @@ function Cart(params) {
 							<div className={style.imgContainer}>
 								{item.is_offer && (
 									<span className={style.offer}>
-										{'Oferta'}
+										{`-${(
+											(100 *
+												(-item.price +
+													item.price_offer)) /
+											item.price
+										).toFixed(0)}%`}
 									</span>
 								)}
 
-								<Link to={`/detail/${id_product}`}>
+								<Link to={`/products/${id_product}`}>
 									<img
 										className={style.productImage}
 										src={variants[0].ProductImages[0]}
@@ -56,7 +84,9 @@ function Cart(params) {
 									</h3>
 									<p
 										className={style.productPrice}
-										id='individualProductPrice'>{`$${totalPrice}`}</p>
+										id='individualProductPrice'>{`$${parseFloat(
+										totalPrice
+									).toFixed(2)}`}</p>
 									<p
 										className={style.productPrice}
 										id='individualProductPrice'>{`Color: ${item.variants[0].ColorName}`}</p>
@@ -69,7 +99,7 @@ function Cart(params) {
 									<Quantity product={item} />
 
 									<div className={style.containerButtons}>
-										<div
+										{/* <div
 											className={style.containerDiscount}>
 											<input
 												className={style.inputDiscount}
@@ -81,15 +111,20 @@ function Cart(params) {
 												type='submit'
 												value='Apply'
 											/>
-										</div>
+										</div> */}
 
 										<button
 											className={style.removeButton}
-											onClick={() =>
+											onClick={() => {
 												dispatch(
 													removeCart(itemsCart, item)
-												)
-											}>
+												);
+												swal(
+													'Product removed from cart',
+													'Click to continue!',
+													'success'
+												);
+											}}>
 											<p>Remove</p>
 										</button>
 									</div>
@@ -100,6 +135,22 @@ function Cart(params) {
 				})}
 
 			<div className={style.purchaseContainer}>
+				<div className={style.containerDiscount}>
+					<input
+						className={style.inputDiscount}
+						type='text'
+						placeholder='Discount Code'
+						name='discount'
+						value={discount}
+						onChange={handlePriceChange}
+					/>
+					<input
+						className={style.applyDiscount}
+						type='submit'
+						value='Apply'
+						onClick={handleVerify}
+					/>
+				</div>
 				{!!itemsCart.length && (
 					<p className={style.totalInfo}>
 						Total due:{' '}

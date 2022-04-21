@@ -39,10 +39,11 @@ function LogInMain(params) {
 	}, [loggedInClient]);
 
 	function responseGoogle(response) {
+		console.log(response);
 		const info = {
-			name: response.profileObj.givenName,
-			lastname: response.profileObj.familyName,
-			email: response.profileObj.email,
+			name: response?.profileObj?.givenName,
+			lastname: response?.profileObj?.familyName,
+			email: response?.profileObj?.email,
 		};
 		dispatch(createClientGoogle(info));
 		params.history.push('/signupgoogle');
@@ -72,7 +73,7 @@ function LogInMain(params) {
 
 	function handleResetPass(e) {
 		e.preventDefault();
-		sendReset(email);
+		sendReset(email, swal);
 
 	}
 
@@ -167,7 +168,7 @@ function LogInMain(params) {
 							<GoogleLogin
 								className={style.googleButton}
 								clientId='969216311730-erq289787jpgirnsaro1cnd34vcikq20.apps.googleusercontent.com'
-								buttonText='Login'
+								buttonText='Sing Up'
 								onSuccess={responseGoogle}
 								onFailure={responseGoogle}
 								cookiePolicy={'single_host_origin'}

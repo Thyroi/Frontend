@@ -4,6 +4,7 @@ import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { getByName } from '../../actions';
 import { Notifications } from '../../utils/utils';
+import swal from '@sweetalert/with-react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -53,7 +54,7 @@ function Search({ allData, data, filtrado }) {
 		e.preventDefault();
 		cursor > -1 && resultados.current.children[cursor].click();
 		handleClear();
-		dispatch(getByName(search));
+		dispatch(getByName(search, swal));
 	}
 
 	function handleChange(e) {
@@ -105,12 +106,11 @@ function Search({ allData, data, filtrado }) {
 				/>
 				{filtrado !== 'All' && (
 					<div className={styles.searchIn}>
-						<span htmlFor='searchIn'>
-							{`Search in: ${filtrado}`}
-						</span>
+						<span htmlFor='searchIn'>{`In: ${
+							filtrado.split(' ')[0]
+						}...`}</span>
 						<input
-							style={{ width: '1rem' }}
-							// defaultChecked={checked}
+							className={styles.check}
 							type='checkbox'
 							name='searchIn'
 							value={checked}
@@ -133,23 +133,24 @@ function Search({ allData, data, filtrado }) {
 							? styles.searchResult
 							: styles.searchResultNone
 					}
-					ref={resultados}
-					onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
-					onBlur={(e) => handleOnBlur(e)}>
-					{filteredData.map((value, key) => {
-						return (
-							<a
-								className={styles.dataItem}
-								key={key}
-								href={`/products/${value.id_product}`}>
-								<p>{value.name}</p>
-							</a>
-						);
-					})}
-				</div>
-			}
-		</div>
-	);
+          ref={resultados}
+          onKeyDown={(e) => keypress[e.key] && keypress[e.key](e)}
+          onBlur={(e)=>handleOnBlur(e)}
+          >
+          {filteredData.map((value, key) => {
+            return (
+              <a
+                className={styles.dataItem}
+                key={key}
+                href={`/products/${value.id_product}`}>
+                <p>{value.name}</p>
+              </a>
+            );
+          })}
+        </div>
+      }
+    </div>
+  );
 }
 
 export default Search;

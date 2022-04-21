@@ -12,6 +12,7 @@ export default function Card({ data }) {
 		id_product,
 		name,
 		price,
+		price_offer,
 		brand,
 		rating,
 		collection,
@@ -54,12 +55,18 @@ export default function Card({ data }) {
 	variants?.forEach((v) =>
 		Object.values(v.Stocks).forEach((s) => (stocks += s))
 	);
-
+	const percentage = (100 * (-price + price_offer)) / price;
 	return (
 		<div className={style.container}>
 			<div className={style.background}>
-				<Link className={style.linkedImage} to={`/products/${stocks ? id_product : ''}`}>
-					{is_offer && <span className={style.offer}>{'SALE'}</span>}
+				<Link
+					className={style.linkedImage}
+					to={`/products/${stocks ? id_product : ''}`}>
+					{is_offer && (
+						<span className={style.offer}>{`-${percentage.toFixed(
+							0
+						)}%`}</span>
+					)}
 					<img
 						src={default_image}
 						alt=''
@@ -74,7 +81,7 @@ export default function Card({ data }) {
 					<span>{collection_name}</span>
 					<span style={{ color: '#e4687c' }}>{showRating()}</span>
 				</div>
-				<div className={style.price}>{`$${price}`}</div>
+				<div className={style.price}>{`$${price.toFixed(2)}`}</div>
 				{stocks === 0 ? (
 					<span
 						style={{

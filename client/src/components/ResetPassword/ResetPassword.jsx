@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import style from './ResetPassword.module.scss';
 import { resetPassword } from '../../utils/utils';
+import swal from '@sweetalert/with-react';
 
 function ResetPassword({ match }) {
 	const { phone } = match.params;
@@ -19,11 +20,11 @@ function ResetPassword({ match }) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		if (!pass?.login_password) {
-			alert('Cannot set an empty password');
+			swal('Alert!', 'Cannot set an empty password', 'warning');
 		} else if (pass?.login_password !== pass?.login_password_val) {
-			alert("Passwords don't match");
+			swal('Alert!', "Passwords don't match", 'warning');
 		} else {
-			resetPassword(phone, pass.login_password);
+			resetPassword(phone, pass.login_password, swal);
 		}
 	}
 

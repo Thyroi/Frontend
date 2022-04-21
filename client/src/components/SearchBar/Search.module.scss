@@ -1,7 +1,7 @@
 .container {
 	position: relative;
-	min-width: 60%;
-	max-width: 75%;
+	min-width: 80%;
+	max-width: 100%;
 }
 
 .searchInputs {
@@ -18,20 +18,34 @@
 
 .searchInput {
 	height: 40px;
-	width: 100%;
+	width: 50%;
 	font-size: 0.9rem;
 }
+
 .searchIn {
 	display: flex;
+	flex-wrap: nowrap;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: flex-end;
 	border: none;
-	width: 350px;
+	overflow: hidden;
+	height: 40px;
 	background: #ffffff;
 	color: #00000036;
 	outline: none;
 	font-weight: 600;
 }
+
+.check {
+	height: 20px;
+	color: rgb(228 104 124);
+	margin: 5px;
+}
+
+.searchIn span {
+	min-width: 50%;
+}
+
 .searchButton {
 	height: 40px;
 	background: #e4687c;

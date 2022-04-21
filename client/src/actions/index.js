@@ -25,6 +25,20 @@ export function getInfo(nested) {
 	};
 }
 
+export function getStats() {
+	return async function (dispatch) {
+		try {
+			var { data } = await axios.get(`/statistics/get`);
+			return dispatch({
+				type: 'GET_STATS',
+				payload: data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+}
+
 export function getSelectorsCol() {
 	return async function (dispatch) {
 		try {

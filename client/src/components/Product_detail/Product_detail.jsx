@@ -241,7 +241,10 @@ export default function Product_detail() {
 			<div className={style.containerImages}>
 				<div className={style.containerMainImage}>
 					{product?.is_offer && (
-						<span className={style.offer}>{'Oferta'}</span>
+						<span className={style.offer}>{`-%${
+							(100 * (product.price - product.price_offer)) /
+							product.price
+						}`}</span>
 					)}
 					<img
 						className={style.mainImage}

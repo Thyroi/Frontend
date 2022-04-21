@@ -61,25 +61,25 @@ function ClientProfile(params) {
 
 	function opt() {
 		let nuevo = [];
-		if(lists?.length){
+		if (lists?.length) {
 			for (var i = 0; i < lists?.length; i++) {
-			if (lists[i].title === 'Favorite') {
-			} else {
-				nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
+				if (lists[i].title === 'Favorite') {
+				} else {
+					nuevo = [...nuevo, { id: lists[i].id, name: lists[i].title }];
+				}
 			}
-		}
-		return nuevo;
+			return nuevo;
 		} else {
-			const empty = [{id: 0, name: "NO LIST CREATED YET"}]
+			const empty = [{ id: 0, name: "NO LIST CREATED YET" }]
 			return empty
 		}
-		
+
 	}
 
 	function handleRedirect(e) {
 		e.preventDefault();
-		if(parseInt(e.target.value) === 0){
-			
+		if (parseInt(e.target.value) === 0) {
+
 		} else {
 			params.history.push(`/lists/${e.target.value}`);
 		}
@@ -277,13 +277,25 @@ function ClientProfile(params) {
 					<div
 						className={style.deleteAccountContainer}
 						onClick={() => {
-							swal(
-								'Alert!',
-								'Are you sure you want to delete your account?',
-								'warning'
-							);
-							deleteAccount(phone);
-							dispatch(logOutUser());
+
+							swal({
+								title: "Are you sure?",
+								text: "Are you sure you want to delete your account?",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true,
+							})
+								.then((willDelete) => {
+									if (willDelete) {
+										deleteAccount(phone);
+										dispatch(logOutUser());
+										swal("Poof! Your account has been deleted!", {
+											icon: "success",
+										});
+									} else {
+										swal("Bad cat!, get off the table!");
+									}
+								});
 							params.history.push('/home');
 						}}>
 						<FontAwesomeIcon

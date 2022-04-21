@@ -212,14 +212,12 @@ export default function Products({ filtrado, filtradoOnChange }) {
     if (event.target.value === "0") {
       nestedF.collection = null;
       dispatch(nested(nestedF));
-      dispatch(getInfo({ ...nestedF }));
-      filtradoOnChange("All");
+      dispatch(getInfo({ ...nestedF })) && filtradoOnChange("All");
       return;
     }
-
     nestedF.collection = event.target.value;
     dispatch(nested(nestedF));
-    dispatch(getInfo({ ...nestedF }));
+    dispatch(getInfo({ ...nestedF })) && filtradoOnChange(event.target.textContent);
     // dispatch(getByColId(event.target.value));
     // filtradoOnChange(event.target.textContent);
   };

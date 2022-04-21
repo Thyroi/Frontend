@@ -23,6 +23,7 @@ import {
 	orderByArrive,
 	cleanProducts,
 	orderByStars,
+	clearDiscount,
 } from '../../actions';
 // import state from 'sweetalert/typings/modules/state';
 
@@ -62,6 +63,7 @@ export default function Products({ filtrado, filtradoOnChange }) {
 
 	useEffect(() => {
 		dispatch(clearDetail());
+		dispatch(clearDiscount())
 		if (!products.length) {
 			collection
 				? dispatch(getByColId(collection)) &&

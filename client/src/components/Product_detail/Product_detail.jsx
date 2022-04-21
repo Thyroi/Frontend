@@ -29,6 +29,7 @@ import {
 	getUserLists,
 	updateList,
 	getSpecificList,
+	clearDiscount,
 } from '../../actions/index';
 
 import Dropdown from '../Dropdown/Dropdown';
@@ -53,6 +54,7 @@ export default function Product_detail() {
 
 	useEffect(() => {
 		dispatch(getById(id));
+		dispatch(clearDiscount())
 	}, []);
 
 	useEffect(() => {

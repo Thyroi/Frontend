@@ -250,7 +250,7 @@ export default function Product_detail() {
 						{product?.is_offer && (
 							<span className={style.offer}>{`-${parseFloat(
 								(100 * (-product.price + product.price_offer)) /
-									product.price
+								product.price
 							).toFixed(0)}%`}</span>
 						)}
 						<img
@@ -286,7 +286,7 @@ export default function Product_detail() {
 						<p
 							className={style.productPrice}
 							id='individualProductPrice'>{`$${
-							(product?.totalPrice) || product?.price
+							(product?.totalPrice) || parseFloat(product?.price).toFixed(2)
 						}`}</p>
 
 						<div className={style.containerPreferences}>

@@ -25,6 +25,7 @@ function AdminProfile() {
 	const allproducts = useSelector((state) => state.allproducts);
 	const {
 		totalOrdersInProcess,
+		totalOrdersComplete,
 		totalOrdersSubmited,
 		totalOrdersCancelled,
 		totalVentas,
@@ -37,7 +38,7 @@ function AdminProfile() {
 
 	const users = totalClientsVerified;
 
-	const compOrd = totalOrdersSubmited;
+	const compOrd = totalOrdersComplete;
 	const penOrd = totalOrdersInProcess;
 	const submOrd = totalOrdersSubmited;
 	const cancOrd = totalOrdersCancelled;

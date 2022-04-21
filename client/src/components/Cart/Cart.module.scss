@@ -1,151 +1,203 @@
 .containerCart {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-  .itemContainer {
-    width: 90%;
-    height: 250px;
-    background: #ffffff;
-    border-radius: 5px;
-    margin-bottom: 3rem;
-    display: flex;
+	.itemContainer {
+		width: 90%;
+		height: 250px;
+		background: #ffffff;
+		border-radius: 5px;
+		margin-bottom: 3rem;
+		display: flex;
 
-    position: relative;
+		position: relative;
 
-    .offer {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
-      width: 4rem;
-      height: 4rem;
-      border-radius: 2rem;
-      background-color: #e4687c;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: azure;
-      font-weight: 400;
-    }
+		.offer {
+			position: absolute;
+			left: 1rem;
+			top: 1rem;
+			width: 4rem;
+			height: 4rem;
+			border-radius: 2rem;
+			background-color: #e4687c;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: azure;
+			font-weight: 400;
+		}
 
-    .imgContainer {
-      width: 400px;
+		.imgContainer {
+			width: 400px;
 
-      .productImage {
-        width: 100%;
-        height: 100%;
-        border-radius: 5px 0 0 5px;
-        object-fit: cover;
-      }
-    }
+			.productImage {
+				width: 100%;
+				height: 100%;
+				border-radius: 5px 0 0 5px;
+				object-fit: cover;
+			}
+		}
 
-    .infoContainer {
-      width: 100%;
-      height: 100%;
+		.infoContainer {
+			width: 100%;
+			height: 100%;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-      .subInfoContainer {
-        width: 95%;
-        height: 85%;
+			.subInfoContainer {
+				width: 95%;
+				height: 85%;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
 
-        .containerButtons {
-          display: flex;
-          justify-content: space-between;
+				.containerButtons {
+					display: flex;
+					justify-content: flex-end;
 
-          .containerDiscount {
-            display: flex;
-            justify-content: flex-start;
-            height: 3rem;
+					.removeButton {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						height: 3rem;
+						padding: 0 1rem;
+						background: #e4687c;
+						border-radius: 5px;
+						color: #ffffff;
+						font-weight: 600;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
 
-            .inputDiscount {
-              background: #F3F3F3;
-              border-radius: 5px 0 0 5px;
-              padding-left: 1rem;
-              font-size: 0.9rem;
-            }
+	.purchaseContainer {
+		width: 90%;
+		height: 3rem;
+		margin-bottom: 3rem;
+		display: flex;
+		justify-content: flex-end;
 
-            .applyDiscount {
-              background: #e4687c;
-              border-radius: 0 5px 5px 0;
-              padding: 0 1rem;
-              color: #ffffff;
-              font-weight: 600;
-              cursor: pointer;
-              transition: 0.3s all ease;
-            }
+		.totalInfo {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-            .applyDiscount:hover {
-              background: #F3F3F3;
-              color: #e4687c;
-            }
-          }
+			padding: 0 1rem;
+			background: #ffffff;
+			border-radius: 5px;
 
-          .removeButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+			.totalPrice {
+				font-weight: 600;
+				margin-left: 1rem;
+			}
+		}
 
-            padding: 0 1rem;
-            background: #e4687c;
-            border-radius: 5px;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-          }
-        }
-      }
-    }
-  }
+		.buyButton {
+			width: 10rem;
+			margin-left: 3rem;
+			background: #e4687c;
+			border-radius: 5px;
+			font-weight: 600;
+			color: #ffffff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
 
-  .purchaseContainer {
-    width: 90%;
-    height: 3rem;
-    margin-bottom: 3rem;
-    display: flex;
-    justify-content: flex-end;
+			.buyLetter {
+				background-color: #e4687c;
+				font-weight: 600;
+				color: #ffffff;
+				width: 80%;
+				cursor: pointer;
+			}
+		}
+	}
+}
 
-    .totalInfo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+.containerDiscount {
+	display: flex;
+	justify-content: flex-start;
 
-      padding: 0 1rem;
-      background: #ffffff;
-      border-radius: 5px;
-    
-      .totalPrice {
-        font-weight: 600;
-        margin-left: 1rem;
-      }
-    }
+	.inputDiscount {
+		background: white;
+		height: 3rem;
+		border-radius: 5px 0 0 5px;
+		padding-left: 1rem;
+		font-size: 0.9rem;
+	}
 
-    .buyButton {
-      width: 10rem;
-      margin-left: 3rem;
-      background: #e4687c;
-      border-radius: 5px;
-      font-weight: 600;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    
-      .buyLetter {
-        background-color: #e4687c;
-        font-weight: 600;
-        color: #ffffff;
-        width: 80%;
-        cursor: pointer;
-      }
-    }
-  }
+	.applyDiscount {
+		height: 3rem;
+		margin-right: 3rem;
+		background: #e4687c;
+		border-radius: 0 5px 5px 0;
+		padding: 0 1rem;
+		color: #ffffff;
+		font-weight: 600;
+		cursor: pointer;
+		transition: 0.3s all ease;
+	}
+
+	.applyDiscount:hover {
+		background: #f3f3f3;
+		color: #e4687c;
+	}
+}
+
+@media screen and (max-width: 850px) {
+	.containerCart {
+		.itemContainer {
+			height: auto;
+
+			.infoContainer {
+				.subInfoContainer {
+					height: 95%;
+				}
+
+				.productPrice {
+					margin-bottom: 0.5rem;
+				}
+			}
+		}
+	}
+
+	.containerButtons {
+		flex-direction: column;
+
+		.containerDiscount {
+			margin-top: 1rem;
+
+			.inputDiscount {
+				width: 100%;
+			}
+		}
+
+		.removeButton {
+			margin-top: 1rem;
+		}
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.containerCart {
+		.itemContainer {
+			flex-direction: column;
+			.imgContainer {
+				width: 100%;
+
+				.productImage {
+					border-radius: 5px 5px 0 0;
+					height: 500px;
+				}
+			}
+		}
+	}
 }

@@ -1,0 +1,27 @@
+.container {
+  
+  .burgerMenu {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: none;
+  }
+
+  .containerNav {
+    
+  }
+}
+
+@media screen and (max-width: 999px) {
+  
+  .container {
+
+    .burgerMenu {
+      display: block;
+    }
+    .hiddenNavBar {
+      display: block;
+    }
+  }
+
+}

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './Products.module.css';
 import Card from '../Card/Card';
+import Loader from '../Loader/Loader';
 import Dropdown from '../Dropdown/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import swal from 'sweetalert';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,49 +16,88 @@ import {
 	getOffers,
 	getSelectorsCat,
 	getSelectorsCol,
+	clearDetail,
+	setActualPage,
+	nested,
+	orderByPrice,
+	orderByArrive,
 	cleanProducts,
+	orderByStars,
 } from '../../actions';
+// import state from 'sweetalert/typings/modules/state';
 
-export default function Products() {
+export default function Products({ filtrado, filtradoOnChange }) {
 	function useQuery() {
 		const { search } = useLocation();
 		return React.useMemo(() => new URLSearchParams(search), [search]);
 	}
+
+	// const [nested, setNested] = useState({
+	//   offer: null,
+	//   category: null,
+	//   collection: null
+	// });
+
 	const collection = useQuery().get('collection');
+	const collectionName = useQuery().get('name');
+
+	const nestedF = useSelector((state) => state.nested);
+
 	const dispatch = useDispatch();
-	const products = useSelector((state) => state.products);
+	var products = useSelector((state) => state.products);
 	const categories = useSelector((state) => state.categories);
 	const collections = useSelector((state) => state.collections);
 
+	// useEffect(() => {
+	// 	dispatch(clearDetail());
+	// 	!products.length &&
+	// 		setTimeout(() => {
+	// 			collection
+	// 				? dispatch(getByColId(collection))
+	// 				: dispatch(getInfo());
+	// 			dispatch(getSelectorsCat());
+	// 			dispatch(getSelectorsCol());
+	// 		}, 2000);
+	// }, [dispatch]);
+
 	useEffect(() => {
-		dispatch(cleanProducts());
-		collection ? dispatch(getByColId(collection)) : dispatch(getInfo());
+		dispatch(clearDetail());
+		if (!products.length) {
+			collection
+				? dispatch(getByColId(collection)) &&
+				  filtradoOnChange(collectionName)
+				: dispatch(getInfo(nestedF));
+		}
+		// dispatch(getByCatId());
 		dispatch(getSelectorsCat());
 		dispatch(getSelectorsCol());
-	}, [dispatch]);
-
-	/* const products = data */
+	}, []);
 
 	//---------------------------------------------PAGINADO--------------------------------//
 
-	const [results] = useState(9);
-	const [currentPage, setCurrentPage] = useState(1);
+	const actualPage = useSelector((state) => state.actualPage);
+	const [results] = useState(12);
+	const [currentPage, setCurrentPage] = useState(actualPage);
 	const [i, setI] = useState(0);
 	const [j, setJ] = useState(i + 3);
 
 	useEffect(() => {
-		setCurrentPage(1);
+		setCurrentPage(actualPage);
 	}, [products]);
 
 	useEffect(() => {
-		document.querySelector('.container').scrollTop = 0;
+		document.querySelector('.container').scrollBy({
+			top: -2000,
+			left: 0,
+			behavior: 'smooth',
+		});
+		dispatch(setActualPage(currentPage));
 	}, [currentPage]);
-
-	//probar Element.scrollIntoView();
 
 	function previousPage(e) {
 		e.preventDefault();
 		setCurrentPage((current) => (current -= 1));
+
 		if (currentPage < pageNumbers.length) {
 			setI((i) => (i > 1 ? i - 1 : 0));
 			setJ((j) => (i > 0 ? j - 1 : j));
@@ -93,17 +134,29 @@ export default function Products() {
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	const handleOfferChange = (e) => {
+	const handleOfferChange = async (e) => {
 		e.preventDefault();
 		var res = '';
 		if (e.target.value === '0') {
-			res = 'true';
+			res = true;
+			// await setNested({...nested, offer : res});
+			nestedF.offer = res;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		} else if (e.target.value === '1') {
-			res = 'false';
+			res = false;
+			// await setNested({...nested, offer : res});
+			// await dispatch(getInfo({...nested, offer : res}));
+			nestedF.offer = res;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		} else {
-			return dispatch(getInfo());
+			nestedF.offer = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF })) && filtradoOnChange('All');
 		}
-		dispatch(getOffers(res));
+		filtradoOnChange(res === 'true' ? 'onOffer' : 'noOffer');
+		// dispatch(getOffers(res));
 	};
 
 	/* const handleStockChange = (event) => {
@@ -112,32 +165,98 @@ export default function Products() {
  */
 	const handleTypeChange = (event) => {
 		event.preventDefault();
+		setCurrentPage(1);
 		if (event.target.value === '0') {
-			return dispatch(getInfo());
+			nestedF.category = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF })) && filtradoOnChange('All');
 		} else {
-			dispatch(getByCatId(event.target.value));
+			filtradoOnChange(event.target.textContent);
+
+			// setNested({...nested, category : event.target.value});
+			// dispatch(getInfo({...nested, category : event.target.value}));
+			// dispatch(getByCatId(event.target.value));
+
+			nestedF.category = event.target.value;
+			dispatch(getInfo({ ...nestedF }));
+			dispatch(nested(nestedF));
 		}
 	};
 
+	function handleReset(e) {
+		e.preventDefault();
+		nestedF.category = null;
+		nestedF.collection = null;
+		nestedF.offer = null;
+		nestedF.type = null;
+		nestedF.method = null;
+		dispatch(getInfo({ ...nestedF }, swal));
+	}
 	/* const handleBrandChange = (event) => {
 		setBrand(event.target.value);
 	}; */
 
 	const handleCollectionChange = (event) => {
 		event.preventDefault();
-		event.target.value === '0'
-			? dispatch(getInfo())
-			: dispatch(getByColId(event.target.value));
+		setCurrentPage(1);
+
+		if (event.target.value === '0') {
+			nestedF.collection = null;
+			dispatch(nested(nestedF));
+			dispatch(getInfo({ ...nestedF }));
+			filtradoOnChange('All');
+			return;
+		}
+
+		nestedF.collection = event.target.value;
+		dispatch(nested(nestedF));
+		dispatch(getInfo({ ...nestedF }));
+		// dispatch(getByColId(event.target.value));
+		// filtradoOnChange(event.target.textContent);
+	};
+
+	const handlerOrder = (event) => {
+		event.preventDefault();
+		if (event.target.value === '0') {
+			nestedF.type = null;
+			nestedF.method = null;
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '1') {
+			nestedF.type = 'ASC';
+			nestedF.method = 'price';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '2') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'price';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '3') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'rating';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		} else if (event.target.value === '4') {
+			nestedF.type = 'DESC';
+			nestedF.method = 'createdAt';
+			dispatch(nested(nestedF));
+			return dispatch(getInfo({ ...nestedF }));
+		}
 	};
 
 	//-----------------------------------HANDLERS------------------------------------------//
 
-	return !products.length ? (
-		<h2>Loading...</h2>
+	return !products.length ||
+		!categories.women?.length ||
+		!collections.length ? (
+		<Loader />
 	) : (
 		<div className={style.container}>
 			<div className={style.filters}>
-				{/* options=[{id:"id", name:"name"},{id:"id", name:"name"},{id:"id", name:"name"},...] */}
+				<button className={style.reset} onClick={(e) => handleReset(e)}>
+					Reset filters
+				</button>
 				<Dropdown
 					placeHolder={'Sale'}
 					options={[
@@ -147,52 +266,42 @@ export default function Products() {
 					]}
 					handler={handleOfferChange}
 				/>
-				{/* <Dropdown
-					placeHolder={'Stock'}
-					options={[
-						{ id: 0, name: 'More than 100' },
-						{ id: 1, name: 'Less than 100' },
-						{ id: 2, name: 'No stock' },
-						{ id: 3, name: 'All' },
-					]}
-					handler={handleStockChange}
-				/> */}
+
 				<Dropdown
 					placeHolder={'Type'}
 					options={[
 						{ id: 0, name: 'All' },
 						...categories?.women?.filter((c) => {
-							return c.id > 2;
+							return c?.id > 2;
 						}),
 						...categories?.men?.filter((c) => {
-							return c.id > 2;
+							return c?.id > 2;
 						}),
 					]}
 					handler={handleTypeChange}
 				/>
-				{/* <Dropdown
-					placeHolder={'Brand'}
-					options={[
-						{ id: 0, name: 'Forever21' },
-						{ id: 1, name: 'H&M' },
-						{ id: 2, name: 'Zara' },
-						{ id: 3, name: 'All' },
-					]}
-					handler={handleBrandChange}
-				/> */}
+
 				<Dropdown
 					placeHolder={'Collection'}
 					options={[{ id: 0, name: 'All' }, ...collections]}
 					handler={handleCollectionChange}
 				/>
+
+				<Dropdown
+					placeHolder={'Order'}
+					options={[
+						{ id: 0, name: 'All' },
+						{ id: 1, name: 'Price ascendent' },
+						{ id: 2, name: 'Price descendent' },
+						{ id: 3, name: 'Best rated' },
+						{ id: 4, name: 'Latest arrivals' },
+					]}
+					handler={handlerOrder}
+				/>
 			</div>
 			<div className={style.cards}>
 				{currentPosts.map((d) => {
-					return (
-						<div key={d.id_product}>
-							<Card data={d} />
-						</div>
-					);
+					return <Card key={d.id_product} data={d} />;
 				})}
 			</div>
 

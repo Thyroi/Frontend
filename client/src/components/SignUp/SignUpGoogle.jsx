@@ -98,7 +98,8 @@ export default function SignUpGoogle(params) {
 			...inputs,
 			phone: parseInt(inputs.phone),
 		});
-		dispatch(createClient(inputs));
+		let setLoad = true;
+		dispatch(createClient(inputs, setLoad));
 		setInputs({
 			name: info.name,
 			lastname: info.lastname,

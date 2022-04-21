@@ -1,8 +1,8 @@
 .container {
-	display: grid;
-	height: 70vh;
+  display: flex;
+  flex-direction: column;
+
 	width: 23vw;
-	grid-template-rows: 7fr 3fr;
 	border: none;
 	border-radius: 0.3rem;
 	position: relative;
@@ -11,7 +11,7 @@
 	transition: all 0.15s;
 }
 
-.container:hover{
+.container:hover {
 	border: none;
 	transform: translateY(-5px);
 	box-shadow: 0 0 0.5rem 0.05rem rgba(0, 0, 0, 0.5);
@@ -40,19 +40,19 @@
 	font-weight: 400;
 }
 
-.background img {
-	max-width: 23vw;
-	max-height: 50rem;
+.background {
+  width: 100%;
+	height: 400px;
 }
 
-.noStock{
+.noStock {
 	-webkit-filter: grayscale(1);
 	filter: grayscale(1);
 }
 
 .info {
-	grid-row: 2;
-	background-color: white;
+  height: 100%;
+  background-color: white;
 	color: #565656;
 	text-align: start;
 	display: grid;
@@ -61,7 +61,6 @@
 }
 
 .name,
-.brand,
 .price,
 .stock {
 	display: flex;
@@ -69,12 +68,23 @@
 	margin: 0.2rem 0.2rem 0.2rem 1rem;
 }
 
+.brand {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	font-size: 0.8rem;
+	font-weight: 400;
+}
+
+.brand span {
+	justify-self: flex-start;
+	margin-left: 1rem;
+}
+
 .name {
 	font-size: 1.2rem;
 	font-weight: 500;
 }
 
-.brand,
 .stock {
 	font-size: 0.7rem;
 	font-weight: 300;
@@ -86,4 +96,36 @@
 .price {
 	font-size: 1.2rem;
 	font-weight: 600;
+}
+
+.linkedImage {
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 999px) {
+  .container {
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .container {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .container {
+    width: 100%;
+  }
+
+  .background {
+    height: 600px;
+  }
 }

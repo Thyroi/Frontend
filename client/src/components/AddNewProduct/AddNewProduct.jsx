@@ -6,17 +6,22 @@ import { getSelectorsCat, addProduct, getInfo } from '../../actions';
 import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import swal from '@sweetalert/with-react';
 
 export default function AddNewProduct() {
 	const [imageUpload, setImageUpload] = useState(null);
 	const [imageUrls, setImageUrls] = useState([]);
+	const [copyUrls, setCopyUrls] = useState([]);
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const categorias = useSelector((state) => state.categories);
 	const productos = useSelector((state) => state.products);
+	const nested = useSelector((state) => state.nested)
 
 	useEffect(() => {
 		dispatch(getSelectorsCat());
-		dispatch(getInfo());
+		dispatch(getInfo(nested));
 	}, [dispatch]);
 
 	let mujeres = categorias?.women;
@@ -34,29 +39,32 @@ export default function AddNewProduct() {
 				{ ColorName: 'Blanco', Stocks: { L: 'a ver', M: 'a ver' } },
 			],
 		},
+		mode: 'all',
 	});
+
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'variants',
 	});
+
 	const onSubmit = (data) => {
 		data.collection = parseInt(data.collection);
-		data.price = parseInt(data.price);
+		data.price = parseFloat(data.price);
 		data.categories = [data.categories];
 		data.default_image = imageUrls[0];
 		data.id_product = productos.length + 1;
-		data.variants[0].ProductImages = [imageUrls[0]];
-		data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
-		data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
-		data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
-		data.variants[0].Stocks.XL = parseInt(data.variants[0].Stocks.XL);
 
 		for (let i = 0; i < imageUrls.length; i++) {
 			data.variants[i].SwatchImage = imageUrls[i];
+			data.variants[i].ProductImages = [imageUrls[i]];
+			data.variants[i].Stocks.L = parseInt(data.variants[i].Stocks.L);
+			data.variants[i].Stocks.M = parseInt(data.variants[i].Stocks.M);
+			data.variants[i].Stocks.S = parseInt(data.variants[i].Stocks.S);
+			data.variants[i].Stocks.XL = parseInt(data.variants[i].Stocks.XL);
 		}
-		dispatch(addProduct({ product: data }));
-		//console.log({product: data})
+		dispatch(addProduct({ product: data }), swal);
 		reset();
+		setImageUrls([]);
 	};
 
 	const uploadFile = (e) => {
@@ -66,40 +74,16 @@ export default function AddNewProduct() {
 		uploadBytes(imageRef, imageUpload).then((snapshot) => {
 			getDownloadURL(snapshot.ref).then((url) => {
 				setImageUrls((prev) => [...prev, url]);
+				setCopyUrls((prev) => [...prev, url]);
 			});
 		});
 	};
-
+	console.log(productos);
+	console.log(copyUrls);
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.left}>
-					<input
-						type='text'
-						name='name'
-						autoComplete='off'
-						placeholder='Name'
-						ref={register({ required: true })}
-					/>
-					{errors.name && (
-						<span className={styles.error}>
-							This field is required
-						</span>
-					)}
-
-					<input
-						type='text'
-						name='brand'
-						autoComplete='off'
-						placeholder='Brand'
-						ref={register({ required: true, typeOf: 'number' })}
-					/>
-					{errors.brand && (
-						<span className={styles.error}>
-							This field is required
-						</span>
-					)}
-
 					<select
 						name='categories'
 						ref={register({ required: true })}>
@@ -117,7 +101,7 @@ export default function AddNewProduct() {
 					</select>
 					{errors.categories && (
 						<span className={styles.error}>
-							This field is required
+							You should select a category
 						</span>
 					)}
 
@@ -133,16 +117,56 @@ export default function AddNewProduct() {
 					</select>
 					{errors.collection && (
 						<span className={styles.error}>
-							This field is required
+							This should select a collection
+						</span>
+					)}
+					<input
+						type='text'
+						name='name'
+						autoComplete='off'
+						placeholder='Name'
+						ref={register({
+							required: true,
+							pattern: {
+								value: /^[^0-9]+$/,
+							},
+						})}
+					/>
+					{errors.name && (
+						<span className={styles.error}>
+							This field is mandatory and can only contain letters
 						</span>
 					)}
 
 					<input
-						type='number'
+						type='text'
+						name='brand'
+						autoComplete='off'
+						placeholder='Brand'
+						ref={register({ required: true, typeOf: 'number' })}
+					/>
+					{errors.brand && (
+						<span className={styles.error}>
+							This field is mandatory
+						</span>
+					)}
+
+					<input
+						type='text'
 						name='price'
 						autoComplete='off'
 						placeholder='Price'
-						ref={register({ required: true })}
+						ref={register({
+							required: true,
+							pattern: {
+								value: /^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/,
+							},
+						})}
+						onKeyPress={(e) => {
+							if (e.key === 'e' || e.key === '-') {
+								e.preventDefault();
+							}
+						}}
 					/>
 					{errors.price && (
 						<span className={styles.error}>
@@ -165,17 +189,30 @@ export default function AddNewProduct() {
 						ref={register({ required: true })}
 					/>
 				</div>
-
+				{errors.description && (
+					<span className={styles.error}>This field is required</span>
+				)}
 				<div className={styles.center}>
 					<ul>
 						{fields.map((item, index) => {
 							return (
 								<li key={item.id}>
 									<input
-										ref={register()}
+										ref={register({
+											required: true,
+											pattern: {
+												value: /^[^0-9]+$/,
+											},
+										})}
 										placeholder='Color'
 										name={`variants[${index}].ColorName`}
 									/>
+									{errors.variants && (
+										<span className={styles.error}>
+											This field is required and can
+											contain only letters
+										</span>
+									)}
 
 									<Controller
 										as={<input />}
@@ -184,7 +221,16 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stock for Size S'
+										onKeyPress={(e) => {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
+												e.preventDefault();
+											}
+										}}
 									/>
+
 									<Controller
 										as={<input />}
 										type='number'
@@ -192,6 +238,14 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size M'
+										onKeyPress={(e) => {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
+												e.preventDefault();
+											}
+										}}
 									/>
 									<Controller
 										as={<input />}
@@ -200,6 +254,14 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size L'
+										onKeyPress={(e) => {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
+												e.preventDefault();
+											}
+										}}
 									/>
 									<Controller
 										as={<input />}
@@ -208,6 +270,14 @@ export default function AddNewProduct() {
 										control={control}
 										defaultValue=''
 										placeholder='Select Stocks for Size XL'
+										onKeyPress={(e) => {
+											if (
+												e.key === 'e' ||
+												e.key === '-'
+											) {
+												e.preventDefault();
+											}
+										}}
 									/>
 
 									<input
@@ -219,6 +289,7 @@ export default function AddNewProduct() {
 											);
 										}}
 									/>
+
 									<button onClick={uploadFile}>
 										Upload Image
 									</button>
@@ -241,6 +312,15 @@ export default function AddNewProduct() {
 								});
 							}}>
 							Add color
+						</button>
+					</section>
+					<section>
+						<button
+							type='button'
+							onClick={() => {
+								history.push('/addnewproduct/addcategory');
+							}}>
+							Add category
 						</button>
 					</section>
 				</div>

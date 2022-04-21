@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CardCategory from '../CardCategory/CardCategory';
+import { cleanProducts, getInfo } from '../../actions';
 import styles from './Landing.module.css';
 
 export default function Landing() {
+	const nested = useSelector((state) => state.nested);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getInfo(nested))
+		.then(() => dispatch(cleanProducts()))
+	}, [dispatch]);
+
 	let collections = [
 		{
 			id: 2,

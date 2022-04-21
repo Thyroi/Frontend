@@ -1,258 +1,317 @@
 .background {
-  width: 100%;
-  height: 100vh;
-  background: #f3f3f3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 100%;
+	height: 100vh;
+	background: #f3f3f3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  .container {
-    width: 55%;
-    height: 500px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    display: flex;
+	.container {
+		width: 55%;
+		height: 500px;
+		box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+		display: flex;
 
-    .containerImage {
-      width: 50%;
+		.containerImage {
+			width: 50%;
 
-      .img {
-        width: 100%;
-        height: 100%;
-        border-radius: 5px 0 0 5px;
-        object-fit: cover;
-      }
-    }
+			.img {
+				width: 100%;
+				height: 100%;
+				border-radius: 5px 0 0 5px;
+				object-fit: cover;
+			}
+		}
 
-    .containerForm {
-      width: 50%;
-      border-radius: 0 5px 5px 0;
-      background: #ffffff;
+		.containerForm {
+			width: 50%;
+			border-radius: 0 5px 5px 0;
+			background: #ffffff;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-      .subContainerForm {
-        width: 85%;
-        height: 90%;
+			.subContainerForm {
+				width: 85%;
+				height: 90%;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
 
-        .containerHeader {
-          width: 100%;
+				.containerHeader {
+					width: 100%;
 
-          .header {
-            margin: 0;
-            margin-bottom: 0.5rem;
-            text-align: left;
-          }
+					.header {
+						margin: 0;
+						margin-bottom: 0.5rem;
+						text-align: left;
+					}
 
-          .subHeader {
-            text-align: left;
-            font-size: 0.9rem;
-          }
-        }
+					.subHeader {
+						text-align: left;
+						font-size: 0.9rem;
+					}
+				}
 
-        .containerInput {
-          width: 100%;
+				.containerInput {
+					width: 100%;
 
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
 
-          .labelInput {
-            margin-bottom: 1rem;
-            font-weight: 600;
-          }
+					.labelInput {
+						margin-bottom: 1rem;
+						font-weight: 600;
+					}
 
-          .input {
-            width: 100%;
-            height: 2.5rem;
-            border: 2px solid #f3f3f3;
-            border-radius: 5px;
-            padding-left: 1rem;
-            background: #f3f3f3;
-            font-size: 0.8rem;
+					.input {
+						width: 100%;
+						height: 2.5rem;
+						border: 2px solid #f3f3f3;
+						border-radius: 5px;
+						padding-left: 1rem;
+						background: #f3f3f3;
+						font-size: 0.8rem;
 
-            transition: 0.3s all ease;
-          }
+						transition: 0.15s all ease;
+					}
 
-          .input:focus {
-            border: 2px solid #e4687c;
-          }
-        }
+					.input:focus {
+						border: 2px solid #e4687c;
+					}
+				}
 
-        .containerOptions {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
+				.containerOptions {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
 
-          .containerRememberMe {
-            display: flex;
-            align-items: center;
-            position: relative;
+					.containerRememberMe {
+						display: flex;
+						align-items: center;
+						position: relative;
 
-            // .checkIcon {
-            //   position: absolute;
-            //   width: 15px;
-            //   height: 15px;
-            //   left: 2px;
-            //   color: #ffffff;
-            // }
+						// .checkIcon {
+						//   position: absolute;
+						//   width: 15px;
+						//   height: 15px;
+						//   left: 2px;
+						//   color: #ffffff;
+						// }
 
-            .buttonRemember {
-              appearance: none;
-              width: 20px;
-              height: 20px;
-              border: 2px solid #e4687c;
-              border-radius: 5px;
-              flex-shrink: 0;
-              cursor: pointer;
-              transition: 0.3s all ease-out;
-            }
+						.buttonRemember {
+							appearance: none;
+							width: 20px;
+							height: 20px;
+							border: 2px solid #e4687c;
+							border-radius: 5px;
+							flex-shrink: 0;
+							cursor: pointer;
+							transition: 0.15s all ease-out;
+						}
 
-            .buttonRemember:checked {
-              background: #e4687c;
-            }
+						.buttonRemember:checked {
+							background: #e4687c;
+						}
 
-            .buttonRemember:checked::after {
-              content: "\2714";
-              color: #ffffff;
-            }
+						.buttonRemember:checked::after {
+							content: '\2714';
+							color: #ffffff;
+						}
 
-            .textRemember {
-              margin-left: 0.5rem;
-              font-size: 0.9rem;
-            }
-          }
+						.textRemember {
+							margin-left: 0.5rem;
+							font-size: 0.9rem;
+						}
+					}
 
-          .forgotText {
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s all ease;
-          }
+					.forgotText {
+						font-weight: 600;
+						font-size: 0.9rem;
+						transition: 0.15s all ease;
+						background-color: transparent;
+						color: #565656;
+					}
 
-          .forgotText:hover {
-            color: #e4687c;
-          }
-        }
+					.forgotText:hover {
+						color: #e4687c;
+					}
+				}
 
-        .containerLoginSignUp {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
+				.containerLoginSignUp {
+					width: 100%;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
 
-          .loginButton,
-          .signUpButton {
-            width: 45%;
-            height: 2.5rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-          }
+					.loginButton,
+					.signUpButton {
+						width: 45%;
+						height: 2.5rem;
+						border-radius: 5px;
+						margin-bottom: 1rem;
+						cursor: pointer;
+					}
 
-          .loginButton {
-            background: #e4687c;
-            color: #ffffff;
-            font-weight: 500;
+					.loginButton {
+						background: #e4687c;
+						color: #ffffff;
+						font-weight: 500;
 
-            transition: 0.3s all ease;
-          }
+						transition: 0.15s all ease;
+					}
 
-          .loginButton:hover {
-            background: #d3566a;
-          }
+					.loginButton:hover {
+						background: #d3566a;
+					}
 
-          .signUpButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+					.signUpButton {
+						display: flex;
+						justify-content: center;
+						align-items: center;
 
-            background: #ffffff;
-            border: 3px solid #e4687c;
-            color: #e4687c;
-            font-weight: 500;
+						background: #ffffff;
+						border: 3px solid #e4687c;
+						color: #e4687c;
+						font-weight: 500;
 
-            transition: 0.3s all ease;
-          }
+						transition: 0.15s all ease;
+					}
 
-          .signUpButton:hover {
-            background: #e4687c;
-            color: #ffffff;
-          }
+					.signUpButton:hover {
+						background: #e4687c;
+						color: #ffffff;
+					}
 
-          .googleButton {
-            width: 45%;
-            height: 2.5rem;
-            border-radius: 5px;
-            border: 0;
-            outline: 0;
-            cursor: pointer;
+					.googleButton {
+						width: 45%;
+						height: 2.5rem;
+						border-radius: 5px;
+						border: 0;
+						outline: 0;
+						cursor: pointer;
 
-            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
-          }
+						box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+					}
 
-          .googleButton > div {
-            height: 90%;
-          }
-          .googleButton > span {
-            font-family: "Montserrat", sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-          }
-        }
-      }
-    }
-  }
+					.googleButton > div {
+						height: 90%;
+					}
+					.googleButton > span {
+						font-family: 'Montserrat', sans-serif;
+						font-size: 1rem;
+						font-weight: 500;
+					}
+				}
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 970px) {
-  .containerOptions {
-    flex-direction: column;
+	.containerOptions {
+		flex-direction: column;
 
-    .containerRememberMe {
-      margin-bottom: 0.5rem;
-    }
-  }
+		.containerRememberMe {
+			margin-bottom: 0.5rem;
+		}
+	}
 }
 
 @media screen and (max-width: 845px) {
-  .container {
-    .containerImage {
-      display: none;
-    }
+	.container {
+		.containerImage {
+			display: none;
+		}
 
-    .containerForm {
-      background-color: #d3566a;
-      flex-basis: 100%;
-    }
-  }
+		.containerForm {
+			background-color: #d3566a;
+			flex-basis: 100%;
+		}
+	}
 }
 
 @media screen and (max-width: 450px) {
-  .background {
-    .container {
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
+	.background {
+		.container {
+			width: 100%;
+			height: 100%;
+			flex-direction: column;
 
-      .containerImage {
-        display: block;
-        width: 100%;
-        height: 25vh;
+			.containerImage {
+				display: block;
+				width: 100%;
+				height: 25vh;
 
-        .img {
-          border-radius: 0;
-        }
-      }
+				.img {
+					border-radius: 0;
+				}
+			}
 
-      .containerForm {
-        width: 100%;
-      }
-    }
-  }
+			.containerForm {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.dropdown {
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	width: auto;
+	overflow: hidden;
+	top: 1.5rem;
+	background-color: white;
+	border-radius: 5px;
+	transform: scaleY(0) translateY(-100%);
+	transition: all 0.15s;
+}
+
+.dropdownContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 600;
+	transition: 0.15s all ease;
+	position: relative;
+	cursor: pointer;
+}
+
+.dropdownContainer:hover .dropdown {
+	display: flex;
+	flex-direction: column;
+	background-color: rgba(255, 255, 255);
+	transform: scaleY(1);
+	box-shadow: 0 0 0.3rem 0.1rem rgba(0, 0, 0, 0.2);
+	transition: all 0.15s;
+}
+
+.dropdown input {
+	background-color: #f6f6f6;
+	padding: 0.5rem;
+	margin: 0.5rem;
+	border-radius: 5px;
+	width: 300px;
+}
+
+.dropdown button {
+	border: none;
+	background-color: transparent;
+	padding: 1rem;
+	color: #565656;
+	font-weight: 400;
+	transition: all 0.15s;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.dropdown button:hover {
+	color: #e4687c;
+	font-weight: 600;
 }

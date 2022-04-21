@@ -5,6 +5,10 @@
 	align-items: flex-end;
 	margin: 5rem 0;
 }
+.container a {
+	display: flex;
+	align-items: center;
+}
 
 .title {
 	text-align: left;
@@ -14,7 +18,7 @@
 	border-radius: 5px 0 0 5px;
 	font-weight: 600;
 	transition: all ease-in-out 0.2s;
-  position: relative;
+	position: relative;
 }
 
 .title:hover {
@@ -47,26 +51,34 @@
 	justify-content: center;
 	align-items: center;
 }
+
 .container button:hover {
 	background-color: white;
 	color: #e4687c;
 }
 
 .containerAdvise {
-  background: #e4687c;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+	background: #e4687c;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  position: absolute;
-  right: 20px;
+	position: absolute;
+	right: 20px;
 }
 
 .itemsNumber {
-  font-size: 0.9rem;
-  color: #ffffff;
+	font-size: 0.9rem;
+	color: #ffffff;
+}
+
+
+@media screen and (max-width: 999px){
+  .container {
+    display: none;
+  }
 }

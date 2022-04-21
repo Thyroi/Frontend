@@ -67,7 +67,7 @@ function Cart(params) {
 									</span>
 								)}
 
-								<Link to={`/detail/${id_product}`}>
+								<Link to={`/products/${id_product}`}>
 									<img
 										className={style.productImage}
 										src={variants[0].ProductImages[0]}

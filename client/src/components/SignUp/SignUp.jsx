@@ -5,26 +5,22 @@ import { createClient } from '../../actions';
 import style from './SignUp.module.css';
 import swal from 'sweetalert';
 import Loader from '../Loader/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faSquareCheck,
+	faSquareXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function SignUp(params) {
 	const dispatch = useDispatch();
-  const [load, setLoad] = useState(false);
+	const [load, setLoad] = useState(false);
 
-	const [error, setError] = useState({});
-	const [show, setShow] = useState({
-		name: false,
-		lastname: false,
-		email: false,
-		phone: false,
-		login_name: false,
-		login_password: false,
-		address: {
-			streetNumber: false,
-			provinceDepartment: false,
-			city: false,
-			zipCode: false,
-		},
-	});
+	const emailRegEx = useMemo(
+		() => new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+		[]
+	);
+
+	const zipCodeRegEx = useMemo(() => new RegExp(/^\d{4}$/), []);
 
 	const [inputs, setInputs] = useState({
 		name: '',
@@ -42,39 +38,70 @@ export default function SignUp(params) {
 	});
 
 	useEffect(() => {
-		setError(validator(inputs));
+		setError({
+			name: inputs.name ? false : true,
+			lastname: inputs.lastname ? false : true,
+			email: !emailRegEx.test(inputs.email),
+			phone: inputs.phone ? false : true,
+			login_name: inputs.login_name ? false : true,
+			login_password: inputs.login_password ? false : true,
+			streetNumber: inputs.address.streetNumber ? false : true,
+			provinceDepartment: inputs.address.provinceDepartment
+				? false
+				: true,
+			city: inputs.address.city ? false : true,
+			zipCode: !zipCodeRegEx.test(inputs.address.zipCode),
+		});
+
+		setDisable(
+			!(
+				!error.name &&
+				!error.lastname &&
+				!error.email &&
+				!error.phone &&
+				!error.login_name &&
+				!error.login_password &&
+				!error.streetNumber &&
+				!error.provinceDepartment &&
+				!error.city &&
+				!error.zipCode
+			)
+		);
 	}, [inputs]);
+
+	const [error, setError] = useState({
+		name: inputs.name ? false : true,
+		lastname: inputs.lastname ? false : true,
+		email: !emailRegEx.test(inputs.email),
+		phone: inputs.phone ? false : true,
+		login_name: inputs.login_name ? false : true,
+		login_password: inputs.login_password ? false : true,
+		streetNumber: inputs.streetNumber ? false : true,
+		provinceDepartment: inputs.provinceDepartment ? false : true,
+		city: inputs.city ? false : true,
+		zipCode: !zipCodeRegEx.test(inputs.zipCode),
+	});
+
+	const [disable, setDisable] = useState(
+		!(
+			!error.name &&
+			!error.lastname &&
+			!error.email &&
+			!error.phone &&
+			!error.login_name &&
+			!error.login_password &&
+			!error.streetNumber &&
+			!error.provinceDepartment &&
+			!error.city &&
+			!error.zipCode
+		)
+	);
 
 	function handleChange(e) {
 		e.preventDefault();
 		setInputs({
 			...inputs,
 			[e.target.name]: e.target.value,
-		});
-
-		setError({
-			...inputs,
-			[e.target.name]: e.target.value,
-		});
-	}
-	function handleBlur(e) {
-		e.preventDefault();
-		setShow((prevState) => {
-			const newState = {
-				...prevState,
-				[e.target.name]: true,
-			};
-			return newState;
-		});
-	}
-	function handleBlurAddress(e) {
-		e.preventDefault();
-		setShow((prevState) => {
-			const newState = {
-				...prevState,
-				address: { ...prevState.address, [e.target.name]: true },
-			};
-			return newState;
 		});
 	}
 
@@ -86,85 +113,9 @@ export default function SignUp(params) {
 		});
 	}
 
-	function validator(inputs) {
-		let error = {};
-		if (!inputs.name) {
-			error.name = 'Name is required';
-		} else if (typeof inputs.name !== 'string') {
-			error.name =
-				'Insert a valid name (without special caracters or numbers)';
-		}
-		if (!inputs.lastname) {
-			error.lastname = 'Lastname is required';
-		} else if (typeof inputs.lastname !== 'string') {
-			error.lastname =
-				'Insert a valid lastname (without special caracters or numbers)';
-		}
-		if (!inputs.email) {
-			error.email = 'Email is required';
-		} else if (
-			/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(
-				inputs.email
-			) === false
-		) {
-			error.email = 'Email should be a valid email';
-		}
-		if (!inputs.phone) {
-			error.phone = 'Phone is required';
-		}
-		if (!inputs.login_name) {
-			error.login_name = 'Login name is required';
-		}
-		if (!inputs.login_password) {
-			error.login_password = 'Password is required';
-		}
-		if (!inputs.address.streetNumber) {
-			error.calle = 'Street and number are required';
-		}
-		if (!inputs.address.provinceDepartment) {
-			error.provinceDepartment = 'Province is required';
-		}
-		if (!inputs.address.city) {
-			error.city = 'City is required';
-		} else if (typeof inputs.address.city !== 'string') {
-			error.city =
-				'Insert a valid city (without special caracters or numbers)';
-		}
-		if (!inputs.address.zipCode) {
-			error.zipCode = 'Zip code is required';}
-		else if(inputs.address.zipCode.toString().length!==4){
-			error.zipCode = 'Zip code must be a 4 digits number'
-
-		}		
-		 /* if (!inputs.address.particularDetails) {
-			error.zipCode = 'a particular detail is required';
-		} */
-		return error;
-	}
-	//let show=false;
-
-	const disable = useMemo(() => {
-		if (
-			error.name ||
-			error.lastname ||
-			error.phone ||
-			error.email ||
-			error.login_name ||
-			error.login_password ||
-			error.streetNumber ||
-			error.city ||
-			error.zipCode ||
-			error.provinceDepartment ||
-			error.particularDetails
-		) {
-			return true;
-		}
-		return false;
-	}, [error]);
-
 	function handleSubmit(e) {
 		e.preventDefault();
-    setLoad(true);
+		setLoad(true);
 		setInputs({
 			...inputs,
 			phone: parseInt(inputs.phone),
@@ -172,7 +123,7 @@ export default function SignUp(params) {
 		});
 
 		dispatch(createClient(inputs, setLoad));
-		swal("Welcome","You're registered!", "success");
+		swal('Welcome', "You're registered!", 'success');
 		setInputs({
 			name: '',
 			lastname: '',
@@ -193,9 +144,9 @@ export default function SignUp(params) {
 		}, 3500);
 	}
 
-  if(load === true){
-    return <Loader/>  
-  }
+	if (load === true) {
+		return <Loader />;
+	}
 
 	return (
 		<div className={style.container}>
@@ -207,72 +158,119 @@ export default function SignUp(params) {
 				<div className={style.addressGlobal}>
 					<label>Address</label>
 					<div className={style.address}>
-						<input
-							type='text'
-							placeholder='Street and number'
-							name='streetNumber'
-							value={inputs.address.streetNumber}
-							onChange={(e) => {
-								handleAdress(e);
-							}}
-							onBlur={(e) => {
-								handleBlurAddress(e);
-							}}
-						/>
-						{error.calle && show.address.streetNumber && (
-							<p className={style.error}>{error.calle}</p>
-						)}
-
-						<input
-							type='text'
-							placeholder='City'
-							name='city'
-							value={inputs.address.city}
-							onChange={(e) => {
-								handleAdress(e);
-							}}
-							onBlur={(e) => {
-								handleBlurAddress(e);
-							}}
-						/>
-						{error.city && show.address.city && (
-							<p className={style.error}>{error.city}</p>
-						)}
-
-						<input
-							type='text'
-							placeholder='Zip Code'
-							name='zipCode'
-							value={inputs.address.zipCode}
-							onChange={(e) => {
-								handleAdress(e);
-							}}
-							onBlur={(e) => {
-								handleBlurAddress(e);
-							}}
-						/>
-						{error.zipCode && show.address.zipCode && (
-							<p className={style.error}>{error.zipCode}</p>
-						)}
-
-						<input
-							type='text'
-							placeholder='province'
-							name='provinceDepartment'
-							value={inputs.address.provinceDepartment}
-							onChange={(e) => {
-								handleAdress(e);
-							}}
-							onBlur={(e) => {
-								handleBlurAddress(e);
-							}}
-						/>
-						{error.provinceDepartment &&
-							show.address.provinceDepartment && (
-								<p className={style.error}>
-									{error.provinceDepartment}
-								</p>
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='Street and number'
+								name='streetNumber'
+								value={inputs.address.streetNumber}
+								onChange={(e) => {
+									handleAdress(e);
+								}}
+							/>
+							{!error.streetNumber && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
 							)}
+						</div>
+
+						{error.streetNumber && (
+							<p className={style.error}>
+								{'Street and number are required'}
+							</p>
+						)}
+
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='City'
+								name='city'
+								value={inputs.address.city}
+								onChange={(e) => {
+									handleAdress(e);
+								}}
+							/>
+							{!error.city && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.city && (
+							<p className={style.error}>
+								{
+									'Insert a valid city without special caracters or numbers'
+								}
+							</p>
+						)}
+
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='Zip Code'
+								name='zipCode'
+								value={inputs.address.zipCode}
+								onChange={(e) => {
+									handleAdress(e);
+								}}
+							/>
+							{!error.zipCode && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.zipCode && (
+							<p className={style.error}>
+								{'Zip code must be a 4 digits number'}
+							</p>
+						)}
+
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='province'
+								name='provinceDepartment'
+								value={inputs.address.provinceDepartment}
+								onChange={(e) => {
+									handleAdress(e);
+								}}
+							/>
+							{!error.provinceDepartment && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.provinceDepartment && (
+							<p className={style.error}>
+								{'Province or department is required'}
+							</p>
+						)}
 
 						<input
 							type='text'
@@ -282,127 +280,189 @@ export default function SignUp(params) {
 							onChange={(e) => {
 								handleAdress(e);
 							}}
-							onBlur={(e) => {
-								handleBlurAddress(e);
-							}}
 						/>
-						{error.particularDetails &&
-							show.address.particularDetails && (
-								<p className={style.error}>
-									{error.particularDetails}
-								</p>
-							)}
 					</div>
 				</div>
 
 				<div className={style.infoGlobal}>
 					<label>Personal Information</label>
 					<div className={style.infoContainer}>
-						<input
-							type='text'
-							placeholder='Name'
-							name='name'
-							value={inputs.name}
-							onChange={(e) => {
-								handleChange(e);
-							}}
-							onBlur={(e) => {
-								handleBlur(e);
-							}}
-						/>
-						{error.name && show.name && (
-							<p className={style.error}>{error.name}</p>
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='Name'
+								name='name'
+								value={inputs.name}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
+							{!error.name && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.name && (
+							<p className={style.error}>
+								{
+									'Insert a valid name without special caracters or numbers'
+								}
+							</p>
 						)}
 
-						<input
-							type='text'
-							placeholder='Last name'
-							name='lastname'
-							value={inputs.lastname}
-							onChange={(e) => {
-								handleChange(e);
-							}}
-							onBlur={(e) => {
-								handleBlur(e);
-							}}
-						/>
-						{error.lastname && show.lastname && (
-							<p className={style.error}>{error.lastname}</p>
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='Last name'
+								name='lastname'
+								value={inputs.lastname}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
+							{!error.lastname && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.lastname && (
+							<p className={style.error}>
+								{
+									'Insert a valid lastname without special caracters or numbers'
+								}
+							</p>
 						)}
 
-						<input
-							type='text'
-							placeholder='e-mail'
-							name='email'
-							value={inputs.email}
-							onChange={(e) => {
-								handleChange(e);
-							}}
-							onBlur={(e) => {
-								handleBlur(e);
-							}}
-						/>
-						{error.email && show.email && (
-							<p className={style.error}>{error.email}</p>
+						<div className={style.validInput}>
+							<input
+								type='text'
+								placeholder='e-mail'
+								name='email'
+								value={inputs.email}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
+							{!error.email && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.email && (
+							<p className={style.error}>
+								{'insert a valid email'}
+							</p>
 						)}
 
-						<input
-							type='number'
-							placeholder='Phone number'
-							name='phone'
-							value={inputs.phone}
-							onChange={(e) => {
-								handleChange(e);
-							}}
-							onBlur={(e) => {
-								handleBlur(e);
-							}}
-						/>
-						{error.phone && show.phone && (
-							<p className={style.error}>{error.phone}</p>
+						<div className={style.validInput}>
+							<input
+								type='number'
+								placeholder='Phone number'
+								name='phone'
+								value={inputs.phone}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
+							{!error.phone && (
+								<FontAwesomeIcon
+									icon={faSquareCheck}
+									style={{
+										color: 'green',
+										fontSize: '1.5rem',
+										marginLeft: '0.5rem',
+									}}
+								/>
+							)}
+						</div>
+
+						{error.phone && (
+							<p className={style.error}>
+								{'Insert a valid phone number, only numbers'}
+							</p>
 						)}
 					</div>
 				</div>
 
 				<div className={style.logInGlobal}>
-					<label>Username</label>
-					<input
-						type='text'
-						placeholder='Type username'
-						name='login_name'
-						value={inputs.login_name}
-						onChange={(e) => {
-							handleChange(e);
-						}}
-						onBlur={(e) => {
-							handleBlur(e);
-						}}
-					/>
-					{error.login_name && show.login_name && (
-						<p className={style.error}>{error.login_name}</p>
+					<label>Log in</label>
+
+					<div className={style.validInput}>
+						<input
+							type='text'
+							placeholder='Type username'
+							name='login_name'
+							value={inputs.login_name}
+							onChange={(e) => {
+								handleChange(e);
+							}}
+						/>
+						{!error.login_name && (
+							<FontAwesomeIcon
+								icon={faSquareCheck}
+								style={{
+									color: 'green',
+									fontSize: '1.5rem',
+									marginLeft: '0.5rem',
+								}}
+							/>
+						)}
+					</div>
+
+					{error.login_name && (
+						<p className={style.error}>{'Insert a login name'}</p>
 					)}
-					<label>Password</label>
-					<input
-						type='password'
-						placeholder='Type password'
-						name='login_password'
-						value={inputs.login_password}
-						onChange={(e) => {
-							handleChange(e);
-						}}
-						onBlur={(e) => {
-							handleBlur(e);
-						}}
-					/>
-					{error.login_password && show.login_password && (
-						<p className={style.error}>{error.login_password}</p>
+
+					<div className={style.validInput}>
+						<input
+							type='password'
+							placeholder='Type password'
+							name='login_password'
+							value={inputs.login_password}
+							onChange={(e) => {
+								handleChange(e);
+							}}
+						/>
+						{!error.login_password && (
+							<FontAwesomeIcon
+								icon={faSquareCheck}
+								style={{
+									color: 'green',
+									fontSize: '1.5rem',
+									marginLeft: '0.5rem',
+								}}
+							/>
+						)}
+					</div>
+
+					{error.login_password && (
+						<p className={style.error}>{'Insert a password'}</p>
 					)}
 				</div>
 
 				<div className={style.submit}>
-					<button disabled={disable} type='submit'>
-						Sign Up
-					</button>
+					{!disable && <button type='submit'>Sign Up</button>}
 				</div>
 			</form>
 		</div>

@@ -12,6 +12,7 @@ export default function Card({ data }) {
 		id_product,
 		name,
 		price,
+		price_offer,
 		brand,
 		rating,
 		collection,
@@ -58,8 +59,14 @@ export default function Card({ data }) {
 	return (
 		<div className={style.container}>
 			<div className={style.background}>
-				<Link className={style.linkedImage} to={`/products/${stocks ? id_product : ''}`}>
-					{is_offer && <span className={style.offer}>{'SALE'}</span>}
+				<Link
+					className={style.linkedImage}
+					to={`/products/${stocks ? id_product : ''}`}>
+					{is_offer && (
+						<span className={style.offer}>{`-%${
+							(100 * (price - price_offer)) / price
+						}`}</span>
+					)}
 					<img
 						src={default_image}
 						alt=''

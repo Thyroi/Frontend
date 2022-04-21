@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 
 import Quantity from '../Quantity/Quantity';
 import Loader from '../Loader/Loader';
@@ -7,11 +7,7 @@ import style from './Product_detail.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faCartShopping,
-	faHeart,
-	faPlusSquare,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons';
 import swal from '@sweetalert/with-react';
 
 import {
@@ -40,6 +36,7 @@ import Dropdown from '../Dropdown/Dropdown';
 export default function Product_detail() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
+	const params = useHistory();
 
 	const templateProduct = useSelector((state) => state.details);
 	const loggedInAdmin = useSelector((state) => state.loggedInAdmin);
@@ -69,7 +66,7 @@ export default function Product_detail() {
 	}, [product?.price]);
 
 	useEffect(() => {}, [product && product?.variants]);
-//
+	//
 	useEffect(() => {
 		dispatch(getUserLists(client?.phone));
 		dispatch(getSpecificList(client.phone, 'Favorite'));
@@ -114,7 +111,11 @@ export default function Product_detail() {
 					listName === 'Favoritas' ||
 					listName === 'Favorita'
 				) {
-					alert('This name is not allow');
+					swal(
+						'Product added to your list',
+						'Click to continue!',
+						'warning'
+					);
 				} else if (listName) {
 					const newList = {
 						ClientPhone: client.phone,
@@ -122,7 +123,7 @@ export default function Product_detail() {
 						Colaborators: [],
 						title: listName,
 					};
-					dispatch(createList(newList));
+					dispatch(createList(newList, swal));
 					setTimeout(() => {
 						dispatch(getUserLists(client.phone));
 					}, 1000);
@@ -134,7 +135,12 @@ export default function Product_detail() {
 						parseInt(id)
 					)
 				) {
-					return alert('This product already is on this list');
+					swal(
+						'This product already is on favorites',
+						'Click to continue!',
+						'warning'
+					);
+					return;
 				} else {
 					if (updated) {
 						const listUpdated = {
@@ -148,11 +154,24 @@ export default function Product_detail() {
 							title: updated?.title,
 						};
 						dispatch(updateList(listUpdated));
+						swal('List created', 'Click to continue!', 'success');
 					}
 				}
 			}
 		} else {
-			alert('You have to be registered to create a wishlist');
+			swal({
+				title: 'You have to be logged in to add lists',
+				text: 'Would you like to login?',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willAccept) => {
+				if (willAccept) {
+					prepareProduct(product);
+					params.push('/login');
+				} else {
+				}
+			});
 		}
 	}
 
@@ -166,7 +185,11 @@ export default function Product_detail() {
 						parseInt(id)
 					)
 				) {
-					alert('This product already is on favorites');
+					swal(
+						'This product already is on favorites',
+						'Click to continue!',
+						'warning'
+					);
 				} else {
 					const listUpdated = {
 						id: favorite[0]?.id,
@@ -179,6 +202,11 @@ export default function Product_detail() {
 						title: favorite[0]?.title,
 					};
 					dispatch(updateList(listUpdated));
+					swal(
+						'Product added to your list',
+						'Click to continue!',
+						'success'
+					);
 				}
 			} else {
 				const newList = {
@@ -190,26 +218,39 @@ export default function Product_detail() {
 				dispatch(createList(newList));
 			}
 		} else {
-			alert('You have to be registered to add a product to favorites');
+			swal({
+				title: 'You have to be logged in to add products',
+				text: 'Would you like to login?',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willAccept) => {
+				if (willAccept) {
+					prepareProduct(product);
+					params.push('/login');
+				} else {
+				}
+			});
 		}
 	}
 
 	if (!product?.variants) return <Loader />;
-	console.log(product)
+	console.log(product);
 	return (
 		<div className={style.container}>
 			<div className={style.containerImages}>
 				<div className={style.containerMainImage}>
 					{product?.is_offer && (
-						<span className={style.offer}>{'Oferta'}</span>
+						<span className={style.offer}>{`-%${
+							(100 * (product.price - product.price_offer)) /
+							product.price
+						}`}</span>
 					)}
 					<img
 						className={style.mainImage}
 						src={
 							product?.variants &&
 							product?.variants[0]?.ProductImages[0]
-							
-							
 						}
 						id='default_image'
 						alt=''
@@ -315,8 +356,21 @@ export default function Product_detail() {
 							<div className={style.containerBuyCart}>
 								<Link
 									className={style.buyButton}
-									to='/form'
-									onClick={() => prepareProduct(product)}>
+									onClick={() => {
+										/* swal({
+											title: 'You have to be logged in to buy',
+											text: 'Would you like to login?',
+											icon: 'warning',
+											buttons: true,
+											dangerMode: true,
+										}).then((willAccept) => {
+											if (willAccept) { */
+										prepareProduct(product);
+										params.push('/form');
+										/* } else {
+											}
+										}); */
+									}}>
 									<button className={style.buyLetter}>
 										Buy
 									</button>
@@ -329,6 +383,11 @@ export default function Product_detail() {
 											cartProducts,
 											product,
 											dispatch
+										);
+										swal(
+											'Product added to cart',
+											'Click to continue!',
+											'success'
 										);
 									}}>
 									<FontAwesomeIcon

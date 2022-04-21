@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+
 import style from './LoginAdmin.module.scss';
 
 import { logInAdmin } from '../../actions';
 import { sendReset } from '../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
+import swal from '@sweetalert/with-react';
 
 function LogInMain(params) {
 	const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function LogInMain(params) {
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
-		if (loggedInAdmin.id_user) {
+		if (loggedInAdmin?.id_user) {
 			params.history.push('/admindashboard');
 		}
 	}, [loggedInAdmin]);
@@ -38,7 +39,7 @@ function LogInMain(params) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		if (!user?.login_name || !user?.login_password) {
-			alert('Please fill all fields');
+			swal('Alert!', 'Please fill all fields', 'warning');
 		}
 		dispatch(logInAdmin(user));
 	}
@@ -51,7 +52,7 @@ function LogInMain(params) {
 
 	function handleResetPass(e) {
 		e.preventDefault();
-		sendReset(email);
+		sendReset(email, swal);
 	}
 
 	return (

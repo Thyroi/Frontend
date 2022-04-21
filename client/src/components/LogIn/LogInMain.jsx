@@ -64,7 +64,7 @@ function LogInMain(params) {
       return;
 		}
     setLoad("true");
-		dispatch(logInUser(user, swal, setLoad));
+		dispatch(logInUser(user, setUser, setLoad));
 	}
 
 	function handleMailChange(e) {

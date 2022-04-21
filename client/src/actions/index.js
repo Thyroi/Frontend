@@ -1045,3 +1045,20 @@ export function verifyDiscount(params, swal){
 		}
 	}
 }
+
+export function verifyAccount(token){
+	token = {token:token}
+	return async function(){
+		try{
+			const newPrice = await axios.patch("/client/verify", token)
+			if(newPrice.data === "Cliente verificado de manera exitosa!!"){
+				return console.log("success")
+			} else {
+				return console.log("fail")
+			}
+		}
+		catch(error){
+			console.log(error)
+		}
+	}
+}

@@ -279,7 +279,7 @@ export default function Product_detail() {
 					<p
 						className={style.productPrice}
 						id='individualProductPrice'>{`$${
-						product?.totalPrice?.toFixed(2) ||
+						parseFloat(product?.totalPrice).toFixed(2) ||
 						product?.price?.toFixed(2)
 					}`}</p>
 

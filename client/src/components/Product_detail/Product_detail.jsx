@@ -181,9 +181,9 @@ export default function Product_detail() {
 			if (favorite.length) {
 				console.log(favorite);
 				if (
-					favorite[0]?.List?.map((p) => parseInt(p.id_product)).includes(
-						parseInt(id)
-					)
+					favorite[0]?.List?.map((p) =>
+						parseInt(p.id_product)
+					).includes(parseInt(id))
 				) {
 					swal(
 						'This product already is on favorites',
@@ -241,10 +241,10 @@ export default function Product_detail() {
 			<div className={style.containerImages}>
 				<div className={style.containerMainImage}>
 					{product?.is_offer && (
-						<span className={style.offer}>{`-%${
+						<span className={style.offer}>{`-${(
 							(100 * (-product.price + product.price_offer)) /
 							product.price
-						}`}</span>
+						).toFixed(0)}%`}</span>
 					)}
 					<img
 						className={style.mainImage}
@@ -279,7 +279,8 @@ export default function Product_detail() {
 					<p
 						className={style.productPrice}
 						id='individualProductPrice'>{`$${
-						product?.totalPrice || product?.price
+						product?.totalPrice?.toFixed(2) ||
+						product?.price?.toFixed(2)
 					}`}</p>
 
 					<div className={style.containerPreferences}>

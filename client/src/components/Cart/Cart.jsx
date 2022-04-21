@@ -58,12 +58,12 @@ function Cart(params) {
 							<div className={style.imgContainer}>
 								{item.is_offer && (
 									<span className={style.offer}>
-										{`-%${
+										{`-${(
 											(100 *
 												(-item.price +
 													item.price_offer)) /
 											item.price
-										}`}
+										).toFixed(0)}%`}
 									</span>
 								)}
 
@@ -84,7 +84,9 @@ function Cart(params) {
 									</h3>
 									<p
 										className={style.productPrice}
-										id='individualProductPrice'>{`$${totalPrice}`}</p>
+										id='individualProductPrice'>{`$${totalPrice.toFixed(
+										2
+									)}`}</p>
 									<p
 										className={style.productPrice}
 										id='individualProductPrice'>{`Color: ${item.variants[0].ColorName}`}</p>

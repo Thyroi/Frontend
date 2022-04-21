@@ -722,7 +722,7 @@ export function logInAdmin(user, setUser) {
 				user_name: user.login_name,
 				user_password: user.login_password,
 			};
-			const { data } = await axios.post('/login/admin', dato, {
+			const {data} = await axios.post('/login/admin', dato, {
 				headers: {
 					Authorization: `Bearer ${window.localStorage.getItem(
 						'token'
@@ -730,7 +730,7 @@ export function logInAdmin(user, setUser) {
 				},
 			})
 				.then(response => {
-					if (response.data.message === 'Incorrect user or password') {
+					if (response.data.message && response.data.message === 'Incorrect user or password') {
 						swal('Oh, oh!', 'User or password not found', 'warning');
 						setUser({
 							login_name: '',
@@ -738,10 +738,10 @@ export function logInAdmin(user, setUser) {
 						});
 						return;
 					} else {
-						window.localStorage.setItem('token', data.token);
+						window.localStorage.setItem('token', response.data.token);
 						return dispatch({
 							type: 'LOG_IN_ADMIN',
-							payload: data.user,
+							payload: response.data.user,
 						});
 					}
 				})

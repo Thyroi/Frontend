@@ -1,7 +1,7 @@
 import { async } from '@firebase/util';
 import axios from 'axios';
 
-export function getInfo(nested) {
+export function getInfo(nested, swal) {
 	return async function (dispatch) {
 		try {
 			var info = await axios.get(
@@ -14,11 +14,14 @@ export function getInfo(nested) {
 				// 		)}`,
 				// 	},
 				// }
-			);
-			return dispatch({
-				type: 'GET_ALL',
-				payload: info.data,
-			});
+			); //{message:"not found"}
+
+			return info?.data?.message === 'not found'
+				? swal('Oops!', 'Nothing found, please reset filters', 'info')
+				: dispatch({
+						type: 'GET_ALL',
+						payload: info.data,
+				  });
 		} catch (error) {
 			console.log(error);
 		}
@@ -886,7 +889,19 @@ export function createList(payload, swal) {
 					)}`,
 				},
 			});
-			return swal('Success!', 'List created!', 'success');
+			console.log(payload);
+			if (payload.title === 'Favorite') {
+				return swal(
+					'Success!',
+					'Product added to favourites!',
+					'success'
+				);
+			}
+			return swal(
+				'Success!',
+				'List created and product added!',
+				'success'
+			);
 		} catch (error) {
 			console.log(error);
 		}

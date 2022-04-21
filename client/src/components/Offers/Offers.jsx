@@ -9,7 +9,7 @@ import { setNewOffer } from '../../utils/utils';
 function Offers() {
 	const allproducts = useSelector((state) => state.allproducts);
 
-	const [active, setActive] = useState({
+	/* 	const [active, setActive] = useState({
 		Mon: false,
 		Tue: false,
 		Wed: false,
@@ -17,17 +17,17 @@ function Offers() {
 		Fri: false,
 		Sat: false,
 		Sun: false,
-	});
+	}); */
 
 	const [itemsOnOffer, setItemsOnOffer] = useState([]);
 
 	const [discount, setDiscount] = useState(0);
 
-	function handleClick(e) {
+	/* 	function handleClick(e) {
 		e.preventDefault();
 		const { name } = e.target;
 		setActive({ ...active, [name]: !active[name] });
-	}
+	} */
 
 	function handleSend(e) {
 		e.preventDefault();
@@ -37,7 +37,7 @@ function Offers() {
 		});
 		setDiscount(0);
 
-		setActive({
+		/* setActive({
 			Mon: false,
 			Tue: false,
 			Wed: false,
@@ -45,7 +45,7 @@ function Offers() {
 			Fri: false,
 			Sat: false,
 			Sun: false,
-		});
+		}); */
 
 		itemsOnOffer.forEach((id) => {
 			document.getElementById(id).classList.remove(styles.selected);
@@ -85,7 +85,7 @@ function Offers() {
 			<h2>Offers</h2>
 			<div className={styles.content}>
 				<div className={styles.options}>
-					<div className={styles.days}>
+					{/* 					<div className={styles.days}>
 						<button
 							className={
 								active.Mon ? styles.active : styles.button
@@ -142,7 +142,7 @@ function Offers() {
 							name='Sun'>
 							Sun
 						</button>
-					</div>
+					</div> */}
 					<div className={styles.discount}>
 						<label>Discount % between 1 and 99</label>
 						<input

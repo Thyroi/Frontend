@@ -64,7 +64,7 @@ export default function Card({ data }) {
 					to={`/products/${stocks ? id_product : ''}`}>
 					{is_offer && (
 						<span className={style.offer}>{`-%${
-							(100 * (price - price_offer)) / price
+							(100 * (-price + price_offer)) / price
 						}`}</span>
 					)}
 					<img

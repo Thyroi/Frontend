@@ -14,9 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faRotateLeft
-} from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 function LogInMain(params) {
 	const history = useHistory();
@@ -45,9 +43,9 @@ function LogInMain(params) {
 		}
 	}, [loggedInClient]);
 
-	function handleGoBack(e) {
+	function handleGoHome(e) {
 		e.preventDefault();
-		history.goBack();
+		history.push('/home');
 	}
 
 	function responseGoogle(response) {
@@ -96,6 +94,10 @@ function LogInMain(params) {
 		<div className={style.background}>
 			<div className={style.container}>
 				<div className={style.containerImage}>
+					<button onClick={(e) => handleGoHome(e)}>
+						<FontAwesomeIcon icon={faHouse} />
+					</button>
+
 					<img
 						className={style.img}
 						src={require('../../Assets/img/login_side.jpg')}
@@ -188,11 +190,6 @@ function LogInMain(params) {
 						</div>
 					</div>
 				</form>
-			</div>
-			<div className={style.backbutton}>
-				<button onClick={(e) => handleGoBack(e)}>
-					<FontAwesomeIcon icon={faRotateLeft} />
-				</button>
 			</div>
 		</div>
 	);

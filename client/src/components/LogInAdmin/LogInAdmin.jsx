@@ -41,7 +41,7 @@ function LogInMain(params) {
 		if (!user?.login_name || !user?.login_password) {
 			swal('Alert!', 'Please fill all fields', 'warning');
 		}
-		dispatch(logInAdmin(user));
+		dispatch(logInAdmin(user, setUser));
 	}
 
 	function handleMailChange(e) {

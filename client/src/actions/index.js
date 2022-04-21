@@ -66,8 +66,8 @@ export function getSelectorsCol() {
 				typeof data?.data === 'string'
 					? [{ id: 10, name: 'error loading collections' }]
 					: data?.data?.map((p) => {
-							return { id: p?.id_collection, name: p?.name };
-					  });
+						return { id: p?.id_collection, name: p?.name };
+					});
 
 			return dispatch({
 				type: 'GET_SELECTOR_COL',
@@ -437,7 +437,7 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.map((i) => {
@@ -445,13 +445,13 @@ export function addCart(cartProducts, payload, dispatch) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 			) {
 				i.variants[0].Stocks[
 					Object.keys(payload.variants[0].Stocks)[0]
 				] +=
 					payload.variants[0].Stocks[
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 					];
 				return i;
 			}
@@ -572,7 +572,7 @@ export function removeCart(cartProducts, payload) {
 				i.id_product === payload.id_product &&
 				i.variants[0].ColorName === payload.variants[0].ColorName &&
 				Object.keys(i.variants[0].Stocks)[0] ===
-					Object.keys(payload.variants[0].Stocks)[0]
+				Object.keys(payload.variants[0].Stocks)[0]
 		)
 	) {
 		cart = cart.filter((i) => {
@@ -581,7 +581,7 @@ export function removeCart(cartProducts, payload) {
 					i.id_product === payload.id_product &&
 					i.variants[0].ColorName === payload.variants[0].ColorName &&
 					Object.keys(i.variants[0].Stocks)[0] ===
-						Object.keys(payload.variants[0].Stocks)[0]
+					Object.keys(payload.variants[0].Stocks)[0]
 				)
 			) {
 				return i;
@@ -689,9 +689,7 @@ export function logInUser(user, setUser, setLoad) {
 			const { data } = await axios.post('/login', dato);
 			window.localStorage.setItem('token', data.token);
 
-			if (data.message === 'Incorrect login name or password') {
-				console.log('ERROR_________________________\n');
-				console.log(data.message);
+			if (data.message === 'Incorrect User or Password') {
 				swal('Oh, oh!', 'User or password not found', 'warning');
 				setLoad('false');
 				setUser({
@@ -711,7 +709,7 @@ export function logInUser(user, setUser, setLoad) {
 	};
 }
 
-export function logInAdmin(user, setLoad) {
+export function logInAdmin(user, setUser) {
 	return async function (dispatch) {
 		try {
 			const dato = { user_name: user.login_name };
@@ -723,10 +721,12 @@ export function logInAdmin(user, setLoad) {
 				},
 			});
 			window.localStorage.setItem('token', data.token);
-
-			if (!data) {
+			if (data.message === 'Incorrect user or password') {
 				swal('Oh, oh!', 'User or password not found', 'warning');
-				setLoad('false');
+				setUser({
+					login_name: '',
+					login_password: '',
+				})
 				return;
 			}
 
@@ -770,9 +770,9 @@ export function getCart(phone) {
 						(c) =>
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 					)
 				) {
 					//entonces se suma la cantidad de ese item de cart al item de data
@@ -780,15 +780,15 @@ export function getCart(phone) {
 						if (
 							c.id_product === i.id_product &&
 							c.variants[0].ColorName ===
-								i.variants[0].ColorName &&
+							i.variants[0].ColorName &&
 							Object.keys(c.variants[0].Stocks)[0] ===
-								Object.keys(i.variants[0].Stocks)[0]
+							Object.keys(i.variants[0].Stocks)[0]
 						) {
 							c.variants[0].Stocks[
 								Object.keys(i.variants[0].Stocks)[0]
 							] +=
 								i.variants[0].Stocks[
-									Object.keys(i.variants[0].Stocks)[0]
+								Object.keys(i.variants[0].Stocks)[0]
 								];
 							return c; //y se devuelve el objeto con el item de la BD sumado
 						}
@@ -1059,14 +1059,14 @@ export function shareList(payload) {
 	return async function () {
 		try {
 
-			await axios.patch(`/lists/share`, payload,  {
-					headers: {
-						'content-type': 'application/json',
-						Authorization: `Bearer ${window.localStorage.getItem(
-							'token'
-						)}`,
-					},
-				});
+			await axios.patch(`/lists/share`, payload, {
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${window.localStorage.getItem(
+						'token'
+					)}`,
+				},
+			});
 			swal('Success!', 'Email sent succesfully', 'success');
 		} catch (error) {
 			console.log(error);

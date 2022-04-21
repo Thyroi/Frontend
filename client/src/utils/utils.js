@@ -400,23 +400,21 @@ export async function resetPassword(phone, login_password, swal) {
 			},
 		} */
 		);
-		if (data === 'Cliente actualizado') {
-			swal(
-				'Success!',
-				'password successfully set, happy shopping!',
-				'success'
-			);
+		if (data === "Cliente actualizado con Exito!!" ) {
+			swal({  title: "Congratulations!",
+			text: "Your account has been verified correctly!",
+			icon: "success",
+			buttons: false, closeOnClickOutside: false, closeOnEsc: false, timer: 4000 });
 			window.location.href = '/home';
-		} else {
-			swal(
-				'Error :s',
-				'there has been a problem, contact support',
-				'error'
-			);
-			window.location.href = '/home';
-		}
+		} 	
 	} catch (e) {
 		console.log(e);
+		swal(
+			'Error :s',
+			'there has been a problem, contact support',
+			'error'
+		);
+		window.location.href = '/home';
 	}
 }
 

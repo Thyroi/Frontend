@@ -37,8 +37,6 @@
   overflow: hidden;
 }
 
-
-
 .title {
 	display: flex;
 	justify-content: flex-end;
@@ -94,7 +92,7 @@
   font-weight: 300;
   font-size: 1rem;
   text-align: justify;
-  padding: 0 2rem;
+  padding: 0 1.2rem;
 
   display: flex;
   justify-content: center;
@@ -117,6 +115,6 @@
 
 }
 
-.background:hover img {
-  width: 50%;
+.container:hover .image {
+  transform: scale(1.1);
 }

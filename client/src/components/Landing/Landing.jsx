@@ -41,11 +41,11 @@ export default function Landing() {
 
 	return (
 		<div className={styles.container}>
-			{
+			{/* {
 				<div className={styles.top}>
 					<img src={require('../../Assets/logo_home.png')} alt='' />
 				</div>
-			}
+			} */}
 			<div className={styles.cards}>
 				{collections.map(({ id, img, name }) => {
 					return (

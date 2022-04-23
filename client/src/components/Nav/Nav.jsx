@@ -8,7 +8,7 @@ import {
 	faCartShopping,
 	faHouse,
 	faChartLine,
-	faRotateLeft,
+	faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Nav.module.css';
@@ -28,7 +28,7 @@ export default function Nav() {
 	return (
 		<div className={styles.container}>
 			<button onClick={(e) => handleGoBack(e)}>
-				<FontAwesomeIcon icon={faRotateLeft} />
+				<FontAwesomeIcon icon={faArrowLeft} />
 			</button>
 			<NavLink
 				to='/home'
@@ -45,7 +45,7 @@ export default function Nav() {
 					className={styles.title}>
 					<FontAwesomeIcon
 						className={styles.icons}
-						icon={faChartLine}
+						icon={faArrowLeft}
 					/>
 					Dashboard
 				</NavLink>

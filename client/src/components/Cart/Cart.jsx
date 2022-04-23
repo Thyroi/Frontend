@@ -33,8 +33,9 @@ function Cart(params) {
 
 	if (itemsCart.length === 0)
 		return (
-			<div style={{ width: '100%', textAlign: 'center' }}>
-				<h1>This cart is empty!</h1>
+			<div className={style.backgroundEmptyCart}>
+				<img className={style.imgEmptyCart} src={require("../../Assets/img/noItemsCart.png")} alt='empty-cart' />
+        <h2>No product in cart</h2>
 			</div>
 		);
 

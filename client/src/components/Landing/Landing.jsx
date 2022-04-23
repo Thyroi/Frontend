@@ -43,7 +43,7 @@ export default function Landing() {
 		<div className={styles.container}>
 			{
 				<div className={styles.top}>
-					<img src={require('../../Assets/logo_home.png')} alt='' />
+					<img className={styles.topLogo} src={require('../../Assets/logo_home.png')} alt='' />
 				</div>
 			}
 			<div className={styles.cards}>

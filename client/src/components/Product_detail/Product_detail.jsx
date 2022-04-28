@@ -156,7 +156,7 @@ export default function Product_detail() {
 								...updated?.List.map((p) => p.id_product),
 								parseInt(id),
 							],
-							Colaborators: [...updated.Colaborators],
+							Colaborators: [...updated.Colaborators.map((c) => parseInt(c.phone))],
 							title: updated?.title,
 						};
 						dispatch(updateList(listUpdated));

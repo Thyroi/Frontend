@@ -340,6 +340,11 @@ export default function UpdateProduct() {
 							Add category
 						</button>
 					</section>
+					<section>
+						<button onClick={handleSubmit} value='Update'>
+							Submit
+						</button>
+					</section>
 				</div>
 
 				<div className={styles.right}>
@@ -347,9 +352,6 @@ export default function UpdateProduct() {
 					{imageUrls?.map((url) => {
 						return <img key={url} src={url} alt={url} />;
 					})}
-				</div>
-				<div className={styles.bottom}>
-					<input type='submit' value='Update' />
 				</div>
 			</form>
 		</div>

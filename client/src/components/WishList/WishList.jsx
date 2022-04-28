@@ -35,7 +35,7 @@ export default function Wishlist({ match, history }) {
 			id: parseInt(id),
 			ClientPhone: list.ClientPhone,
 			rList: borrar.map((p) => p.id_product),
-			Colaborators: list.Colaborators,
+			Colaborators: list.Colaborators.map((c) => parseInt(c.phone)),
 			title: list.title,
 		};
 		dispatch(updateListDeleted(updated, swal));

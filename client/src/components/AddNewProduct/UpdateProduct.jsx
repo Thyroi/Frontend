@@ -2,32 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import styles from './AddNewProduct.module.css';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getSelectorsCat, updateProduct, getInfo, getById } from '../../actions';
+import {
+	getSelectorsCat,
+	updateProduct,
+	getInfo,
+	getById,
+} from '../../actions';
 import { storage } from '../../Assets/firebase';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
 export default function UpdateProduct() {
-    const {id} = useParams()
-    
-    const [imageUpload, setImageUpload] = useState(null);
+	const { id } = useParams();
+
+	const [imageUpload, setImageUpload] = useState(null);
 	const [imageUrls, setImageUrls] = useState([]);
 	const [copyUrls, setCopyUrls] = useState([]);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const categorias = useSelector((state) => state.categories);
-    const product = useSelector((state) => state.details)
+	const product = useSelector((state) => state.details);
 	const productos = useSelector((state) => state.products);
-	const nested = useSelector((state) => state.nested)
+	const nested = useSelector((state) => state.nested);
 
 	useEffect(() => {
 		dispatch(getSelectorsCat());
 		dispatch(getInfo(nested));
-        dispatch(getById(product))
+		dispatch(getById(product));
 	}, [dispatch]);
 
-   
 	// let mujeres = categorias?.women;
 	// let hombres = categorias?.men;
 
@@ -50,34 +54,30 @@ export default function UpdateProduct() {
 		control,
 		name: 'variants',
 	});
-    
+
 	const onSubmit = (data) => {
-        data.id_product = parseInt(product?.id_product)
+		data.id_product = parseInt(product?.id_product);
 		data.price = parseFloat(data?.price);
-		data.variants[0].ProductImages = product?.variants[0]?.ProductImages
-		data.variants[0].SwatchImage  = product?.variants[0]?.SwatchImage
-		data.default_image = product?.default_image
+		data.variants[0].ProductImages = product?.variants[0]?.ProductImages;
+		data.variants[0].SwatchImage = product?.variants[0]?.SwatchImage;
+		data.default_image = product?.default_image;
 		data.variants[0].Stocks.L = parseInt(data.variants[0].Stocks.L);
 		data.variants[0].Stocks.M = parseInt(data.variants[0].Stocks.M);
 		data.variants[0].Stocks.S = parseInt(data.variants[0].Stocks.S);
 		data.variants[0].Stocks.XL = parseInt(data.variants[0].Stocks.XL);
 
-	
 		dispatch(updateProduct({ updatedProduct: data }));
-		console.log({updatedProduct: data})
+		console.log({ updatedProduct: data });
 		//reset();
 		setImageUrls([]);
 		history.push('/admindashboard');
 		//dispatch(getById(id))
 	};
 
-
-
 	return (
 		<div className={styles.AddProductContainer}>
 			<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.left}>
-             
 					{/* <select
 
 						name='categories'
@@ -119,7 +119,7 @@ export default function UpdateProduct() {
 						type='text'
 						name='name'
 						autoComplete='off'
-                        defaultValue={product?.name}
+						defaultValue={product?.name}
 						placeholder='Name'
 						ref={register({
 							required: true,
@@ -137,7 +137,7 @@ export default function UpdateProduct() {
 					<input
 						type='text'
 						name='brand'
-                        defaultValue={product?.brand}
+						defaultValue={product?.brand}
 						autoComplete='off'
 						placeholder='Brand'
 						ref={register({ required: true, typeOf: 'number' })}
@@ -151,7 +151,7 @@ export default function UpdateProduct() {
 					<input
 						type='text'
 						name='price'
-                        defaultValue={product?.price}
+						defaultValue={product?.price}
 						autoComplete='off'
 						placeholder='Price'
 						ref={register({
@@ -177,14 +177,16 @@ export default function UpdateProduct() {
 							style={{ width: '1rem' }}
 							type='checkbox'
 							name='is_offer'
-                            {...(product?.is_offer ? { defaultChecked: true } : {})}
+							{...(product?.is_offer
+								? { defaultChecked: true }
+								: {})}
 							ref={register}
 						/>
 					</div>
 
 					<textarea
 						name='description'
-                        defaultValue={product?.description}
+						defaultValue={product?.description}
 						placeholder='Description'
 						ref={register({ required: true })}
 					/>
@@ -205,7 +207,9 @@ export default function UpdateProduct() {
 											},
 										})}
 										placeholder='Color'
-                                        defaultValue={product?.variants[index]?.ColorName }
+										defaultValue={
+											product?.variants[index]?.ColorName
+										}
 										name={`variants[${index}].ColorName`}
 									/>
 									{errors.variants && (
@@ -220,7 +224,10 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.S`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.S  || 0}
+										defaultValue={
+											product?.variants[index]?.Stocks
+												.S || 0
+										}
 										placeholder='Select Stock for Size S'
 										onKeyPress={(e) => {
 											if (
@@ -237,7 +244,10 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.M`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.M  || 0}
+										defaultValue={
+											product?.variants[index]?.Stocks
+												.M || 0
+										}
 										placeholder='Select Stocks for Size M'
 										onKeyPress={(e) => {
 											if (
@@ -252,7 +262,10 @@ export default function UpdateProduct() {
 										as={<input />}
 										type='number'
 										name={`variants[${index}].Stocks.L`}
-                                        defaultValue={product?.variants[index]?.Stocks.M || 0}
+										defaultValue={
+											product?.variants[index]?.Stocks
+												.M || 0
+										}
 										control={control}
 										placeholder='Select Stocks for Size L'
 										onKeyPress={(e) => {
@@ -269,7 +282,10 @@ export default function UpdateProduct() {
 										type='number'
 										name={`variants[${index}].Stocks.XL`}
 										control={control}
-										defaultValue={product?.variants[index]?.Stocks.XL || 0}
+										defaultValue={
+											product?.variants[index]?.Stocks
+												.XL || 0
+										}
 										placeholder='Select Stocks for Size XL'
 										onKeyPress={(e) => {
 											if (
@@ -327,17 +343,14 @@ export default function UpdateProduct() {
 				</div>
 
 				<div className={styles.right}>
-					<img src={product?.default_image} alt={product?.name} />;
-                    {imageUrls?.map((url) => {
+					<img src={product?.default_image} alt={product?.name} />
+					{imageUrls?.map((url) => {
 						return <img key={url} src={url} alt={url} />;
 					})}
-					
 				</div>
 				<div className={styles.bottom}>
 					<input type='submit' value='Update' />
-				
 				</div>
-				
 			</form>
 		</div>
 	);

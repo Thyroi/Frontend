@@ -45,7 +45,7 @@ export default function Nav() {
 					className={styles.title}>
 					<FontAwesomeIcon
 						className={styles.icons}
-						icon={faArrowLeft}
+						icon={faChartLine}
 					/>
 					Dashboard
 				</NavLink>

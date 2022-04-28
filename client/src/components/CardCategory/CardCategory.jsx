@@ -11,12 +11,18 @@ function CardCategory({ img, name, id }) {
 
 			<Link
 				className={styles.title}
-				to={name === 'All' ? '/home' : `/home?collection=${id}&name=${name}`}>
+				to={
+					name === 'All'
+						? '/home'
+						: `/home?collection=${id}&name=${name}`
+				}>
 				<p className={styles.text}>{name}</p>
-				<p className={styles.textDescription}>{`Click in this section in order to see ${name} Clothe we have on Posh Boutique`}</p>
+				<p className={styles.textDescription}>
+					{name === 'All'
+						? 'Click to see all products!'
+						: `Click to see the ${name} collection!`}
+				</p>
 			</Link>
-
-			{/* <div className={styles.products}></div> */}
 		</div>
 	);
 }
